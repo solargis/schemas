@@ -1,0 +1,297 @@
+{
+  "$id": "https://github.com/solargis/schemas/solargis_common_enums.schema.json",
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "description": "Common enums and similar schemas can be used both in request and response.",
+  "$comments": "By validating any column name (data parameter name) against this schema file you can test if your column name is recognized by Solargis.",
+  "anyOf": [
+    {
+      "$ref": "#/$defs/SolargisColumnNamesEnum"
+    },
+    {
+      "$ref": "#/$defs/SolargisUncertaintyColumnNamesPattern"
+    },
+    {
+      "$ref": "#/$defs/SolargisWindHeightColumnNamesPattern"
+    }
+  ],
+  "$defs": {
+    "TimeAlignmentEnum": {
+      "description": "Datetime strings (labels of time intervals) can represent start, center or end of the time interval (or the left edge, the center and the right edge of the time interval).",
+      "enum": [
+        "START",
+        "CENTER",
+        "END"
+      ]
+    },
+    "TimeStepEnum": {
+      "description": "Time step of the datetime column, also known as time resolution or time granularity.",
+      "$comment": "Values use ISO 8601 durations standard: https://en.wikipedia.org/wiki/ISO_8601#Durations.",
+      "enum": [
+        "PT1M",
+        "PT5M",
+        "PT10M",
+        "PT15M",
+        "PT30M",
+        "PT60M",
+        "P1D",
+        "P1M",
+        "P1Y"
+      ]
+    },
+    "SolarRadiationColumnTypesEnum": {
+      "description": "Column types from the solar data domain (and related). The enum also includes tilted solar irradiation types.",
+      "$comment": "Do not confuse column types with column names, but prefer using type names for column names if applicable.",
+      "enum": [
+        "SUN_AZIMUTH",
+        "SUN_ELEVATION",
+        "PANEL_AZIMUTH",
+        "PANEL_TILT",
+        "PANEL_INC",
+        "GHI",
+        "DNI",
+        "DIF",
+        "ALB",
+        "GTI",
+        "PAR",
+        "UVB",
+        "UVA",
+        "DHI",
+        "KTM",
+        "KT",
+        "KC"
+      ]
+    },
+    "PvEnergyColumnTypesEnum": {
+      "description": "Column types from the PV energy data domain (and related).",
+      "enum": [
+        "TMOD",
+        "PVOUT"
+      ]
+    },
+    "WindEnergyColumnTypesEnum": {
+      "description": "Column types from wind energy data domain.",
+      "enum": [
+        "WOUT"
+      ]
+    },
+    "MeteoColumnTypesEnum": {
+      "description": "Column types from the meteorological data domain.",
+      "enum": [
+        "TEMP",
+        "WS",
+        "WD",
+        "WG",
+        "RH",
+        "AP",
+        "PWAT",
+        "PREC",
+        "TD",
+        "WBT",
+        "SWE",
+        "TSD",
+        "SDENS",
+        "SDWE",
+        "SFWE"
+      ]
+    },
+    "SolargisColumnNamesEnum": {
+      "description": "Solargis recognizes all column types as column names. In addition to predefined column type names, Solargis will recognize the meaning of several other column names by convention. You can request these names and you will receive them in the response. See their meaning here: (TODO provide the url).",
+      "$comment": "This definition 'extends' the #/$defs/AllColumnTypes by adding another enum of names.",
+      "anyOf": [
+        {
+          "$comment": "All column types are valid as column names.",
+          "$ref": "#/$defs/AllColumnTypes"
+        },
+        {
+          "enum": [
+            "GHI_SHD",
+            "GHI_UNC_LOW",
+            "GHI_UNC_HIGH",
+            "GHI_C",
+            "DNI_SHD",
+            "DNI_C",
+            "DIF_SHD",
+            "GTI_SHD",
+            "GTI_C",
+            "GTI_DIR",
+            "GTI_DIR_SHD",
+            "GTI_CIRC",
+            "GTI_CIRC_SHD",
+            "GTI_ISO_HOR",
+            "GTI_ISO_HOR_SHD",
+            "GTI_REFL",
+            "GTI_REFL_SHD",
+            "GTI_EFF",
+            "GTI_EFF_SHD",
+            "CI_FLAG",
+            "SNOW_FLAG",
+            "PVOUT_UNC",
+            "PVOUT_UNC_LOW",
+            "PVOUT_UNC_HIGH"
+          ]
+        }
+      ]
+    },
+    "SolargisWindHeightColumnNamesPattern": {
+      "description": "Solargis recognized pattern allows to 'suffix' two wind column type names. Wind speed and wind direction can be recorded at the arbitrary height over the ground (from 50 to 200 meters).",
+      "pattern": "^(WS|WD)(5[0-9]|[6-9][0-9]|1[0-9]{2}|200)$"
+    },
+    "SolargisUncertaintyColumnNamesPattern": {
+      "description": "Solargis recognizes the names of several uncertainty scenarios for selected column types.",
+      "$comment": "Make sure you understand the difference between column names and column types.",
+      "pattern": "^(GHI.*|GTI.*|PVOUT.*)_UNC_P(1|5|10|25|75|90|95|99)$"
+    },
+    "PatternForColumnNames": {
+      "description": "Pattern and rules defined for any column name (see in #/$defs/AllColumnTypes, that also column type name match this pattern) - either predefined or custom.",
+      "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+      "maxLength": 100
+    },
+    "AllColumnTypes": {
+      "description": "Convenience schema - merging all possible column types together. Solargis assumes the solar, meteo and related energy community understands and uses them.",
+      "$comment": "Make sure you understand the difference between column names and column types.",
+      "anyOf": [
+        {
+          "$ref": "#/$defs/GeneralColumnTypesEnum"
+        },
+        {
+          "$ref": "#/$defs/SolarRadiationColumnTypesEnum"
+        },
+        {
+          "$ref": "#/$defs/MeteoColumnTypesEnum"
+        },
+        {
+          "$ref": "#/$defs/PvEnergyColumnTypesEnum"
+        },
+        {
+          "$ref": "#/$defs/WindEnergyColumnTypesEnum"
+        }
+      ]
+    },
+    "AllColumnNames": {
+      "description": "Convenience schema - defining everything you can use as a column name. Note, despite using various enums and restrictions (for clarity), column names are arbitrary (unless SolargisPatternForColumnNames is matched).",
+      "$comment": "Make sure you understand the difference between column names and column types.",
+      "anyOf": [
+        {
+          "$comment": "All column types are valid as column names - they are included in this enum.",
+          "$ref": "#/$defs/SolargisColumnNamesEnum"
+        },
+        {
+          "$comment": "This particular rule allows users with arbitrary (custom) column names.",
+          "$ref": "#/$defs/PatternForColumnNames"
+        },
+        {
+          "$ref": "#/$defs/SolargisUncertaintyColumnNamesPattern"
+        },
+        {
+          "$ref": "#/$defs/SolargisWindHeightColumnNamesPattern"
+        }
+      ]
+    },
+    "GeneralColumnTypesEnum": {
+      "enum": [
+        "DATETIME",
+        "UNDEFINED",
+        "FLAG"
+      ]
+    },
+    "SolarRadiationUnitsEnum": {
+      "description": "Units used with solar radiation data - either power or energy.",
+      "enum": [
+        "W/m2",
+        "kW/m2",
+        "Wh/m2",
+        "kWh/m2",
+        "MJ/m2",
+        "kJ/m2",
+        "J/m2",
+        "MJ/cm2",
+        "kJ/cm2",
+        "J/cm2"
+      ]
+    },
+    "TemperatureUnitsEnum": {
+      "description": "Units used with temperature data - of air, panel surface or a device temperature.",
+      "enum": [
+        "deg_C",
+        "deg_F",
+        "K"
+      ]
+    },
+    "WindSpeedUnitsEnum": {
+      "description": "Units used with wind speed data.",
+      "enum": [
+        "m/s",
+        "km/h"
+      ]
+    },
+    "AngularUnitsEnum": {
+      "description": "Various angles - used in wind direction, solar geometry, panels, etc.",
+      "enum": [
+        "deg",
+        "deg_azimuth_from_north_clockwise",
+        "rad"
+      ]
+    },
+    "PressureUnitsEnum": {
+      "description": "Units used with the air pressure.",
+      "enum": [
+        "hPa",
+        "mbar"
+      ]
+    },
+    "PrecipitationUnitsEnum": {
+      "description": "Units used with water vapour, rain and snow.",
+      "enum": [
+        "kg/m2",
+        "kg/m2/hour",
+        "cm",
+        "mm"
+      ]
+    },
+    "AllUnits": {
+      "description": "Convenience schema - merging all possible units.",
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SolarRadiationUnitsEnum"
+        },
+        {
+          "$ref": "#/$defs/TemperatureUnitsEnum"
+        },
+        {
+          "$ref": "#/$defs/WindSpeedUnitsEnum"
+        },
+        {
+          "$ref": "#/$defs/AngularUnitsEnum"
+        },
+        {
+          "$ref": "#/$defs/PrecipitationUnitsEnum"
+        },
+        {
+          "$ref": "#/$defs/PressureUnitsEnum"
+        },
+        {
+          "const": "%"
+        },
+        {
+          "enum": [
+            "unit-less",
+            "kWh",
+            "kW"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "QualityControlStatusEnum": {
+      "description": "Types of the QC status entity.",
+      "enum": [
+        "TIME_REFERENCE_CHECK",
+        "AUTOMATIC_QUALITY_CHECK_IRRADIATION",
+        "MANUAL_QUALITY_CHECK",
+        "DRIFT_DETECTION"
+      ]
+    }
+  }
+}
