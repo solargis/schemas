@@ -1,5 +1,5 @@
 {
-  "$id": "https://github.com/solargis/schemas/blob/main/solargis_common_enums.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/solargis_common_enums.schema.json",
   "$schema": "https://json-schema.org/draft-07/schema",
   "description": "Common enums and similar schemas can be used both in request and response.",
   "$comments": "By validating any column name (data parameter name) against this schema file you can test if your column name is recognized by Solargis.",
