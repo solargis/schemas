@@ -1,8 +1,9 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/solargis_common_enums.schema.json",
   "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/solargis_common_enums.schema.json",
+
   "description": "Common enums and similar schemas can be used both in request and response.",
-  "$comments": "By validating any column name (data parameter name) against this schema file you can test if your column name is recognized by Solargis.",
+  "$comments": "For convenience: by validating any column name (or data parameter name) against this schema file you can test if your column name is recognized by Solargis (i.e., you can use it in request).",
   "anyOf": [
     {
       "$ref": "#/$defs/SolargisColumnNamesEnum"
@@ -14,6 +15,7 @@
       "$ref": "#/$defs/SolargisWindHeightColumnNamesPattern"
     }
   ],
+
   "$defs": {
     "TimeAlignmentEnum": {
       "description": "Datetime strings (labels of time intervals) can represent start, center or end of the time interval (or the left edge, the center and the right edge of the time interval).",

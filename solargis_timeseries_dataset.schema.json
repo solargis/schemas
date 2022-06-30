@@ -1,65 +1,30 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/solargis_timeseries_dataset.schema.json",
   "$schema": "https://json-schema.org/draft-07/schema",
-  "description": "This is the schema for the Solargis timeseries dataset - a structure for data and metadata you can exchange with Solargis. You can use this schema for two dimensional tabular data (one column is reserved for datetime strings, others are numeric columns) for a single site location or a single portfolio.",
-  "$comment": "Important - all columns must refer to a single site location (or single portfolio). If you want to compare data from multiple sites, create multiple datasets. Columns from other datasets can be combined into one dataset only if they share the same datetime column.",
-  "allOf": [
-    {
-      "$ref": "#/$defs/TimeseriesDataset"
-    }
-  ],
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/solargis_timeseries_dataset.schema.json",
+
+  "title": "Timeseries dataset",
+  "description": "Solargis timeseries dataset - a structure for data and metadata you can exchange with Solargis. You can use this schema for two dimensional tabular data (one column is reserved for datetime strings, others are numeric columns) for a single site location or a single portfolio. Note the data property can be empty - allows for exchanging of metadata.",
+  "$comment": "All columns must refer to a single site location (or single portfolio). If you want to compare data from multiple sites, create multiple datasets. Columns from other datasets can be combined into one dataset only if they share the same datetime column.",
+  "allOf": [{"$ref": "#/$defs/TimeseriesDataset"}],
+
   "$defs": {
     "TimeseriesDataset": {
+      "title": "Timeseries dataset",
       "description": "Solargis timeseries dataset - a top level schema of this file.",
       "$comment": "Note, that some of the required properties are mutually exclusive.",
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "$schema",
-        "created",
-        "datasetType",
-        "metadata"
-      ],
-      "allOf": [
-        {
-          "oneOf": [
-            {
-              "required": [
-                "site"
-              ]
-            },
-            {
-              "required": [
-                "portfolio"
-              ]
-            }
-          ]
-        },
-        {
-          "oneOf": [
-            {
-              "required": [
-                "data"
-              ]
-            },
-            {
-              "required": [
-                "dataUrl"
-              ]
-            }
-          ]
-        }
-      ],
       "properties": {
         "$schema": {
-          "description": "TimeseriesDataset instance must comply with the schema referenced by this keyword.",
+          "description": "Solargis always wants to know which dialect is used for a TimeseriesDataset instance. The instance must comply with the schema referenced by this keyword.",
           "type": "string",
           "format": "uri"
         },
         "created": {
           "description": "Creation time of the dataset.",
           "type": "string",
-          "format": "date-time"
+          "format": "date-time",
+          "readOnly": true
         },
         "lastModified": {
           "description": "Modification time of the dataset.",
@@ -138,17 +103,25 @@
           }
         },
         "data": {
-          "description": "Data values itself organized in table-like structure. Including flags.",
-          "$ref": "#/$defs/Data"
+          "description": "Data values itself organized in a table-like structure. Data can include columns with flag values.",
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Data"
+            }
+          ]
         },
         "dataUrl": {
-          "$comment": "Milos, TODO - list of urls",
+          "$comment": "better list of urls?",
           "description": "Solargis internal - for the future. Data could be accessible by its URL (with query parameters for filtering, paging).",
           "format": "uri"
         }
       }
     },
     "TimeseriesDatasetTypeEnum": {
+      "title": "TimeseriesDatasetTypeEnum",
       "description": "Timeseries dataset can hold data for typical timeseries, but also for TMY and LTA type of data.",
       "enum": [
         "TS",
@@ -156,42 +129,8 @@
         "LTA"
       ]
     },
-    "Data": {
-      "description": "Data itself in columns. DATETIME column must have array of datetime strings. Others columns have arrays of nullable numeric values. All column arrays must have the same size.",
-      "type": "object",
-      "$comment": "The DATETIME column is required. Schema cannot enforce unique column names! This is the responsibility of producers or consumers.",
-      "required": [
-        "DATETIME"
-      ],
-      "properties": {
-        "DATETIME": {
-          "type": "array",
-          "items": {
-            "$comment": "Allowed are null values - they will be reported during a QC process as gaps in time, but then removed (together with matching data values in other columns).",
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time"
-          }
-        }
-      },
-      "propertyNames": {
-        "$ref": "solargis_common_enums.schema.json#/$defs/AllColumnNames"
-      },
-      "additionalProperties": {
-        "type": "array",
-        "description": "Columns with numeric data values.",
-        "$comment": "Definition for (data or flag) column values. For the sake of simplicity, we define values for both flag or data columns - number (float or integer) or null, although flags are typically only integers.",
-        "items": {
-          "type": [
-            "number",
-            "null"
-          ]
-        }
-      }
-    },
     "Metadata": {
+      "title": "Metadata",
       "description": "Basic metadata properties for a data resource.",
       "type": "object",
       "additionalProperties": true,
@@ -344,7 +283,8 @@
       }
     },
     "DatasetMetadata": {
-      "description": "Metadata properties you can use globally on the dataset level. It extends the Metadata with new properties.",
+      "title": "DatasetMetadata",
+      "description": "Metadata properties you can use globally on a dataset level. It extends the Metadata with new properties.",
       "type": "object",
       "$comment": "Before the JSON schema draft 2019-09 you must redeclare all properties from the base class (Metadata).",
       "allOf": [
@@ -397,6 +337,7 @@
       "additionalProperties": false
     },
     "TimeColumnMetadata": {
+      "title": "TimeColumnMetadata",
       "description": "Interpretation of datetime strings included in the DATETIME column.",
       "$comment": "The schema requires full date-time format as defined by https://datatracker.ietf.org/doc/html/rfc3339#section-5.6. Time zone is a required part of timestamp strings.",
       "type": "object",
@@ -407,6 +348,7 @@
       "properties": {
         "timeFormatPattern": {
           "description": "Dates and times are represented in RFC 3339, section 5.6. This is a subset of the date format also commonly known as ISO8601 format.",
+          "$comment": "Note the value is not intended to be used in programming languages for parsing datetime. It's ISO format, so the parsing should be easy even without specifying the format.",
           "const": "YYYY-MM-DDThh:mm:ss[.sss]±hh:mm"
         },
         "timeStep": {
@@ -437,6 +379,7 @@
       }
     },
     "DataColumnMetadata": {
+      "title": "DataColumnMetadata",
       "description": "Meta properties at the column level. It extends the Metadata base entity with specific column properties (most importantly columnType and unit).",
       "type": "object",
       "$comment": "Prior to the JSON schema draft 2019-09 you must redeclare all properties from the base class (Metadata).",
@@ -481,6 +424,42 @@
         "unit"
       ],
       "additionalProperties": false
+    },
+    "Data": {
+      "title": "Data",
+      "description": "Data itself in columns. DATETIME column must have array of datetime strings. Others columns have arrays of nullable numeric values. All column arrays must have the same size.",
+      "type": "object",
+      "$comment": "The DATETIME column is required. Schema cannot enforce unique column names! This is the responsibility of producers or consumers.",
+      "required": [
+        "DATETIME"
+      ],
+      "properties": {
+        "DATETIME": {
+          "type": "array",
+          "items": {
+            "$comment": "Allowed are null values - they will be reported during a QC process as gaps in time, but then removed (together with matching data values in other columns).",
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        }
+      },
+      "propertyNames": {
+        "$ref": "solargis_common_enums.schema.json#/$defs/AllColumnNames"
+      },
+      "additionalProperties": {
+        "type": "array",
+        "description": "Columns with numeric data values.",
+        "$comment": "Definition for (data or flag) column values. For the sake of simplicity, we define values for both flag or data columns - number (float or integer) or null, although flags are typically only integers.",
+        "items": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
     }
   }
 }
