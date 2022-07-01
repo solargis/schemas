@@ -4,7 +4,7 @@
   "additionalProperties": true,
   "properties": {
     "name": {
-      "$ref": "b.schema.json#bname"
+      "$ref": "b.schema.json#/$defs/name"
     }
   }
 }
