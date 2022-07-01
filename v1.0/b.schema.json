@@ -3,6 +3,7 @@
   "$id": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/b.schema.json",
   "$defs": {
     "name": {
+      "$id": "bname",
       "type": "string",
       "maxLength": 3
     }

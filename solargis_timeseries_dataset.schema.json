@@ -17,6 +17,7 @@
       "properties": {
         "$schema": {
           "description": "Solargis always wants to know which dialect is used for a TimeseriesDataset instance. The instance must comply with the schema referenced by this keyword.",
+          "$comment": "This schema is closed, so $schema keyword must be allowed explicitly.",
           "type": "string",
           "format": "uri"
         },
@@ -33,7 +34,7 @@
         },
         "id": {
           "description": "Solargis internal or any custom ID. Typically a resource identifier stored in a database.",
-          "$comment": "Producers will set the value for e.g., Solargis API request ID, order or contract ID or database ID for persisted datasets. Values may not be globally unique. URI can also be used.",
+          "$comment": "Producers use any arbitrary value e.g., Solargis API request ID, order or contract ID or database ID for persisted datasets. Values may not be globally unique. URIs can also be used.",
           "type": "string",
           "maxLength": 100
         },
