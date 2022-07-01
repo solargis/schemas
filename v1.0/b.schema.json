@@ -1,11 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/b.schema.json",
-  "$defs": {
-    "name": {
-      "$id": "#bname",
-      "type": "string",
-      "maxLength": 3
-    }
+  "name": {
+    "$id": "#bname",
+    "type": "string",
+    "maxLength": 3
   }
 }
