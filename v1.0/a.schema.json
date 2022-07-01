@@ -1,7 +1,10 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/a.schema.json",
+  "additionalProperties": true,
   "properties": {
-    "name": {"$ref": "/schemas/main/v1.0/b.schema.json#bname"}
+    "name": {
+      "$ref": "b.schema.json#/$defs/name"
+    }
   }
 }
