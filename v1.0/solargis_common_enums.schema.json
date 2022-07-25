@@ -3,18 +3,6 @@
   "$id": "https://raw.githubusercontent.com/solargis/schemas/main/solargis_common_enums.schema.json",
 
   "description": "Common enums and similar schemas can be used both in request and response.",
-  "$comments": "For convenience: by validating any column name (or data parameter name) against this schema file you can test if your column name is recognized by Solargis (i.e., you can use it in request).",
-  "anyOf": [
-    {
-      "$ref": "#/$defs/SolargisColumnNamesEnum"
-    },
-    {
-      "$ref": "#/$defs/SolargisUncertaintyColumnNamesPattern"
-    },
-    {
-      "$ref": "#/$defs/SolargisWindHeightColumnNamesPattern"
-    }
-  ],
 
   "$defs": {
     "TimeAlignmentEnum": {
@@ -180,6 +168,20 @@
         {
           "$comment": "This particular rule allows users with arbitrary (custom) column names.",
           "$ref": "#/$defs/PatternForColumnNames"
+        },
+        {
+          "$ref": "#/$defs/SolargisUncertaintyColumnNamesPattern"
+        },
+        {
+          "$ref": "#/$defs/SolargisWindHeightColumnNamesPattern"
+        }
+      ]
+    },
+    "ColumnNamesRecognizedBySolargis": {
+      "description": "For convenience: by validating any column name against this sub-schema you can test if the column name is recognized by Solargis (i.e., you can use it in request).",
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SolargisColumnNamesEnum"
         },
         {
           "$ref": "#/$defs/SolargisUncertaintyColumnNamesPattern"

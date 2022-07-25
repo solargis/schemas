@@ -1,6 +1,7 @@
 {
   "$id": "https://raw.githubusercontent.com/solargis/schemas/main/solargis_timeseries_dataset.schema.json",
   "$schema": "https://json-schema.org/draft-07/schema",
+
   "description": "This is the schema for the Solargis timeseries dataset - a structure for data and metadata you can exchange with Solargis. You can use this schema for two dimensional tabular data (one column is reserved for datetime strings, others are numeric columns) for a single site location or a single portfolio.",
   "$comment": "Important - all columns must refer to a single site location (or single portfolio). If you want to compare data from multiple sites, create multiple datasets. Columns from other datasets can be combined into one dataset only if they share the same datetime column.",
   "allOf": [
@@ -8,6 +9,7 @@
       "$ref": "#/$defs/TimeseriesDataset"
     }
   ],
+
   "$defs": {
     "TimeseriesDataset": {
       "description": "Solargis timeseries dataset - a top level schema of this file.",
@@ -139,7 +141,14 @@
         },
         "data": {
           "description": "Data values itself organized in table-like structure. Including flags.",
-          "$ref": "#/$defs/Data"
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Data"
+            }
+          ]
         },
         "dataUrl": {
           "$comment": "Milos, TODO - list of urls",
