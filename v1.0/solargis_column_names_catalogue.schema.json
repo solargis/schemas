@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/solargis_column_names_catalogue.schema.json",
+
+  "description": "By using this schema, Solargis created a catalogue file storing predefined properties for each Solargis column name from #/$defs/SolargisColumnNamesEnum.",
+  "type": "object",
+  "required": [
+    "$schema"
+  ],
+  "properties": {
+    "$schema": {
+      "description": "Catalogue document instance must comply with the schema referenced by this keyword.",
+      "type": "string",
+      "format": "uri"
+    }
+  },
+  "propertyNames": {
+    "anyOf": [
+      {
+        "$ref": "solargis_common_enums.schema.json#/$defs/SolargisColumnNamesEnum"
+      },
+      {
+        "const": "$schema"
+      }
+    ]
+  },
+  "additionalProperties": {
+    "description": "Properties of a column name. One column name can have multiple sets of names, units - variants e.g., irradiance vs. irradiation.",
+    "type": "array",
+    "items": {
+      "$ref": "#/$defs/SolargisColumnNameProperties"
+    }
+  },
+
+  "$defs": {
+    "SolargisColumnNameProperties": {
+      "description": "Other properties of Solargis column names taken from #/$defs/SolargisColumnNamesEnum (each column type has a predefined description and set of allowed units).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "columnType",
+        "description",
+        "units"
+      ],
+      "properties": {
+        "columnType": {
+          "description": "Column type for this column name.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/AllColumnTypes"
+        },
+        "timeStep": {
+          "description": "Allowed time steps for this column name.",
+          "type": "array",
+          "items": {
+            "$ref": "solargis_common_enums.schema.json#/$defs/TimeStepEnum"
+          }
+        },
+        "description": {
+          "description": "Default descriptive text Solargis uses for a column name.",
+          "type": "string",
+          "maxLength": 500
+        },
+        "units": {
+          "description": "Allowed units for a column name.",
+          "type": "array",
+          "items": {
+            "$ref": "solargis_common_enums.schema.json#/$defs/AllUnits"
+          }
+        },
+        "categorical": {
+          "type": "array",
+          "description": "Some column names have categorical defined as categories.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": ["integer"]
+              },
+              "description": {
+                "type": "string",
+                "maxLength": 300
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

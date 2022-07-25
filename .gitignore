@@ -1,6 +1,4 @@
-solargis_common_enums.schema.json
-solargis_common_types.schema.json
-solargis_timeseries-dataset.schema.json/.tox
+/.tox
 /dist
 /build
 /*.egg-info
