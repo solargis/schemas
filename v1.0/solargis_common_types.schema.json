@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema",
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/solargis_common_types.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_common_types.schema.json",
 
   "description": "Following type definitions Solargis uses with data resources - in requests or responses.",
 
