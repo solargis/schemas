@@ -436,7 +436,7 @@
         "timeAlignment": {
           "description": "Datetime strings (labels of time intervals) can represent start, center or end of the time interval (or the left edge, the middle and the right edge of the time interval).",
           "$ref": "solargis_common_enums.schema.json#/$defs/TimeAlignmentEnum",
-          "default": "center"
+          "default": "CENTER"
         },
         "realTimestamps": {
           "description": "TMY and LTA datasets have 'non-real' timestamps (don't represent real instances of time). TS datasets -> real timestamps.",
