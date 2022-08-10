@@ -1,0 +1,235 @@
+{
+  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_column_names_catalogue.schema.json",
+  "GHI": {
+    "legacy": [
+      {
+        "description": "Global horizontal irradiance [W/m2], no data value -9[, with terrain shading]",
+        "columnType": "GHI",
+        "units": [
+          "W/m2"
+        ],
+        "timeStep": [
+          "PT1M",
+          "PT5M",
+          "PT10M",
+          "PT15M",
+          "PT30M"
+        ]
+      },
+      {
+        "description": "Global horizontal irradiation [Wh/m2], no data value -9[, with terrain shading]",
+        "columnType": "GHI",
+        "units": [
+          "Wh/m2"
+        ],
+        "timeStep": [
+          "PT60M"
+        ]
+      },
+      {
+        "description": "Daily sum of global horizontal irradiation [kWh/m2], no data value -9[, with terrain shading]",
+        "columnType": "GHI",
+        "units": [
+          "kWh/m2"
+        ],
+        "timeStep": [
+          "P1D"
+        ]
+      }
+    ]
+  },
+  "GHId": {
+    "legacy": [
+      {
+        "description": "Average daily sum of global horizontal irradiation [kWh/m2][, with terrain shading]",
+        "columnType": "GHI",
+        "$comment": "The same column definition exists also with the 'summarization': monthly_longterm and yearly_longterm.",
+        "units": [
+          "kWh/m2"
+        ],
+        "timeStep": [
+          "P1M",
+          "P1Y"
+        ]
+      },
+    ]
+  },
+  "GHIm": {
+    "legacy": [
+      {
+        "description": "Monthly sum of global horizontal irradiation [kWh/m2][, with terrain shading]",
+        "columnType": "GHI",
+        "units": [
+          "kWh/m2"
+        ],
+        "timeStep": [
+          "P1M"
+        ]
+      },
+      {
+        "description": "Yearly sum of global horizontal irradiation [kWh/m2][, with terrain shading]",
+        "columnType": "GHI",
+        "units": [
+          "kWh/m2"
+        ],
+        "timeStep": [
+          "P1Y"
+        ]
+      },
+      {
+        "description": "Average monthly (yearly) sum of global horizontal irradiation [kWh/m2][, with terrain shading]",
+        "columnType": "GHI",
+        "units": [
+          "kWh/m2"
+        ],
+        "$comment": "For the 'monthly_longterm' summarization.",
+        "timeStep": [
+        ]
+      }
+    ]
+  },
+  "GHIy": {
+    "legacy": [
+      {
+        "description": "Average yearly sum of global horizontal irradiation [kWh/m2][, with terrain shading]",
+        "columnType": "GHI",
+        "units": [
+          "kWh/m2"
+        ],
+        "$comment": "For the 'yearly_longterm' summarization.",
+        "timeStep": [
+        ]
+      },
+      {
+        "description": "Yearly sum of global horizontal irradiation [kWh/m2][, with terrain shading]",
+        "columnType": "GHI",
+        "units": [
+          "kWh/m2"
+        ],
+        "timeStep": [
+          "P1Y"
+        ]
+      },
+      {
+        "description": "Average monthly (yearly) sum of global horizontal irradiation [kWh/m2][, with terrain shading]",
+        "columnType": "GHI",
+        "units": [
+          "kWh/m2"
+        ],
+        "$comment": "For the 'monthly_longterm' summarization.",
+        "timeStep": [
+        ]
+      }
+    ]
+  },
+  "SE": {
+    "legacy": [
+      {
+        "description": "Sun altitude (elevation) angle [deg.]",
+        "columnType": "SE",
+        "units": [
+          "deg"
+        ],
+        "$comment": "Not defined for the 'yearly' summarization (P1Y).",
+        "$comment2": "Zero value means the sun passes the horizontal plane of the observer.",
+        "valueRange": {
+          "inclusiveMin": -90,
+          "inclusiveMax": 90
+        },
+        "timeStep": [
+          "PT1M",
+          "PT5M",
+          "PT10M",
+          "PT15M",
+          "PT30M",
+          "PT60M",
+          "P1D",
+          "P1M"
+        ]
+      }
+    ]
+  },
+  "SUN_ELEVATION": {
+    "legacy": [
+      {
+        "description": "Sun elevation angle [deg.]",
+        "columnType": "SUN_ELEVATION",
+        "units": [
+          "deg"
+        ],
+        "$comment": "Not defined for the 'yearly' summarization (P1Y).",
+        "$comment2": "Zero value means the sun passes the horizontal plane of the observer.",
+        "$comment3": "This column values mean the same as for the column SE.",
+        "valueRange": {
+          "inclusiveMin": -90,
+          "inclusiveMax": 90
+        },
+        "timeStep": [
+          "PT1M",
+          "PT5M",
+          "PT10M",
+          "PT15M",
+          "PT30M",
+          "PT60M",
+          "P1D",
+          "P1M"
+        ]
+      }
+    ]
+  },
+  "SA": {
+    "legacy": [
+      {
+        "description": "Sun aspect angle [deg.]",
+        "columnType": "SA",
+        "units": [
+          "deg"
+        ],
+        "$comment": "Not defined for the 'yearly' summarization (P1Y).",
+        "$comment2": "Zero value means the sun passes South position. Negative values are at the East side.",
+        "valueRange": {
+          "inclusiveMin": -180,
+          "inclusiveMax": 180
+        },
+        "timeStep": [
+          "PT1M",
+          "PT5M",
+          "PT10M",
+          "PT15M",
+          "PT30M",
+          "PT60M",
+          "P1D",
+          "P1M"
+        ]
+      }
+    ]
+  },
+  "SUN_AZIMUTH": {
+    "legacy": [
+      {
+        "description": "Sun azimuth angle [deg.]",
+        "columnType": "SUN_AZIMUTH",
+        "units": [
+          "deg"
+        ],
+        "$comment": "Not defined for the 'yearly' summarization (P1Y).",
+        "$comment2": "Clockwise starting from the zero value (North), through the 90 (East), 180 (South), 270 (West).",
+        "$comment3": "Is 360 excluded?",
+        "valueRange": {
+          "inclusiveMin": 0,
+          "inclusiveMax": 360
+        },
+        "timeStep": [
+          "PT1M",
+          "PT5M",
+          "PT10M",
+          "PT15M",
+          "PT30M",
+          "PT60M",
+          "P1D",
+          "P1M"
+        ]
+      }
+    ]
+  }
+}
