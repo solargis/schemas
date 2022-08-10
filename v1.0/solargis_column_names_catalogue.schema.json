@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft-07/schema",
   "$id": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_column_names_catalogue.schema.json",
 
-  "description": "By using this schema, Solargis prepared a catalogue storing predefined properties for each Solargis column name from solargis_common_enums.schema.json#/$defs/SolargisColumnNamesEnum.",
+  "description": "By using this schema, Solargis has prepared a catalogue of definitions for each Solargis column name from solargis_common_enums.schema.json#/$defs/SolargisColumnNamesEnum.",
   "type": "object",
   "required": [
     "$schema"
@@ -25,18 +25,23 @@
     ]
   },
   "additionalProperties": {
-    "description": "Properties of a column name. One column name can have multiple sets of names, units - variants e.g., irradiance vs. irradiation.",
-    "type": "array",
-    "items": {
-      "$ref": "#/$defs/SolargisColumnNameProperties"
+    "type": "object",
+    "additionalProperties": {
+      "$ref": "#/$defs/SolargisApplication"
     }
   },
-
   "$defs": {
+    "SolargisApplication": {
+      "description": "Solargis application or system, e.g., legacy or Prospect. Each app can have multiple definitions of a name, but usually just single one.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SolargisColumnNameProperties"
+      }
+    },
     "SolargisColumnNameProperties": {
       "description": "Other properties of Solargis column names taken from #/$defs/SolargisColumnNamesEnum (each column type has a predefined description and set of allowed units).",
       "type": "object",
-      "additionalProperties": false,
+      "additionalProperties": true,
       "required": [
         "columnType",
         "description",
@@ -60,20 +65,20 @@
           "maxLength": 500
         },
         "units": {
-          "description": "Allowed units for a column name.",
+          "description": "Allowed units for a column name. Base units, not multiples.",
           "type": "array",
           "items": {
             "$ref": "solargis_common_enums.schema.json#/$defs/AllUnits"
           }
         },
-        "categorical": {
+        "categories": {
           "type": "array",
-          "description": "Some column names have categorical defined as categories.",
+          "description": "Some columns have pre-defined values - categories.",
           "items": {
             "type": "object",
             "properties": {
               "code": {
-                "type": ["integer"]
+                "type": "integer"
               },
               "description": {
                 "type": "string",
@@ -81,6 +86,21 @@
               }
             }
           }
+        },
+        "valueRange": {
+          "$ref": "#/$defs/ValueRange"
+        }
+      }
+    },
+    "ValueRange": {
+      "description": "Range of possible numeric values for a column name.",
+      "type": "object",
+      "properties": {
+        "inclusiveMin": {
+          "type": "number"
+        },
+        "inclusiveMax": {
+          "type": "number"
         }
       }
     }
