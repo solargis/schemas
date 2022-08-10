@@ -87,7 +87,7 @@
       ]
     },
     "SolargisColumnNamesEnum": {
-      "description": "Solargis recognizes all column types as column names. In addition to predefined column type names, Solargis will recognize the meaning of several other column names by convention. You can request these names and you will receive them in the response. See their meaning here: (TODO provide the url).",
+      "description": "Solargis recognizes all column types as column names. In addition to predefined column type names, Solargis will recognize the meaning of several other column names by convention. You can request (most of) these names and you will receive them in the response. See their meaning here: (TODO provide the url).",
       "$comment": "This definition 'extends' the #/$defs/AllColumnTypes by adding another enum of names.",
       "anyOf": [
         {
@@ -119,7 +119,10 @@
             "SNOW_FLAG",
             "PVOUT_UNC",
             "PVOUT_UNC_LOW",
-            "PVOUT_UNC_HIGH"
+            "PVOUT_UNC_HIGH",
+            "GHId",
+            "GHIm",
+            "GHIy"
           ]
         }
       ]
