@@ -158,7 +158,7 @@
       }
     },
     "TimeseriesDatasetTypeEnum": {
-      "description": "Timeseries dataset can hold data for typical timeseries, but also for TMY and LTA type of data.",
+      "description": "Timeseries dataset models normal timeseries - where timestamps represent real instances of time. The same structure can be used for modeling typical meteorological year (TMY) or long-term average datasets where the meaning of timestamps is different from timeseries.",
       "enum": [
         "TS",
         "TMY",
