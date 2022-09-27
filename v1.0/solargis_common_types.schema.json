@@ -429,12 +429,20 @@
         "version": {
           "type": "string",
           "maxLength": 50
+        },
+        "timePeriod": {
+          "description": "Use it if specific time period is covered by this data source.",
+          "$ref": "#/$defs/TimeRange"
         }
       },
       "examples": [
         {
           "name": "CFSv2 and GFS ((c) 2022 NOAA), ERA5 ((c) 2022 ECMWF)",
-          "version": "2.2.28"
+          "version": "2.2.28",
+          "timePeriod": {
+            "from": "2007-01-01T00:15:00+09:00",
+            "to": "2021-12-31T23:45:00+09:00"
+          }
         }
       ]
     },
