@@ -1,0 +1,134 @@
+{
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_timeseries_request.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+
+  "description": "Schema for a timeseries data request. Instances created by this schema are to be posted to API endpoints providing timeseries dataset objects.",
+  "allOf": [
+    {
+      "$ref": "#/$defs/TimeseriesDataRequest"
+    }
+  ],
+
+  "$defs": {
+    "TimeseriesDataRequest": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "latitude",
+        "longitude",
+        "timeStep",
+        "columns",
+        "outputFormats"
+      ],
+      "properties": {
+        "latitude": {
+          "description": "Geographic coordinate in degrees that specifies the north–south position of a point on the Earth's surface. Positive latitudes are north of the equator (0), and negative ones are south.",
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90
+        },
+        "longitude": {
+          "description": "Geographic coordinate in degrees that specifies the east–west position of a point on the Earth's surface. Positive longitudes are east of the prime meridian (0), and negative ones are west.",
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
+        },
+        "timeStep": {
+          "$comment": "Values use ISO 8601 durations standard: https://en.wikipedia.org/wiki/ISO_8601#Durations.",
+          "enum": [
+            "PT15M",
+            "PT30M",
+            "PT60M",
+            "P1D",
+            "P1M",
+            "P1Y"
+          ]
+        },
+        "columns": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "items": {
+            "$ref": "solargis_common_enums.schema.json#/$defs/ColumnNamesRecognizedBySolargis"
+          }
+        },
+        "outputFormats": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "items": {
+            "enum": [
+              "SOLARGIS_CSV"
+            ]
+          }
+        },
+
+        "fromDate": {
+          "description": "Start date of the requested data. Inclusive. See also the utcOffset.",
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "const": "AUTODETECT"
+            }
+          ]
+        },
+        "toDate": {
+          "description": "End date of the requested data. Inclusive. See also the utcOffset.",
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "const": "LAST_MONTH"
+            },
+            {
+              "const": "LAST_YEAR"
+            }
+          ]
+        },
+        "utcOffset": {
+          "type": "integer",
+          "minimum": -12,
+          "maximum": 12,
+          "default": 0
+        },
+        "timeAlignment": {
+          "description": "Datetime strings (labels of time intervals) can be positioned or aligned with the start, center or end of the time interval (or the left edge, the middle and the right edge of the time interval).",
+          "$ref": "solargis_common_enums.schema.json#/$defs/TimeAlignmentEnum"
+        },
+        "terrainShading": {
+          "type": "boolean",
+          "default": false
+        },
+        "siteName": {
+          "description": "Any site name e.g., address.",
+          "type": "string"
+        },
+        "siteId": {
+          "description": "Identifier for referencing site specific properties. See the allowed text pattern.",
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+          "maxLength": 100
+        },
+        "fileLabel": {
+          "description": "Custom label will be a part of generated file names. See the allowed text pattern.",
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+          "maxLength": 100
+        },
+        "horizon": {
+          "$ref": "solargis_common_types.schema.json#/$defs/Horizon"
+        },
+        "gtiConfiguration": {
+          "$comment": "To be defined...",
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    }
+  }
+}
