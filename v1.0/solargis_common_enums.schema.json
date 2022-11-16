@@ -11,7 +11,8 @@
         "START",
         "CENTER",
         "END"
-      ]
+      ],
+      "default": "CENTER"
     },
     "TimeStepEnum": {
       "description": "Time step of the datetime column, also known as time resolution or time granularity.",
