@@ -6,7 +6,6 @@
 
   "$defs": {
     "Site": {
-      "$anchor": "Site",
       "description": "Location or a pinpoint on Earth.",
       "type": "object",
       "additionalProperties": true,
@@ -63,7 +62,7 @@
           "$ref": "#/$defs/Horizon"
         },
         "id": {
-          "description": "Solargis internal or any custom id. Id of site stored in a database.",
+          "description": "Solargis internal or any custom id. Can be used as identifier for referencing another site specific properties.",
           "type": "string",
           "maxLength": 100
         }
