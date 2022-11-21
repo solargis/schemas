@@ -14,24 +14,15 @@
       "type": "object",
       "additionalProperties": true,
       "required": [
-        "latitude",
-        "longitude",
+        "site",
         "timeStep",
         "columns",
         "outputFormats"
       ],
       "properties": {
-        "latitude": {
-          "description": "Geographic coordinate in degrees that specifies the north–south position of a point on the Earth's surface. Positive latitudes are north of the equator (0), and negative ones are south.",
-          "type": "number",
-          "minimum": -90,
-          "maximum": 90
-        },
-        "longitude": {
-          "description": "Geographic coordinate in degrees that specifies the east–west position of a point on the Earth's surface. Positive longitudes are east of the prime meridian (0), and negative ones are west.",
-          "type": "number",
-          "minimum": -180,
-          "maximum": 180
+        "site": {
+          "description": "Site location definition.",
+          "$ref": "solargis_common_types.schema.json#/$defs/Site"
         },
         "timeStep": {
           "$comment": "Values use ISO 8601 durations standard: https://en.wikipedia.org/wiki/ISO_8601#Durations.",
@@ -103,16 +94,6 @@
         "terrainShading": {
           "type": "boolean",
           "default": false
-        },
-        "siteName": {
-          "description": "Any site name e.g., address.",
-          "type": "string"
-        },
-        "siteId": {
-          "description": "Identifier for referencing site specific properties. See the allowed text pattern.",
-          "type": "string",
-          "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
-          "maxLength": 100
         },
         "fileLabel": {
           "description": "Custom label will be a part of generated file names. See the allowed text pattern.",

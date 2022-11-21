@@ -1,9 +1,14 @@
 {
   "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_timeseries_request.schema.json",
-
-  "latitude": 45.09,
-  "longitude": 17.34,
+  "site": {
+    "latitude": 45.09,
+    "longitude": 17.34
+  },
   "timeStep": "PT15M",
-  "columns": ["GHI"],
-  "outputFormats": ["SOLARGIS_CSV"]
+  "columns": [
+    "GHI"
+  ],
+  "outputFormats": [
+    "SOLARGIS_CSV"
+  ]
 }
