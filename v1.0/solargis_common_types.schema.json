@@ -531,7 +531,7 @@
       }
     },
     "EnergySystemConfiguration": {
-      "description": "Object describing inputs needed for the energy simulation. To be defined later.",
+      "description": "For Solargis v2 simulation tools only. Object describing inputs needed for the energy simulation. To be defined later.",
       "additionalProperties": false,
       "type": "object",
       "properties": {
@@ -548,6 +548,35 @@
           "maxLength": 500
         }
       }
+    },
+    "PvSystemConfiguration_v1": {
+      "description": "PV configuration used with the the first version (legacy) of Solargis PV simulation tools.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "installedPower"
+      ],
+      "properties": {
+        "installedPower": {
+          "description": "Total PV system rating is the summation of all panel ratings measured in STC, in kilowatt-peaks (kWp)",
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "TrueNorthBasedAzimuth": {
+      "description": "Horizontal angle from north (going clockwise). Examples: North=0° (or 360°), East=90°, South=180°, West=270°",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 360,
+      "default": 180
+    },
+    "Tilt": {
+      "description": "Vertical angle (of a PV panel surface) from the horizontal position (tilt=0°) towards vertical (tilt=90°).",
+      "type": "number",
+      "minimum": 0,
+      "maximum": 90,
+      default: 0
     }
   }
 }
