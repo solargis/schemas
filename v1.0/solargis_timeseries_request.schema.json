@@ -92,6 +92,7 @@
           "$ref": "solargis_common_enums.schema.json#/$defs/TimeAlignmentEnum"
         },
         "terrainShading": {
+          "description": "This attribute affects all related parameters (e.g., GHI, DIF, DNI, GTI, PVOUT, TMOD except parameters with explicit _NOSHD suffix.)",
           "type": "boolean",
           "default": false
         },
@@ -104,10 +105,13 @@
         "horizon": {
           "$ref": "solargis_common_types.schema.json#/$defs/Horizon"
         },
-        "gtiConfiguration": {
-          "$comment": "To be defined...",
-          "type": "object",
-          "additionalProperties": true
+        "gtiConfiguration_v1": {
+          "description": "Object is required if at least one GTI related column is present in the array of columns.",
+          "$ref": "solargis_gti_configuration_v1.schema.json#/$defs/GtiConfiguration_v1"
+        },
+        "pvConfiguration_v1": {
+          "description": "Object is required if at least one PV output related column is present in the array of columns (also the TMOD parameter).",
+          "$ref": "solargis_common_types.schema.json#/$defs/PvSystemConfiguration_v1"
         }
       }
     }
