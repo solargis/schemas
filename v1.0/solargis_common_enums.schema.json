@@ -97,14 +97,14 @@
         },
         {
           "enum": [
-            "GHI_SHD",
+            "GHI_NOSHD",
             "GHI_UNC_LOW",
             "GHI_UNC_HIGH",
             "GHI_C",
-            "DNI_SHD",
+            "DNI_NOSHD",
             "DNI_C",
-            "DIF_SHD",
-            "GTI_SHD",
+            "DIF_NOSHD",
+            "GTI_NOSHD",
             "GTI_C",
             "GTI_DIR",
             "GTI_DIR_SHD",
