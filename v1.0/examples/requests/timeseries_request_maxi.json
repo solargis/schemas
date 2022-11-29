@@ -12,6 +12,8 @@
     "GHI",
     "DIF",
     "DNI",
+    "GTI",
+    "GTI_NOSHD",
     "TEMP",
     "WS",
     "WS78"
@@ -34,5 +36,15 @@
       19.0581,
       31.2
     ]
+  },
+  "gtiConfiguration_v1": {
+    "mounting": "OneAxisInclined",
+    "axisAzimuth": 180,
+    "axisTilt": 30,
+    "relativeColumnSpacing": 2.9,
+    "backTracking": false
+ },
+  "pvConfiguration_v1": {
+    "installedPower": 2767.09
   }
 }
