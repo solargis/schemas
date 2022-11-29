@@ -1,0 +1,328 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_gti_configuration_v1.schema.json",
+  "description": "Following type definitions Solargis uses for simulation of the global tilted irradiation (GTI or POA - plain of array) - in its older (legacy or v1) version of simulation tools.",
+  "$defs": {
+    "GtiConfiguration_v1": {
+      "description": "Main object needed for simulation of solar irradiation hitting a tilted surface (GTI or POA).",
+      "type": "object",
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "$ref": "#/$defs/GeometryFixedOneAngle"
+        },
+        {
+          "$ref": "#/$defs/GeometryOneAxisHorizontalTracker"
+        },
+        {
+          "$ref": "#/$defs/GeometryOneAxisInclinedTracker"
+        },
+        {
+          "$ref": "#/$defs/GeometryOneAxisVerticalTracker"
+        },
+        {
+          "$ref": "#/$defs/GeometryTwoAxisAstronomicalTracker"
+        }
+      ]
+    },
+    "GeometryFixedOneAngle": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "mounting",
+        "azimuth",
+        "tilt"
+      ],
+      "properties": {
+        "mounting": {
+          "description": "Needed for geometry type identification in the instance documents.",
+          "const": "FixedOneAngle"
+        },
+        "azimuth": {
+          "$ref": "solargis_common_types.schema.json#/$defs/TrueNorthBasedAzimuth"
+        },
+        "tilt": {
+          "$ref": "solargis_common_types.schema.json#/$defs/Tilt"
+        },
+        "relativeRowSpacing": {
+          "$ref": "#/$defs/RelativeRowSpacing"
+        },
+
+        "axisAzimuth": {
+          "not": {}
+        },
+        "axisTilt": {
+          "not": {}
+        },
+        "relativeColumnSpacing": {
+          "not": {}
+        },
+        "backTracking": {
+          "not": {}
+        },
+        "trackerRotationLimits":{
+          "not": {}
+        },
+        "trackerTiltLimits":{
+          "not": {}
+        }
+      }
+    },
+    "GeometryOneAxisHorizontalTracker": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "mounting"
+      ],
+      "properties": {
+        "mounting": {
+          "description": "Needed for easy geometry type identification in the instance documents.",
+          "const": "OneAxisHorizontalNS"
+        },
+        "axisAzimuth": {
+          "description": "Tracker axis azimuth. Important is the compass value where the southern tip of tracker axis is oriented. Regardless of the Earth hemisphere. The value range is limited to <135°, 225°>, so the deviation from the north-south line is not bigger than 45 degrees.",
+          "$ref": "#/$defs/AxisAzimuth"
+        },
+        "relativeColumnSpacing": {
+          "$ref": "#/$defs/RelativeColumnSpacing"
+        },
+        "trackerRotationLimits": {
+          "$ref": "#/$defs/TrackerRotationLimits"
+        },
+        "backTracking": {
+          "$ref": "#/$defs/BackTracking",
+          "default": false
+        },
+        "azimuth": {
+          "not": {}
+        },
+        "tilt": {
+          "not": {}
+        },
+        "axisTilt": {
+          "not": {}
+        },
+        "relativeRowSpacing": {
+          "not": {}
+        },
+        "trackerTiltLimits":{
+          "not": {}
+        }
+      }
+    },
+    "GeometryOneAxisInclinedTracker": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "mounting",
+        "axisTilt"
+      ],
+      "properties": {
+        "mounting": {
+          "description": "Needed for easy geometry type identification in the instance documents.",
+          "const": "OneAxisInclined"
+        },
+        "axisAzimuth": {
+          "description": "Tracker axis azimuth. Important is the compass value where the southern tip of tracker axis is oriented. Regardless of the Earth hemisphere. The value range is limited to <135°, 225°>, so the deviation from the north-south line is not bigger than 45 degrees.",
+          "$ref": "#/$defs/AxisAzimuth"
+        },
+        "axisTilt": {
+          "description": "Tilt of tracker axis.",
+          "$ref": "solargis_common_types.schema.json#/$defs/Tilt",
+          "default": 30
+        },
+        "relativeColumnSpacing": {
+          "$ref": "#/$defs/RelativeColumnSpacing"
+        },
+        "trackerRotationLimits": {
+          "$ref": "#/$defs/TrackerRotationLimits"
+        },
+        "backTracking": {
+          "$ref": "#/$defs/BackTracking",
+          "default": false
+        },
+        "azimuth": {
+          "not": {}
+        },
+        "tilt": {
+          "not": {}
+        },
+        "relativeRowSpacing": {
+          "not": {}
+        },
+        "trackerTiltLimits":{
+          "not": {}
+        }
+      }
+    },
+    "GeometryOneAxisVerticalTracker": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "mounting",
+        "tilt"
+      ],
+      "properties": {
+        "mounting": {
+          "description": "Needed for easy geometry type identification in the instance documents.",
+          "const": "OneAxisVertical"
+        },
+        "tilt": {
+          "$ref": "solargis_common_types.schema.json#/$defs/Tilt"
+        },
+        "relativeColumnSpacing": {
+          "$ref": "#/$defs/RelativeColumnSpacing"
+        },
+        "trackerRotationLimits": {
+          "$ref": "#/$defs/TrackerRotationLimitsForVerticalAxis"
+        },
+        "backTracking": {
+          "$ref": "#/$defs/BackTracking",
+          "default": false
+        },
+        "azimuth": {
+          "not": {}
+        },
+        "axisAzimuth": {
+          "not": {}
+        },
+        "axisTilt": {
+          "not": {}
+        },
+        "relativeRowSpacing": {
+          "not": {}
+        },
+        "trackerTiltLimits":{
+          "not": {}
+        }
+      }
+    },
+    "GeometryTwoAxisAstronomicalTracker": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "mounting"
+      ],
+      "properties": {
+        "mounting": {
+          "description": "Needed for easy geometry type identification in the instance documents.",
+          "const": "TwoAxisAstronomical"
+        },
+        "trackerRotationLimits": {
+          "$ref": "#/$defs/TrackerRotationLimitsForVerticalAxis"
+        },
+        "trackerTiltLimits": {
+          "$ref": "#/$defs/TrackerTiltLimits"
+        },
+        "relativeColumnSpacing": {
+          "$ref": "#/$defs/RelativeColumnSpacing"
+        },
+        "backTracking": {
+          "$ref": "#/$defs/BackTracking",
+          "default": false
+        },
+        "azimuth": {
+          "not": {}
+        },
+        "axisAzimuth": {
+          "not": {}
+        },
+        "axisTilt": {
+          "not": {}
+        },
+        "tilt": {
+          "not": {}
+        },
+        "relativeRowSpacing": {
+          "not": {}
+        }
+      }
+    },
+
+    "RelativeRowSpacing": {
+      "description": "The ratio between distance of equivalent table legs and PV table width (typically in the north-south direction).",
+      "type": "number",
+      "default": 2.5
+    },
+    "RelativeColumnSpacing": {
+      "description": "The ratio between distance of equivalent table legs and PV table width (typically in the east-west direction).",
+      "type": "number",
+      "default": 2.5
+    },
+    'AxisAzimuth': {
+      "description": "Special type of TrueNorthBasedAzimuth with narrower range of values. Used with specific one-axis trackers.",
+      "type": "number",
+      "minimum": 135,
+      "maximum": 225,
+      "default": 180
+    },
+    "TrackerRotationLimits": {
+      "description": "Limit angles of tracker axis rotation. Implemented with trackers - OneAxisHorizontalNS and OneAxisInclined. If tracker movement has no limits, the setup is east=-90, west=90.",
+      "required": [
+        "east",
+        "west"
+      ],
+      "properties": {
+        "east": {
+          "description": "East side limit of tracker axis rotation.",
+          "minimum": -90,
+          "maximum": 0,
+          "default": -90
+        },
+        "west": {
+          "description": "West side limit of tracker axis rotation.",
+          "minimum": 0,
+          "maximum": 90,
+          "default": 90
+        }
+      }
+    },
+    "TrackerRotationLimitsForVerticalAxis": {
+      "description": "Limit angles of tracker axis rotation for vertical axis. Implemented with OneAxisVertical and TwoAxisAstronomical (its vertical axis). If tracker movement has no limits, the setup is east=-180, west=180 (tracker can look 'behind').",
+      "required": [
+        "east",
+        "west"
+      ],
+      "properties": {
+        "east": {
+          "description": "East side limit of tracker axis rotation.",
+          "minimum": -180,
+          "maximum": 0,
+          "default": -180
+        },
+        "west": {
+          "description": "West side limit of tracker axis rotation.",
+          "minimum": 0,
+          "maximum": 180,
+          "default": 180
+        }
+      }
+    },
+    "TrackerTiltLimits": {
+      "description": "Limit angles for TwoAxisAstronomical tracker (its horizontal axis). Typically, tilt angles range is smaller than defaults (min=-90°, max=90°) e.g., min=10°, max=80°. If tracker axis movement has no limits the default setup is used. Selecting tilt limits of min=45°, max=45° will convert TwoAxisAstronomical tracker into a OneAxisVertical tracker with the 45° tilt",
+      "required": [
+        "min",
+        "max"
+      ],
+      "properties": {
+        "min": {
+          "description": "Minimum tilt angle tracker can achieve.",
+          "minimum": 0,
+          "maximum": 90,
+          "default": 0
+        },
+        "max": {
+          "description": "Maximum tilt angle tracker can achieve.",
+          "minimum": 0,
+          "maximum": 90,
+          "default": 0
+        }
+      }
+    },
+    "BackTracking": {
+          "description": "Implemented for all trackers. Default value (false) corresponds to a standalone tracker without neighbours (best possible case) moving within specified rotation limits. If BackTracking is set to true, the tracker moves in the way to avoid shading from its peers",
+          "$comment": "Internally it maps to pvTrackerBackTrack",
+          "type": "bool"
+        }
+  }
+}
