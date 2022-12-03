@@ -5,6 +5,14 @@
   "description": "Common enums and similar schemas can be used both in request and response.",
 
   "$defs": {
+    "DatasetTypeEnum": {
+      "description": "Main categories of dataset object (typically the API response). Timestamps in the dataset can either represent real instances of time (TS) or typical meteorological year (TMY) or long-term average data (LTA). The meaning of timestamps is different in these types.",
+      "enum": [
+        "TS",
+        "TMY",
+        "LTA"
+      ]
+    },
     "TimeAlignmentEnum": {
       "description": "Datetime strings (labels of time intervals) can represent start, center or end of the time interval (or the left edge, the center and the right edge of the time interval).",
       "enum": [
