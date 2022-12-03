@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_timeseries_request.schema.json",
+  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_data_request.schema.json",
   "site": {
     "latitude": 45.09,
     "longitude": 17.34
