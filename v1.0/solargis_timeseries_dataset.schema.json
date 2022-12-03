@@ -81,10 +81,7 @@
           "maxLength": 100
         },
         "datasetType": {
-          "description": "Although 'TimeseriesDataset' is the name of the main type, not only typical timeseries (TS) can be modeled by this schema. To model typical meteorological year (TMY) or long-term average data (LTA) we use partially 'faked' datetime strings.",
-          "$comment": "In typical timeseries every timestamp (and the value) represent the real instance in time, while in LTA or TMY datasets, the meaning of values depends on the processing method. See also the TimeReference.realTimestamps property.",
-          "$ref": "#/$defs/TimeseriesDatasetTypeEnum",
-          "default": "TS"
+          "$ref": "solargis_common_enums.schema.json#/$defs/DatasetTypeEnum"
         },
         "name": {
           "description": "Name of the dataset.",
@@ -151,19 +148,11 @@
           ]
         },
         "dataUrl": {
-          "$comment": "Milos, TODO - list of urls",
+          "$comment": "Or list of urls?",
           "description": "Solargis internal - for the future. Data could be accessible by its URL (with query parameters for filtering, paging).",
           "format": "uri"
         }
       }
-    },
-    "TimeseriesDatasetTypeEnum": {
-      "description": "Timeseries dataset models normal timeseries - where timestamps represent real instances of time. The same structure can be used for modeling typical meteorological year (TMY) or long-term average datasets where the meaning of timestamps is different from timeseries.",
-      "enum": [
-        "TS",
-        "TMY",
-        "LTA"
-      ]
     },
     "Data": {
       "description": "Data itself in columns. DATETIME column must have array of datetime strings. Others columns have arrays of nullable numeric values. All column arrays must have the same size.",
