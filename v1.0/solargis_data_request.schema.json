@@ -15,6 +15,7 @@
       "additionalProperties": true,
       "required": [
         "site",
+        "datasetType",
         "timeStep",
         "columns",
         "outputFormats"
@@ -24,16 +25,11 @@
           "description": "Site location definition.",
           "$ref": "solargis_common_types.schema.json#/$defs/Site"
         },
+        "datasetType": {
+          "$ref": "solargis_common_enums.schema.json#/$defs/DatasetTypeEnum"
+        },
         "timeStep": {
-          "$comment": "Values use ISO 8601 durations standard: https://en.wikipedia.org/wiki/ISO_8601#Durations.",
-          "enum": [
-            "PT15M",
-            "PT30M",
-            "PT60M",
-            "P1D",
-            "P1M",
-            "P1Y"
-          ]
+          "$ref": "solargis_common_enums.schema.json#/$defs/TimeStepEnum"
         },
         "columns": {
           "type": "array",
@@ -111,7 +107,7 @@
         },
         "pvConfiguration_v1": {
           "description": "Object is required if at least one PV output related column is present in the array of columns (also the TMOD parameter).",
-          "$ref": "solargis_common_types.schema.json#/$defs/PvSystemConfiguration_v1"
+          "$ref": "solargis_pv_configuration_v1.schema.json#/$defs/PvConfiguration_v1"
         }
       }
     }
