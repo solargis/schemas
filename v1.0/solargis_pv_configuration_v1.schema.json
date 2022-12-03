@@ -1,0 +1,364 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_pv_configuration_v1.schema.json",
+  "description": "Following type definitions Solargis uses for the simulation of the PV output - in its older (legacy or v1) version of simulation tools.",
+
+  "$defs": {
+    "PvConfiguration_v1": {
+      "description": "PV configuration object used with the the first version (legacy) of the Solargis PV simulation tools.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "installedPower",
+        "installationType",
+        "module"
+      ],
+      "properties": {
+        "installedPower": {
+          "description": "Total PV system rating (nameplate capacity) is the summation of all panel ratings measured in STC, in kilowatt-peaks (kWp)",
+          "type": "number",
+          "minimum": 0
+        },
+        "installationType": {
+          "description": "This property of the PV system helps to estimate how modules are cooled by the air.",
+          "enum": [
+            "FREE_STANDING",
+            "ROOF_MOUNTED",
+            "BUILDING_INTEGRATED"
+          ]
+        },
+        "module": {
+          "$ref": "#/$defs/Module"
+        },
+        "selfShading": {
+          "description": "The parameter affects FixedOneAngle geometry, then OneAxisHorizontalNS and OneAxisInclined type of trackers with backTracking=false. When backTracking=true, the parameter does not make sense as self-shading is avoided. No other GTI configs are implemented. The parameter is used to determine the impact of self (inter-row) shading on PV power production. When set to true, the effect of self-shading is taken into account in calculation, otherwise the structure is assumed without neighbors (best possible). Direct shadow is considered, the effect of diffuse shading is not considered in this version.",
+          "type": "bool",
+          "default": false
+        },
+        "terrainProperties": {
+          "description": "Characteristics of the terrain - applied only when calculating self-shading effect of PV system with FixedOneAngle mounting.",
+          "$ref": "#/$defs/TerrainProperties"
+        },
+        "inverter": {
+          "$ref": "#/$defs/Inverter"
+        },
+        "dcLosses": {
+          "$ref": "#/$defs/DcLosses"
+        },
+        "acLosses": {
+          "$ref": "#/$defs/AcLosses"
+        }
+      }
+    },
+    "Module": {
+      "description": "PV configuration used with the the first version (legacy) of Solargis PV simulation tools.",
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "technology"
+      ],
+      "properties": {
+        "technology": {
+          "description": "Codes for materials used in PV modules. Use 'CSI' for crystalline silicon, 'ASI' for amorphous silicon, 'CDTE' for cadmium telluride, 'CIS' for copper indium selenide.",
+          "enum": [
+            "CSI",
+            "ASI",
+            "CDTE",
+            "CIS"
+          ]
+        },
+        "topologyType": {
+          "description": "This parameter estimates a loss of PV system output when modules are self-shaded. The effect depends on wiring interconnections within a module. Shading influence ranges from 0% (no influence) to 100% (full influence) and it's mapped to categories: PROPORTIONAL = 20%, UNPROPORTIONAL_1 = 40%, UNPROPORTIONAL_2 = 60%, UNPROPORTIONAL_3 = 80%. When parameter is missing, the self-shading influence is estimated to 5 %.",
+          "$comment": "Defaults: UNPROPORTIONAL_1 for CSI, PROPORTIONAL for all other module technologies",
+          "enum": [
+            "PROPORTIONAL",
+            "UNPROPORTIONAL_1",
+            "UNPROPORTIONAL_2",
+            "UNPROPORTIONAL_3"
+          ]
+        },
+        "degradation": {
+          "description": "If property is missing degradation of PV modules is ignored.",
+          "$ref": "#/$defs/ModulesDegradation"
+        },
+        "nominalOperatingCellTemperature": {
+          "description": "Normal operating cell temperature. Float value of the temperature in degrees Celsius of a free standing PV module exposed to irradiance of 800 W/m2 and ambient air temperature of 20°C and wind speed of 1 m/s. The value is given by manufacturer and only for ventilated free standing PV system.",
+          "$comment": "Defaults according to moduleTechnology value: CSI=46°C, ASI=44°C, CDTE=48°C, CIS=47°C.",
+          "type": "number"
+        },
+        "temperatureCoefficientPmax": {
+          "description": "Negative percent float value representing the change in PV panel output power for temperatures other than 25°C (decrease of output power with raising temperature). This property is given by the manufacturer at STC.",
+          "$comment": "Defaults according to moduleTechnology: CSI=-0.438%/°C, ASI=-0.18%/°C, CDTE=-0.297%/°C, CIS=-0.36%/°C.",
+          "type": "number",
+          "exclusiveMaximum": 0
+        }
+      }
+    },
+    "TerrainProperties": {
+      "description": "PV configuration used with the the first version (legacy) of Solargis PV simulation tools.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "terrainAzimuth",
+        "terrainSlope"
+      ],
+      "properties": {
+        "terrainAzimuth": {
+          "$ref": "solargis_common_types.schema.json#/$defs/TrueNorthBasedAzimuth"
+        },
+        "terrainSlope": {
+          "$ref": "solargis_common_types.schema.json#/$defs/Tilt"
+        }
+      }
+    },
+    "ModulesDegradation": {
+      "description": "Estimated annual percentage degradation of rated output power of PV modules. This parameter is only considered if dateStartup attribute is set.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "startUpDate"
+      ],
+      "properties": {
+        "startUpDate": {
+          "description": "Start up date of a PV system (resp. unpacking of modules). This parameter is used for calculation of degradation (or aging) of modules.",
+          "type": "string",
+          "format": "date"
+        },
+        "degradationAnyYear": {
+          "description": "Annual percentage degradation for any year.",
+          "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
+          "default": 0.5
+        },
+        "degradationFirstYear": {
+          "description": "Annual percentage degradation specifically for the first year of operation.",
+          "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
+          "default": 0.8
+        }
+      }
+    },
+    "Inverter": {
+      "description": "Properties of the PV inverter.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "inverterEfficiency": {
+          "$ref": "#/$defs/InverterEfficiency"
+        },
+        "inverterLimitationACPower": {
+          "description": "Maximum AC power in kW delivered by the inverter without the limitation (clipping) of AC output. Clipping refers to the situation where the AC power output of an inverter is limited due to the peak rating of the inverter (the parameter value in kw), even though additional power may still be available from the solar modules. If you have power factor (PF) and AC limit in kVA available, use this formula: PF * AC_limit_kVA = kW, which is the value of this parameter.",
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "InverterEfficiency": {
+      "description": "Efficiency of the PV inverter.",
+      "type": "object",
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "required": [
+            "constant"
+          ]
+        },
+        {
+          "required": [
+            "curve"
+          ]
+        }
+      ],
+      "properties": {
+        "constant": {
+          "description": "Value of inverter efficiency known as Euro or CEC (California Energy Commission) efficiency. This value is a calculated weighted efficiency given by manufacturer. It gives a simplified picture of the non-linear inverter performance. Valid range of this value is practically 70%-100%.",
+          "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
+          "default": 97.5
+        },
+        "curve": {
+          "$ref": "#/$defs/InverterEfficiencyCurve",
+          "examples": [
+            {
+              "inputPowerKilowatts": [
+                0.5,
+                1,
+                1.5,
+                2,
+                2.5,
+                3.0
+              ],
+              "efficiencyPercentage": [
+                96.2,
+                98,
+                97,
+                97,
+                96,
+                96.5
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "InverterEfficiencyCurve": {
+      "description": "Non-linear efficiency of the inverter can be described as a simplified curve defined as list of data points.",
+      "type": "object",
+      "required": [
+        "inputPowerKilowatts",
+        "efficiencyPercentage"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "inputPowerKilowatts": {
+          "description": "Input power in kilowatts (kW).",
+          "type": "array",
+          "items": {
+            "type": [
+              "number"
+            ],
+            "minimum": 0
+          }
+        },
+        "efficiencyPercentage": {
+          "description": "Inverter's efficiency (%).",
+          "type": "array",
+          "items": {
+            "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive"
+          }
+        }
+      }
+    },
+    "DcLosses": {
+      "description": "PV power losses on the DC side.",
+      "type": "object",
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "required": [
+            "overall"
+          ]
+        },
+        {
+          "required": [
+            "specific"
+          ]
+        }
+      ],
+      "properties": {
+        "overall": {
+          "description": "Overall % estimate of all specific DC losses (mismatch, cabling, dirtAndSnow) together. Simplest expression of the DC losses.",
+          "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
+          "default": 5.4
+        },
+        "specific": {
+          "$ref": "#/$defs/SpecificDcLosses"
+        }
+      }
+    },
+    "SpecificDcLosses": {
+      "description": "Specific PV power losses on the DC side.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mismatch",
+        "cabling",
+        "dirtAndSnow"
+      ],
+      "properties": {
+        "mismatch": {
+          "description": "% estimate of the mismatch losses.",
+          "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
+          "default": 1.0
+        },
+        "cabling": {
+          "description": "% estimate of the cabling losses.",
+          "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
+          "default": 2.0
+        },
+        "dirtAndSnow": {
+          "description": "% estimate of the dirt and snow losses.",
+          "$ref": "#/$defs/DirtAndSnowLosses"
+        }
+      }
+    },
+    "DirtAndSnowLosses": {
+      "description": "PV power losses due to dirt and/or snow.",
+      "type": "object",
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "required": [
+            "overall"
+          ]
+        },
+        {
+          "required": [
+            "monthly"
+          ]
+        }
+      ],
+      "properties": {
+        "overall": {
+          "description": "Overall % estimate dirt and/or snow losses - one value for the whole dataset.",
+          "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
+          "default": 2.5
+        },
+        "monthly": {
+          "description": "Distribution of the dirt and/or snow losses into 12 average calendar months.",
+          "type": "array",
+          "minItems": 12,
+          "maxItems": 12,
+          "items": {
+            "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive"
+          }
+        }
+      }
+    },
+    "AcLosses": {
+      "description": "PV power losses on the AC side.",
+      "type": "object",
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "required": [
+            "overall"
+          ]
+        },
+        {
+          "required": [
+            "specific"
+          ]
+        }
+      ],
+      "properties": {
+        "overall": {
+          "description": "Overall % estimate of all specific AC losses (transformer, cabling) together. Simplest expression of the DC losses.",
+          "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
+          "default": 1.5
+        },
+        "specific": {
+          "$ref": "#/$defs/SpecificAcLosses"
+        }
+      }
+    },
+    "SpecificAcLosses": {
+      "description": "Specific PV power losses on the AC side.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "transformer",
+        "cabling"
+      ],
+      "properties": {
+        "transformer": {
+          "description": "% estimate of the transformer losses.",
+          "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
+          "default": 1.0
+        },
+        "cabling": {
+          "description": "% estimate of the cabling losses.",
+          "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
+          "default": 0.5
+        }
+      }
+    }
+  }
+}
