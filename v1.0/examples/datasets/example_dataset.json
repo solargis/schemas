@@ -44,6 +44,7 @@
       "GHI": {
         "columnType": "GHI",
         "unit": "W/m2",
+        "terrainShading": true,
         "description": "Global horizontal irradiance",
         "sources": [
           {
@@ -52,10 +53,11 @@
           }
         ]
       },
-      "GHI_SHD": {
+      "GHI_NOSHD": {
         "columnType": "GHI",
         "unit": "W/m2",
-        "description": "Global horizontal irradiance, shaded by horizon (see the horizon property).",
+        "terrainShading": false,
+        "description": "Global horizontal irradiance without any shading (in a raw theoretical form).",
         "sources": [
           {
             "name": "Meteosat MSG IODC and Meteosat MFG IODC satellite data ((c) 2022 EUMETSAT) and atmospheric data ((c) 2022 ECMWF, NOAA and NASA)",
@@ -93,7 +95,7 @@
     "columnOrder": [
       "DATETIME",
       "GHI",
-      "GHI_SHD",
+      "GHI_NOSHD",
       "TEMP"
     ]
   },
@@ -106,9 +108,9 @@
       32.2,
       46.5
     ],
-    "GHI_SHD": [
-      15.2,
-      20.5
+    "GHI_NOSHD": [
+      35.2,
+      50.5
     ],
     "TEMP": [
       15,

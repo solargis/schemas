@@ -4,6 +4,7 @@
     "latitude": 45.09,
     "longitude": 17.34
   },
+  "datasetType": "TS",
   "timeStep": "PT15M",
   "columns": [
     "GHI"
