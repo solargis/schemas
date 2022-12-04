@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft-07/schema",
   "$id": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_common_enums.schema.json",
 
-  "description": "Common enums and similar schemas can be used both in request and response.",
+  "description": "Common enums and other schemas used with requests or datasets.",
 
   "$defs": {
     "DatasetTypeEnum": {
