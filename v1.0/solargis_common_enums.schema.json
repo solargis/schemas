@@ -6,11 +6,11 @@
 
   "$defs": {
     "DatasetTypeEnum": {
-      "description": "Main categories of dataset object (typically the API response). Timestamps in the dataset can either represent real instances of time (TS) or typical meteorological year (TMY) or long-term average data (LTA). The meaning of timestamps is different in these types.",
+      "description": "Main categories of dataset object (typically the API response). Timestamps in the dataset can either represent real instances of time or typical meteorological year (TMY) or long-term average data. The meaning of timestamps is different in these types.",
       "enum": [
-        "TS",
+        "TIMESERIES",
         "TMY",
-        "LTA"
+        "LONG_TERM_AVERAGE"
       ]
     },
     "TimeAlignmentEnum": {
