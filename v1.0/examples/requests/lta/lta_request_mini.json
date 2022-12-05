@@ -3,7 +3,7 @@
   "requestType": "LONG_TERM_AVERAGE",
   "site": {
     "latitude": 45.09,
-    "longitude": 17.34,
+    "longitude": 17.34
   },
   "timeStep": "P1M",
   "columns": [

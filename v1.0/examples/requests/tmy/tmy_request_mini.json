@@ -3,7 +3,7 @@
   "requestType": "TMY",
   "site": {
     "latitude": 45.09,
-    "longitude": 17.34,
+    "longitude": 17.34
   },
   "timeStep": "PT15M",
   "columns": [
