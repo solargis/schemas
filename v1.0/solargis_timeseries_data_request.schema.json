@@ -1,6 +1,7 @@
 {
   "$id": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_timeseries_data_request.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
+
   "description": "Schema for Solargis data request - for timeseries datasets. See other requests for TMY or long-term average datasets",
   "allOf": [
     {
