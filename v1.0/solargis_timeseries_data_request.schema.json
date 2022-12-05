@@ -4,7 +4,7 @@
   "description": "Schema for Solargis data request - for timeseries datasets. See other requests for TMY or long-term average datasets",
   "allOf": [
     {
-      "$ref": "solargis_data_request.schema.json"
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest"
     }
   ],
   "required": [

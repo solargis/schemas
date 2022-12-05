@@ -4,7 +4,7 @@
   "description": "Schema for Solargis data request - for long-term average (LTA) datasets. See other requests for timeseries or TMY",
   "allOf": [
     {
-      "$ref": "solargis_data_request.schema.json"
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest"
     }
   ],
   "required": [

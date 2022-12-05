@@ -2,11 +2,7 @@
   "$id": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_data_request.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
   "description": "Base schema for Solargis data request - to be extended. Instances created by this schema are to be posted to API endpoints providing dataset objects.",
-  "allOf": [
-    {
-      "$ref": "#/$defs/DataRequest"
-    }
-  ],
+
   "$defs": {
     "DataRequest": {
       "type": "object",
