@@ -310,25 +310,6 @@
             "$ref": "solargis_common_types.schema.json#/$defs/DataSource"
           }
         },
-        "energySystem": {
-          "type": "object",
-          "additionalProperties": false,
-          "$comments": "Gti and pv config will be normally mutually exclusive, as PV config will embed GTI config.",
-          "properties": {
-            "gtiConfiguration": {
-              "description": "Object describing parameters needed for the calculation of tilted solar radiation.",
-              "$ref": "solargis_common_types.schema.json#/$defs/EnergySystemConfiguration"
-            },
-            "pvConfiguration": {
-              "description": "Object describing PV configuration.",
-              "$ref": "solargis_common_types.schema.json#/$defs/EnergySystemConfiguration"
-            },
-            "windTurbineConfiguration": {
-              "description": "Object describing wind turbine configuration.",
-              "$ref": "solargis_common_types.schema.json#/$defs/EnergySystemConfiguration"
-            }
-          }
-        },
         "instrument": {
           "description": "Column values can be measured by one (or more) measuring instrument e.g., pyranometer or a thermometer.",
           "type": "array",
@@ -338,6 +319,14 @@
         },
         "horizon": {
           "$ref": "solargis_common_types.schema.json#/$defs/Horizon"
+        },
+        "gtiConfiguration_v1": {
+          "description": "Configuration object used with the simulation of solar irradiation hitting a tilted surface (GTI or POA). First version of Solargis GTI simulation.",
+          "$ref": "solargis_gti_configuration_v1.schema.json#/$defs/GtiConfiguration_v1"
+        },
+        "pvConfiguration_v1": {
+          "description": "Configuration object used with the PV output simulation. First version of Solargis PV simulation tool.",
+          "$ref": "solargis_pv_configuration_v1.schema.json#/$defs/PvConfiguration_v1"
         }
       }
     },
