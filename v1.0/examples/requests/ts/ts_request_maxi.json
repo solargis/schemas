@@ -1,5 +1,6 @@
 {
-  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_data_request.schema.json",
+  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_timeseries_data_request.schema.json",
+  "requestType": "TIMESERIES",
   "site": {
     "latitude": 43.023903,
     "longitude": 142.419596,
@@ -8,13 +9,15 @@
     "id": "AX_987JP"
   },
   "timeStep": "PT15M",
-  "datasetType": "TS",
   "columns": [
     "GHI",
     "DIF",
     "DNI",
     "GTI",
-    "GTI_NOSHD", "PVOUT"
+    "GTI_NOSHD",
+    "TEMP",
+    "WS",
+    "WS78"
   ],
   "outputFormats": [
     "SOLARGIS_CSV"
@@ -36,14 +39,11 @@
     ]
   },
   "gtiConfiguration_v1": {
-    "mounting": "OneAxisHorizontalNS",
+    "mounting": "OneAxisInclined",
     "axisAzimuth": 180,
-    "relativeColumnSpacing": 2.5,
-    "trackerRotationLimits": {
-      "east": -50,
-      "west": 50
-    },
-    "backTracking": true
+    "axisTilt": 30,
+    "relativeColumnSpacing": 2.9,
+    "backTracking": false
   },
   "pvConfiguration_v1": {
     "installedPower": 3.0,
@@ -66,8 +66,8 @@
     },
     "inverter": {
       "inverterEfficiency": {
-      "constant": 97.5
-    },
+        "constant": 97.5
+      },
       "inverterLimitationACPower": 2.6
     },
     "dcLosses": {
@@ -75,13 +75,25 @@
         "cabling": 2,
         "mismatch": 1,
         "dirtAndSnow": {
-          "monthly": [1,2,3,4,5,6,7,8,9,1,1,1]
+          "monthly": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            1,
+            1,
+            1
+          ]
         }
       }
     },
     "acLosses": {
       "overall": 1.5
     }
-
   }
 }

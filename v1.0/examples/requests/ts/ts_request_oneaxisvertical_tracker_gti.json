@@ -1,5 +1,6 @@
 {
-  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_data_request.schema.json",
+  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_timeseries_data_request.schema.json",
+  "requestType": "TIMESERIES",
   "site": {
     "latitude": 43.023903,
     "longitude": 142.419596,
@@ -7,17 +8,13 @@
     "name": "Pippu 比布町, Kamikawa District, Hokkaido, Japan",
     "id": "AX_987JP"
   },
-  "datasetType": "TS",
   "timeStep": "PT15M",
   "columns": [
     "GHI",
     "DIF",
     "DNI",
     "GTI",
-    "GTI_NOSHD",
-    "TEMP",
-    "WS",
-    "WS78"
+    "GTI_NOSHD"
   ],
   "outputFormats": [
     "SOLARGIS_CSV"
@@ -39,13 +36,13 @@
     ]
   },
   "gtiConfiguration_v1": {
-    "mounting": "OneAxisInclined",
-    "axisAzimuth": 180,
-    "axisTilt": 30,
-    "relativeColumnSpacing": 2.9,
-    "backTracking": false
- },
-  "pvConfiguration_v1": {
-    "installedPower": 2767.09
+    "mounting": "OneAxisVertical",
+    "tilt": 34,
+    "relativeColumnSpacing": 2.5,
+    "trackerRotationLimits": {
+      east: -120,
+      "west": 120
+    },
+    "backTracking": true
   }
 }

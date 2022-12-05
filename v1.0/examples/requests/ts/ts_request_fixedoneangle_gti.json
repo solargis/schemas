@@ -1,5 +1,6 @@
 {
-  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_data_request.schema.json",
+  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_timeseries_data_request.schema.json",
+  "requestType": "TIMESERIES",
   "site": {
     "latitude": 43.023903,
     "longitude": 142.419596,
@@ -7,7 +8,6 @@
     "name": "Pippu 比布町, Kamikawa District, Hokkaido, Japan",
     "id": "AX_987JP"
   },
-  "datasetType": "TS",
   "timeStep": "PT15M",
   "columns": [
     "GHI",

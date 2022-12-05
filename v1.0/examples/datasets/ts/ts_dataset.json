@@ -1,8 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_timeseries_dataset.schema.json",
-
   "created": "2022-05-11T07:25:43.24+00:00",
-  "datasetType": "TS",
+  "datasetType": "TIMESERIES",
   "id": "SG-88689-2205-2-1",
   "name": "15 MINUTE VALUES OF SOLAR RADIATION AND METEOROLOGICAL PARAMETERS",
   "description": "Example of 15 minute timeseries dataset.",
@@ -51,18 +50,6 @@
             "name": "Meteosat MSG IODC and Meteosat MFG IODC satellite data ((c) 2022 EUMETSAT) and atmospheric data ((c) 2022 ECMWF, NOAA and NASA)",
             "version": "2.2.28"
           }
-        ]
-      },
-      "GHI_NOSHD": {
-        "columnType": "GHI",
-        "unit": "W/m2",
-        "terrainShading": false,
-        "description": "Global horizontal irradiance without any shading (in a raw theoretical form).",
-        "sources": [
-          {
-            "name": "Meteosat MSG IODC and Meteosat MFG IODC satellite data ((c) 2022 EUMETSAT) and atmospheric data ((c) 2022 ECMWF, NOAA and NASA)",
-            "version": "2.2.28"
-          }
         ],
         "horizon": {
           "azimuth": [
@@ -74,6 +61,18 @@
             23
           ]
         }
+      },
+      "GHI_NOSHD": {
+        "columnType": "GHI",
+        "unit": "W/m2",
+        "terrainShading": false,
+        "description": "Global horizontal irradiance without any shading (in a raw theoretical form).",
+        "sources": [
+          {
+            "name": "Meteosat MSG IODC and Meteosat MFG IODC satellite data ((c) 2022 EUMETSAT) and atmospheric data ((c) 2022 ECMWF, NOAA and NASA)",
+            "version": "2.2.28"
+          }
+        ]
       },
       "TEMP": {
         "columnType": "TEMP",
@@ -90,13 +89,79 @@
           }
         ],
         "method": "interpolated to 15 min"
+      },
+      "PVOUT": {
+        "columnType": "PVOUT",
+        "unit": "kW",
+        "description": "PV output.",
+        "createdByApplication": {
+          "name": "solargis/pvSimulator_v1"
+        },
+        "gtiConfiguration_v1": {
+          "mounting": "FixedOneAngle",
+          "azimuth": 180,
+          "tilt": 35,
+          "relativeRowSpacing": 2.5
+        },
+        "pvConfiguration_v1": {
+          "installedPower": 3.0,
+          "installationType": "FREE_STANDING",
+          "selfShading": false,
+          "terrainProperties": {
+            "terrainAzimuth": 180,
+            "terrainSlope": 0
+          },
+          "module": {
+            "technology": "CSI",
+            "topologyType": "UNPROPORTIONAL_2",
+            "degradation": {
+              "startUpDate": "2000-01-21",
+              "degradationAnyYear": 0.5,
+              "degradationFirstYear": 0.8
+            },
+            "nominalOperatingCellTemperature": 44.5,
+            "temperatureCoefficientPmax": -0.438
+          },
+          "inverter": {
+            "inverterEfficiency": {
+              "constant": 97.5
+            },
+            "inverterLimitationACPower": 2.6
+          },
+          "dcLosses": {
+            "specific": {
+              "cabling": 2,
+              "mismatch": 1,
+              "dirtAndSnow": {
+                "monthly": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  1,
+                  1,
+                  1
+                ]
+              }
+            }
+          },
+          "acLosses": {
+            "overall": 1.5
+          }
+        }
       }
     },
     "columnOrder": [
       "DATETIME",
       "GHI",
       "GHI_NOSHD",
-      "TEMP"
+      "TEMP",
+      "PVOUT"
     ]
   },
   "data": {
@@ -115,6 +180,10 @@
     "TEMP": [
       15,
       24
+    ],
+    "PVOUT": [
+      300.98,
+      340.2
     ]
   }
 }

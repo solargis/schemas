@@ -1,0 +1,215 @@
+{
+  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_timeseries_dataset.schema.json",
+  "created": "2022-05-11T07:25:09+00:00",
+  "datasetType": "TMY",
+  "name": "TYPICAL METEOROLOGICAL YEAR (P50) - HOURLY VALUES OF SOLAR RADIATION AND METEOROLOGICAL PARAMETERS",
+  "id": "aafdfUy9",
+  "author": {
+    "name": "Solargis s.r.o.",
+    "address": "Bottova 2A, Bratislava, Slovakia",
+    "web": "https://solargis.com",
+    "email": "contact@solargis.com",
+    "phone": "+421 2 4319 1708",
+    "serviceDeskUrl": "https://solargis.com/servicedesk"
+  },
+  "license": {
+    "copyright": "© 2022 Solargis s.r.o.",
+    "disclaimer": "Considering the nature of climate fluctuations, interannual and long-term changes, as well as the uncertainty of measurements and calculations, Solargis s.r.o. cannot take full guarantee of the accuracy of estimates. The maximum possible has been done for the assessment of climate conditions based on the best available data, software and knowledge. Solargis s.r.o. shall not be liable for any direct, incidental, consequential, indirect or punitive damages arising or alleged to have arisen out of use of the provided data. Solargis is a trade mark of Solargis s.r.o."
+  },
+  "site": {
+    "latitude": 43.023903,
+    "longitude": 142.419596,
+    "elevation": 179,
+    "name": "Pippu 比布町, Kamikawa District, Hokkaido, Japan",
+    "countryName": "Japan",
+    "countryCode": "JP",
+    "mapUrl": "https://apps.solargis.com/prospect/map?s=43.913961,142.419596&c=43.914237,142.420094,12&m=mapbox-satellite&l=true"
+  },
+  "metadata": {
+    "createdByApplication": {
+      "name": "solargis/tmyAPI",
+      "version": "0.3"
+    },
+    "processing": {
+      "timePeriod": {
+        "from": "2007-01-01T00:15:00+09:00",
+        "to": "2021-12-31T23:45:00+09:00"
+      },
+      "modules": [
+        {
+          "name": "solargis/tmy",
+          "version": "0.1",
+          "details": {
+            "scenario": "P50",
+            "method": "Solargis_3",
+            "createdFromYears": {
+              "Jan": 2018,
+              "Feb": 2017,
+              "Mar": 2018,
+              "Apr": 2017,
+              "May": 2012,
+              "Jun": 2019,
+              "Jul": 2017,
+              "Aug": 2021,
+              "Sep": 2015,
+              "Oct": 2017,
+              "Nov": 2019,
+              "Dec": 2015
+            }
+          }
+        }
+      ]
+    },
+    "columns": {
+      "DATETIME": {
+        "timeFormatPattern": "YYYY-MM-DDThh:mm:ss[.sss]±hh:mm",
+        "timeStep": "PT60M",
+        "firstTimestamp": "1900-01-01T00:30:00+09:00",
+        "lastTimestamp": "1900-01-01T02:30:00+09:00",
+        "timeAlignment": "CENTER",
+        "realTimestamps": false
+      },
+      "GHI": {
+        "columnType": "GHI",
+        "unit": "Wh/m2",
+        "description": "Global horizontal irradiation",
+        "sources": [
+          {
+            "name": "Meteosat MSG IODC and Meteosat MFG IODC satellite data ((c) 2022 EUMETSAT) and atmospheric data ((c) 2022 ECMWF, NOAA and NASA)",
+            "version": "2.2.28",
+            "timePeriod": {
+            "from": "2007-01-01T00:15:00+09:00",
+            "to": "2021-12-31T23:45:00+09:00"
+          }
+          }
+        ]
+      },
+      "DNI": {
+        "columnType": "DNI",
+        "unit": "Wh/m2",
+        "description": "Direct normal irradiation",
+        "sources": [
+          {
+            "name": "Meteosat MSG IODC and Meteosat MFG IODC satellite data ((c) 2022 EUMETSAT) and atmospheric data ((c) 2022 ECMWF, NOAA and NASA)",
+            "version": "2.2.28"
+          }
+        ]
+      },
+      "DIF": {
+        "columnType": "DIF",
+        "unit": "Wh/m2",
+        "description": "Diffuse horizontal irradiation",
+        "sources": [
+          {
+            "name": "Meteosat MSG IODC and Meteosat MFG IODC satellite data ((c) 2022 EUMETSAT) and atmospheric data ((c) 2022 ECMWF, NOAA and NASA)",
+            "version": "2.2.28"
+          }
+        ]
+      },
+      "SUN_ELEVATION": {
+        "columnType": "SUN_ELEVATION",
+        "unit": "deg",
+        "description": "Sun elevation angle"
+      },
+      "SUN_AZIMUTH": {
+        "columnType": "SUN_AZIMUTH",
+        "unit": "deg",
+        "description": "Sun azimuth angle"
+      },
+      "TEMP": {
+        "columnType": "TEMP",
+        "unit": "deg_C",
+        "description": "Air temperature at 2 m",
+        "sources": [
+          {
+            "name": "CFSv2 and GFS ((c) 2022 NOAA), ERA5 ((c) 2022 ECMWF)",
+            "version": "2.2.28"
+          }
+        ],
+        "method": "spatially disaggregated by Solargis method"
+      },
+      "WS": {
+        "columnType": "WS",
+        "unit": "m/s",
+        "description": "Wind speed at 10 m",
+        "sources": [
+          {
+            "name": "CFSv2 and GFS ((c) 2022 NOAA), ERA5 ((c) 2022 ECMWF)",
+            "version": "2.2.28"
+          }
+        ],
+        "method": "spatially disaggregated by Solargis method"
+      },
+      "WD": {
+        "columnType": "WD",
+        "unit": "deg",
+        "description": "Wind direction at 10 m",
+        "sources": [
+          {
+            "name": "CFSv2 and GFS ((c) 2022 NOAA), ERA5 ((c) 2022 ECMWF)",
+            "version": "2.2.28"
+          }
+        ],
+        "method": "spatially disaggregated by Solargis method"
+      }
+    },
+    "columnOrder": [
+      "DATETIME",
+      "GHI",
+      "DNI",
+      "DIF",
+      "SUN_ELEVATION",
+      "SUN_AZIMUTH",
+      "TEMP",
+      "WS",
+      "WD"
+    ]
+  },
+  "data": {
+    "DATETIME": [
+      "1900-01-01T00:30:00+09:00",
+      "1900-01-01T01:30:00+09:00",
+      "1900-01-01T02:30:00+09:00"
+    ],
+    "GHI": [
+      0,
+      0,
+      0
+    ],
+    "DNI": [
+      null,
+      0,
+      0
+    ],
+    "DIF": [
+      0,
+      0,
+      0
+    ],
+    "SUN_ELEVATION": [
+      -67.17,
+      -61.69,
+      -53.93
+    ],
+    "SUN_AZIMUTH": [
+      90,
+      91.15,
+      92.08
+    ],
+    "TEMP": [
+      0.1,
+      -0.6,
+      -0.3
+    ],
+    "WS": [
+      2.3,
+      2.3,
+      2
+    ],
+    "WD": [
+      232,
+      243,
+      239.6
+    ]
+  }
+}
