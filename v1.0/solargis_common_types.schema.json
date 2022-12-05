@@ -1,12 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema",
   "$id": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_common_types.schema.json",
-
-  "description": "Following type definitions Solargis uses with data resources - in requests or responses.",
-
+  "description": "Common type definitions Solargis uses with requests or responses.",
   "$defs": {
     "Site": {
-      "description": "Location or a pinpoint on Earth.",
+      "description": "Site location point, a place on Earth.",
       "type": "object",
       "additionalProperties": true,
       "required": [
@@ -567,6 +565,12 @@
       "type": "number",
       "minimum": 0,
       "maximum": 100
+    },
+    "FileLabel": {
+      "description": "Custom label will be a part of generated file names - if applicable, only in specific endpoints. See the allowed text pattern.",
+      "type": "string",
+      "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+      "maxLength": 100
     }
   }
 }
