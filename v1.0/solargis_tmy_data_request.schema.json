@@ -1,0 +1,52 @@
+{
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_tmy_data_request.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Schema for Solargis data request - for TMY datasets. See other requests for timeseries or long-term average datasets",
+  "allOf": [
+    {
+      "$ref": "solargis_data_request.schema.json"
+    }
+  ],
+  "required": [
+    "requestType",
+    "site",
+    "timeStep",
+    "columns",
+    "tmyScenario"
+  ],
+  "properties": {
+    "requestType": {
+      "const": "TMY"
+    },
+    "timeStep": {
+      "enum": [
+        "PT1M",
+        "PT5M",
+        "PT10M",
+        "PT15M",
+        "PT30M",
+        "PT60M"
+      ]
+    },
+    "tmyScenario": {
+      "pattern": "^P(1|5|10|25|50|75|90|95|99)$",
+      "default": "P50"
+    },
+    "outputFormats": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "SOLARGIS_JSON",
+          "SOLARGIS_CSV",
+          "SAM",
+          "HELIOSCOPE"
+        ]
+      }
+    },
+    "fileLabel": {
+      "$ref": "solargis_common_types.schema.json#/$defs/FileLabel"
+    }
+  }
+}

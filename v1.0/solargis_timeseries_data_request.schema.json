@@ -1,0 +1,75 @@
+{
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_timeseries_data_request.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Schema for Solargis data request - for timeseries datasets. See other requests for TMY or long-term average datasets",
+  "allOf": [
+    {
+      "$ref": "solargis_data_request.schema.json"
+    }
+  ],
+  "required": [
+    "requestType",
+    "site",
+    "timeStep",
+    "columns",
+    "fromDate",
+    "toDate"
+  ],
+  "properties": {
+        "requestType": {
+      "const": "TIMESERIES"
+    },
+    "timeStep": {
+      "$ref": "solargis_common_enums.schema.json#/$defs/TimeStepEnum"
+    },
+    "columns": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+        "$ref": "solargis_common_enums.schema.json#/$defs/ColumnNamesRecognizedBySolargis"
+      }
+    },
+    "outputFormats": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "SOLARGIS_JSON",
+          "SOLARGIS_CSV"
+        ]
+      }
+    },
+    "fromDate": {
+      "description": "Start date of the requested data. Inclusive. See also the utcOffset.",
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "const": "AUTODETECT"
+        }
+      ]
+    },
+    "toDate": {
+      "description": "End date of the requested data. Inclusive. See also the utcOffset.",
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "const": "LAST_MONTH"
+        },
+        {
+          "const": "LAST_YEAR"
+        }
+      ]
+    },
+    "fileLabel": {
+      "$ref": "solargis_common_types.schema.json#/$defs/FileLabel"
+    }
+  }
+}
