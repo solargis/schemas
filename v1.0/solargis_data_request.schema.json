@@ -1,81 +1,20 @@
 {
   "$id": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_data_request.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
-
-  "description": "Schema for Solargis data request. Instances created by this schema are to be posted to API endpoints providing dataset objects.",
+  "description": "Base schema for Solargis data request - to be extended. Instances created by this schema are to be posted to API endpoints providing dataset objects.",
   "allOf": [
     {
       "$ref": "#/$defs/DataRequest"
     }
   ],
-
   "$defs": {
     "DataRequest": {
       "type": "object",
       "additionalProperties": true,
-      "required": [
-        "site",
-        "datasetType",
-        "timeStep",
-        "columns",
-        "outputFormats"
-      ],
       "properties": {
         "site": {
           "description": "Site location definition.",
           "$ref": "solargis_common_types.schema.json#/$defs/Site"
-        },
-        "datasetType": {
-          "$ref": "solargis_common_enums.schema.json#/$defs/DatasetTypeEnum"
-        },
-        "timeStep": {
-          "$ref": "solargis_common_enums.schema.json#/$defs/TimeStepEnum"
-        },
-        "columns": {
-          "type": "array",
-          "uniqueItems": true,
-          "minItems": 1,
-          "items": {
-            "$ref": "solargis_common_enums.schema.json#/$defs/ColumnNamesRecognizedBySolargis"
-          }
-        },
-        "outputFormats": {
-          "type": "array",
-          "uniqueItems": true,
-          "minItems": 1,
-          "items": {
-            "enum": [
-              "SOLARGIS_CSV"
-            ]
-          }
-        },
-
-        "fromDate": {
-          "description": "Start date of the requested data. Inclusive. See also the utcOffset.",
-          "oneOf": [
-            {
-              "type": "string",
-              "format": "date"
-            },
-            {
-              "const": "AUTODETECT"
-            }
-          ]
-        },
-        "toDate": {
-          "description": "End date of the requested data. Inclusive. See also the utcOffset.",
-          "oneOf": [
-            {
-              "type": "string",
-              "format": "date"
-            },
-            {
-              "const": "LAST_MONTH"
-            },
-            {
-              "const": "LAST_YEAR"
-            }
-          ]
         },
         "utcOffset": {
           "type": "integer",
@@ -91,12 +30,6 @@
           "description": "This attribute affects all related parameters (e.g., GHI, DIF, DNI, GTI, PVOUT, TMOD except parameters with explicit _NOSHD suffix.)",
           "type": "boolean",
           "default": false
-        },
-        "fileLabel": {
-          "description": "Custom label will be a part of generated file names. See the allowed text pattern.",
-          "type": "string",
-          "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
-          "maxLength": 100
         },
         "horizon": {
           "$ref": "solargis_common_types.schema.json#/$defs/Horizon"
