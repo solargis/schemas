@@ -249,7 +249,7 @@
       "type": "number",
       "default": 2.5
     },
-    'AxisAzimuth': {
+    "AxisAzimuth": {
       "description": "Special type of TrueNorthBasedAzimuth with narrower range of values. Used with specific one-axis trackers.",
       "type": "number",
       "minimum": 135,
