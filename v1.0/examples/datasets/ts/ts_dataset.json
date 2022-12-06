@@ -97,13 +97,13 @@
         "createdByApplication": {
           "name": "solargis/pvSimulator_v1"
         },
-        "gtiConfiguration_v1": {
+        "gtiConfigurationV1": {
           "mounting": "FixedOneAngle",
           "azimuth": 180,
           "tilt": 35,
           "relativeRowSpacing": 2.5
         },
-        "pvConfiguration_v1": {
+        "pvConfigurationV1": {
           "installedPower": 3.0,
           "installationType": "FREE_STANDING",
           "selfShading": false,

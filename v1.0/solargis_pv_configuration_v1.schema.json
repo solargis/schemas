@@ -5,7 +5,7 @@
   "description": "Following type definitions Solargis uses for the simulation of the PV output - in its older (legacy or v1) version of simulation tools.",
 
   "$defs": {
-    "PvConfiguration_v1": {
+    "PvConfigurationV1": {
       "description": "PV configuration object used with the the first version (legacy) of the Solargis PV simulation tools.",
       "type": "object",
       "additionalProperties": false,

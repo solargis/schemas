@@ -3,7 +3,7 @@
   "$schema": "https://json-schema.org/draft-07/schema",
   "description": "Following type definitions Solargis uses for simulation of the global tilted irradiation (GTI or POA - plain of array) - in its older (legacy or v1) version of simulation tools.",
   "$defs": {
-    "GtiConfiguration_v1": {
+    "GtiConfigurationV1": {
       "description": "Main object needed for simulation of solar irradiation hitting a tilted surface (GTI or POA).",
       "type": "object",
       "additionalProperties": false,

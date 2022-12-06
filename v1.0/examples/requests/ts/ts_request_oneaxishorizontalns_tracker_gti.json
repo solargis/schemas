@@ -35,7 +35,7 @@
       31.2
     ]
   },
-  "gtiConfiguration_v1": {
+  "gtiConfigurationV1": {
     "mounting": "OneAxisHorizontalNS",
     "axisAzimuth": 180,
     "relativeColumnSpacing": 2.5,

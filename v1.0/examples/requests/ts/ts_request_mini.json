@@ -10,5 +10,10 @@
     "GHI"
   ],
   "fromDate": "AUTODETECT",
-  "toDate": "LAST_MONTH"
+  "toDate": "LAST_MONTH",
+  "gtiConfigurationV1": {
+    "mounting": "FixedOneAngle",
+    "azimuth": 180,
+    "tilt": 89
+  }
 }

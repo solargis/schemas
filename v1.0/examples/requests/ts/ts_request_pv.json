@@ -35,7 +35,7 @@
       31.2
     ]
   },
-  "gtiConfiguration_v1": {
+  "gtiConfigurationV1": {
     "mounting": "OneAxisHorizontalNS",
     "axisAzimuth": 180,
     "relativeColumnSpacing": 2.5,
@@ -45,7 +45,7 @@
     },
     "backTracking": true
   },
-  "pvConfiguration_v1": {
+  "pvConfigurationV1": {
     "installedPower": 3.0,
     "installationType": "FREE_STANDING",
     "selfShading": false,

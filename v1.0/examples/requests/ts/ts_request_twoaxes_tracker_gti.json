@@ -35,11 +35,11 @@
       31.2
     ]
   },
-  "gtiConfiguration_v1": {
+  "gtiConfigurationV1": {
     "mounting": "TwoAxisAstronomical",
     "relativeColumnSpacing": 2.5,
     "trackerRotationLimits": {
-      east: -120,
+      "east": -120,
       "west": 120
     },
     "trackerTiltLimits": {

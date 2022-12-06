@@ -59,7 +59,7 @@
         "columnType": "GTI",
         "unit": "kWh/m2",
         "description": "Average monthly sum of global tilted irradiation",
-        "gtiConfiguration_v1": {
+        "gtiConfigurationV1": {
           "mounting": "OneAxisHorizontalNS",
           "axisAzimuth": 180,
           "relativeColumnSpacing": 2.5,

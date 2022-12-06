@@ -35,7 +35,7 @@
       31.2
     ]
   },
-  "gtiConfiguration_v1": {
+  "gtiConfigurationV1": {
     "mounting": "OneAxisInclined",
     "axisTilt": 34,
     "axisAzimuth": 180,
