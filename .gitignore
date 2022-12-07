@@ -11,9 +11,7 @@ __pycache__
 *.tar.xz
 *.so
 *.ll
-*precompiled_psa*
 *.pyd
-/genericsat
 .git/
 .venv/
 

@@ -19,9 +19,7 @@
     "WS",
     "WS78"
   ],
-  "outputFormats": [
-    "SOLARGIS_CSV"
-  ],
+  "outputFormat": "SOLARGIS_CSV",
   "fromDate": "2022-10-01",
   "toDate": "2022-10-02",
   "utcOffset": 9,

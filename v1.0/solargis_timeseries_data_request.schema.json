@@ -12,9 +12,7 @@
     "requestType",
     "site",
     "timeStep",
-    "columns",
-    "fromDate",
-    "toDate"
+    "columns"
   ],
   "properties": {
         "requestType": {
@@ -31,16 +29,11 @@
         "$ref": "solargis_common_enums.schema.json#/$defs/ColumnNamesRecognizedBySolargis"
       }
     },
-    "outputFormats": {
-      "type": "array",
-      "uniqueItems": true,
-      "minItems": 1,
-      "items": {
-        "enum": [
+    "outputFormat": {
+      "enum": [
           "SOLARGIS_JSON",
           "SOLARGIS_CSV"
         ]
-      }
     },
     "fromDate": {
       "description": "Start date of the requested data. Inclusive. See also the utcOffset.",
