@@ -33,7 +33,7 @@
         },
         "selfShading": {
           "description": "The parameter affects FixedOneAngle geometry, then OneAxisHorizontalNS and OneAxisInclined type of trackers with backTracking=false. When backTracking=true, the parameter does not make sense as self-shading is avoided. No other GTI configs are implemented. The parameter is used to determine the impact of self (inter-row) shading on PV power production. When set to true, the effect of self-shading is taken into account in calculation, otherwise the structure is assumed without neighbors (best possible). Direct shadow is considered, the effect of diffuse shading is not considered in this version.",
-          "type": "bool",
+          "type": "boolean",
           "default": false
         },
         "terrainProperties": {

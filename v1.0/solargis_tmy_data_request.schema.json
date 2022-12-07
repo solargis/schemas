@@ -47,6 +47,11 @@
     },
     "fileLabel": {
       "$ref": "solargis_common_types.schema.json#/$defs/FileLabel"
+    },
+      "compressOutputs": {
+      "description": "Output datasets will be zipped.",
+      "type": "boolean",
+      "default": false
     }
   }
 }

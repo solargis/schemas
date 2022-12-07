@@ -60,10 +60,10 @@
         "backTracking": {
           "not": {}
         },
-        "trackerRotationLimits":{
+        "trackerRotationLimits": {
           "not": {}
         },
-        "trackerTiltLimits":{
+        "trackerTiltLimits": {
           "not": {}
         }
       }
@@ -105,7 +105,7 @@
         "relativeRowSpacing": {
           "not": {}
         },
-        "trackerTiltLimits":{
+        "trackerTiltLimits": {
           "not": {}
         }
       }
@@ -150,7 +150,7 @@
         "relativeRowSpacing": {
           "not": {}
         },
-        "trackerTiltLimits":{
+        "trackerTiltLimits": {
           "not": {}
         }
       }
@@ -192,7 +192,7 @@
         "relativeRowSpacing": {
           "not": {}
         },
-        "trackerTiltLimits":{
+        "trackerTiltLimits": {
           "not": {}
         }
       }
@@ -320,9 +320,9 @@
       }
     },
     "BackTracking": {
-          "description": "Implemented for all trackers. Default value (false) corresponds to a standalone tracker without neighbours (best possible case) moving within specified rotation limits. If BackTracking is set to true, the tracker moves in the way to avoid shading from its peers",
-          "$comment": "Internally it maps to pvTrackerBackTrack",
-          "type": "bool"
-        }
+      "description": "Implemented for all trackers. Default value (false) corresponds to a standalone tracker without neighbours (best possible case) moving within specified rotation limits. If BackTracking is set to true, the tracker moves in the way to avoid shading from its peers",
+      "$comment": "Internally it maps to pvTrackerBackTrack",
+      "type": "boolean"
+    }
   }
 }
