@@ -6,7 +6,7 @@
     "GtiConfigurationV1": {
       "description": "Main object needed for simulation of solar irradiation hitting a tilted surface (GTI or POA).",
       "type": "object",
-      "additionalProperties": false,
+      "additionalProperties": true,
       "oneOf": [
         {
           "$ref": "#/$defs/GeometryFixedOneAngle"
