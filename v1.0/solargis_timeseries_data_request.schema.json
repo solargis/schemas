@@ -15,7 +15,7 @@
     "columns"
   ],
   "properties": {
-        "requestType": {
+    "requestType": {
       "const": "TIMESERIES"
     },
     "timeStep": {
@@ -31,9 +31,9 @@
     },
     "outputFormat": {
       "enum": [
-          "SOLARGIS_JSON",
-          "SOLARGIS_CSV"
-        ]
+        "SOLARGIS_JSON",
+        "SOLARGIS_CSV"
+      ]
     },
     "fromDate": {
       "description": "Start date of the requested data. Inclusive. See also the utcOffset.",
