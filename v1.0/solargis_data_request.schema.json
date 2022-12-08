@@ -31,7 +31,7 @@
           "$ref": "solargis_common_types.schema.json#/$defs/Horizon"
         },
         "gtiConfigurationV1": {
-          "description": "Object is required if at least one GTI related column is present in the array of columns.",
+          "description": "Object is required if at least one GTI or PVOUT related column is present in the array of columns.",
           "$ref": "solargis_gti_configuration_v1.schema.json#/$defs/GtiConfigurationV1"
         },
         "pvConfigurationV1": {
