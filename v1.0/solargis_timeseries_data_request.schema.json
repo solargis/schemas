@@ -9,25 +9,11 @@
     }
   ],
   "required": [
-    "requestType",
-    "site",
-    "timeStep",
-    "columns"
+    "requestType"
   ],
   "properties": {
     "requestType": {
       "const": "TIMESERIES"
-    },
-    "timeStep": {
-      "$ref": "solargis_common_enums.schema.json#/$defs/TimeStepEnum"
-    },
-    "columns": {
-      "type": "array",
-      "uniqueItems": true,
-      "minItems": 1,
-      "items": {
-        "$ref": "solargis_common_enums.schema.json#/$defs/ColumnNamesRecognizedBySolargis"
-      }
     },
     "outputFormat": {
       "enum": [

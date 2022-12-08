@@ -9,9 +9,6 @@
   ],
   "required": [
     "requestType",
-    "site",
-    "timeStep",
-    "columns",
     "tmyScenario"
   ],
   "properties": {
@@ -19,6 +16,7 @@
       "const": "TMY"
     },
     "timeStep": {
+      "$comment": "Redefined enum coming from the base schema.",
       "enum": [
         "PT1M",
         "PT5M",
@@ -48,7 +46,7 @@
     "fileLabel": {
       "$ref": "solargis_common_types.schema.json#/$defs/FileLabel"
     },
-      "compressOutputs": {
+    "compressOutputs": {
       "description": "Output datasets will be zipped.",
       "type": "boolean",
       "default": false

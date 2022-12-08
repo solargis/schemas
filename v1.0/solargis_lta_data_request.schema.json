@@ -8,16 +8,14 @@
     }
   ],
   "required": [
-    "requestType",
-    "site",
-    "timeStep",
-    "columns"
+    "requestType"
   ],
   "properties": {
     "requestType": {
       "const": "LONG_TERM_AVERAGE"
     },
     "timeStep": {
+      "$comment": "Redefined enum coming from the base schema.",
       "enum": [
         "P1M",
         "P1Y"
