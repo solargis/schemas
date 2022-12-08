@@ -38,6 +38,11 @@
           "description": "Object is required if at least one PV output related column is present in the array of columns (also the TMOD parameter).",
           "$ref": "solargis_pv_configuration_v1.schema.json#/$defs/PvConfigurationV1"
         }
+      },
+      "dependencies": {
+        "pvConfigurationV1": [
+          "gtiConfigurationV1"
+        ]
       }
     }
   }
