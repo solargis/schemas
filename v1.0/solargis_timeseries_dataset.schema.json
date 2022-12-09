@@ -381,7 +381,7 @@
           }
         }
       },
-      "additionalProperties": false
+      "additionalProperties": true
     },
     "TimeColumnMetadata": {
       "description": "Interpretation of datetime strings included in the DATETIME column.",
@@ -467,7 +467,7 @@
         "columnType",
         "unit"
       ],
-      "additionalProperties": false
+      "additionalProperties": true
     }
   }
 }
