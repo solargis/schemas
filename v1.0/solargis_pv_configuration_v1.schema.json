@@ -231,6 +231,15 @@
       "description": "PV power losses on the DC side.",
       "type": "object",
       "additionalProperties": false,
+      "properties": {
+        "overall": {
+          "description": "Overall % estimate of all specific DC losses (mismatch, cabling, dirtAndSnow) together. Simplest expression of the DC losses.",
+          "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive"
+        },
+        "specific": {
+          "$ref": "#/$defs/SpecificDcLosses"
+        }
+      },
       "oneOf": [
         {
           "required": [
@@ -242,17 +251,7 @@
             "specific"
           ]
         }
-      ],
-      "properties": {
-        "overall": {
-          "description": "Overall % estimate of all specific DC losses (mismatch, cabling, dirtAndSnow) together. Simplest expression of the DC losses.",
-          "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
-          "default": 5.4
-        },
-        "specific": {
-          "$ref": "#/$defs/SpecificDcLosses"
-        }
-      }
+      ]
     },
     "SpecificDcLosses": {
       "description": "Specific PV power losses on the DC side.",
@@ -299,8 +298,7 @@
       "properties": {
         "overall": {
           "description": "Overall % estimate dirt and/or snow losses - one value for the whole dataset.",
-          "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
-          "default": 2.5
+          "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive"
         },
         "monthly": {
           "description": "Distribution of the dirt and/or snow losses into 12 average calendar months.",
@@ -332,8 +330,7 @@
       "properties": {
         "overall": {
           "description": "Overall % estimate of all specific AC losses (transformer, cabling) together. Simplest expression of the DC losses.",
-          "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
-          "default": 1.5
+          "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive"
         },
         "specific": {
           "$ref": "#/$defs/SpecificAcLosses"
