@@ -397,7 +397,7 @@
           "const": "YYYY-MM-DDThh:mm:ss[.sss]±hh:mm"
         },
         "timeStep": {
-          "description": "Time step (a.k.a. time resolution or time granularity). It's optional because not all datasets have constant time step in all records.",
+          "description": "Time step (time resolution or time granularity). It's optional because not all datasets have constant time step in all records.",
           "$comment": "Values comply with the https://en.wikipedia.org/wiki/ISO_8601#Durations standard.",
           "$ref": "solargis_common_enums.schema.json#/$defs/TimeStepEnum"
         },
