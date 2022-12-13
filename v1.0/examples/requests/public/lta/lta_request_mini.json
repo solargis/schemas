@@ -1,0 +1,15 @@
+{
+  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_public_LTA_request.schema.json",
+  "requestType": "LONG_TERM_AVERAGE",
+  "site": {
+    "latitude": 45.09,
+    "longitude": 17.34
+  },
+  "timeStep": "P1M",
+  "columns": [
+    "GHI"
+  ],
+  "fromDate": "AUTODETECT",
+  "toDate": "LAST_YEAR",
+  "outputFormat": "SOLARGIS_JSON"
+}

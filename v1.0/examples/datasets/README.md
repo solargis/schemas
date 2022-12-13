@@ -1,0 +1,1 @@
+Datasets are JSON responses (files) generated in Solargis APIs and apps.

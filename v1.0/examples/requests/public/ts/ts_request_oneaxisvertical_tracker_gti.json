@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_timeseries_data_request.schema.json",
+  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_public_TS_request.schema.json",
   "requestType": "TIMESERIES",
   "site": {
     "latitude": 43.023903,
@@ -44,5 +44,6 @@
       "west": 120
     },
     "backTracking": true
-  }
+  },
+  "outputFormat": "SOLARGIS_JSON"
 }

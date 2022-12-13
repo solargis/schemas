@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_timeseries_data_request.schema.json",
+  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_public_TS_request.schema.json",
   "requestType": "TIMESERIES",
   "site": {
     "latitude": 43.023903,
@@ -36,13 +36,10 @@
     ]
   },
   "gtiConfigurationV1": {
-    "mounting": "OneAxisHorizontalNS",
-    "axisAzimuth": 180,
-    "relativeColumnSpacing": 2.5,
-    "trackerRotationLimits": {
-      east: -50,
-      "west": 50
-    },
-    "backTracking": true
-  }
+    "mounting": "FixedOneAngle",
+    "azimuth": 180,
+    "tilt": 35,
+    "relativeRowSpacing": 2.5
+  },
+  "outputFormat": "SOLARGIS_JSON"
 }

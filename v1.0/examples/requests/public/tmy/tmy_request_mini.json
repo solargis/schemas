@@ -1,0 +1,17 @@
+{
+  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_public_TMY_request.schema.json",
+  "requestType": "TMY",
+  "site": {
+    "latitude": 45.09,
+    "longitude": 17.34
+  },
+  "timeStep": "PT15M",
+  "columns": [
+    "GHI"
+  ],
+  "tmyScenario": "P50",
+  "fromDate": "AUTODETECT",
+  "toDate": "LAST_YEAR",
+  "outputFormat": "SOLARGIS_JSON",
+  "compressOutput": false
+}

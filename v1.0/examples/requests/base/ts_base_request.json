@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_timeseries_data_request.schema.json",
+    "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_data_request.schema.json",
   "requestType": "TIMESERIES",
   "site": {
     "latitude": 43.023903,
@@ -14,11 +14,12 @@
     "DIF",
     "DNI",
     "GTI",
-    "GTI_NOSHD", "PVOUT"
+    "GTI_NOSHD",
+    "TEMP",
+    "WS",
+    "WS78"
   ],
-  "outputFormats": [
-    "SOLARGIS_CSV"
-  ],
+  "outputFormat": "SOLARGIS_CSV",
   "fromDate": "2022-10-01",
   "toDate": "2022-10-02",
   "utcOffset": 9,
@@ -36,14 +37,11 @@
     ]
   },
   "gtiConfigurationV1": {
-    "mounting": "OneAxisHorizontalNS",
+    "mounting": "OneAxisInclined",
     "axisAzimuth": 180,
-    "relativeColumnSpacing": 2.5,
-    "trackerRotationLimits": {
-      "east": -50,
-      "west": 50
-    },
-    "backTracking": true
+    "axisTilt": 30,
+    "relativeColumnSpacing": 2.9,
+    "backTracking": false
   },
   "pvConfigurationV1": {
     "installedPower": 3.0,
@@ -66,8 +64,8 @@
     },
     "inverter": {
       "inverterEfficiency": {
-      "constant": 97.5
-    },
+        "constant": 97.5
+      },
       "inverterLimitationACPower": 2.6
     },
     "dcLosses": {
@@ -75,7 +73,20 @@
         "cabling": 2,
         "mismatch": 1,
         "dirtAndSnow": {
-          "monthly": [1,2,3,4,5,6,7,8,9,1,1,1]
+          "monthly": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            1,
+            1,
+            1
+          ]
         }
       }
     },

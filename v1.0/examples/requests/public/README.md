@@ -1,0 +1,1 @@
+Simplified request types for Solargis products suitable for public endpoints.

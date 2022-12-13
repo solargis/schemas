@@ -1,0 +1,99 @@
+{
+  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_public_TS_request.schema.json",
+  "requestType": "TIMESERIES",
+  "site": {
+    "latitude": 43.023903,
+    "longitude": 142.419596,
+    "elevation": 156.9,
+    "name": "Pippu 比布町, Kamikawa District, Hokkaido, Japan",
+    "id": "AX_987JP"
+  },
+  "timeStep": "PT15M",
+  "columns": [
+    "GHI",
+    "DIF",
+    "DNI",
+    "GTI",
+    "GTI_NOSHD",
+    "TEMP",
+    "WS",
+    "WS78"
+  ],
+  "fromDate": "2022-10-01",
+  "toDate": "2022-10-02",
+  "utcOffset": 9,
+  "timeAlignment": "CENTER",
+  "terrainShading": true,
+
+  "horizon": {
+    "azimuth": [
+      0.0,
+      360
+    ],
+    "height": [
+      19.0581,
+      31.2
+    ]
+  },
+  "gtiConfigurationV1": {
+    "mounting": "OneAxisInclined",
+    "axisAzimuth": 180,
+    "axisTilt": 30,
+    "relativeColumnSpacing": 2.9,
+    "backTracking": false
+  },
+  "pvConfigurationV1": {
+    "installedPower": 3.0,
+    "installationType": "FREE_STANDING",
+    "selfShading": false,
+    "terrainProperties": {
+      "terrainAzimuth": 180,
+      "terrainSlope": 0
+    },
+    "module": {
+      "technology": "CSI",
+      "topologyType": "UNPROPORTIONAL_2",
+      "degradation": {
+        "startUpDate": "2000-01-21",
+        "degradationAnyYear": 0.5,
+        "degradationFirstYear": 0.8
+      },
+      "nominalOperatingCellTemperature": 44.5,
+      "temperatureCoefficientPmax": -0.438
+    },
+    "inverter": {
+      "inverterEfficiency": {
+        "constant": 97.5
+      },
+      "inverterLimitationACPower": 2.6
+    },
+    "dcLosses": {
+      "specific": {
+        "cabling": 2,
+        "mismatch": 1,
+        "dirtAndSnow": {
+          "monthly": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            1,
+            1,
+            1
+          ]
+        }
+      }
+    },
+    "acLosses": {
+      "overall": 1.5
+    }
+  },
+  "outputFormat": "SOLARGIS_CSV",
+  "fileLabel": "Pippu_AX_987JP",
+  "compressOutput": true
+}
