@@ -41,7 +41,7 @@
     "axisAzimuth": 180,
     "relativeColumnSpacing": 2.5,
     "trackerRotationLimits": {
-      east: -50,
+      "east": -50,
       "west": 50
     },
     "backTracking": true
