@@ -190,6 +190,9 @@
       "description": "Solargis recognizes these column names in the request.",
       "anyOf": [
         {
+          "$ref": "solargis_common_types.schema.json#/$defs/PatternForColumnNames"
+        },
+        {
           "$ref": "#/$defs/SolarRadiationColumnTypesEnum"
         },
         {
@@ -209,9 +212,6 @@
         },
         {
           "$ref": "#/$defs/SolargisWindHeightColumnNamesPattern"
-        },
-        {
-          "$ref": "solargis_common_types.schema.json#/$defs/PatternForColumnNames"
         }
       ]
     },
