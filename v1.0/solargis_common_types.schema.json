@@ -570,8 +570,18 @@
     "FileLabel": {
       "description": "Custom label will be a part of generated file names - if applicable, only in specific endpoints. See the allowed text pattern.",
       "type": "string",
-      "pattern": "^[A-Za-z_][A-Za-z0-9_]*$",
+      "$ref": "#/$defs/VariableSafePattern",
       "maxLength": 100
-    }
+    },
+    "PatternForColumnNames": {
+      "description": "Pattern and rules defined for a column name - either predefined by Solargis or a custom name.",
+      "$ref": "#/$defs/VariableSafePattern",
+      "maxLength": 100
+    },
+    "VariableSafePattern": {
+      "description": "Contains only ASCII letters, numbers and underscores, and it must not start with a number.",
+      "type": "string",
+      "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+    },
   }
 }
