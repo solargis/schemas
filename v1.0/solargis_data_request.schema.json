@@ -1,7 +1,7 @@
 {
   "$id": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_data_request.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
-  "description": "Base schema for a Solargis data request - not used in public APIs. See special public request types.",
+  "description": "Base schema for a Solargis data request (schema of all request attributes) - not used in public APIs. See special public request types derived from the base.",
 
   "allOf": [
     {
@@ -63,7 +63,7 @@
           "uniqueItems": true,
           "minItems": 1,
           "items": {
-            "$ref": "solargis_common_enums.schema.json#/$defs/ColumnNamesRecognizedBySolargis"
+            "$ref": "solargis_common_enums.schema.json#/$defs/RequestColumnNames"
           }
         },
         "utcOffset": {
