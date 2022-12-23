@@ -384,8 +384,8 @@
       "additionalProperties": true
     },
     "TimeColumnMetadata": {
-      "description": "Interpretation of datetime strings included in the DATETIME column.",
-      "$comment": "The schema requires full date-time format as defined by https://datatracker.ietf.org/doc/html/rfc3339#section-5.6. Time zone is a required part of timestamp strings.",
+      "description": "Interpretation of datetime text values included in the DATETIME column.",
+      "$comment": "The schema requires full date-time format as defined by https://datatracker.ietf.org/doc/html/rfc3339#section-5.6. Time zone is required part of the timestamp strings.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -456,7 +456,7 @@
         },
         "flagColumnName": {
           "description": "Column can have its flag values in another column (a flag column).",
-          "$ref": "solargis_common_enums.schema.json#/$defs/PatternForColumnNames"
+          "$ref": "solargis_common_types.schema.json#/$defs/PatternForColumnNames"
         },
         "priority": {
           "description": "For internal use of the Solargis Analyst, but can be used elsewhere - if you need to express the importance of multiple columns of the same type e.g., multiple sensor GHIs.",
