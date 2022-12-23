@@ -194,10 +194,10 @@
       "affectedColumns": [
         "GHI_sensor"
       ],
-      "description": "dsc",
+      "description": "abc",
       "timeIsExact": true,
-      "vegetationState": "free trava",
-      "conditionUponArrival": "vtaci trus bol na senzore"
+      "vegetationState": "grown grass",
+      "conditionUponArrival": "bird droppings on sensor glass"
     }
   ],
   "history": [
