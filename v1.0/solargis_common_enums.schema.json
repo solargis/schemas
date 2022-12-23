@@ -159,7 +159,6 @@
     },
     "SolargisUncertaintyColumnNamesPattern": {
       "description": "Solargis recognizes the names of several uncertainty scenarios for selected column types.",
-      "$comment": "Make sure you understand the difference between column names and column types.",
       "pattern": "^(GHI.*|GTI.*|PVOUT.*)_UNC_P(1|5|10|25|75|90|95|99)$"
     },
     "AllColumnNames": {
