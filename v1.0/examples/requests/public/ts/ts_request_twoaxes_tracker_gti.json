@@ -43,7 +43,7 @@
       "west": 120
     },
     "trackerTiltLimits": {
-      min: 10,
+      "min": 10,
       "max": 60
     },
     "backTracking": true
