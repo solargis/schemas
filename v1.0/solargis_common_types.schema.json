@@ -246,7 +246,7 @@
           "description": "If the array is empty, the event affects all columns.",
           "type": "array",
           "items": {
-            "$ref": "solargis_common_enums.schema.json#/$defs/AllColumnNames"
+            "$ref": "solargis_common_types.schema.json#/$defs/PatternForColumnNames"
           }
         },
         "description": {

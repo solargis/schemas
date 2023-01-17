@@ -53,11 +53,11 @@
     "horizon": {
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/horizon"
     },
-    "gtiConfigurationV1": {
-      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/gtiConfigurationV1"
+    "gtiConfiguration": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/gtiConfiguration"
     },
-    "pvConfigurationV1": {
-      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/pvConfigurationV1"
+    "pvConfiguration": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/pvConfiguration"
     },
 
     "fileLabel": {
@@ -76,8 +76,8 @@
     }
   },
   "dependencies": {
-    "pvConfigurationV1": [
-      "gtiConfigurationV1"
+    "pvConfiguration": [
+      "gtiConfiguration"
     ]
   }
 }

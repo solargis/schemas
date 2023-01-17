@@ -3,7 +3,7 @@
   "$schema": "https://json-schema.org/draft-07/schema",
 
   "description": "This is the schema for the Solargis timeseries dataset - a structure for data and metadata you can exchange with Solargis. You can use this schema for two dimensional tabular data (one column is reserved for datetime strings, others are numeric columns) for a single site location or a single portfolio.",
-  "$comment": "Important - all columns must refer to a single site location (or single portfolio). If you want to compare data from multiple sites, create multiple datasets. Columns from other datasets can be combined into one dataset only if they share the same datetime column.",
+  "$comment": "Important - all columns must refer to a single site location (or single portfolio). If you want to compare data from multiple sites, create multiple datasets.",
   "allOf": [
     {
       "$ref": "#/$defs/TimeseriesDataset"
@@ -13,14 +13,15 @@
   "$defs": {
     "TimeseriesDataset": {
       "description": "Solargis timeseries dataset - a top level schema of this file.",
-      "$comment": "Note, that some of the required properties are mutually exclusive.",
+      "$comment": "Note, that some of the required properties are mutually exclusive, e.g. site XOR portfolio",
       "type": "object",
       "additionalProperties": false,
       "required": [
         "$schema",
         "created",
         "datasetType",
-        "metadata"
+        "metadata",
+        "data"
       ],
       "allOf": [
         {
@@ -33,20 +34,6 @@
             {
               "required": [
                 "portfolio"
-              ]
-            }
-          ]
-        },
-        {
-          "oneOf": [
-            {
-              "required": [
-                "data"
-              ]
-            },
-            {
-              "required": [
-                "dataUrl"
               ]
             }
           ]
@@ -146,11 +133,6 @@
               "$ref": "#/$defs/Data"
             }
           ]
-        },
-        "dataUrl": {
-          "$comment": "Or list of urls?",
-          "description": "Solargis internal - for the future. Data could be accessible by its URL (with query parameters for filtering, paging).",
-          "format": "uri"
         }
       }
     },
@@ -175,7 +157,7 @@
         }
       },
       "propertyNames": {
-        "$ref": "solargis_common_enums.schema.json#/$defs/AllColumnNames"
+        "$ref": "solargis_common_types.schema.json#/$defs/PatternForColumnNames"
       },
       "additionalProperties": {
         "type": "array",
@@ -320,14 +302,19 @@
         "horizon": {
           "$ref": "solargis_common_types.schema.json#/$defs/Horizon"
         },
-        "gtiConfigurationV1": {
-          "description": "Configuration object used with the simulation of solar irradiation hitting a tilted surface (GTI or POA). First version of Solargis GTI simulation.",
-          "$ref": "solargis_gti_configuration_v1.schema.json#/$defs/GtiConfigurationV1"
+        "gtiConfiguration": {
+          "description": "Configuration object used with the simulation of solar irradiation hitting a tilted surface (GTI or POA).",
+          "$ref": "solargis_gti_configuration_v2.schema.json#/$defs/GtiSimulationRequest"
         },
-        "pvConfigurationV1": {
-          "description": "Configuration object used with the PV output simulation. First version of Solargis PV simulation tool.",
-          "$ref": "solargis_pv_configuration_v1.schema.json#/$defs/PvConfigurationV1"
+        "pvConfiguration": {
+          "description": "Object is required if at least one PV output related column is present in the array of columns (also the TMOD parameter).",
+          "$comment": "TODO add V2, for now we have only solargis_pv_configuration_v1.schema.json#/$defs/PvConfigurationV1"
         }
+      },
+      "dependencies": {
+        "pvConfiguration": [
+          "gtiConfiguration"
+        ]
       }
     },
     "DatasetMetadata": {
@@ -361,7 +348,7 @@
             "DATETIME"
           ],
           "propertyNames": {
-            "$ref": "solargis_common_enums.schema.json#/$defs/AllColumnNames"
+            "$ref": "solargis_common_types.schema.json#/$defs/PatternForColumnNames"
           },
           "properties": {
             "DATETIME": {
@@ -377,7 +364,7 @@
           "type": "array",
           "uniqueItems": true,
           "items": {
-            "$ref": "solargis_common_enums.schema.json#/$defs/AllColumnNames"
+            "$ref": "solargis_common_types.schema.json#/$defs/PatternForColumnNames"
           }
         }
       },

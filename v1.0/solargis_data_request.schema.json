@@ -84,13 +84,13 @@
         "horizon": {
           "$ref": "solargis_common_types.schema.json#/$defs/Horizon"
         },
-        "gtiConfigurationV1": {
+        "gtiConfiguration": {
           "description": "Object is required if at least one GTI or PVOUT related column is present in the array of columns.",
-          "$ref": "solargis_gti_configuration_v1.schema.json#/$defs/GtiConfigurationV1"
+          "$ref": "solargis_gti_configuration_v2.schema.json#/$defs/GtiSimulationRequest"
         },
-        "pvConfigurationV1": {
+        "pvConfiguration": {
           "description": "Object is required if at least one PV output related column is present in the array of columns (also the TMOD parameter).",
-          "$ref": "solargis_pv_configuration_v1.schema.json#/$defs/PvConfigurationV1"
+          "$comment": "TODO add V2, for now we have only solargis_pv_configuration_v1.schema.json#/$defs/PvConfigurationV1"
         },
         "tmyScenario": {
           "pattern": "^P(1|5|10|25|50|75|90|95|99)$",
@@ -103,8 +103,8 @@
         }
       },
       "dependencies": {
-        "pvConfigurationV1": [
-          "gtiConfigurationV1"
+        "pvConfiguration": [
+          "gtiConfiguration"
         ]
       }
     }

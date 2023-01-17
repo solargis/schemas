@@ -60,7 +60,8 @@
         "DHI",
         "KTM",
         "KT",
-        "KC"
+        "KC",
+        "LEADTIME"
       ]
     },
     "PvEnergyColumnTypesEnum": {
@@ -97,7 +98,7 @@
       ]
     },
     "GeneralColumnTypesEnum": {
-      "description": "Generic types - can occur in datasets, but not in requests.",
+      "description": "Generic types - can occur in datasets, but cannot be requested as names in requests.",
       "enum": [
         "UNDEFINED",
         "FLAG"
@@ -159,31 +160,7 @@
     },
     "SolargisUncertaintyColumnNamesPattern": {
       "description": "Solargis recognizes the names of several uncertainty scenarios for selected column types.",
-      "pattern": "^(GHI.*|GTI.*|PVOUT.*)_UNC_P(1|5|10|25|75|90|95|99)$"
-    },
-    "AllColumnNames": {
-      "description": "Column names allowed to be used in the response (dataset). See the RequestColumnNames for those allowed in the requests.",
-      "$comment": "Make sure you understand that column type names are subset of all column names.",
-      "anyOf": [
-        {
-          "description": "Any column type name is valid as column name.",
-          "$ref": "#/$defs/AllColumnTypes"
-        },
-        {
-          "description": "Additional special Solargis column names.",
-          "$ref": "#/$defs/SolargisSpecialColumnNamesEnum"
-        },
-        {
-          "$ref": "#/$defs/SolargisUncertaintyColumnNamesPattern"
-        },
-        {
-          "$ref": "#/$defs/SolargisWindHeightColumnNamesPattern"
-        },
-        {
-          "description": "This rule allows providers with arbitrary (unless the pattern matches) column names in datasets.",
-          "$ref": "solargis_common_types.schema.json#/$defs/PatternForColumnNames"
-        }
-      ]
+      "pattern": "^(GHI.*|GTI.*|PVOUT.*)_UNC_P(1|5|10|20|25|75|80|90|95|99)$"
     },
     "RequestColumnNames": {
       "description": "Solargis recognizes these column names in the request.",
