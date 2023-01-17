@@ -78,9 +78,9 @@
             "name": "Meteosat MSG IODC and Meteosat MFG IODC satellite data ((c) 2022 EUMETSAT) and atmospheric data ((c) 2022 ECMWF, NOAA and NASA)",
             "version": "2.2.28",
             "timePeriod": {
-            "from": "2007-01-01T00:15:00+09:00",
-            "to": "2021-12-31T23:45:00+09:00"
-          }
+              "from": "2007-01-01T00:15:00+09:00",
+              "to": "2021-12-31T23:45:00+09:00"
+            }
           }
         ]
       },

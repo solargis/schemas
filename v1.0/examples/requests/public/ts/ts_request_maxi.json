@@ -35,14 +35,9 @@
       31.2
     ]
   },
-  "gtiConfigurationV1": {
-    "mounting": "OneAxisInclined",
-    "axisAzimuth": 180,
-    "axisTilt": 30,
-    "relativeColumnSpacing": 2.9,
-    "backTracking": false
+  "gtiConfiguration": {
   },
-  "pvConfigurationV1": {
+  "pvConfiguration": {
     "installedPower": 3.0,
     "installationType": "FREE_STANDING",
     "selfShading": false,

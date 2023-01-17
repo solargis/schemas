@@ -35,18 +35,7 @@
       31.2
     ]
   },
-  "gtiConfigurationV1": {
-    "mounting": "TwoAxisAstronomical",
-    "relativeColumnSpacing": 2.5,
-    "trackerRotationLimits": {
-      "east": -120,
-      "west": 120
-    },
-    "trackerTiltLimits": {
-      "min": 10,
-      "max": 60
-    },
-    "backTracking": true
+  "gtiConfiguration": {
   },
   "outputFormat": "SOLARGIS_JSON"
 }

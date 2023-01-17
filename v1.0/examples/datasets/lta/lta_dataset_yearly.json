@@ -59,15 +59,8 @@
         "columnType": "GTI",
         "unit": "kWh/m2",
         "description": "Average yearly sum of global tilted irradiation",
-        "gtiConfigurationV1": {
-          "mounting": "OneAxisHorizontalNS",
-          "axisAzimuth": 180,
-          "relativeColumnSpacing": 2.5,
-          "trackerRotationLimits": {
-            "east": -50,
-            "west": 50
-          },
-          "backTracking": true
+        "gtiConfiguration": {
+
         }
       }
     }

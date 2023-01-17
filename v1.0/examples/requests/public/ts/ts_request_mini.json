@@ -7,7 +7,8 @@
   },
   "timeStep": "PT15M",
   "columns": [
-    "GHI", "GHI_NOSHD"
+    "GHI",
+    "GHI_NOSHD"
   ],
   "fromDate": "1995-09-09",
   "toDate": "LAST_MONTH",

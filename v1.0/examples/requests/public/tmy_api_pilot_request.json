@@ -1,12 +1,13 @@
 {
   "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_public_TMY_API_pilot_request.schema.json",
-    "latitude": 45,
-    "longitude": 17,
-    "timeStep": "PT15M",
-    "tmyScenario": "P50",
-    "outputFormats": [
-        "SOLARGIS_JSON","SOLARGIS_CSV"
-    ],
-    "siteName": "bbb"
+  "latitude": 45,
+  "longitude": 17,
+  "timeStep": "PT15M",
+  "tmyScenario": "P50",
+  "outputFormats": [
+    "SOLARGIS_JSON",
+    "SOLARGIS_CSV"
+  ],
+  "siteName": "bbb"
 
 }

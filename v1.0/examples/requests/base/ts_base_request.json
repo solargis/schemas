@@ -1,5 +1,5 @@
 {
-    "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_data_request.schema.json",
+  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_data_request.schema.json",
   "requestType": "TIMESERIES",
   "site": {
     "latitude": 43.023903,
@@ -36,62 +36,49 @@
       31.2
     ]
   },
-  "gtiConfigurationV1": {
-    "mounting": "OneAxisInclined",
-    "axisAzimuth": 180,
-    "axisTilt": 30,
-    "relativeColumnSpacing": 2.9,
-    "backTracking": false
-  },
-  "pvConfigurationV1": {
-    "installedPower": 3.0,
-    "installationType": "FREE_STANDING",
-    "selfShading": false,
-    "terrainProperties": {
-      "terrainAzimuth": 180,
-      "terrainSlope": 0
+  "gtiConfiguration": {
+    "input": {
+      "sun_azimuth": [],
+      "sun_elevation": []
     },
-    "module": {
-      "technology": "CSI",
-      "topologyType": "UNPROPORTIONAL_2",
-      "degradation": {
-        "startUpDate": "2000-01-21",
-        "degradationAnyYear": 0.5,
-        "degradationFirstYear": 0.8
-      },
-      "nominalOperatingCellTemperature": 44.5,
-      "temperatureCoefficientPmax": -0.438
+    "options": {
+      "includeAlbedo": true,
+      "includeGtiShaded": true,
+      "includeGtiComponentsShaded": true
     },
-    "inverter": {
-      "inverterEfficiency": {
-        "constant": 97.5
-      },
-      "inverterLimitationACPower": 2.6
+    "processing": {
+      "nCpuThreads": 1,
+      "skyModelType": "ISOTROPIC",
+      "nHorizShadingAzimSteps": 1,
+      "nHorizShadingHeightSteps": 1,
+      "nHorizBeltShadingSteps": 1,
+      "angularReflectivity": 1
     },
-    "dcLosses": {
-      "specific": {
-        "cabling": 2,
-        "mismatch": 1,
-        "dirtAndSnow": {
-          "monthly": [
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            1,
-            1,
-            1
-          ]
+    "system": {
+      "layout": {
+        "isSouthernHemisphere": false,
+        "azimuth": 180,
+        "relativeSpacing": 2.5,
+        "mounting": {
+          "type": "FIXED_ONE_ANGLE",
+          "tilt": 26
         }
+      },
+      "environment": {
+        "terrainAlbedo": 0.12,
+        "horizon": [
+          {
+            "azimuth": 0,
+            "height": 30
+          },
+          {
+            "azimuth": 360,
+            "height": 30
+          }
+        ]
       }
-    },
-    "acLosses": {
-      "overall": 1.5
     }
+  },
+  "pvConfiguration": {
   }
 }

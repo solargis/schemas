@@ -35,11 +35,48 @@
       31.2
     ]
   },
-  "gtiConfigurationV1": {
-    "mounting": "FixedOneAngle",
-    "azimuth": 180,
-    "tilt": 35,
-    "relativeRowSpacing": 2.5
+  "gtiConfiguration": {
+    "input": {
+      "sun_azimuth": [],
+      "sun_elevation": []
+    },
+    "options": {
+      "includeAlbedo": true,
+      "includeGtiShaded": true,
+      "includeGtiComponentsShaded": true
+    },
+    "processing": {
+      "nCpuThreads": 1,
+      "skyModelType": "ISOTROPIC",
+      "nHorizShadingAzimSteps": 1,
+      "nHorizShadingHeightSteps": 1,
+      "nHorizBeltShadingSteps": 1,
+      "angularReflectivity": 1
+    },
+    "system": {
+      "layout": {
+        "isSouthernHemisphere": false,
+        "azimuth": 180,
+        "relativeSpacing": 2.5,
+        "mounting": {
+          "type": "FIXED_ONE_ANGLE",
+          "tilt": 26
+        }
+      },
+      "environment": {
+        "terrainAlbedo": 0.12,
+        "horizon": [
+          {
+            "azimuth": 0,
+            "height": 30
+          },
+          {
+            "azimuth": 360,
+            "height": 30
+          }
+        ]
+      }
+    }
   },
   "outputFormat": "SOLARGIS_JSON"
 }
