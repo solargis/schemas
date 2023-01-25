@@ -36,23 +36,6 @@
     ]
   },
   "gtiConfiguration": {
-    "input": {
-      "sun_azimuth": [],
-      "sun_elevation": []
-    },
-    "options": {
-      "includeAlbedo": true,
-      "includeGtiShaded": true,
-      "includeGtiComponentsShaded": true
-    },
-    "processing": {
-      "nCpuThreads": 1,
-      "skyModelType": "ISOTROPIC",
-      "nHorizShadingAzimSteps": 1,
-      "nHorizShadingHeightSteps": 1,
-      "nHorizBeltShadingSteps": 1,
-      "angularReflectivity": 1
-    },
     "system": {
       "layout": {
         "isSouthernHemisphere": false,
