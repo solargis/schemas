@@ -107,19 +107,10 @@
     "Horizon": {
       "description": "An outline (modeled as a set of points) of land and other objects defined against the sky - a skyline.",
       "type": "object",
-      "oneOf": [
-        {
-          "required": [
+      "required": [
             "azimuth",
             "height"
-          ]
-        },
-        {
-          "required": [
-            "uri"
-          ]
-        }
-      ],
+          ],
       "additionalProperties": false,
       "properties": {
         "azimuth": {
@@ -143,10 +134,6 @@
             "minimum": 0,
             "maximum": 90
           }
-        },
-        "uri": {
-          "description": "Solargis internal. If Horizon is a big object, using some URI (for getting the Horizon) can be more suitable.",
-          "format": "uri"
         }
       },
       "examples": [
