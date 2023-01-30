@@ -569,6 +569,6 @@
       "description": "Contains only ASCII letters, numbers and underscores, and it must not start with a number.",
       "type": "string",
       "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
-    },
+    }
   }
 }
