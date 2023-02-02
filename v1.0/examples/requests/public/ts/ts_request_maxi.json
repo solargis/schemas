@@ -88,7 +88,7 @@
       "overall": 1.5
     }
   },
-  "outputFormat": "SOLARGIS_CSV",
+  "outputFormat": "SOLARGIS_JSON",
   "fileLabel": "Pippu_AX_987JP",
   "compressOutput": true
 }

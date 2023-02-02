@@ -66,8 +66,7 @@
     },
     "outputFormat": {
       "enum": [
-        "SOLARGIS_JSON",
-        "SOLARGIS_CSV"
+        "SOLARGIS_JSON"
       ]
     },
     "compressOutput": {

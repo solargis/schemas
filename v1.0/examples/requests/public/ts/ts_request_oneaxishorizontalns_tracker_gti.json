@@ -16,9 +16,6 @@
     "GTI",
     "GTI_NOSHD"
   ],
-  "outputFormats": [
-    "SOLARGIS_CSV"
-  ],
   "fromDate": "2022-10-01",
   "toDate": "2022-10-02",
   "utcOffset": 9,
