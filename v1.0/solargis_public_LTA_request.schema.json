@@ -64,7 +64,7 @@
         "SOLARGIS_JSON",
         "SOLARGIS_CSV"
       ]
-    },
+    }
   },
   "dependencies": {
     "pvConfiguration": [
