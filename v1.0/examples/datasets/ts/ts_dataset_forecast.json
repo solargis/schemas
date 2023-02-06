@@ -108,8 +108,7 @@
       "PVOUT_D9"
     ],
     "gtiConfiguration": {
-    },
-    "pvConfiguration": {}
+    }
   },
   "data": {
     "DATETIME": [

@@ -89,26 +89,13 @@
           }
         ],
         "method": "interpolated to 15 min"
-      },
-      "PVOUT": {
-        "columnType": "PVOUT",
-        "unit": "kW",
-        "description": "PV output.",
-        "createdByApplication": {
-          "name": "solargis/pvSimulator_v1"
-        },
-        "gtiConfiguration": {
-        },
-        "pvConfiguration": {
-        }
       }
     },
     "columnOrder": [
       "DATETIME",
       "GHI",
       "GHI_NOSHD",
-      "TEMP",
-      "PVOUT"
+      "TEMP"
     ]
   },
   "data": {
@@ -127,10 +114,6 @@
     "TEMP": [
       15,
       24
-    ],
-    "PVOUT": [
-      300.98,
-      340.2
     ]
   }
 }

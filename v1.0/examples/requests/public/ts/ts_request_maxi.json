@@ -37,57 +37,6 @@
   },
   "gtiConfiguration": {
   },
-  "pvConfiguration": {
-    "installedPower": 3.0,
-    "installationType": "FREE_STANDING",
-    "selfShading": false,
-    "terrainProperties": {
-      "terrainAzimuth": 180,
-      "terrainSlope": 0
-    },
-    "module": {
-      "technology": "CSI",
-      "topologyType": "UNPROPORTIONAL_2",
-      "degradation": {
-        "startUpDate": "2000-01-21",
-        "degradationAnyYear": 0.5,
-        "degradationFirstYear": 0.8
-      },
-      "nominalOperatingCellTemperature": 44.5,
-      "temperatureCoefficientPmax": -0.438
-    },
-    "inverter": {
-      "inverterEfficiency": {
-        "constant": 97.5
-      },
-      "inverterLimitationACPower": 2.6
-    },
-    "dcLosses": {
-      "specific": {
-        "cabling": 2,
-        "mismatch": 1,
-        "dirtAndSnow": {
-          "monthly": [
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            1,
-            1,
-            1
-          ]
-        }
-      }
-    },
-    "acLosses": {
-      "overall": 1.5
-    }
-  },
   "outputFormat": "SOLARGIS_JSON",
   "fileLabel": "Pippu_AX_987JP",
   "compressOutput": true
