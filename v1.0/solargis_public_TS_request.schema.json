@@ -12,6 +12,7 @@
     "columns",
     "outputFormat"
   ],
+  "additionalProperties": true,
   "properties": {
     "requestType": {
       "const": "TIMESERIES"
@@ -56,10 +57,6 @@
     "gtiConfiguration": {
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/gtiConfiguration"
     },
-    "pvConfiguration": {
-      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/pvConfiguration"
-    },
-
     "fileLabel": {
       "$ref": "solargis_common_types.schema.json#/$defs/FileLabel"
     },
@@ -73,10 +70,5 @@
       "type": "boolean",
       "default": false
     }
-  },
-  "dependencies": {
-    "pvConfiguration": [
-      "gtiConfiguration"
-    ]
   }
 }

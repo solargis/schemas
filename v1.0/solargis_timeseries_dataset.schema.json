@@ -124,7 +124,7 @@
           }
         },
         "data": {
-          "description": "Data values itself organized in table-like structure. Including flags.",
+          "description": "Data values organized as collection of named arrays (=columns).",
           "oneOf": [
             {
               "type": "null"
@@ -137,9 +137,9 @@
       }
     },
     "Data": {
-      "description": "Data itself in columns. DATETIME column must have array of datetime strings. Others columns have arrays of nullable numeric values. All column arrays must have the same size.",
+      "description": "Data itself in columns. The special DATETIME column must have an array of datetime strings. Others columns have arrays of nullable numeric values. All column arrays must have the same length.",
       "type": "object",
-      "$comment": "The DATETIME column is required. Schema cannot enforce unique column names! This is the responsibility of producers or consumers.",
+      "$comment": "Schema does not enforce unique column names and the same length for all arrays. This is the responsibility of producers or consumers.",
       "required": [
         "DATETIME"
       ],
@@ -310,11 +310,6 @@
           "description": "Object is required if at least one PV output related column is present in the array of columns (also the TMOD parameter).",
           "$comment": "TODO add V2, for now we have only solargis_pv_configuration_v1.schema.json#/$defs/PvConfigurationV1"
         }
-      },
-      "dependencies": {
-        "pvConfiguration": [
-          "gtiConfiguration"
-        ]
       }
     },
     "DatasetMetadata": {

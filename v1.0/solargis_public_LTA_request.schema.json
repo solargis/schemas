@@ -52,10 +52,6 @@
     "gtiConfiguration": {
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/gtiConfiguration"
     },
-    "pvConfiguration": {
-      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/pvConfiguration"
-    },
-
     "fileLabel": {
       "$ref": "solargis_common_types.schema.json#/$defs/FileLabel"
     },
@@ -64,10 +60,5 @@
         "SOLARGIS_JSON"
       ]
     }
-  },
-  "dependencies": {
-    "pvConfiguration": [
-      "gtiConfiguration"
-    ]
   }
 }
