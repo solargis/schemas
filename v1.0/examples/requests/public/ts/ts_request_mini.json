@@ -13,6 +13,5 @@
   "fromDate": "1995-09-09",
   "toDate": "LAST_MONTH",
   "terrainShading": false,
-
   "outputFormat": "SOLARGIS_JSON"
 }

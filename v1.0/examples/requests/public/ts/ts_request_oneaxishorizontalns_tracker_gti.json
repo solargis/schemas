@@ -5,7 +5,9 @@
     "latitude": 43.023903,
     "longitude": 142.419596,
     "elevation": 156.9,
-    "name": "Pippu 比布町, Kamikawa District, Hokkaido, Japan",
+    "name": "Pippu 比布町, Kamikawa District",
+    "countryName": "Japan",
+    "countryISOCode": "JP",
     "id": "AX_987JP"
   },
   "timeStep": "PT15M",

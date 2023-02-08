@@ -15,10 +15,10 @@
     "latitude": 43.023903,
     "longitude": 142.419596,
     "elevation": 179,
-    "name": "Pippu 比布町, Kamikawa District, Hokkaido, Japan",
+    "name": "Pippu 比布町, Kamikawa District",
     "id": "AX-987JP",
     "countryName": "Japan",
-    "countryCode": "JP",
+    "countryISOCode": "JP",
     "mapUrl": "https://apps.solargis.com/prospect/map?s=43.913961,142.419596&c=43.914237,142.420094,12&m=mapbox-satellite&l=true"
   },
   "metadata": {
