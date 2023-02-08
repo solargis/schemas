@@ -54,6 +54,9 @@
     "horizon": {
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/horizon"
     },
+    "groundAlbedo": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/groundAlbedo"
+    },
     "gtiConfiguration": {
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/gtiConfiguration"
     },
@@ -69,6 +72,9 @@
       "description": "Output dataset will be zipped.",
       "type": "boolean",
       "default": false
+    },
+    "stochasticGenerator": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/stochasticGenerator"
     }
   }
 }

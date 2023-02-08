@@ -23,7 +23,20 @@
   "utcOffset": 9,
   "timeAlignment": "CENTER",
   "terrainShading": true,
-  "fileLabel": "Pippu_AX_987JP",
+  "groundAlbedo": [
+    0.23,
+    0.20,
+    0.12,
+    0.12,
+    0.12,
+    0.12,
+    0.12,
+    0.12,
+    0.12,
+    0.12,
+    0.12,
+    0.15
+  ],
   "horizon": {
     "azimuth": [
       0.0,
@@ -60,5 +73,6 @@
       }
     }
   },
-  "outputFormat": "SOLARGIS_JSON"
+  "outputFormat": "SOLARGIS_JSON",
+  "fileLabel": "Pippu_AX_987JP"
 }

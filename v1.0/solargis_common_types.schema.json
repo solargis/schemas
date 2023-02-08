@@ -108,9 +108,9 @@
       "description": "An outline (modeled as a set of points) of land and other objects defined against the sky - a skyline.",
       "type": "object",
       "required": [
-            "azimuth",
-            "height"
-          ],
+        "azimuth",
+        "height"
+      ],
       "additionalProperties": false,
       "properties": {
         "azimuth": {
@@ -149,6 +149,16 @@
             ]
           }
         ]
+      ]
+    },
+    "GroundAlbedo": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/NormalizedPercentage"
+        },
+        {
+          "$ref": "#/$defs/MonthlyValuesNormalizedPercentage"
+        }
       ]
     },
     "Flag": {
@@ -553,6 +563,19 @@
       "type": "number",
       "minimum": 0,
       "maximum": 100
+    },
+    "NormalizedPercentage": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "MonthlyValuesNormalizedPercentage": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/NormalizedPercentage"
+      },
+      "minItems": 12,
+      "maxItems": 12
     },
     "FileLabel": {
       "description": "Custom label will be a part of generated file names - if applicable, only in specific endpoints. See the allowed text pattern.",

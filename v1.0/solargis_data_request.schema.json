@@ -84,6 +84,9 @@
         "horizon": {
           "$ref": "solargis_common_types.schema.json#/$defs/Horizon"
         },
+        "groundAlbedo": {
+          "$ref": "solargis_common_types.schema.json#/$defs/GroundAlbedo"
+        },
         "gtiConfiguration": {
           "description": "Object is required if at least one GTI or PVOUT related column is present in the array of columns.",
           "$ref": "solargis_gti_configuration_v2.schema.json#/$defs/GtiSimulationRequest"
@@ -96,8 +99,8 @@
           "pattern": "^P(1|5|10|25|50|75|90|95|99)$",
           "default": "P50"
         },
-        "syntheticGenerator": {
-          "description": "For 1, 5 and 10 minute time steps the solar irradiation values can be synthetically generated from 15 minute data.",
+        "stochasticGenerator": {
+          "description": "For 1, 5 and 10 minute time steps, the solar irradiation values can be synthetically generated from 15 minute data.",
           "type": "boolean",
           "default": false
         }

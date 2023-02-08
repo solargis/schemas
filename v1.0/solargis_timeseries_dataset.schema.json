@@ -302,6 +302,9 @@
         "horizon": {
           "$ref": "solargis_common_types.schema.json#/$defs/Horizon"
         },
+        "groundAlbedo": {
+          "$ref": "solargis_common_types.schema.json#/$defs/GroundAlbedo"
+        },
         "gtiConfiguration": {
           "description": "Configuration object used with the simulation of solar irradiation hitting a tilted surface (GTI or POA).",
           "$ref": "solargis_gti_configuration_v2.schema.json#/$defs/GtiSimulationRequest"

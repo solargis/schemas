@@ -26,7 +26,7 @@
   "utcOffset": 9,
   "timeAlignment": "CENTER",
   "terrainShading": true,
-
+  "groundAlbedo": 0.12,
   "horizon": {
     "azimuth": [
       0.0,
@@ -39,6 +39,7 @@
   },
   "gtiConfiguration": {
   },
+  "stochasticGenerator": false,
   "outputFormat": "SOLARGIS_JSON",
   "fileLabel": "Pippu_AX_987JP",
   "compressOutput": true

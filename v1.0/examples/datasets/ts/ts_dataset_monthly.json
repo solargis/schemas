@@ -58,6 +58,7 @@
         "method": "spatially disaggregated from sources"
       }
     },
+    "groundAlbedo": 0.12,
     "columnOrder": [
       "DATETIME",
       "GHI",
