@@ -88,8 +88,8 @@
           "$ref": "solargis_common_types.schema.json#/$defs/GroundAlbedo"
         },
         "gtiConfiguration": {
-          "description": "Object is required if at least one GTI or PVOUT related column is present in the array of columns.",
-          "$ref": "solargis_gti_configuration_v2.schema.json#/$defs/GtiSimulationRequest"
+          "description": "Object is required if at least one GTI related column is present in the array of columns.",
+          "$ref": "solargis_gti_configuration_v2.schema.json#/$defs/GtiSystem"
         },
         "pvConfiguration": {
           "description": "Object is required if at least one PV output related column is present in the array of columns (also the TMOD parameter).",

@@ -307,7 +307,7 @@
         },
         "gtiConfiguration": {
           "description": "Configuration object used with the simulation of solar irradiation hitting a tilted surface (GTI or POA).",
-          "$ref": "solargis_gti_configuration_v2.schema.json#/$defs/GtiSimulationRequest"
+          "$ref": "solargis_gti_configuration_v2.schema.json#/$defs/GtiSystem"
         },
         "pvConfiguration": {
           "description": "Object is required if at least one PV output related column is present in the array of columns (also the TMOD parameter).",

@@ -60,6 +60,15 @@
         "unit": "kWh/m2",
         "description": "Average monthly sum of global tilted irradiation",
         "gtiConfiguration": {
+          "layout": {
+            "azimuth": 180,
+            "mounting": {
+              "type": "ONE_AXIS_VERTICAL_TRACKER",
+              "tilt": 30,
+              "rotationLimitEast": -90,
+              "rotationLimitWest": 90
+            }
+          }
         }
       }
     }

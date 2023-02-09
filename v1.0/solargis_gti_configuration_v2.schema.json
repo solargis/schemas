@@ -1,75 +1,13 @@
 {
   "$id": "https://raw.githubusercontent.com/solargis/schemas/main/v1.0/solargis_gti_configuration_v2.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
-  "description": "Base schema for a Solargis GTI simulation request - not used in public APIs.",
+  "description": "Base schema for a Solargis GTI system definition for simulation request - not used in public APIs.",
   "allOf": [
     {
-      "$ref": "#/$defs/GtiSimulationRequest"
+      "$ref": "#/$defs/GtiSystem"
     }
   ],
   "$defs": {
-    "DegreesHorizonAzimuth": {
-      "type": "number",
-      "minimum": 0,
-      "maximum": 360
-    },
-    "DegreesHorizonHeight": {
-      "type": "number",
-      "minimum": 0,
-      "maximum": 90
-    },
-    "HorizonElement": {
-      "type": "object",
-      "properties": {
-        "azimuth": {
-          "$ref": "#/$defs/DegreesHorizonAzimuth"
-        },
-        "height": {
-          "$ref": "#/$defs/DegreesHorizonHeight"
-        }
-      },
-      "required": [
-        "azimuth",
-        "height"
-      ]
-    },
-    "Horizon": {
-      "type": "array",
-      "items": {
-        "$ref": "#/$defs/HorizonElement"
-      }
-    },
-    "NormalizedPercentage": {
-      "type": "number",
-      "minimum": 0,
-      "maximum": 1
-    },
-    "MonthlyValuesNormalizedPercentage": {
-      "type": "array",
-      "items": {
-        "$ref": "#/$defs/NormalizedPercentage"
-      },
-      "minItems": 12,
-      "maxItems": 12
-    },
-    "GtiEnvironment": {
-      "type": "object",
-      "properties": {
-        "terrainAlbedo": {
-          "oneOf": [
-            {
-              "$ref": "#/$defs/NormalizedPercentage"
-            },
-            {
-              "$ref": "#/$defs/MonthlyValuesNormalizedPercentage"
-            }
-          ]
-        },
-        "horizon": {
-          "$ref": "#/$defs/Horizon"
-        }
-      }
-    },
     "MonthDay": {
       "type": "string",
       "pattern": "^\\d{2}-\\d{2}$"
@@ -314,9 +252,6 @@
     "GtiSystemLayout": {
       "type": "object",
       "properties": {
-        "isSouthernHemisphere": {
-          "type": "boolean"
-        },
         "azimuth": {
           "type": "number",
           "minimum": 0,
@@ -331,10 +266,71 @@
         }
       },
       "required": [
-        "isSouthernHemisphere",
         "mounting"
       ],
       "additionalProperties": false
+    },
+    "DegreesHorizonAzimuth": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 360
+    },
+    "DegreesHorizonHeight": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 90
+    },
+    "Horizon": {
+      "type": "object",
+      "properties": {
+        "azimuth": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DegreesHorizonAzimuth"
+          }
+        },
+        "height": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DegreesHorizonHeight"
+          }
+        }
+      },
+      "required": [
+        "azimuth",
+        "height"
+      ]
+    },
+    "NormalizedPercentage": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "MonthlyValuesNormalizedPercentage": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/NormalizedPercentage"
+      },
+      "minItems": 12,
+      "maxItems": 12
+    },
+    "GtiEnvironment": {
+      "type": "object",
+      "properties": {
+        "terrainAlbedo": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/NormalizedPercentage"
+            },
+            {
+              "$ref": "#/$defs/MonthlyValuesNormalizedPercentage"
+            }
+          ]
+        },
+        "horizon": {
+          "$ref": "solargis_common_types.schema.json#/$defs/Horizon"
+        }
+      }
     },
     "GtiSystem": {
       "type": "object",
@@ -346,178 +342,6 @@
           "$ref": "#/$defs/GtiEnvironment"
         }
       }
-    },
-    "DateTimeISO8601": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "GtiSimulationInput": {
-      "type": "object",
-      "properties": {
-        "horizon": {
-          "$ref": "#/$defs/Horizon"
-        },
-        "datetime": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/DateTimeISO8601"
-          }
-        },
-        "sun_azimuth": {
-          "type": "array",
-          "items": {
-            "type": "number",
-            "minimum": -360,
-            "maximum": 360
-          }
-        },
-        "sun_elevation": {
-          "type": "array",
-          "items": {
-            "type": "number",
-            "minimum": -90,
-            "maximum": 90
-          }
-        },
-        "ghi": {
-          "type": "array",
-          "items": {
-            "type": "number",
-            "minimum": 0
-          }
-        },
-        "dni": {
-          "type": "array",
-          "items": {
-            "type": "number",
-            "minimum": 0
-          }
-        },
-        "albedo": {
-          "type": "array",
-          "items": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 1
-          }
-        },
-        "panel_azimuth": {
-          "type": "array",
-          "items": {
-            "type": "number"
-          }
-        },
-        "panel_tilt": {
-          "type": "array",
-          "items": {
-            "type": "number"
-          }
-        }
-      },
-      "required": [
-        "sun_azimuth",
-        "sun_elevation"
-      ],
-      "additionalProperties": false
-    },
-    "GtiSkyModelType": {
-      "type": "string",
-      "enum": [
-        "ISOTROPIC",
-        "ANISOTROPIC"
-      ]
-    },
-    "GtiProcessingOptions": {
-      "type": "object",
-      "properties": {
-        "nCpuThreads": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "skyModelType": {
-          "$ref": "#/$defs/GtiSkyModelType"
-        },
-        "nHorizShadingAzimSteps": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "nHorizShadingHeightSteps": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "nHorizBeltShadingSteps": {
-          "type": "integer",
-          "minimum": 1
-        },
-        "angularReflectivity": {
-          "type": "number",
-          "minimum": 0,
-          "maximum": 1
-        }
-      }
-    },
-    "GtiSimulationOptions": {
-      "type": "object",
-      "properties": {
-        "includeDatetime": {
-          "type": "boolean"
-        },
-        "includeSunPos": {
-          "type": "boolean"
-        },
-        "includeAlbedo": {
-          "type": "boolean"
-        },
-        "includeInputIrrads": {
-          "type": "boolean"
-        },
-        "includeInputIrradsShaded": {
-          "type": "boolean"
-        },
-        "includePanelIncAngle": {
-          "type": "boolean"
-        },
-        "includePanelOrientation": {
-          "type": "boolean"
-        },
-        "includeGti": {
-          "type": "boolean"
-        },
-        "includeGtiShaded": {
-          "type": "boolean"
-        },
-        "includeGtiComponents": {
-          "type": "boolean"
-        },
-        "includeGtiComponentsShaded": {
-          "type": "boolean"
-        },
-        "includeGtiEffective": {
-          "type": "boolean"
-        },
-        "includeGtiEffectiveShaded": {
-          "type": "boolean"
-        }
-      },
-      "additionalProperties": false
-    },
-    "GtiSimulationRequest": {
-      "type": "object",
-      "properties": {
-        "input": {
-          "$ref": "#/$defs/GtiSimulationInput"
-        },
-        "options": {
-          "$ref": "#/$defs/GtiSimulationOptions"
-        },
-        "processing": {
-          "$ref": "#/$defs/GtiProcessingOptions"
-        },
-        "system": {
-          "$ref": "#/$defs/GtiSystem"
-        }
-      },
-      "additionalProperties": false
     }
   }
 }

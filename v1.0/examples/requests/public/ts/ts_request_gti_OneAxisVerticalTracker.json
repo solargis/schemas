@@ -23,20 +23,7 @@
   "utcOffset": 9,
   "timeAlignment": "CENTER",
   "terrainShading": true,
-  "groundAlbedo": [
-    0.23,
-    0.20,
-    0.12,
-    0.12,
-    0.12,
-    0.12,
-    0.12,
-    0.12,
-    0.12,
-    0.12,
-    0.12,
-    0.15
-  ],
+  "fileLabel": "Pippu_AX_987JP",
   "horizon": {
     "azimuth": [
       0.0,
@@ -47,32 +34,45 @@
       31.2
     ]
   },
+  "groundAlbedo": 0.12,
   "gtiConfiguration": {
-    "system": {
-      "layout": {
-        "isSouthernHemisphere": false,
-        "azimuth": 180,
-        "relativeSpacing": 2.5,
-        "mounting": {
-          "type": "FIXED_ONE_ANGLE",
-          "tilt": 26
-        }
-      },
-      "environment": {
-        "terrainAlbedo": 0.12,
-        "horizon": [
-          {
-            "azimuth": 0,
-            "height": 30
-          },
-          {
-            "azimuth": 360,
-            "height": 30
-          }
+    "layout": {
+      "azimuth": 180,
+      "mounting": {
+        "type": "ONE_AXIS_VERTICAL_TRACKER",
+        "tilt": 30,
+        "rotationLimitEast": -90,
+        "rotationLimitWest": 90
+      }
+    },
+    "environment": {
+      "terrainAlbedo": [
+        0.23,
+        0.20,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.15
+      ],
+      "horizon": {
+        "azimuth": [
+          0.0,
+          360
+        ],
+        "height": [
+          30,
+          51.2
         ]
       }
     }
   },
   "outputFormat": "SOLARGIS_JSON",
-  "fileLabel": "Pippu_AX_987JP"
+  "stochasticGenerator": false,
+  "compressOutput": false
 }
