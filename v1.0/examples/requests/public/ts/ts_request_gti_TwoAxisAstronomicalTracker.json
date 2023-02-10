@@ -38,6 +38,7 @@
   "gtiConfiguration": {
     "layout": {
       "azimuth": 180,
+      "relativeSpacing": 2.5,
       "mounting": {
         "type": "TWO_AXIS_ASTRONOMICAL_TRACKER",
         "backtracking": true,

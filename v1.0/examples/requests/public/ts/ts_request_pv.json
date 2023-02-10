@@ -36,6 +36,41 @@
     ]
   },
   "gtiConfiguration": {
+    "layout": {
+      "azimuth": 180,
+      "relativeSpacing": 2.4,
+      "mounting": {
+        "type": "FIXED_ONE_ANGLE",
+        "tilt": 39
+      }
+    },
+    "environment": {
+      "terrainAlbedo": [
+        0.23,
+        0.20,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.15
+      ],
+      "horizon": {
+        "azimuth": [
+          0.0,
+          360
+        ],
+        "height": [
+          30,
+          51.2
+        ]
+      }
+    }
   },
+  "pvConfiguration": {},
   "outputFormat": "SOLARGIS_JSON"
 }

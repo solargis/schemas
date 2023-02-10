@@ -39,44 +39,36 @@
     ]
   },
   "gtiConfiguration": {
-    "input": {
-      "sun_azimuth": [],
-      "sun_elevation": []
+    "layout": {
+      "azimuth": 180,
+      "mounting": {
+        "type": "FIXED_ONE_ANGLE",
+        "tilt": 39
+      }
     },
-    "options": {
-      "includeAlbedo": true,
-      "includeGtiShaded": true,
-      "includeGtiComponentsShaded": true
-    },
-    "processing": {
-      "nCpuThreads": 1,
-      "skyModelType": "ISOTROPIC",
-      "nHorizShadingAzimSteps": 1,
-      "nHorizShadingHeightSteps": 1,
-      "nHorizBeltShadingSteps": 1,
-      "angularReflectivity": 1
-    },
-    "system": {
-      "layout": {
-        "isSouthernHemisphere": false,
-        "azimuth": 180,
-        "relativeSpacing": 2.5,
-        "mounting": {
-          "type": "FIXED_ONE_ANGLE",
-          "tilt": 26
-        }
-      },
-      "environment": {
-        "terrainAlbedo": 0.12,
-        "horizon": [
-          {
-            "azimuth": 0,
-            "height": 30
-          },
-          {
-            "azimuth": 360,
-            "height": 30
-          }
+    "environment": {
+      "terrainAlbedo": [
+        0.23,
+        0.20,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.15
+      ],
+      "horizon": {
+        "azimuth": [
+          0.0,
+          360
+        ],
+        "height": [
+          30,
+          51.2
         ]
       }
     }
