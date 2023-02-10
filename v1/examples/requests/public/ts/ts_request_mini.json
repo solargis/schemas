@@ -1,0 +1,17 @@
+{
+  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1/solargis_public_TS_request.schema.json",
+  "requestType": "TIMESERIES",
+  "site": {
+    "latitude": 45.09,
+    "longitude": 17.34
+  },
+  "timeStep": "PT15M",
+  "columns": [
+    "GHI",
+    "GHI_NOSHD"
+  ],
+  "fromDate": "1995-09-09",
+  "toDate": "LAST_MONTH",
+  "terrainShading": false,
+  "outputFormat": "SOLARGIS_JSON"
+}

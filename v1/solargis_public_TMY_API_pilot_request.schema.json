@@ -1,0 +1,63 @@
+{
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/v1/solargis_public_TMY_API_pilot_request.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+
+  "description": "Schema for public Solargis data request - for TMY API pilot version.",
+  "required": [
+    "latitude",
+    "longitude",
+    "timeStep",
+    "outputFormats",
+    "tmyScenario"
+  ],
+  "properties": {
+    "latitude": {
+      "description": "Latitude coordinate in decimal format [-90,90]",
+      "type": "number",
+      "minimum": -90,
+      "maximum": 90
+    },
+    "longitude": {
+      "description": "Longitude coordinate in decimal format [-180,180]",
+      "type": "number",
+      "minimum": -180,
+      "maximum": 180
+    },
+    "timeStep": {
+      "enum": [
+        "PT15M",
+        "PT60M"
+      ]
+    },
+    "tmyScenario": {
+      "const": "P50"
+    },
+    "outputFormats": {
+      "type": "array",
+      "uniqueItems": true,
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "SOLARGIS_JSON",
+          "SOLARGIS_CSV",
+          "SAM",
+          "HELIOSCOPE"
+        ]
+      }
+    },
+    "fileLabel": {
+      "description": "User provided label used for file name generation only",
+      "type": "string",
+      "maxLength": 10,
+      "pattern": "^\w*$"
+
+    },
+    "siteName": {
+      "description": "User provided value",
+      "type": "string",
+      "maxLength": 50,
+      "pattern": "^\S.*$"
+
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1/solargis_timeseries_dataset.schema.json",
+  "created": "2022-05-11T07:25:43.24+00:00",
+  "datasetType": "TIMESERIES",
+  "site": {
+    "latitude": 43.023903,
+    "longitude": 142.419596
+  },
+  "metadata": {
+    "columnOrder": [
+      "DATETIME",
+      "GHI"
+    ],
+    "columns": {
+      "DATETIME": {
+        "timeFormatPattern": "YYYY-MM-DDThh:mm:ss[.sss]±hh:mm"
+      },
+      "GHI": {
+        "columnType": "GHI",
+        "unit": "kWh/m2"
+      }
+    }
+  },
+  "data": null
+}

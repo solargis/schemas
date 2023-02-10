@@ -1,0 +1,67 @@
+{
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/v1/solargis_public_LTA_request.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+
+  "description": "Schema for Solargis data request - for long-term average (LTA) datasets.",
+  "required": [
+    "requestType",
+    "site",
+    "timeStep",
+    "fromDate",
+    "toDate",
+    "columns",
+    "outputFormat"
+  ],
+  "properties": {
+    "requestType": {
+      "const": "LONG_TERM_AVERAGE"
+    },
+    "site": {
+      "description": "Site location definition.",
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/site"
+    },
+    "timeStep": {
+      "enum": [
+        "P1M",
+        "P1Y"
+      ]
+    },
+    "fromDate": {
+      "description": "Start date of the requested data. Inclusive.",
+      "const": "AUTODETECT"
+    },
+    "toDate": {
+      "description": "End date of the requested data. Inclusive.",
+      "const": "LAST_YEAR"
+    },
+    "columns": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/columns"
+    },
+    "utcOffset": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/utcOffset"
+    },
+    "timeAlignment": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/timeAlignment"
+    },
+    "terrainShading": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/terrainShading"
+    },
+    "horizon": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/horizon"
+    },
+    "groundAlbedo": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/groundAlbedo"
+    },
+    "gtiConfiguration": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/gtiConfiguration"
+    },
+    "fileLabel": {
+      "$ref": "solargis_common_types.schema.json#/$defs/FileLabel"
+    },
+    "outputFormat": {
+      "enum": [
+        "SOLARGIS_JSON"
+      ]
+    }
+  }
+}
