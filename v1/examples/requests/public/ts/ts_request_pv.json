@@ -38,7 +38,6 @@
   "gtiConfiguration": {
     "layout": {
       "azimuth": 180,
-      "relativeSpacing": 2.4,
       "mounting": {
         "type": "FIXED_ONE_ANGLE",
         "tilt": 39
