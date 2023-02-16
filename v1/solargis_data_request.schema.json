@@ -67,10 +67,9 @@
           }
         },
         "utcOffset": {
-          "type": "integer",
-          "minimum": -12,
-          "maximum": 12,
-          "default": 0
+          "description": "ISO 8601 time zone designator (offset from UTC) formatted as ±hh:mm. Will not allow offsets beyond ±14:59. If this property is missing Solargis will calculate the offset for the given site: round(longitude/15).",
+          "type": "string",
+          "pattern": "^([+\\-])(0[0-9]|1[0-4]):[0-5][0-9]$"
         },
         "timeAlignment": {
           "description": "Datetime strings (labels of time intervals) can be positioned or aligned with the start, center or end of the time interval (or the left edge, the middle and the right edge of the time interval).",
