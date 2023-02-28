@@ -1,5 +1,4 @@
 {
-  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1/solargis_timeseries_dataset.schema.json",
   "created": "2022-05-11T07:25:43.24+00:00",
   "datasetType": "TIMESERIES",
   "name": "MONTHLY SUMS OF SOLAR RADIATION AND METEOROLOGICAL PARAMETERS",

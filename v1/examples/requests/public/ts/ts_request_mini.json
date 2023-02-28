@@ -1,6 +1,4 @@
 {
-  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1/solargis_public_TS_request.schema.json",
-  "requestType": "TIMESERIES",
   "site": {
     "latitude": 45.09,
     "longitude": 17.34
