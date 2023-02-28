@@ -4,7 +4,6 @@
 
   "description": "Schema for Solargis data request - for long-term average (LTA) datasets.",
   "required": [
-    "requestType",
     "site",
     "timeStep",
     "fromDate",

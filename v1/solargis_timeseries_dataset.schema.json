@@ -15,9 +15,8 @@
       "description": "Solargis timeseries dataset - a top level schema of this file.",
       "$comment": "Note, that some of the required properties are mutually exclusive, e.g. site XOR portfolio",
       "type": "object",
-      "additionalProperties": false,
+      "additionalProperties": true,
       "required": [
-        "$schema",
         "created",
         "datasetType",
         "metadata",
@@ -40,11 +39,6 @@
         }
       ],
       "properties": {
-        "$schema": {
-          "description": "TimeseriesDataset instance must comply with the schema referenced by this keyword.",
-          "type": "string",
-          "format": "uri"
-        },
         "created": {
           "description": "Creation time of the dataset.",
           "type": "string",

@@ -4,7 +4,6 @@
 
   "description": "Schema for Solargis data request - for timeseries datasets.",
   "required": [
-    "requestType",
     "site",
     "timeStep",
     "fromDate",
@@ -14,9 +13,6 @@
   ],
   "additionalProperties": true,
   "properties": {
-    "requestType": {
-      "const": "TIMESERIES"
-    },
     "site": {
       "description": "Site location definition.",
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/site"

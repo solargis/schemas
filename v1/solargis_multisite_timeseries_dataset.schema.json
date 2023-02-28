@@ -13,9 +13,8 @@
     "MultiSiteTimeseriesDataset": {
       "description": "Solargis timeseries dataset for multiple sites - a top level schema of this file.",
       "type": "object",
-      "additionalProperties": false,
+      "additionalProperties": true,
       "required": [
-        "$schema",
         "created",
         "datasetType",
         "sites",
@@ -23,11 +22,6 @@
         "data"
       ],
       "properties": {
-        "$schema": {
-          "description": "MultiSiteTimeseriesDataset instance must comply with the schema referenced by this keyword.",
-          "type": "string",
-          "format": "uri"
-        },
         "created": {
           "description": "Creation time of the dataset.",
           "type": "string",

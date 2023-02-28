@@ -80,7 +80,7 @@
       ]
     },
     "Portfolio": {
-      "description": "Data resource can represent a group of sites (or projects) - a portfolio or a fleet.",
+      "description": "Data resource can represent a group of sites (or projects) - a portfolio or fleet of energy systems.",
       "type": "object",
       "additionalProperties": true,
       "required": [
