@@ -1,4 +1,5 @@
 {
+  "description": "Invalid request due to Solargis rule - GTI column requested, but gtiConfiguration is missing.",
   "site": {
     "latitude": 43.023903,
     "longitude": 142.419596,
@@ -33,41 +34,6 @@
       19.0581,
       31.2
     ]
-  },
-  "gtiConfiguration": {
-    "layout": {
-      "azimuth": 180,
-      "mounting": {
-        "type": "FIXED_ONE_ANGLE",
-        "tilt": 39
-      }
-    },
-    "environment": {
-      "terrainAlbedo": [
-        0.23,
-        0.20,
-        0.12,
-        0.12,
-        0.12,
-        0.12,
-        0.12,
-        0.12,
-        0.12,
-        0.12,
-        0.12,
-        0.15
-      ],
-      "horizon": {
-        "azimuth": [
-          0.0,
-          360
-        ],
-        "height": [
-          30,
-          51.2
-        ]
-      }
-    }
   },
   "stochasticGenerator": false,
   "outputFormat": "SOLARGIS_JSON",

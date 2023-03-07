@@ -1,7 +1,7 @@
 {
   "created": "2022-05-11T07:25:43.24+00:00",
   "datasetType": "TIMESERIES",
-  "name": "MONTHLY SUMS OF SOLAR RADIATION AND METEOROLOGICAL PARAMETERS",
+  "name": "Invalid dataset violates Solargis rule - number of data columns < columns in metadata.",
   "description": "Example of monthly timeseries dataset, e.g. exported from the legacy Data core.",
   "author": {
     "name": "Solargis s.r.o.",
@@ -72,10 +72,6 @@
     "GHI": [
       32.2,
       46.5
-    ],
-    "TEMP": [
-      15,
-      24
     ]
   }
 }

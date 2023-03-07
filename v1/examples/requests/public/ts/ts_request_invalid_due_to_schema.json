@@ -1,11 +1,12 @@
 {
+  "description": "Invalid request due to schema - column name violates the pattern.",
   "site": {
     "latitude": 45.09,
     "longitude": 17.34
   },
   "timeStep": "PT15M",
   "columns": [
-    "GHI"
+    ".GHI"
   ],
   "fromDate": "1995-09-09",
   "toDate": "LAST_MONTH",

@@ -1,5 +1,4 @@
 {
-  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1/solargis_data_request.schema.json",
   "requestType": "TMY",
   "site": {
     "latitude": 45.09,

@@ -1,7 +1,7 @@
 {
   "created": "2022-05-11T07:25:43.24+00:00",
   "datasetType": "TIMESERIES",
-  "name": "MONTHLY SUMS OF SOLAR RADIATION AND METEOROLOGICAL PARAMETERS",
+  "name": "Invalid dataset example - invalid column name '.GHI' violates schema pattern.",
   "description": "Example of monthly timeseries dataset, e.g. exported from the legacy Data core.",
   "author": {
     "name": "Solargis s.r.o.",
@@ -33,7 +33,7 @@
         "timeAlignment": "START",
         "realTimestamps": true
       },
-      "GHI": {
+      ".GHI": {
         "columnType": "GHI",
         "unit": "kWh/m2",
         "description": "Monthly sum of global horizontal irradiation",
@@ -69,7 +69,7 @@
       "2021-11-01T00:00:00+09:00",
       "2021-12-01T00:00:00+09:00"
     ],
-    "GHI": [
+    ".GHI": [
       32.2,
       46.5
     ],

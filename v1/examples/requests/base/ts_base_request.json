@@ -1,5 +1,4 @@
 {
-  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/v1/solargis_data_request.schema.json",
   "requestType": "TIMESERIES",
   "site": {
     "latitude": 43.023903,
@@ -16,10 +15,11 @@
     "DIF",
     "DNI",
     "GTI",
-    "GTI_NOSHD",
+    "GTI_DIR_NOSHD",
     "TEMP",
     "WS",
-    "WS78"
+    "WS78",
+    "ABC"
   ],
   "outputFormat": "SOLARGIS_JSON",
   "fromDate": "2022-10-01",
