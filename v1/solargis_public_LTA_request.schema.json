@@ -48,8 +48,8 @@
     "horizon": {
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/horizon"
     },
-    "groundAlbedo": {
-      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/groundAlbedo"
+    "surfaceAlbedo": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/surfaceAlbedo"
     },
     "gtiConfiguration": {
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/gtiConfiguration"

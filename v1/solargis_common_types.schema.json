@@ -151,7 +151,7 @@
         ]
       ]
     },
-    "GroundAlbedo": {
+    "SurfaceAlbedo": {
       "oneOf": [
         {
           "$ref": "#/$defs/NormalizedPercentage"
@@ -578,13 +578,14 @@
       "maxItems": 12
     },
     "FileLabel": {
-      "description": "Custom label will be a part of generated file names - if applicable, only in specific endpoints. See the allowed text pattern.",
+      "description": "Custom label will be a part of generated file names - if applicable, only in specific API endpoints. See the allowed text pattern.",
       "type": "string",
       "$ref": "#/$defs/VariableSafePattern",
       "maxLength": 100
     },
     "PatternForColumnNames": {
-      "description": "Pattern and rules defined for a column name - either predefined by Solargis or a custom name.",
+      "description": "Pattern and rules defined for all column names - either predefined by Solargis or custom names.",
+      "type": "string",
       "$ref": "#/$defs/VariableSafePattern",
       "maxLength": 100
     },

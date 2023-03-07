@@ -83,8 +83,8 @@
         "horizon": {
           "$ref": "solargis_common_types.schema.json#/$defs/Horizon"
         },
-        "groundAlbedo": {
-          "$ref": "solargis_common_types.schema.json#/$defs/GroundAlbedo"
+        "surfaceAlbedo": {
+          "$ref": "solargis_common_types.schema.json#/$defs/SurfaceAlbedo"
         },
         "gtiConfiguration": {
           "description": "Object is required if at least one GTI related column is present in the array of columns.",
