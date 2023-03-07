@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/v1/solargis_gti_configuration_v2.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.0.1/v1/solargis_gti_configuration_v2.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
   "description": "Base schema for a Solargis GTI system definition for simulation request - not used in public APIs.",
   "allOf": [

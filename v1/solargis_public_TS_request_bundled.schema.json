@@ -1,0 +1,747 @@
+{
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.0.1/v1/solargis_public_TS_request.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Schema for Solargis data request - for timeseries datasets.",
+  "required": [
+    "site",
+    "timeStep",
+    "fromDate",
+    "toDate",
+    "columns",
+    "outputFormat"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "site": {
+      "description": "Site location definition.",
+      "$ref": "#/definitions/solargis_common_types.schema.json#/$defs/Site"
+    },
+    "timeStep": {
+      "enum": [
+        "PT15M",
+        "PT30M",
+        "PT60M",
+        "P1D",
+        "P1M",
+        "P1Y"
+      ]
+    },
+    "fromDate": {
+      "description": "Start date of the requested data. Inclusive.",
+      "$ref": "#/definitions/solargis_data_request.schema.json#/$defs/DataRequest/properties/fromDate"
+    },
+    "toDate": {
+      "description": "End date of the requested data. Inclusive.",
+      "$ref": "#/definitions/solargis_data_request.schema.json#/$defs/DataRequest/properties/toDate"
+    },
+    "columns": {
+      "$ref": "#/definitions/solargis_data_request.schema.json#/$defs/DataRequest/properties/columns"
+    },
+    "utcOffset": {
+      "$ref": "#/definitions/solargis_data_request.schema.json#/$defs/DataRequest/properties/utcOffset"
+    },
+    "timeAlignment": {
+      "$ref": "#/definitions/solargis_common_enums.schema.json#/$defs/TimeAlignmentEnum"
+    },
+    "terrainShading": {
+      "$ref": "#/definitions/solargis_data_request.schema.json#/$defs/DataRequest/properties/terrainShading"
+    },
+    "horizon": {
+      "$ref": "#/definitions/solargis_common_types.schema.json#/$defs/Horizon"
+    },
+    "groundAlbedo": {
+      "$ref": "#/definitions/solargis_common_types.schema.json#/$defs/GroundAlbedo"
+    },
+    "gtiConfiguration": {
+      "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiSystem"
+    },
+    "fileLabel": {
+      "$ref": "#/definitions/solargis_common_types.schema.json#/$defs/VariableSafePattern"
+    },
+    "outputFormat": {
+      "enum": [
+        "SOLARGIS_JSON"
+      ]
+    },
+    "compressOutput": {
+      "description": "Output dataset will be zipped.",
+      "type": "boolean",
+      "default": false
+    },
+    "stochasticGenerator": {
+      "$ref": "#/definitions/solargis_data_request.schema.json#/$defs/DataRequest/properties/stochasticGenerator"
+    }
+  },
+  "definitions": {
+    "solargis_data_request.schema.json#": {
+      "$defs": {
+        "DataRequest": {
+          "properties": {
+            "site": {
+              "$ref": "#/definitions/solargis_common_types.schema.json#/$defs/Site"
+            },
+            "fromDate": {
+              "description": "Start date of the requested data. Inclusive. See also the utcOffset.",
+              "oneOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "const": "AUTODETECT"
+                }
+              ]
+            },
+            "toDate": {
+              "description": "End date of the requested data. Inclusive. See also the utcOffset.",
+              "oneOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "const": "LAST_MONTH"
+                },
+                {
+                  "const": "LAST_YEAR"
+                }
+              ]
+            },
+            "columns": {
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 1,
+              "items": {
+                "$ref": "#/definitions/solargis_common_enums.schema.json#/$defs/RequestColumnNames"
+              }
+            },
+            "utcOffset": {
+              "description": "ISO 8601 time zone designator (offset from UTC) formatted as ±hh:mm. Will not allow offsets beyond ±14:59. If this property is missing Solargis will calculate the offset for the given site: round(longitude/15).",
+              "type": "string",
+              "pattern": "^([+\\-])(0[0-9]|1[0-4]):[0-5][0-9]$"
+            },
+            "timeAlignment": {
+              "$ref": "#/definitions/solargis_common_enums.schema.json#/$defs/TimeAlignmentEnum"
+            },
+            "terrainShading": {
+              "description": "This attribute affects all related parameters (e.g., GHI, DIF, DNI, GTI, PVOUT, TMOD except parameters with explicit _NOSHD suffix.)",
+              "type": "boolean",
+              "default": false
+            },
+            "horizon": {
+              "$ref": "#/definitions/solargis_common_types.schema.json#/$defs/Horizon"
+            },
+            "groundAlbedo": {
+              "$ref": "#/definitions/solargis_common_types.schema.json#/$defs/GroundAlbedo"
+            },
+            "gtiConfiguration": {
+              "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiSystem"
+            },
+            "stochasticGenerator": {
+              "description": "For 1, 5 and 10 minute time steps, the solar irradiation values can be synthetically generated from 15 minute data.",
+              "type": "boolean",
+              "default": false
+            }
+          }
+        }
+      }
+    },
+    "solargis_common_types.schema.json#": {
+      "$defs": {
+        "FileLabel": {
+          "$ref": "#/definitions/solargis_common_types.schema.json#/$defs/VariableSafePattern"
+        },
+        "Site": {
+          "description": "Site location point, a place on Earth.",
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "latitude",
+            "longitude"
+          ],
+          "properties": {
+            "latitude": {
+              "description": "Geographic coordinate in degrees that specifies the north–south position of a point on the Earth's surface. Positive latitudes are north of the equator (0), and negative ones are south.",
+              "type": "number",
+              "minimum": -90,
+              "maximum": 90
+            },
+            "longitude": {
+              "description": "Geographic coordinate in degrees that specifies the east–west position of a point on the Earth's surface. Positive longitudes are east of the prime meridian (0), and negative ones are west.",
+              "type": "number",
+              "minimum": -180,
+              "maximum": 180
+            },
+            "elevation": {
+              "description": "Elevation of the site on Earth above (or below) mean sea level in meters.",
+              "type": "number",
+              "minimum": -500,
+              "maximum": 9000
+            },
+            "name": {
+              "description": "Any name of the site e.g., postal address.",
+              "type": "string",
+              "maxLength": 100
+            },
+            "countryName": {
+              "description": "Country name.",
+              "type": "string",
+              "maxLength": 100
+            },
+            "countryISOCode": {
+              "description": "ISO 3166-1 alpha-2 two-letter country codes, see https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2.",
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 2
+            },
+            "mapUrl": {
+              "description": "Map URL where the location can be explored e.g., Google Maps or Solargis Prospect.",
+              "type": "string",
+              "format": "uri"
+            },
+            "description": {
+              "description": "Description of the site.",
+              "type": "string",
+              "maxLength": 500
+            },
+            "horizon": {
+              "$ref": "#/definitions/solargis_common_types.schema.json#/$defs/Horizon"
+            },
+            "id": {
+              "description": "Solargis internal or any custom id. Can be used as identifier for referencing another site specific properties.",
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          "examples": [
+            {
+              "latitude": 43.913961,
+              "longitude": 142.419596,
+              "elevation": 179,
+              "name": "Pippu 比布町, Kamikawa District",
+              "countryName": "Japan",
+              "countryISOCode": "JP",
+              "mapUrl": "https://apps.solargis.com/prospect/map?s=43.913961,142.419596&c=43.914237,142.420094,12&m=mapbox-satellite&l=true",
+              "description": "Geog. coordinates should have at least 6 decimal places."
+            }
+          ]
+        },
+        "Horizon": {
+          "description": "An outline (modeled as a set of points) of land and other objects defined against the sky - a skyline.",
+          "type": "object",
+          "required": [
+            "azimuth",
+            "height"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "azimuth": {
+              "description": "Geographical azimuth of the point in degrees. From the 0 degree (North) advancing clockwise.",
+              "type": "array",
+              "items": {
+                "type": [
+                  "number"
+                ],
+                "minimum": 0,
+                "maximum": 360
+              }
+            },
+            "height": {
+              "description": "Angular height of the point in degrees. From the 0 degree up to 90 degrees.",
+              "type": "array",
+              "items": {
+                "type": [
+                  "number"
+                ],
+                "minimum": 0,
+                "maximum": 90
+              }
+            }
+          },
+          "examples": [
+            [
+              {
+                "azimuth": [
+                  0,
+                  360
+                ],
+                "height": [
+                  19.0581,
+                  31.2
+                ]
+              }
+            ]
+          ]
+        },
+        "PatternForColumnNames": {
+          "$ref": "#/definitions/solargis_common_types.schema.json#/$defs/VariableSafePattern"
+        },
+        "VariableSafePattern": {
+          "description": "Contains only ASCII letters, numbers and underscores, and it must not start with a number.",
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+        },
+        "GroundAlbedo": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/solargis_common_types.schema.json#/$defs/NormalizedPercentage"
+            },
+            {
+              "$ref": "#/definitions/solargis_common_types.schema.json#/$defs/MonthlyValuesNormalizedPercentage"
+            }
+          ]
+        },
+        "NormalizedPercentage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "MonthlyValuesNormalizedPercentage": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/solargis_common_types.schema.json#/$defs/NormalizedPercentage"
+          },
+          "minItems": 12,
+          "maxItems": 12
+        }
+      }
+    },
+    "solargis_common_enums.schema.json#": {
+      "$defs": {
+        "RequestColumnNames": {
+          "description": "Solargis recognizes these column names in the request.",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/solargis_common_types.schema.json#/$defs/VariableSafePattern"
+            },
+            {
+              "$ref": "#/definitions/solargis_common_enums.schema.json#/$defs/SolarRadiationColumnTypesEnum"
+            },
+            {
+              "$ref": "#/definitions/solargis_common_enums.schema.json#/$defs/MeteoColumnTypesEnum"
+            },
+            {
+              "$ref": "#/definitions/solargis_common_enums.schema.json#/$defs/PvEnergyColumnTypesEnum"
+            },
+            {
+              "$ref": "#/definitions/solargis_common_enums.schema.json#/$defs/SolargisSpecialColumnNamesEnum"
+            },
+            {
+              "$ref": "#/definitions/solargis_common_enums.schema.json#/$defs/SolargisUncertaintyColumnNamesPattern"
+            },
+            {
+              "$ref": "#/definitions/solargis_common_enums.schema.json#/$defs/SolargisWindHeightColumnNamesPattern"
+            }
+          ]
+        },
+        "SolarRadiationColumnTypesEnum": {
+          "description": "Column types from the solar data domain (and related). The enum also includes tilted solar irradiation types.",
+          "$comment": "Do not confuse column types with column names, but prefer using type names for column names if applicable.",
+          "enum": [
+            "SUN_AZIMUTH",
+            "SUN_ELEVATION",
+            "SA",
+            "SE",
+            "PANEL_AZIMUTH",
+            "PANEL_TILT",
+            "PANEL_INC",
+            "GHI",
+            "DNI",
+            "DIF",
+            "ALB",
+            "GTI",
+            "PAR",
+            "UVB",
+            "UVA",
+            "DHI",
+            "KTM",
+            "KT",
+            "KC",
+            "LEADTIME"
+          ]
+        },
+        "MeteoColumnTypesEnum": {
+          "description": "Column types from the meteorological data domain.",
+          "enum": [
+            "TEMP",
+            "WS",
+            "WD",
+            "WG",
+            "RH",
+            "AP",
+            "PWAT",
+            "PREC",
+            "TD",
+            "WBT",
+            "SWE",
+            "TSD",
+            "SDENS",
+            "SDWE",
+            "SFWE"
+          ]
+        },
+        "PvEnergyColumnTypesEnum": {
+          "description": "Column types from the PV energy data domain (and related).",
+          "enum": [
+            "TMOD",
+            "PVOUT"
+          ]
+        },
+        "SolargisSpecialColumnNamesEnum": {
+          "description": "In addition to column type names, Solargis also recognizes the following column names in the request.",
+          "enum": [
+            "GHI_NOSHD",
+            "GHI_UNC_LOW",
+            "GHI_UNC_HIGH",
+            "GHI_C",
+            "DNI_NOSHD",
+            "DNI_C",
+            "DIF_NOSHD",
+            "GTI_NOSHD",
+            "GTI_C",
+            "GTI_DIR",
+            "GTI_DIR_SHD",
+            "GTI_CIRC",
+            "GTI_CIRC_SHD",
+            "GTI_ISO_HOR",
+            "GTI_ISO_HOR_SHD",
+            "GTI_REFL",
+            "GTI_REFL_SHD",
+            "GTI_EFF",
+            "GTI_EFF_SHD",
+            "SNOWflag",
+            "CIflag",
+            "PVOUT_UNC",
+            "PVOUT_UNC_LOW",
+            "PVOUT_UNC_HIGH"
+          ]
+        },
+        "SolargisUncertaintyColumnNamesPattern": {
+          "description": "Solargis recognizes the names of several uncertainty scenarios for selected column types.",
+          "pattern": "^(GHI.*|GTI.*|PVOUT.*)_UNC_P(1|5|10|20|25|75|80|90|95|99)$"
+        },
+        "SolargisWindHeightColumnNamesPattern": {
+          "description": "Solargis recognized pattern allows to 'suffix' two wind column type names. Wind speed and wind direction can be measured at the predefined height range above the ground (from 50 to 200 meters).",
+          "pattern": "^(WS|WD)(5[0-9]|[6-9][0-9]|1[0-9]{2}|200)$"
+        },
+        "TimeAlignmentEnum": {
+          "description": "Datetime strings (labels of time intervals) can represent start, center or end of the time interval (or the left edge, the center and the right edge of the time interval).",
+          "enum": [
+            "START",
+            "CENTER",
+            "END"
+          ],
+          "default": "CENTER"
+        }
+      }
+    },
+    "solargis_gti_configuration_v2.schema.json#": {
+      "$defs": {
+        "GtiSystem": {
+          "type": "object",
+          "properties": {
+            "layout": {
+              "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiSystemLayout"
+            },
+            "environment": {
+              "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiEnvironment"
+            }
+          }
+        },
+        "GtiSystemLayout": {
+          "type": "object",
+          "properties": {
+            "azimuth": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 360
+            },
+            "relativeSpacing": {
+              "type": "number",
+              "minimum": 0.1
+            },
+            "mounting": {
+              "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiMounting"
+            }
+          },
+          "required": [
+            "mounting"
+          ],
+          "additionalProperties": false
+        },
+        "GtiEnvironment": {
+          "type": "object",
+          "properties": {
+            "terrainAlbedo": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/NormalizedPercentage"
+                },
+                {
+                  "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/MonthlyValuesNormalizedPercentage"
+                }
+              ]
+            },
+            "horizon": {
+              "$ref": "#/definitions/solargis_common_types.schema.json#/$defs/Horizon"
+            }
+          }
+        },
+        "GtiMounting": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiMountingFixedOneAngle"
+            },
+            {
+              "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiMountingOneAxisHorizontalTrackerNS"
+            },
+            {
+              "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiMountingOneAxisInclinedTrackerNS"
+            },
+            {
+              "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiMountingOneAxisVerticalTracker"
+            },
+            {
+              "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiMountingTwoAxisAstronomicalTracker"
+            },
+            {
+              "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiMountingTimeSeriesTracker"
+            }
+          ]
+        },
+        "GtiMountingFixedOneAngle": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "FIXED_ONE_ANGLE"
+              ]
+            },
+            "tilt": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiDegreesMountingTilt"
+                },
+                {
+                  "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiMonthlyValuesDegreesMountingTilt"
+                },
+                {
+                  "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiSeasonalDegreesMountingTilt"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "tilt"
+          ],
+          "additionalProperties": false
+        },
+        "GtiMountingOneAxisHorizontalTrackerNS": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "ONE_AXIS_HORIZONTAL_TRACKER_NS"
+              ]
+            },
+            "backtracking": {
+              "type": "boolean"
+            },
+            "rotationLimitEast": {
+              "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiDegreesRotationLimitEastHorizontalInclinedTracker"
+            },
+            "rotationLimitWest": {
+              "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiDegreesRotationLimitWestHorizontalInclinedTracker"
+            }
+          },
+          "required": [
+            "type",
+            "backtracking",
+            "rotationLimitEast",
+            "rotationLimitWest"
+          ],
+          "additionalProperties": false
+        },
+        "GtiMountingOneAxisInclinedTrackerNS": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "ONE_AXIS_INCLINED_TRACKER_NS"
+              ]
+            },
+            "axisTilt": {
+              "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiDegreesMountingTilt"
+            },
+            "backtracking": {
+              "type": "boolean"
+            },
+            "rotationLimitEast": {
+              "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiDegreesRotationLimitEastHorizontalInclinedTracker"
+            },
+            "rotationLimitWest": {
+              "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiDegreesRotationLimitWestHorizontalInclinedTracker"
+            }
+          },
+          "required": [
+            "axisTilt",
+            "type",
+            "backtracking",
+            "rotationLimitEast",
+            "rotationLimitWest"
+          ],
+          "additionalProperties": false
+        },
+        "GtiMountingOneAxisVerticalTracker": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "ONE_AXIS_VERTICAL_TRACKER"
+              ]
+            },
+            "tilt": {
+              "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiDegreesMountingTilt"
+            },
+            "rotationLimitEast": {
+              "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiDegreesRotationLimitEastVerticalTwoAxisTracker"
+            },
+            "rotationLimitWest": {
+              "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiDegreesRotationLimitWestVerticalTwoAxisTracker"
+            }
+          },
+          "required": [
+            "type",
+            "tilt",
+            "rotationLimitEast",
+            "rotationLimitWest"
+          ],
+          "additionalProperties": false
+        },
+        "GtiMountingTwoAxisAstronomicalTracker": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "TWO_AXIS_ASTRONOMICAL_TRACKER"
+              ]
+            },
+            "tiltLimitMin": {
+              "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiDegreesMountingTilt"
+            },
+            "tiltLimitMax": {
+              "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiDegreesMountingTilt"
+            },
+            "rotationLimitEast": {
+              "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiDegreesRotationLimitEastVerticalTwoAxisTracker"
+            },
+            "rotationLimitWest": {
+              "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiDegreesRotationLimitWestVerticalTwoAxisTracker"
+            },
+            "backtracking": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "type",
+            "tiltLimitMin",
+            "tiltLimitMax",
+            "rotationLimitEast",
+            "rotationLimitWest",
+            "backtracking"
+          ],
+          "additionalProperties": false
+        },
+        "GtiMountingTimeSeriesTracker": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "TIME_SERIES_TRACKER"
+              ]
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false
+        },
+        "GtiDegreesMountingTilt": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 90
+        },
+        "GtiMonthlyValuesDegreesMountingTilt": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiDegreesMountingTilt"
+          },
+          "minItems": 12,
+          "maxItems": 12
+        },
+        "GtiSeasonalDegreesMountingTilt": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "dateOfChange": {
+                "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/MonthDay"
+              },
+              "tilt": {
+                "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/GtiDegreesMountingTilt"
+              }
+            },
+            "required": [
+              "dateOfChange",
+              "tilt"
+            ]
+          }
+        },
+        "MonthDay": {
+          "type": "string",
+          "pattern": "^\\d{2}-\\d{2}$"
+        },
+        "GtiDegreesRotationLimitEastHorizontalInclinedTracker": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90
+        },
+        "GtiDegreesRotationLimitWestHorizontalInclinedTracker": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90
+        },
+        "GtiDegreesRotationLimitEastVerticalTwoAxisTracker": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
+        },
+        "GtiDegreesRotationLimitWestVerticalTwoAxisTracker": {
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
+        },
+        "NormalizedPercentage": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "MonthlyValuesNormalizedPercentage": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/solargis_gti_configuration_v2.schema.json#/$defs/NormalizedPercentage"
+          },
+          "minItems": 12,
+          "maxItems": 12
+        }
+      }
+    }
+  }
+}
