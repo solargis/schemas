@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.0.2/solargis_common_enums.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/solargis_common_enums.schema.json",
   "$schema": "https://json-schema.org/draft-07/schema",
 
   "description": "Common enums and other schemas used with requests or datasets.",

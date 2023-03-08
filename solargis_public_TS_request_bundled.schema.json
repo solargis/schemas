@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.0.2/solargis_public_TS_request_bundled.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/solargis_public_TS_request_bundled.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
   "description": "Schema for Solargis data request - for timeseries datasets.",
   "required": [

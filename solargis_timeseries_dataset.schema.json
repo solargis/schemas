@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.0.2/solargis_timeseries_dataset.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/solargis_timeseries_dataset.schema.json",
   "$schema": "https://json-schema.org/draft-07/schema",
 
   "description": "This is the schema for the Solargis timeseries dataset - a structure for data and metadata you can exchange with Solargis. You can use this schema for two dimensional tabular data (one column is reserved for datetime strings, others are numeric columns) for a single site location or a single portfolio.",
