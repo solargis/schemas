@@ -1,0 +1,87 @@
+{
+  "site": {
+    "latitude": 43.023903,
+    "longitude": 142.419596,
+    "elevation": 156.9,
+    "name": "Pippu 比布町, Kamikawa District",
+    "countryName": "Japan",
+    "countryISOCode": "JP",
+    "id": "AX_987JP"
+  },
+  "timeStep": "PT15M",
+  "columns": [
+    "CI_FLAG",
+    "DIF",
+    "DIF_NOSHD",
+    "DNI",
+    "DNI_C",
+    "DNI_NOSHD",
+    "GHI",
+    "GHI_C",
+    "GHI_NOSHD",
+    "GTI",
+    "GTI_C",
+    "GTI_NOSHD",
+    "KC",
+    "SUN_AZIMUTH",
+    "SUN_ELEVATION"
+  ],
+  "fromDate": "2022-10-01",
+  "toDate": "2022-10-02",
+  "utcOffset": "+09:00",
+  "timeAlignment": "CENTER",
+  "terrainShading": true,
+  "fileLabel": "Pippu_AX_987JP",
+  "horizon": {
+    "azimuth": [
+      0.0,
+      360
+    ],
+    "height": [
+      19.0581,
+      31.2
+    ]
+  },
+  "surfaceAlbedo": 0.12,
+  "gtiConfiguration": {
+    "layout": {
+      "azimuth": 180,
+      "relativeSpacing": 2.5,
+      "mounting": {
+        "type": "TRACKER_ONE_AXIS_VERTICAL",
+        "tilt": 30,
+        "azimuthLimitEast": -120,
+        "azimuthLimitWest": 120
+      }
+    },
+    "environment": {
+      "surfaceAlbedo": [
+        0.23,
+        0.20,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.12,
+        0.15
+      ],
+      "horizon": {
+        "azimuth": [
+          0.0,
+          360
+        ],
+        "height": [
+          30,
+          51.2
+        ]
+      }
+    }
+  },
+  "outputFormat": "SOLARGIS_JSON",
+  "stochasticGenerator": false,
+  "compressOutput": false
+}

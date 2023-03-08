@@ -1,0 +1,76 @@
+{
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.0.2/solargis_public_TS_request.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+
+  "description": "Schema for Solargis data request - for timeseries datasets.",
+  "required": [
+    "site",
+    "timeStep",
+    "fromDate",
+    "toDate",
+    "columns",
+    "outputFormat"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "site": {
+      "description": "Site location definition.",
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/site"
+    },
+    "timeStep": {
+      "enum": [
+        "PT15M",
+        "PT30M",
+        "PT60M",
+        "P1D",
+        "P1M",
+        "P1Y"
+      ]
+    },
+    "fromDate": {
+      "description": "Start date of the requested data. Inclusive.",
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/fromDate"
+    },
+    "toDate": {
+      "description": "End date of the requested data. Inclusive.",
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/toDate"
+    },
+    "columns": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/columns"
+    },
+    "utcOffset": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/utcOffset"
+    },
+    "timeAlignment": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/timeAlignment"
+    },
+    "terrainShading": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/terrainShading"
+    },
+    "horizon": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/horizon"
+    },
+    "surfaceAlbedo": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/surfaceAlbedo"
+    },
+    "gtiConfiguration": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/gtiConfiguration"
+    },
+    "fileLabel": {
+      "$ref": "solargis_common_types.schema.json#/$defs/FileLabel"
+    },
+    "outputFormat": {
+      "enum": [
+        "SOLARGIS_JSON"
+      ]
+    },
+    "compressOutput": {
+      "description": "Output dataset will be zipped.",
+      "type": "boolean",
+      "default": false
+    },
+    "stochasticGenerator": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/stochasticGenerator"
+    }
+  }
+}

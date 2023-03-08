@@ -1,0 +1,14 @@
+{
+  "site": {
+    "latitude": 45.09,
+    "longitude": 17.34
+  },
+  "timeStep": "PT15M",
+  "columns": [
+    "GHI"
+  ],
+  "fromDate": "1994-01-01",
+  "toDate": "LAST_MONTH",
+  "terrainShading": true,
+  "outputFormat": "SOLARGIS_JSON"
+}

@@ -1,0 +1,452 @@
+{
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.0.2/solargis_timeseries_dataset.schema.json",
+  "$schema": "https://json-schema.org/draft-07/schema",
+
+  "description": "This is the schema for the Solargis timeseries dataset - a structure for data and metadata you can exchange with Solargis. You can use this schema for two dimensional tabular data (one column is reserved for datetime strings, others are numeric columns) for a single site location or a single portfolio.",
+  "$comment": "Important - all columns must refer to a single site location (or single portfolio). If you want to compare data from multiple sites, create multiple datasets.",
+  "allOf": [
+    {
+      "$ref": "#/$defs/TimeseriesDataset"
+    }
+  ],
+
+  "$defs": {
+    "TimeseriesDataset": {
+      "description": "Solargis timeseries dataset - a top level schema of this file.",
+      "$comment": "Note, that some of the required properties are mutually exclusive, e.g. site XOR portfolio",
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "created",
+        "datasetType",
+        "metadata",
+        "data"
+      ],
+      "allOf": [
+        {
+          "oneOf": [
+            {
+              "required": [
+                "site"
+              ]
+            },
+            {
+              "required": [
+                "portfolio"
+              ]
+            }
+          ]
+        }
+      ],
+      "properties": {
+        "created": {
+          "description": "Creation time of the dataset.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastModified": {
+          "description": "Modification time of the dataset.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "id": {
+          "description": "Solargis internal or any custom ID. Typically a resource identifier stored in a database.",
+          "$comment": "Producers will set the value for e.g., Solargis API request ID, order or contract ID or database ID for persisted datasets. Values may not be globally unique. URI can also be used.",
+          "type": "string",
+          "maxLength": 100
+        },
+        "guid": {
+          "description": "Solargis internal. GUID (globally unique identifier) is a 128-bit text string for an identification.",
+          "$comment": "Future use case: for checking of the originality of datasets (issued by Solargis) we can store hash or checksum for each dataset (identified by the GUID).",
+          "type": "string",
+          "maxLength": 100
+        },
+        "datasetType": {
+          "$ref": "solargis_common_enums.schema.json#/$defs/DatasetTypeEnum"
+        },
+        "name": {
+          "description": "Name of the dataset.",
+          "type": "string",
+          "maxLength": 100
+        },
+        "description": {
+          "description": "More words about the dataset.",
+          "type": "string",
+          "maxLength": 500
+        },
+        "author": {
+          "description": "Who authored the dataset - company or an individual (or an author of application which generated the dataset). Take it like a visit card or a signature under the dataset.",
+          "$ref": "solargis_common_types.schema.json#/$defs/Author"
+        },
+        "license": {
+          "description": "Ownership and rights to a resource.",
+          "$ref": "solargis_common_types.schema.json#/$defs/License"
+        },
+        "history": {
+          "description": "Changes made in a resource. Who did what and when.",
+          "$comment": "Recording of changes typically applies for only stored (persisted) resources, not for 'short-lived' instances (API responses).",
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "solargis_common_types.schema.json#/$defs/ChangeLog"
+              },
+              {
+                "$ref": "solargis_common_types.schema.json#/$defs/TimeShift"
+              }
+            ]
+          }
+        },
+        "site": {
+          "description": "Site location model.",
+          "$ref": "solargis_common_types.schema.json#/$defs/Site"
+        },
+        "portfolio": {
+          "description": " Portfolio - group of project sites, real or virtual.",
+          "$ref": "solargis_common_types.schema.json#/$defs/Portfolio"
+        },
+        "metadata": {
+          "description": "Metadata properties describing the dataset.",
+          "$ref": "#/$defs/DatasetMetadata"
+        },
+        "events": {
+          "description": "Events on the measuring station or instrument. You can attach the events as an auxiliary information.",
+          "$comment": "Events have its own datetime labels not necessarily aligned with the data timestamps.",
+          "type": "array",
+          "items": {
+            "$ref": "solargis_common_types.schema.json#/$defs/Event"
+          }
+        },
+        "data": {
+          "description": "Data values organized as collection of named arrays (=columns).",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Data"
+            }
+          ]
+        }
+      }
+    },
+    "Data": {
+      "description": "Data itself in columns. The special DATETIME column must have an array of datetime strings. Others columns have arrays of nullable numeric values. All column arrays must have the same length.",
+      "type": "object",
+      "$comment": "Schema does not enforce unique column names and the same length for all arrays. This is the responsibility of producers or consumers.",
+      "required": [
+        "DATETIME"
+      ],
+      "properties": {
+        "DATETIME": {
+          "type": "array",
+          "items": {
+            "$comment": "Allowed are null values - they will be reported during a QC process as gaps in time, but then removed (together with matching data values in other columns).",
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        }
+      },
+      "propertyNames": {
+        "$ref": "solargis_common_types.schema.json#/$defs/PatternForColumnNames"
+      },
+      "additionalProperties": {
+        "type": "array",
+        "description": "Columns with numeric data values.",
+        "$comment": "Definition for (data or flag) column values. For the sake of simplicity, we define values for both flag or data columns - number (float or integer) or null, although flags are typically only integers.",
+        "items": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
+    },
+    "Metadata": {
+      "description": "Basic metadata properties for a data resource.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "createdByApplication": {
+          "description": "Data resource is typically generated (e.g, exported, or an API response) in a software application.",
+          "$comment": "Use this for a top level app which orchestrated date resource creation.",
+          "$ref": "solargis_common_types.schema.json#/$defs/SoftwareComponent"
+        },
+        "quality": {
+          "description": "Quality information about the resource.",
+          "$ref": "solargis_common_types.schema.json#/$defs/Quality"
+        },
+        "processing": {
+          "description": "Processing details. Column values are typically results of some processing steps.",
+          "additionalProperties": false,
+          "properties": {
+            "modules": {
+              "description": "List of processing modules (and details) contributed on column values creation.",
+              "$comment": "You can sort the array of processing modules, if that makes sense. See also Metadata.createdByApplication property.",
+              "type": "array",
+              "items": {
+                "$ref": "solargis_common_types.schema.json#/$defs/SoftwareComponent"
+              }
+            },
+            "timePeriod": {
+              "description": "In case of LTA or TMY data, timestamps in DATETIME column work only as labels, because they represent bigger summarization periods and values are result of averaging or data selection.",
+              "$ref": "solargis_common_types.schema.json#/$defs/TimeRange"
+            },
+            "level": {
+              "description": "Level of processing performed on the resource.",
+              "$comment": " TODO: not decided yet, something like: level: L1 - raw data, L1.5 - after QC flagging, L2 - gap-filled (e.g. TS/TMY model), L3 - data derivatives.",
+              "type": [
+                "string"
+              ]
+            }
+          }
+        },
+        "flagScheme": {
+          "description": "Flag scheme - list of flag values and its interpretation.",
+          "type": "array",
+          "items": {
+            "$ref": "solargis_common_types.schema.json#/$defs/Flag"
+          },
+          "examples": [
+            {
+              "value": 1,
+              "validData": true,
+              "description": "passed"
+            },
+            {
+              "value": 0,
+              "validData": false,
+              "description": "sun below horizon"
+            },
+            {
+              "value": 3,
+              "validData": false,
+              "description": "meaning of the flag..."
+            },
+            {
+              "value": 0,
+              "validData": true,
+              "description": "sun below horizon"
+            },
+            {
+              "value": 1,
+              "validData": true,
+              "description": "model value"
+            },
+            {
+              "value": 2,
+              "validData": true,
+              "description": "interpolated <=1hour"
+            },
+            {
+              "value": 3,
+              "validData": true,
+              "description": "extrapolated <=1hour"
+            },
+            {
+              "value": 4,
+              "validData": true,
+              "description": "interpolated/extrapolated >1hour"
+            },
+            {
+              "value": 5,
+              "validData": true,
+              "description": "long term monthly median or persistence"
+            },
+            {
+              "value": 6,
+              "validData": true,
+              "description": "synthetic data"
+            },
+            {
+              "value": 10,
+              "validData": true,
+              "description": "nowcast"
+            },
+            {
+              "value": 11,
+              "validData": true,
+              "description": "NWP forecast"
+            }
+          ]
+        },
+        "method": {
+          "description": "Method used for creation of the column(s).",
+          "type": "string",
+          "maxLength": 500
+        },
+        "sources": {
+          "description": "Origin of the column(s). Usually a data source, but can be anything, even another columns. You can use also the version property.",
+          "$comment": "Single column can originate from multiple sources.",
+          "type": "array",
+          "items": {
+            "$ref": "solargis_common_types.schema.json#/$defs/DataSource"
+          }
+        },
+        "instrument": {
+          "description": "Column values can be measured by one (or more) measuring instrument e.g., pyranometer or a thermometer.",
+          "type": "array",
+          "items": {
+            "$ref": "solargis_common_types.schema.json#/$defs/Instrument"
+          }
+        },
+        "horizon": {
+          "$ref": "solargis_common_types.schema.json#/$defs/Horizon"
+        },
+        "surfaceAlbedo": {
+          "$ref": "solargis_common_types.schema.json#/$defs/SurfaceAlbedo"
+        },
+        "gtiConfiguration": {
+          "description": "Configuration object used with the simulation of solar irradiation hitting a tilted surface (GTI or POA).",
+          "$ref": "solargis_gti_configuration_v2.schema.json#/$defs/GtiSystem"
+        },
+        "pvConfiguration": {
+          "description": "Object is required if at least one PV output related column is present in the array of columns (also the TMOD parameter).",
+          "$comment": "TODO add V2, for now we have only solargis_pv_configuration_v1.schema.json#/$defs/PvConfigurationV1"
+        }
+      }
+    },
+    "DatasetMetadata": {
+      "description": "Metadata properties you can use globally on the dataset level. It extends the Metadata with new properties.",
+      "type": "object",
+      "$comment": "Before the JSON schema draft 2019-09 you must redeclare all properties from the base class (Metadata).",
+      "allOf": [
+        {
+          "$ref": "#/$defs/Metadata"
+        }
+      ],
+      "properties": {
+        "createdByApplication": true,
+        "quality": true,
+        "processing": true,
+        "flagScheme": true,
+        "method": true,
+        "sources": true,
+        "energySystem": true,
+        "instrument": true,
+        "horizon": true,
+        "datasetVersion": {
+          "title": "Version of the dataset instance itself. Do not confuse with versions in Metadata.processing.modules or Metadata.sources.",
+          "type": "string",
+          "maxLength": 50
+        },
+        "columns": {
+          "description": "Meta properties specific for each column. They override the metadata present at the dataset (global) level.",
+          "type": "object",
+          "required": [
+            "DATETIME"
+          ],
+          "propertyNames": {
+            "$ref": "solargis_common_types.schema.json#/$defs/PatternForColumnNames"
+          },
+          "properties": {
+            "DATETIME": {
+              "$ref": "#/$defs/TimeColumnMetadata"
+            }
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/DataColumnMetadata"
+          }
+        },
+        "columnOrder": {
+          "description": "Json (nor all software libraries for Json) doesn't guarantee the sorting of object's properties. Consumers can use this property to keep data column ordering as defined by the producer.",
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "solargis_common_types.schema.json#/$defs/PatternForColumnNames"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "TimeColumnMetadata": {
+      "description": "Interpretation of datetime text values included in the DATETIME column.",
+      "$comment": "The schema requires full date-time format as defined by https://datatracker.ietf.org/doc/html/rfc3339#section-5.6. Time zone is required part of the timestamp strings.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "timeFormatPattern"
+      ],
+      "properties": {
+        "timeFormatPattern": {
+          "description": "Dates and times are represented in RFC 3339, section 5.6. This is a subset of the date format also commonly known as ISO8601 format.",
+          "const": "YYYY-MM-DDThh:mm:ss[.sss]±hh:mm"
+        },
+        "timeStep": {
+          "description": "Time step (time resolution or time granularity). It's optional because not all datasets have constant time step in all records.",
+          "$comment": "Values comply with the https://en.wikipedia.org/wiki/ISO_8601#Durations standard.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/TimeStepEnum"
+        },
+        "firstTimestamp": {
+          "description": "First timestamp in the complete data. For the convenience of consumers.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastTimestamp": {
+          "description": "Last timestamp in the complete data. For the convenience of consumers.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "timeAlignment": {
+          "description": "Datetime strings (labels of time intervals) can represent start, center or end of the time interval (or the left edge, the middle and the right edge of the time interval).",
+          "$ref": "solargis_common_enums.schema.json#/$defs/TimeAlignmentEnum",
+          "default": "CENTER"
+        },
+        "realTimestamps": {
+          "description": "TMY and LTA datasets have 'non-real' timestamps (don't represent real instances of time). TS datasets -> real timestamps.",
+          "default": true,
+          "type": "boolean"
+        }
+      }
+    },
+    "DataColumnMetadata": {
+      "description": "Meta properties at the column level. It extends the Metadata base entity with specific column properties (most importantly columnType and unit).",
+      "type": "object",
+      "$comment": "Prior to the JSON schema draft 2019-09 you must redeclare all properties from the base class (Metadata).",
+      "allOf": [
+        {
+          "$ref": "#/$defs/Metadata"
+        }
+      ],
+      "properties": {
+        "createdByApplication": true,
+        "quality": true,
+        "processing": true,
+        "flagScheme": true,
+        "method": true,
+        "sources": true,
+        "energySystem": true,
+        "instrument": true,
+        "horizon": true,
+        "columnType": {
+          "description": "Predefined column type.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/AllColumnTypes"
+        },
+        "unit": {
+          "$ref": "solargis_common_enums.schema.json#/$defs/AllUnits"
+        },
+        "description": {
+          "description": "More words about the column.",
+          "type": "string",
+          "maxLength": 500
+        },
+        "flagColumnName": {
+          "description": "Column can have its flag values in another column (a flag column).",
+          "$ref": "solargis_common_types.schema.json#/$defs/PatternForColumnNames"
+        },
+        "priority": {
+          "description": "For internal use of the Solargis Analyst, but can be used elsewhere - if you need to express the importance of multiple columns of the same type e.g., multiple sensor GHIs.",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "columnType",
+        "unit"
+      ],
+      "additionalProperties": true
+    }
+  }
+}

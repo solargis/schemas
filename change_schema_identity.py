@@ -2,11 +2,11 @@ import glob
 import os
 from pathlib import Path
 
-old_identity = '/v1.0.1/'
-new_identity = '/v1.0.1/v1/'
+old_identity = '/v1.0.1/v1/'
+new_identity = '/v1.0.2/'
 
 here = Path(__file__).parent
-schema_folder = str(here / "v1")
+schema_folder = str(here)
 
 file_list = glob.glob(os.path.join(schema_folder, "*.schema.json"))
 
