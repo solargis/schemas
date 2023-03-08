@@ -2,7 +2,7 @@ import glob
 import os
 from pathlib import Path
 
-old_identity = '/v1.0.1/v1/'
+old_identity = '/main/'
 new_identity = '/v1.0.2/'
 
 here = Path(__file__).parent

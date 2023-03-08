@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/solargis_public_TS_request_dereferenced.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.0.2/solargis_public_TS_request.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
   "description": "Schema for Solargis data request - for timeseries datasets.",
   "required": [
@@ -181,102 +181,91 @@
             "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
           },
           {
-            "description": "Column types from the solar data domain (and related). The enum also includes tilted solar irradiation types.",
-            "$comment": "Do not confuse column types with column names, but prefer using type names for column names if applicable.",
+            "description": "Column types from the solar data domain. Including also tilted solar irradiation types.",
+            "$comment": "Do not confuse column types with column names, but prefer using type names for column names if applicable (when creating datasets).",
             "enum": [
+              "ALB",
+              "DHI",
+              "DIF",
+              "DNI",
+              "GHI",
+              "GTI",
+              "KC",
+              "KT",
+              "LEADTIME",
+              "PANEL_AZIMUTH",
+              "PANEL_INC",
+              "PANEL_TILT",
+              "PAR",
+              "SH",
               "SUN_AZIMUTH",
               "SUN_ELEVATION",
-              "SA",
-              "SE",
-              "PANEL_AZIMUTH",
-              "PANEL_TILT",
-              "PANEL_INC",
-              "GHI",
-              "DNI",
-              "DIF",
-              "ALB",
-              "GTI",
-              "PAR",
-              "UVB",
               "UVA",
-              "DHI",
-              "KTM",
-              "KT",
-              "KC",
-              "LEADTIME"
+              "UVB"
             ]
           },
           {
             "description": "Column types from the meteorological data domain.",
             "enum": [
-              "TEMP",
-              "WS",
-              "WD",
-              "WG",
-              "RH",
               "AP",
-              "PWAT",
               "PREC",
-              "TD",
-              "WBT",
-              "SWE",
-              "TSD",
+              "PWAT",
+              "RH",
               "SDENS",
               "SDWE",
-              "SFWE"
+              "SFWE",
+              "TD",
+              "TEMP",
+              "TSD",
+              "WBT",
+              "WD",
+              "WG",
+              "WS"
             ]
           },
           {
             "description": "Column types from the PV energy data domain (and related).",
             "enum": [
-              "TMOD",
-              "PVOUT"
-            ]
-          },
-          {
-            "description": "Column types from wind energy data domain.",
-            "enum": [
-              "WOUT"
+              "PVOUT",
+              "TMOD"
             ]
           },
           {
             "description": "In addition to column type names, Solargis also recognizes the following column names in the request.",
             "enum": [
-              "GHI_NOSHD",
-              "GHI_UNC_LOW",
-              "GHI_UNC_HIGH",
-              "GHI_C",
-              "DNI_NOSHD",
-              "DNI_C",
+              "CI_FLAG",
               "DIF_NOSHD",
-              "GTI_NOSHD",
+              "DNI_C",
+              "DNI_NOSHD",
+              "GHI_C",
+              "GHI_NOSHD",
+              "GHI_UNC_HIGH",
+              "GHI_UNC_LOW",
               "GTI_C",
-              "GTI_DIR",
-              "GTI_DIR_SHD",
               "GTI_CIRC",
-              "GTI_CIRC_SHD",
-              "GTI_ISO_HOR",
-              "GTI_ISO_HOR_SHD",
-              "GTI_REFL",
-              "GTI_REFL_SHD",
+              "GTI_CIRC_NOSHD",
+              "GTI_DIR",
+              "GTI_DIR_NOSHD",
               "GTI_EFF",
-              "GTI_EFF_SHD",
-              "SNOWflag",
-              "CIflag",
-              "PVOUT_UNC",
+              "GTI_EFF_NOSHD",
+              "GTI_ISO_HOR",
+              "GTI_ISO_HOR_NOSHD",
+              "GTI_NOSHD",
+              "GTI_REFL",
+              "GTI_REFL_NOSHD",
+              "GTI_UNC_HIGH",
+              "GTI_UNC_LOW",
+              "PVOUT_UNC_HIGH",
               "PVOUT_UNC_LOW",
-              "PVOUT_UNC_HIGH"
+              "SNOW_FLAG"
             ]
           },
           {
             "description": "Solargis recognizes the names of several uncertainty scenarios for selected column types.",
-            "type": "string",
             "pattern": "^(GHI|GTI|PVOUT)_UNC_P(1|5|10|20|25|75|80|90|95|99)$"
           },
           {
             "description": "Solargis recognized pattern allows to 'suffix' two wind column type names. Wind speed and wind direction can be measured at the predefined height range above the ground (from 50 to 200 meters).",
-            "$comment": "This would work: WS55, WD76. This would not: WS201, WD7",
-            "type": "string",
             "pattern": "^(WS|WD)(5[0-9]|[6-9][0-9]|1[0-9]{2}|200)$"
           }
         ]
@@ -290,8 +279,8 @@
     "timeAlignment": {
       "description": "Datetime strings (labels of time intervals) can represent start, center or end of the time interval (or the left edge, the center and the right edge of the time interval).",
       "enum": [
-        "START",
         "CENTER",
+        "START",
         "END"
       ],
       "default": "CENTER"
@@ -348,7 +337,7 @@
         ]
       ]
     },
-    "groundAlbedo": {
+    "surfaceAlbedo": {
       "oneOf": [
         {
           "type": "number",
@@ -394,44 +383,9 @@
                       ]
                     },
                     "tilt": {
-                      "oneOf": [
-                        {
-                          "type": "number",
-                          "minimum": 0,
-                          "maximum": 90
-                        },
-                        {
-                          "type": "array",
-                          "items": {
-                            "type": "number",
-                            "minimum": 0,
-                            "maximum": 90
-                          },
-                          "minItems": 12,
-                          "maxItems": 12
-                        },
-                        {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "dateOfChange": {
-                                "type": "string",
-                                "pattern": "^\\d{2}-\\d{2}$"
-                              },
-                              "tilt": {
-                                "type": "number",
-                                "minimum": 0,
-                                "maximum": 90
-                              }
-                            },
-                            "required": [
-                              "dateOfChange",
-                              "tilt"
-                            ]
-                          }
-                        }
-                      ]
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 90
                     }
                   },
                   "required": [
@@ -446,7 +400,70 @@
                     "type": {
                       "type": "string",
                       "enum": [
-                        "ONE_AXIS_HORIZONTAL_TRACKER_NS"
+                        "FIXED_ONE_ANGLE_MONTHLY"
+                      ]
+                    },
+                    "tilt": {
+                      "type": "array",
+                      "items": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 90
+                      },
+                      "minItems": 12,
+                      "maxItems": 12
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "tilt"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "FIXED_ONE_ANGLE_SEASONAL"
+                      ]
+                    },
+                    "tilt": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "dateOfChange": {
+                            "type": "string",
+                            "pattern": "^\\d{2}-\\d{2}$"
+                          },
+                          "tilt": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 90
+                          }
+                        },
+                        "required": [
+                          "dateOfChange",
+                          "tilt"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "tilt"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "TRACKER_ONE_AXIS_HORIZONTAL"
                       ]
                     },
                     "backtracking": {
@@ -477,7 +494,7 @@
                     "type": {
                       "type": "string",
                       "enum": [
-                        "ONE_AXIS_INCLINED_TRACKER_NS"
+                        "TRACKER_ONE_AXIS_INCLINED"
                       ]
                     },
                     "axisTilt": {
@@ -514,7 +531,7 @@
                     "type": {
                       "type": "string",
                       "enum": [
-                        "ONE_AXIS_VERTICAL_TRACKER"
+                        "TRACKER_ONE_AXIS_VERTICAL"
                       ]
                     },
                     "tilt": {
@@ -522,12 +539,12 @@
                       "minimum": 0,
                       "maximum": 90
                     },
-                    "rotationLimitEast": {
+                    "azimuthLimitEast": {
                       "type": "number",
                       "minimum": -180,
                       "maximum": 180
                     },
-                    "rotationLimitWest": {
+                    "azimuthLimitWest": {
                       "type": "number",
                       "minimum": -180,
                       "maximum": 180
@@ -536,8 +553,8 @@
                   "required": [
                     "type",
                     "tilt",
-                    "rotationLimitEast",
-                    "rotationLimitWest"
+                    "azimuthLimitEast",
+                    "azimuthLimitWest"
                   ],
                   "additionalProperties": false
                 },
@@ -547,7 +564,7 @@
                     "type": {
                       "type": "string",
                       "enum": [
-                        "TWO_AXIS_ASTRONOMICAL_TRACKER"
+                        "TRACKER_TWO_AXIS"
                       ]
                     },
                     "tiltLimitMin": {
@@ -560,12 +577,12 @@
                       "minimum": 0,
                       "maximum": 90
                     },
-                    "rotationLimitEast": {
+                    "azimuthLimitEast": {
                       "type": "number",
                       "minimum": -180,
                       "maximum": 180
                     },
-                    "rotationLimitWest": {
+                    "azimuthLimitWest": {
                       "type": "number",
                       "minimum": -180,
                       "maximum": 180
@@ -578,24 +595,9 @@
                     "type",
                     "tiltLimitMin",
                     "tiltLimitMax",
-                    "rotationLimitEast",
-                    "rotationLimitWest",
+                    "azimuthLimitEast",
+                    "azimuthLimitWest",
                     "backtracking"
-                  ],
-                  "additionalProperties": false
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "enum": [
-                        "TIME_SERIES_TRACKER"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "type"
                   ],
                   "additionalProperties": false
                 }
@@ -610,7 +612,7 @@
         "environment": {
           "type": "object",
           "properties": {
-            "terrainAlbedo": {
+            "surfaceAlbedo": {
               "oneOf": [
                 {
                   "type": "number",
@@ -676,9 +678,11 @@
                 ]
               ]
             }
-          }
+          },
+          "additionalProperties": false
         }
-      }
+      },
+      "additionalProperties": false
     },
     "fileLabel": {
       "description": "Contains only ASCII letters, numbers and underscores, and it must not start with a number.",
