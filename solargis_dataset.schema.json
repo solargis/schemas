@@ -1,25 +1,41 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.0.2/solargis_multisite_timeseries_dataset.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/solargis_dataset.schema.json",
   "$schema": "https://json-schema.org/draft-07/schema",
 
-  "description": "Variant of the Solargis timeseries dataset - having data for multiple sites (one portfolio) in a single instance.",
+  "description": "This is the schema for the Solargis dataset - a structure for data and metadata you can exchange with Solargis. You can use this schema for two dimensional tabular data (one column is reserved for datetime strings, others are numeric columns) for a single site location or a single portfolio.",
+  "$comment": "Important - all columns must refer to a single site location (or single portfolio). If you want to compare data from multiple sites, create multiple datasets.",
   "allOf": [
     {
-      "$ref": "#/$defs/MultiSiteTimeseriesDataset"
+      "$ref": "#/$defs/Dataset"
     }
   ],
 
   "$defs": {
-    "MultiSiteTimeseriesDataset": {
-      "description": "Solargis timeseries dataset for multiple sites - a top level schema of this file.",
+    "Dataset": {
+      "description": "Solargis dataset - a top level schema of this file.",
+      "$comment": "Note, that some of the required properties are mutually exclusive, e.g. site XOR portfolio",
       "type": "object",
       "additionalProperties": true,
       "required": [
         "created",
         "datasetType",
-        "sites",
-        "metadata",
-        "data"
+        "metadata"
+      ],
+      "allOf": [
+        {
+          "oneOf": [
+            {
+              "required": [
+                "site"
+              ]
+            },
+            {
+              "required": [
+                "portfolio"
+              ]
+            }
+          ]
+        }
       ],
       "properties": {
         "created": {
@@ -62,11 +78,11 @@
           "$ref": "solargis_common_types.schema.json#/$defs/Author"
         },
         "license": {
-          "description": "Ownership and rights to this resource.",
+          "description": "Ownership and rights to a resource.",
           "$ref": "solargis_common_types.schema.json#/$defs/License"
         },
         "history": {
-          "description": "Changes made in the resource. Who did what and when.",
+          "description": "Changes made in a resource. Who did what and when.",
           "$comment": "Recording of changes typically applies for only stored (persisted) resources, not for 'short-lived' instances (API responses).",
           "type": "array",
           "items": {
@@ -80,17 +96,25 @@
             ]
           }
         },
-        "sites": {
-          "description": "Collection of site location objects.",
-          "type": "array",
-          "items": {
-            "$ref": "solargis_common_types.schema.json#/$defs/Site"
-          },
-          "minItems": 1,
+        "site": {
+          "description": "Site location model.",
+          "$ref": "solargis_common_types.schema.json#/$defs/Site"
+        },
+        "portfolio": {
+          "description": " Portfolio - group of project sites, real or virtual.",
+          "$ref": "solargis_common_types.schema.json#/$defs/Portfolio"
         },
         "metadata": {
           "description": "Metadata properties describing the dataset.",
           "$ref": "#/$defs/DatasetMetadata"
+        },
+        "events": {
+          "description": "Events on the measuring station or instrument. You can attach the events as an auxiliary information.",
+          "$comment": "Events have its own datetime labels not necessarily aligned with the data timestamps.",
+          "type": "array",
+          "items": {
+            "$ref": "solargis_common_types.schema.json#/$defs/Event"
+          }
         },
         "data": {
           "description": "Data values organized as collection of named arrays (=columns).",
@@ -270,6 +294,9 @@
         },
         "horizon": {
           "$ref": "solargis_common_types.schema.json#/$defs/Horizon"
+        },
+        "surfaceAlbedo": {
+          "$ref": "solargis_common_types.schema.json#/$defs/SurfaceAlbedo"
         },
         "gtiConfiguration": {
           "description": "Configuration object used with the simulation of solar irradiation hitting a tilted surface (GTI or POA).",

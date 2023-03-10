@@ -1,0 +1,25 @@
+{
+  "site": {
+    "latitude": 48.61259,
+    "longitude": 20.827079,
+    "siteName": "Basic example Site"
+  },
+  "timeStep": "PT60M",
+  "columns": [
+    "GHI",
+    "DNI",
+    "DIF",
+    "SUN_ELEVATION",
+    "SUN_AZIMUTH",
+    "TEMP",
+    "WS",
+    "WD"
+  ],
+  "fromDate": "1994-01-01",
+  "toDate": "2022-12-31",
+  "utcOffset": "+01:00",
+  "timeAlignment": "CENTER",
+  "terrainShading": true,
+  "outputFormat": "SOLARGIS_JSON",
+  "fileLabel": "basic_01"
+}
