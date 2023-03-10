@@ -3,7 +3,7 @@
   "$schema": "https://json-schema.org/draft-07/schema",
 
   "description": "This is the schema for the Solargis dataset - a structure for data and metadata you can exchange with Solargis. You can use this schema for two dimensional tabular data (one column is reserved for datetime strings, others are numeric columns) for a single site location or a single portfolio.",
-  "$comment": "Important - all columns must refer to a single site location (or single portfolio). If you want to compare data from multiple sites, create multiple datasets.",
+  "$comment": "Important - all columns must refer to a single site location (or portfolio). If you want to compare data from multiple sites, create multiple datasets.",
   "allOf": [
     {
       "$ref": "#/$defs/Dataset"
@@ -12,8 +12,8 @@
 
   "$defs": {
     "Dataset": {
-      "description": "Solargis dataset - a top level schema of this file.",
-      "$comment": "Note, that some of the required properties are mutually exclusive, e.g. site XOR portfolio",
+      "description": "Solargis dataset - top level schema of this file.",
+      "$comment": "Note, that some of the required properties are mutually exclusive e.g., site XOR portfolio",
       "type": "object",
       "additionalProperties": true,
       "required": [
@@ -101,7 +101,7 @@
           "$ref": "solargis_common_types.schema.json#/$defs/Site"
         },
         "portfolio": {
-          "description": " Portfolio - group of project sites, real or virtual.",
+          "description": " Portfolio - group of project sites, real or virtual. Aggregated as single 'site'.",
           "$ref": "solargis_common_types.schema.json#/$defs/Portfolio"
         },
         "metadata": {
@@ -311,7 +311,7 @@
     "DatasetMetadata": {
       "description": "Metadata properties you can use globally on the dataset level. It extends the Metadata with new properties.",
       "type": "object",
-      "$comment": "Before the JSON schema draft 2019-09 you must redeclare all properties from the base class (Metadata).",
+      "$comment": "Before the JSON schema draft 2019-09, all properties from the base class (Metadata) must be redeclared.",
       "allOf": [
         {
           "$ref": "#/$defs/Metadata"
@@ -371,7 +371,7 @@
       ],
       "properties": {
         "timeFormatPattern": {
-          "description": "Dates and times are represented in RFC 3339, section 5.6. This is a subset of the date format also commonly known as ISO8601 format.",
+          "description": "Dates and times are defined by RFC 3339, section 5.6. This is the subset of a date format commonly known as ISO8601 format.",
           "const": "YYYY-MM-DDThh:mm:ss[.sss]±hh:mm"
         },
         "timeStep": {
@@ -395,7 +395,7 @@
           "default": "CENTER"
         },
         "realTimestamps": {
-          "description": "TMY and LTA datasets have 'non-real' timestamps (don't represent real instances of time). TS datasets -> real timestamps.",
+          "description": "TMY and LONG-TERM AVERAGE datasets have 'non-real' timestamps (don't represent real instances of time). TIMESERIES datasets have timestamps with the real meaning.",
           "default": true,
           "type": "boolean"
         }

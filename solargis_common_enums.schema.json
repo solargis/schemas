@@ -6,7 +6,7 @@
 
   "$defs": {
     "DatasetTypeEnum": {
-      "description": "Category of a response (dataset) object. Also used in requests. Timestamps in the dataset can either represent real instances of time or typical meteorological year (TMY) or long-term average data. The meaning of timestamps is different in these types.",
+      "description": "Main type of a response (dataset) object. Also used in requests. TMY and LONG-TERM AVERAGE datasets have 'non-real' timestamps (not representing real instances of time). TIMESERIES datasets have timestamps with the real meaning.",
       "enum": [
         "LONG_TERM_AVERAGE",
         "TIMESERIES",
