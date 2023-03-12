@@ -80,11 +80,8 @@
           "type": "boolean",
           "default": false
         },
-        "horizon": {
-          "$ref": "solargis_common_types.schema.json#/$defs/Horizon"
-        },
-        "surfaceAlbedo": {
-          "$ref": "solargis_common_types.schema.json#/$defs/SurfaceAlbedo"
+        "environment": {
+          "$ref": "solargis_common_types.schema.json#/$defs/Environment"
         },
         "gtiConfiguration": {
           "description": "Object is required if at least one GTI related column is present in the array of columns.",
@@ -102,7 +99,12 @@
           "description": "For 1, 5 and 10 minute time steps, the solar irradiation values can be synthetically generated from 15 minute data.",
           "type": "boolean",
           "default": false
-        }
+        },
+        "requestId": {
+          "description": "Solargis internal request identification.",
+          "type": "string",
+          "maxLength": 100
+        },
       },
       "dependencies": {
         "pvConfiguration": [

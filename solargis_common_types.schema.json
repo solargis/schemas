@@ -593,6 +593,18 @@
       "description": "Contains only ASCII letters, numbers and underscores, and it must not start with a number.",
       "type": "string",
       "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+    },
+    "Environment": {
+      "description": "Environmental characteristics of the site location.",
+      "type": "object",
+      "properties": {
+        "surfaceAlbedo": {
+          "$ref": "#/$defs/SurfaceAlbedo"
+        },
+        "horizon": {
+          "$ref": "#/$defs/Horizon"
+        }
+      }
     }
   }
 }

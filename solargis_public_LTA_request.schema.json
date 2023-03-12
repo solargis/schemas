@@ -3,6 +3,7 @@
   "$schema": "http://json-schema.org/draft-07/schema",
 
   "description": "Schema for Solargis data request - for long-term average (LTA) datasets.",
+  "type": "object",
   "required": [
     "site",
     "timeStep",
@@ -11,6 +12,7 @@
     "columns",
     "outputFormat"
   ],
+  "additionalProperties": true,
   "properties": {
     "requestType": {
       "const": "LONG_TERM_AVERAGE"
@@ -45,11 +47,8 @@
     "terrainShading": {
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/terrainShading"
     },
-    "horizon": {
-      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/horizon"
-    },
-    "surfaceAlbedo": {
-      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/surfaceAlbedo"
+    "environment": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/environment"
     },
     "gtiConfiguration": {
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/gtiConfiguration"
