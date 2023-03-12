@@ -32,24 +32,34 @@
   "timeAlignment": "CENTER",
   "terrainShading": true,
   "fileLabel": "Pippu_AX_987JP",
-  "horizon": {
-    "azimuth": [
-      0.0,
-      360
-    ],
-    "height": [
-      19.0581,
-      31.2
-    ]
+  "environment": {
+    "surfaceAlbedo": 0.12,
+    "horizon": {
+      "azimuth": [
+        0.0,
+        360
+      ],
+      "height": [
+        19.0581,
+        31.2
+      ]
+    }
   },
-  "surfaceAlbedo": 0.12,
   "gtiConfiguration": {
     "layout": {
       "azimuth": 180,
       "mounting": {
         "type": "FIXED_ONE_ANGLE_SEASONAL",
-        "tilt": [{"dateOfChange": "03-21", "tilt": 30},
-        {"dateOfChange": "09-21", "tilt": 50}]
+        "tilt": [
+          {
+            "dateOfChange": "03-21",
+            "tilt": 30
+          },
+          {
+            "dateOfChange": "09-21",
+            "tilt": 50
+          }
+        ]
       }
     },
     "environment": {

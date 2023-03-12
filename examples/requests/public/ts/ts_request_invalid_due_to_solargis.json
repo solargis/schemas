@@ -24,16 +24,18 @@
   "utcOffset": "+09:00",
   "timeAlignment": "CENTER",
   "terrainShading": true,
-  "surfaceAlbedo": 0.12,
-  "horizon": {
-    "azimuth": [
-      0.0,
-      360
-    ],
-    "height": [
-      19.0581,
-      31.2
-    ]
+  "environment": {
+    "surfaceAlbedo": 0.12,
+    "horizon": {
+      "azimuth": [
+        0.0,
+        360
+      ],
+      "height": [
+        19.0581,
+        31.2
+      ]
+    }
   },
   "stochasticGenerator": false,
   "outputFormat": "SOLARGIS_JSON",

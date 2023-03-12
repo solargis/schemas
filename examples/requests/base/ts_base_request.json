@@ -1,5 +1,6 @@
 {
   "requestType": "TIMESERIES",
+  "requestId": "HGSGL8234jasv6",
   "site": {
     "latitude": 43.023903,
     "longitude": 142.419596,
@@ -21,22 +22,23 @@
     "WS78",
     "ABC"
   ],
-  "outputFormat": "SOLARGIS_JSON",
   "fromDate": "2022-10-01",
   "toDate": "2022-10-02",
   "utcOffset": "+09:00",
   "timeAlignment": "CENTER",
   "terrainShading": true,
-  "fileLabel": "Pippu_AX_987JP",
-  "horizon": {
-    "azimuth": [
-      0.0,
-      360
-    ],
-    "height": [
-      19.0581,
-      31.2
-    ]
+  "environment": {
+    "surfaceAlbedo": 0.12,
+    "horizon": {
+      "azimuth": [
+        0.0,
+        360
+      ],
+      "height": [
+        19.0581,
+        31.2
+      ]
+    }
   },
   "gtiConfiguration": {
     "layout": {
