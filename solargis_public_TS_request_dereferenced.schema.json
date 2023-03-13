@@ -1,7 +1,8 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/solargis_public_TS_request.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.0.3/solargis_public_TS_request.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
   "description": "Schema for Solargis data request - for timeseries datasets.",
+  "type": "object",
   "required": [
     "site",
     "timeStep",
@@ -220,7 +221,8 @@
               "WBT",
               "WD",
               "WG",
-              "WS"
+              "WS",
+              "WOUT"
             ]
           },
           {
@@ -265,7 +267,7 @@
             "pattern": "^(GHI|GTI|PVOUT)_UNC_P(1|5|10|20|25|75|80|90|95|99)$"
           },
           {
-            "description": "Solargis recognized pattern allows to 'suffix' two wind column type names. Wind speed and wind direction can be measured at the predefined height range above the ground (from 50 to 200 meters).",
+            "description": "Solargis recognizes a pattern for two wind column names. Wind speed and wind direction can be recorded at the predefined height range above the ground (from 50 to 200 meters).",
             "pattern": "^(WS|WD)(5[0-9]|[6-9][0-9]|1[0-9]{2}|200)$"
           }
         ]
@@ -290,71 +292,77 @@
       "type": "boolean",
       "default": false
     },
-    "horizon": {
-      "description": "An outline (modeled as a set of points) of land and other objects defined against the sky - a skyline.",
+    "environment": {
+      "description": "Environmental characteristics of the site location.",
       "type": "object",
-      "required": [
-        "azimuth",
-        "height"
-      ],
-      "additionalProperties": false,
       "properties": {
-        "azimuth": {
-          "description": "Geographical azimuth of the point in degrees. From the 0 degree (North) advancing clockwise.",
-          "type": "array",
-          "items": {
-            "type": [
-              "number"
-            ],
-            "minimum": 0,
-            "maximum": 360
-          }
+        "surfaceAlbedo": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "minItems": 12,
+              "maxItems": 12
+            }
+          ]
         },
-        "height": {
-          "description": "Angular height of the point in degrees. From the 0 degree up to 90 degrees.",
-          "type": "array",
-          "items": {
-            "type": [
-              "number"
-            ],
-            "minimum": 0,
-            "maximum": 90
-          }
-        }
-      },
-      "examples": [
-        [
-          {
-            "azimuth": [
-              0,
-              360
-            ],
-            "height": [
-              19.0581,
-              31.2
-            ]
-          }
-        ]
-      ]
-    },
-    "surfaceAlbedo": {
-      "oneOf": [
-        {
-          "type": "number",
-          "minimum": 0,
-          "maximum": 1
-        },
-        {
-          "type": "array",
-          "items": {
-            "type": "number",
-            "minimum": 0,
-            "maximum": 1
+        "horizon": {
+          "description": "An outline (modeled as a set of points) of land and other objects defined against the sky - a skyline.",
+          "type": "object",
+          "required": [
+            "azimuth",
+            "height"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "azimuth": {
+              "description": "Geographical azimuth of the point in degrees. From the 0 degree (North) advancing clockwise.",
+              "type": "array",
+              "items": {
+                "type": [
+                  "number"
+                ],
+                "minimum": 0,
+                "maximum": 360
+              }
+            },
+            "height": {
+              "description": "Angular height of the point in degrees. From the 0 degree up to 90 degrees.",
+              "type": "array",
+              "items": {
+                "type": [
+                  "number"
+                ],
+                "minimum": 0,
+                "maximum": 90
+              }
+            }
           },
-          "minItems": 12,
-          "maxItems": 12
+          "examples": [
+            [
+              {
+                "azimuth": [
+                  0,
+                  360
+                ],
+                "height": [
+                  19.0581,
+                  31.2
+                ]
+              }
+            ]
+          ]
         }
-      ]
+      }
     },
     "gtiConfiguration": {
       "type": "object",

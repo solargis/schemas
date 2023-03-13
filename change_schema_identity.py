@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 
 old_identity = '/main/'
-new_identity = '/v1.0.2/'
+new_identity = '/v1.0.3/'
 
 here = Path(__file__).parent
 schema_folder = str(here)
