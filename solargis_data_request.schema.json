@@ -104,7 +104,7 @@
           "description": "Solargis internal request identification.",
           "type": "string",
           "maxLength": 100
-        },
+        }
       },
       "dependencies": {
         "pvConfiguration": [
