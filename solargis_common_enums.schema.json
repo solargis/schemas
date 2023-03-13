@@ -272,7 +272,6 @@
           "enum": [
             "%",
             "hour",
-            "unit-less",
             "kWh",
             "kW"
           ]
