@@ -59,7 +59,8 @@
         "SUN_AZIMUTH",
         "SUN_ELEVATION",
         "UVA",
-        "UVB"
+        "UVB",
+        "RHI"
       ]
     },
     "PvEnergyColumnTypesEnum": {
