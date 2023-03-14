@@ -2,7 +2,7 @@
   "created": "2022-05-11T07:25:43.24+00:00",
   "datasetType": "TIMESERIES",
   "name": "YEARLY SUMS OF SOLAR RADIATION AND METEOROLOGICAL PARAMETERS",
-  "description": "Example of yearly timeseries dataset, e.g. exported from the legacy Data core. Only 2 years.",
+  "description": "Example of yearly timeseries dataset, e.g. exported from the legacy Data core. Only 2 yearly values.",
   "author": {
     "name": "Solargis s.r.o.",
     "address": "Bottova 2A, Bratislava, Slovakia",
@@ -60,7 +60,48 @@
         ],
         "method": "spatially disaggregated from sources"
       }
-    }
+    },
+    "environment": {
+      "surfaceAlbedo": 0.12,
+      "horizon": {
+        "azimuth": [
+          0,
+          37.5,
+          60,
+          82.5,
+          105,
+          127.5,
+          150,
+          172.5,
+          195,
+          217.5,
+          240,
+          262.5,
+          285,
+          307.5,
+          330,
+          352.5
+        ],
+        "height": [
+          0.705,
+          1.0588235,
+          1.058894,
+          1.428,
+          0.70588764,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
   },
   "data": {
     "DATETIME": [

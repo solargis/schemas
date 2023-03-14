@@ -1,6 +1,7 @@
 {
   "created": "2022-05-11T07:25:43.24+00:00",
   "datasetType": "TIMESERIES",
+  "description": "Example of a dataset having only the metadata part - the data property is not present.",
   "site": {
     "latitude": 43.023903,
     "longitude": 142.419596

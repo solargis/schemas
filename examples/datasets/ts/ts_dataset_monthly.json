@@ -14,10 +14,14 @@
     "copyright": "© 2022 Solargis s.r.o.",
     "disclaimer": "Considering the nature of climate fluctuations, interannual and long-term changes, as well as the uncertainty of measurements and calculations, Solargis s.r.o. cannot take full guarantee of the accuracy of estimates. The maximum possible has been done for the assessment of climate conditions based on the best available data, software and knowledge. Solargis s.r.o. shall not be liable for any direct, incidental, consequential, indirect or punitive damages arising or alleged to have arisen out of use of the provided data. Solargis is a trade mark of Solargis s.r.o."
   },
-  "portfolio": {
-    "name": "MyPortfolio_1",
-    "id": "HGLKSWHq376",
-    "description": "some desc."
+  "site": {
+    "latitude": 43.023903,
+    "longitude": 142.419596,
+    "elevation": 179,
+    "name": "Pippu 比布町, Kamikawa District",
+    "countryName": "Japan",
+    "countryISOCode": "JP",
+    "mapUrl": "https://apps.solargis.com/prospect/map?s=43.913961,142.419596&c=43.914237,142.420094,12&m=mapbox-satellite&l=true"
   },
   "metadata": {
     "createdByApplication": {
@@ -57,7 +61,47 @@
         "method": "spatially disaggregated from sources"
       }
     },
-    "surfaceAlbedo": 0.12,
+    "environment": {
+      "surfaceAlbedo": 0.12,
+      "horizon": {
+        "azimuth": [
+          0,
+          37.5,
+          60,
+          82.5,
+          105,
+          127.5,
+          150,
+          172.5,
+          195,
+          217.5,
+          240,
+          262.5,
+          285,
+          307.5,
+          330,
+          352.5
+        ],
+        "height": [
+          0.705,
+          1.0588235,
+          1.058894,
+          1.428,
+          0.70588764,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
     "columnOrder": [
       "DATETIME",
       "GHI",
