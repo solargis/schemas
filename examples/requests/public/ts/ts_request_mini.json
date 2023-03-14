@@ -7,7 +7,7 @@
   "columns": [
     "GHI"
   ],
-  "fromDate": "1994-01-01",
+  "fromDate": "2022-02-01",
   "toDate": "LAST_MONTH",
   "outputFormat": "SOLARGIS_JSON"
 }
