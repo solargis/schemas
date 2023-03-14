@@ -117,5 +117,6 @@
         "tilt": 39
       }
     }
-  }
+  },
+  "outputFormat": "SOLARGIS_JSON"
 }
