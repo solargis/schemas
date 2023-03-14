@@ -5,12 +5,13 @@
     "elevation": 156.9,
     "name": "Pippu 比布町, Kamikawa District",
     "countryName": "Japan",
-    "countryISOCode": "JP",
-    "id": "AX_987JP"
+    "countryISOCode": "JP"
   },
   "timeStep": "PT15M",
   "columns": [
-    "CI_FLAG",
+    "ALB",
+    "AP",
+    "DHI",
     "DIF",
     "DIF_NOSHD",
     "DNI",
@@ -19,12 +20,46 @@
     "GHI",
     "GHI_C",
     "GHI_NOSHD",
+    "GHI_UNC_HIGH",
+    "GHI_UNC_LOW",
     "GTI",
     "GTI_C",
+    "GTI_CIRC",
+    "GTI_CIRC_NOSHD",
+    "GTI_DIR",
+    "GTI_DIR_NOSHD",
+    "GTI_ISO_HOR",
+    "GTI_ISO_HOR_NOSHD",
     "GTI_NOSHD",
+    "GTI_REFL",
+    "GTI_REFL_NOSHD",
+    "GTI_UNC_HIGH",
+    "GTI_UNC_LOW",
     "KC",
+    "KT",
+    "PAR",
+    "PREC",
+    "PWAT",
+    "RH",
+    "SDENS",
+    "SDWE",
+    "SFWE",
+    "SH",
     "SUN_AZIMUTH",
-    "SUN_ELEVATION"
+    "SUN_ELEVATION",
+    "TD",
+    "TEMP",
+    "TSD",
+    "UVA",
+    "UVB",
+    "WBT",
+    "WD",
+    "WD100",
+    "WD80",
+    "WG",
+    "WS",
+    "WS100",
+    "WS80"
   ],
   "fromDate": "2022-10-01",
   "toDate": "2022-10-02",
@@ -36,12 +71,40 @@
     "surfaceAlbedo": 0.12,
     "horizon": {
       "azimuth": [
-        0.0,
-        360
+        0,
+        37.5,
+        60,
+        82.5,
+        105,
+        127.5,
+        150,
+        172.5,
+        195,
+        217.5,
+        240,
+        262.5,
+        285,
+        307.5,
+        330,
+        352.5
       ],
       "height": [
-        19.0581,
-        31.2
+        0.705,
+        1.0588235,
+        1.058894,
+        1.428,
+        0.70588764,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
       ]
     }
   },
@@ -59,32 +122,6 @@
             "dateOfChange": "09-21",
             "tilt": 50
           }
-        ]
-      }
-    },
-    "environment": {
-      "surfaceAlbedo": [
-        0.23,
-        0.20,
-        0.12,
-        0.12,
-        0.12,
-        0.12,
-        0.12,
-        0.12,
-        0.12,
-        0.12,
-        0.12,
-        0.15
-      ],
-      "horizon": {
-        "azimuth": [
-          0.0,
-          360
-        ],
-        "height": [
-          30,
-          51.2
         ]
       }
     }

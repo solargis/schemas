@@ -10,7 +10,5 @@
   "tmyScenario": "P50",
   "fromDate": "AUTODETECT",
   "toDate": "LAST_YEAR",
-  "stochasticGenerator": false,
-  "outputFormat": "SOLARGIS_JSON",
-  "compressOutput": false
+  "outputFormat": "SOLARGIS_JSON"
 }

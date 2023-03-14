@@ -7,7 +7,6 @@
   "columns": [
     "GHI"
   ],
-  "utcOffset": "+01:00",
   "fromDate": "AUTODETECT",
   "toDate": "LAST_YEAR",
   "outputFormat": "SOLARGIS_JSON"

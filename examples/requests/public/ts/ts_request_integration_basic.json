@@ -6,20 +6,71 @@
   },
   "timeStep": "PT60M",
   "columns": [
-    "GHI",
-    "DNI",
     "DIF",
-    "SUN_ELEVATION",
+    "DNI",
+    "GHI",
+    "GTI",
     "SUN_AZIMUTH",
+    "SUN_ELEVATION",
     "TEMP",
-    "WS",
-    "WD"
+    "WD",
+    "WS"
   ],
   "fromDate": "1994-01-01",
   "toDate": "2022-12-31",
   "utcOffset": "+01:00",
   "timeAlignment": "CENTER",
   "terrainShading": true,
+  "environment": {
+    "surfaceAlbedo": 0.12,
+    "horizon": {
+      "azimuth": [
+        0,
+        37.5,
+        60,
+        82.5,
+        105,
+        127.5,
+        150,
+        172.5,
+        195,
+        217.5,
+        240,
+        262.5,
+        285,
+        307.5,
+        330,
+        352.5
+      ],
+      "height": [
+        0.705,
+        1.0588235,
+        1.058894,
+        1.428,
+        0.70588764,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "gtiConfiguration": {
+    "layout": {
+      "azimuth": 180,
+      "mounting": {
+        "type": "FIXED_ONE_ANGLE",
+        "tilt": 39
+      }
+    }
+  },
   "outputFormat": "SOLARGIS_JSON",
   "fileLabel": "basic_01"
 }
