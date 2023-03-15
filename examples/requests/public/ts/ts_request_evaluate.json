@@ -1,5 +1,6 @@
 {
   "description": "Example request for Solargis Evaluate dataset, non-shaded, UTC timezone.",
+  "requestId": "XXXXX",
   "site": {
     "latitude": 43.023903,
     "longitude": 142.419596,
