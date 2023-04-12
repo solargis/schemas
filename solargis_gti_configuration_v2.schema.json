@@ -2,6 +2,7 @@
   "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.0.3/solargis_gti_configuration_v2.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
   "description": "Base schema for a Solargis GTI system definition for simulation request - not used in public APIs.",
+  "$comment": "Taken from: https://gitlab.solargis.com/sg2-data-and-simulation-core/sg2-data-and-simulation-core-types/-/blob/665c3c02ee74ce90fcf61d82543c15e4c04d62b0/src/node_src/sg2-core-types-gti-export.json",
   "allOf": [
     {
       "$ref": "#/$defs/GtiSystem"
