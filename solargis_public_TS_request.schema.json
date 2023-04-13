@@ -43,6 +43,7 @@
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/utcOffset"
     },
     "timeAlignment": {
+      "description": "For time steps P1D, P1M, P1Y timeAlignment in the request is ignored. The START value is used.",
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/timeAlignment"
     },
     "terrainShading": {
