@@ -34,7 +34,7 @@
     "WG",
     "WS"
   ],
-  "fromDate": "2022-10-01",
+  "fromDate": "AUTODETECT-1D",
   "toDate": "2022-10-02",
   "utcOffset": "+00:00",
   "timeAlignment": "CENTER",
