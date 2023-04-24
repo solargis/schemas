@@ -28,7 +28,10 @@
     },
     "fromDate": {
       "description": "Start date of the requested data. Inclusive.",
-      "const": "AUTODETECT"
+      "enum": [
+                "AUTODETECT",
+                "AUTODETECT-1D"
+              ]
     },
     "toDate": {
       "description": "End date of the requested data. Inclusive.",
