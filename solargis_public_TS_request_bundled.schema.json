@@ -86,7 +86,10 @@
                   "format": "date"
                 },
                 {
-                  "const": "AUTODETECT"
+                  "enum": [
+                    "AUTODETECT",
+                    "AUTODETECT-1D"
+                  ]
                 }
               ]
             },
