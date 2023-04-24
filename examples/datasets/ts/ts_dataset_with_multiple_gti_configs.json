@@ -1,5 +1,4 @@
 {
-  "$schema": "https://raw.githubusercontent.com/solargis/schemas/main/solargis_dataset.schema.json",
   "description": "Example of a dataset having two different GTI configurations - config is attached to the the respective column's metadata.",
   "created": "2023-03-15T13:32:45.620999+00:00",
   "datasetType": "TIMESERIES",
