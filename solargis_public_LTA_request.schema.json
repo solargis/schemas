@@ -31,7 +31,7 @@
       "description": "Start date of the requested data. Inclusive.",
       "enum": [
                 "AUTODETECT",
-                "AUTODETECT-1D"
+                "AUTODETECT-P1D"
               ]
     },
     "toDate": {

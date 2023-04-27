@@ -152,7 +152,7 @@
         {
           "enum": [
             "AUTODETECT",
-            "AUTODETECT-1D"
+            "AUTODETECT-P1D"
           ]
         }
       ]
