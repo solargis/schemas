@@ -30,9 +30,9 @@
     "fromDate": {
       "description": "Start date of the requested data. Inclusive.",
       "enum": [
-                "AUTODETECT",
-                "AUTODETECT-P1D"
-              ]
+        "AUTODETECT",
+        "AUTODETECT-P1D"
+      ]
     },
     "toDate": {
       "description": "End date of the requested data. Inclusive.",
@@ -61,7 +61,8 @@
     },
     "outputFormat": {
       "enum": [
-        "SOLARGIS_JSON"
+        "SOLARGIS_JSON",
+        "SOLARGIS_JSON_HIGH_PREC_FLOAT"
       ]
     }
   }

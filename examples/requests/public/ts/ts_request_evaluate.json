@@ -1,5 +1,5 @@
 {
-  "description": "Example request for Solargis Evaluate dataset, non-shaded, UTC timezone.",
+  "description": "Example request for typical Solargis Evaluate dataset, non-shaded, UTC timezone.",
   "requestId": "XXXXX",
   "site": {
     "latitude": 43.023903,
@@ -39,7 +39,7 @@
   "utcOffset": "+00:00",
   "timeAlignment": "CENTER",
   "terrainShading": false,
-  "outputFormat": "SOLARGIS_JSON",
+  "outputFormat": "SOLARGIS_JSON_HIGH_PREC_FLOAT",
   "stochasticGenerator": false,
   "compressOutput": false
 }

@@ -59,7 +59,8 @@
     },
     "outputFormat": {
       "enum": [
-        "SOLARGIS_JSON"
+        "SOLARGIS_JSON",
+        "SOLARGIS_JSON_HIGH_PREC_FLOAT"
       ]
     },
     "compressOutput": {
