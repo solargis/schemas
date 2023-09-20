@@ -366,8 +366,17 @@
       ],
       "properties": {
         "name": {
-          "$comment": "Here the enum of all Solargis apps and libs could help.",
-          "type": "string",
+          "$comment": "Here the enum of all Solargis apps and libs could help...",
+          "anyOf": [
+            {
+              "enum": [
+                "solargis/analyst"
+              ]
+            },
+            {
+              "type": "string"
+            }
+          ],
           "maxLenght": 50
         },
         "version": {
@@ -376,7 +385,7 @@
           "maxLenght": 50
         },
         "details": {
-          "description": "Any details specific to processing step.",
+          "description": "Details specific to the component e.g., parametrization.",
           "type": "object"
         }
       },
@@ -473,10 +482,6 @@
           "items": {
             "$ref": "#/$defs/QualityStatus"
           }
-        },
-        "consistencySet": {
-          "type": "object",
-          "description": "Used in Solargis Analyst QC procedures."
         }
       }
     },
@@ -495,7 +500,10 @@
           "enum": [
             "TIME_REFERENCE_CHECK",
             "AUTOMATIC_QUALITY_CHECK_IRRADIATION",
+            "AUTOMATIC_QUALITY_CHECK_METEO",
+            "AUTOMATIC_QUALITY_CHECK_PV",
             "MANUAL_QUALITY_CHECK",
+            "AUTOMATIC_POST_FILTERING",
             "DRIFT_DETECTION"
           ]
         },
