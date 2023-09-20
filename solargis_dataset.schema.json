@@ -132,7 +132,7 @@
     "Data": {
       "description": "Data itself in columns. The special DATETIME column must have an array of datetime strings. Others columns have arrays of nullable numeric values. All column arrays must have the same length.",
       "type": "object",
-      "$comment": "Schema does not enforce unique column names and the same length for all arrays. This is the responsibility of producers or consumers.",
+      "$comment": "The schema does not enforce unique column names and the same length for all arrays. This test is the responsibility of producers or consumers.",
       "required": [
         "DATETIME"
       ],
@@ -169,6 +169,9 @@
       "type": "object",
       "additionalProperties": true,
       "properties": {
+        "dataOrigin": {
+          "$ref": "solargis_common_enums.schema.json#/$defs/DataOriginEnum"
+        },
         "createdByApplication": {
           "description": "Data resource is typically generated (e.g, exported, or an API response) in a software application.",
           "$comment": "Use this for a top level app which orchestrated date resource creation.",
@@ -279,14 +282,14 @@
         },
         "sources": {
           "description": "Origin of the column(s). Usually a data source, but can be anything, even another columns. You can use also the version property.",
-          "$comment": "Single column can originate from multiple sources.",
+          "$comment": "Values of the single column can originate from multiple sources.",
           "type": "array",
           "items": {
             "$ref": "solargis_common_types.schema.json#/$defs/DataSource"
           }
         },
         "instrument": {
-          "description": "Column values can be measured by one (or more) measuring instrument e.g., pyranometer or a thermometer.",
+          "description": "Column values can be measured by one or more measuring instruments e.g., pyranometer, thermometer.",
           "type": "array",
           "items": {
             "$ref": "solargis_common_types.schema.json#/$defs/Instrument"
@@ -315,6 +318,7 @@
         }
       ],
       "properties": {
+        "dataOrigin": true,
         "createdByApplication": true,
         "quality": true,
         "processing": true,
@@ -354,6 +358,10 @@
           "items": {
             "$ref": "solargis_common_types.schema.json#/$defs/PatternForColumnNames"
           }
+        },
+        "testGroups": {
+          "description": "Used in Solargis Analyst QC procedures.",
+          "$ref": "solargis_test_group_v1.schema.json"
         }
       },
       "additionalProperties": true
@@ -408,6 +416,7 @@
         }
       ],
       "properties": {
+        "dataOrigin": true,
         "createdByApplication": true,
         "quality": true,
         "processing": true,
