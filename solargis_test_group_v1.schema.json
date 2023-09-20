@@ -1,0 +1,102 @@
+{
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/solargis_test_group_v1.schema.json",
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "description": "Test group schema v1 for the Solargis Analyst.",
+  "type": "object",
+  "required": [
+    "version",
+    "groups"
+  ],
+  "properties": {
+    "version": {
+      "description": "The version of the test group schema",
+      "type": "integer"
+    },
+    "groups": {
+      "description": "Test group objects",
+      "type": "object",
+      "$comment": "Typical instance property names are Group 1,...,Group N.",
+      "propertyNames": {
+        "$ref": "solargis_common_types.schema.json#/$defs/PatternForColumnNames"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/TestGroup"
+      }
+    }
+  },
+  "$defs": {
+    "TestGroups": {
+      "$comment": "Nepotrebny objekt, nikto ho nepouziva, podobny so schema root?",
+      "type": "object",
+      "required": [
+        "version",
+        "groups"
+      ],
+      "properties": {
+        "version": {
+          "description": "The version of the test group schema",
+          "type": "integer"
+        },
+        "groups": {
+          "description": "Array of test groups",
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": false,
+          "properties": {
+            "GHI": {
+              "$ref": "#/$defs/ParameterAssignment"
+            },
+            "DNI": {
+              "$ref": "#/$defs/ParameterAssignment"
+            },
+            "DIF": {
+              "$ref": "#/$defs/ParameterAssignment"
+            },
+            "GTI": {
+              "$ref": "#/$defs/ParameterAssignment"
+            },
+            "RHI": {
+              "$ref": "#/$defs/ParameterAssignment"
+            },
+            "ALB": {
+              "$ref": "#/$defs/ParameterAssignment"
+            }
+          }
+        }
+      }
+    },
+    "TestGroup": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "solargis_common_types.schema.json#/$defs/PatternForColumnNames"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/ParameterAssignment"
+      }
+    },
+    "ParameterAssignment": {
+      "type": "object",
+      "required": [
+        "name",
+        "primary"
+      ],
+      "properties": {
+        "name": {
+          "description": "name of the assigned column",
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "solargis_common_types.schema.json#/$defs/PatternForColumnNames"
+            }
+          ]
+        },
+        "primary": {
+          "description": "information about primary column",
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}
