@@ -26,12 +26,54 @@
   "metadata": {
     "datasetVersion": "0.1-draft",
     "createdByApplication": {
-      "name": "solargis/Analyst",
+      "name": "solargis/analyst",
       "version": "0.33.2"
     },
-    "quality": {
-      "consistencySet": {
-        "toBeDefinedLater": true
+    "testGroups": {
+      "version": 1,
+      "groups": {
+        "Group1": {
+          "GHI": {
+            "name": "ghi1",
+            "primary": true
+          },
+          "DNI": {
+            "name": "dni",
+            "primary": true
+          },
+          "DIF": {
+            "name": "dif1",
+            "primary": false
+          }
+        },
+        "Group2": {
+          "GHI": {
+            "name": "ghi1",
+            "primary": false
+          },
+          "DNI": {
+            "name": "dni2",
+            "primary": true
+          },
+          "DIF": {
+            "name": "dif2",
+            "primary": true
+          }
+        },
+        "Group3": {
+          "GHI": {
+            "name": "ghi2",
+            "primary": false
+          },
+          "DNI": {
+            "name": null,
+            "primary": false
+          },
+          "DIF": {
+            "name": null,
+            "primary": false
+          }
+        }
       }
     },
     "columnOrder": [
@@ -53,6 +95,7 @@
       },
       "GHI_sensor": {
         "columnType": "GHI",
+        "dataOrigin": "GROUND_MEASUREMENTS_DATA",
         "unit": "Wh/m2",
         "description": "Global horizontal irradiation",
         "flagColumnName": "flg_GHI",
@@ -110,6 +153,7 @@
       },
       "GHI_model": {
         "columnType": "GHI",
+        "dataOrigin": "MODEL_DATA",
         "unit": "Wh/m2",
         "description": "Global horizontal irradiation",
         "flagColumnName": "flagR",
