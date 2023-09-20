@@ -13,6 +13,13 @@
         "TMY"
       ]
     },
+    "DataOriginEnum": {
+      "description": "Origin of data values in single column or in the whole dataset.",
+      "enum": [
+        "GROUND_MEASUREMENTS_DATA",
+        "MODEL_DATA"
+      ]
+    },
     "TimeAlignmentEnum": {
       "description": "Datetime strings (labels of time intervals) can represent start, center or end of the time interval (or the left edge, the center and the right edge of the time interval).",
       "enum": [
@@ -50,10 +57,8 @@
         "GTI",
         "KC",
         "KT",
+        "KTM",
         "LEADTIME",
-        "PANEL_AZIMUTH",
-        "PANEL_INC",
-        "PANEL_TILT",
         "PAR",
         "SH",
         "SUN_AZIMUTH",
@@ -62,11 +67,15 @@
         "UVB"
       ]
     },
-    "PvEnergyColumnTypesEnum": {
-      "description": "Column types from the PV energy data domain (and related).",
+    "EnergySystemColumnTypesEnum": {
+      "description": "Column types from the various energy systems - photovoltaic or wind turbines.",
       "enum": [
         "PVOUT",
-        "TMOD"
+        "TMOD",
+        "WOUT",
+        "PANEL_AZIMUTH",
+        "PANEL_INC",
+        "PANEL_TILT"
       ]
     },
     "MeteoColumnTypesEnum": {
@@ -85,8 +94,7 @@
         "WBT",
         "WD",
         "WG",
-        "WS",
-        "WOUT"
+        "WS"
       ]
 
     },
@@ -98,18 +106,33 @@
         "PVOUT_UNC"
       ]
     },
-    "GeneralColumnTypesEnum": {
-      "description": "Generic types - can occur in datasets, but cannot be requested as names in requests.",
+    "OtherColumnTypesEnum": {
+      "description": "Following column types can occur in dataset metadata, but cannot be requested as names in Solargis requests.",
       "enum": [
         "FLAG",
-        "UNDEFINED"
+        "UNDEFINED",
+        "GENERIC_AVERAGE",
+        "GENERIC_SUM",
+        "RATIO_BETWEEN_0_1",
+        "PERCENTAGE",
+        "ELECTRIC_CURRENT",
+        "BATT",
+        "PM",
+        "DFN",
+        "LWR",
+        "RHI",
+        "ZENITH_ANGLE",
+        "SUN_ASPECT",
+        "MOR",
+        "AOD",
+        "SNOW_HEIGHT"
       ]
     },
     "AllColumnTypes": {
       "description": "Merging all possible column types together. Used only in the response (datasets).",
       "anyOf": [
         {
-          "$ref": "#/$defs/GeneralColumnTypesEnum"
+          "$ref": "#/$defs/OtherColumnTypesEnum"
         },
         {
           "$ref": "#/$defs/SolarRadiationColumnTypesEnum"
@@ -118,7 +141,7 @@
           "$ref": "#/$defs/MeteoColumnTypesEnum"
         },
         {
-          "$ref": "#/$defs/PvEnergyColumnTypesEnum"
+          "$ref": "#/$defs/EnergySystemColumnTypesEnum"
         },
         {
           "$ref": "#/$defs/UncertaintyColumnTypesEnum"
@@ -127,7 +150,7 @@
     },
 
     "SolargisSpecialColumnNamesEnum": {
-      "description": "In addition to column type names, Solargis also recognizes the following column names in the request.",
+      "description": "In addition to the most of the column type names, Solargis also recognizes the following column names in the request.",
       "enum": [
         "CI_FLAG",
         "DIF_NOSHD",
@@ -153,7 +176,9 @@
         "GTI_UNC_LOW",
         "PVOUT_UNC_HIGH",
         "PVOUT_UNC_LOW",
-        "SNOW_FLAG"
+        "SNOW_FLAG",
+        "PM10",
+        "PM2P5"
       ]
 
     },
@@ -178,7 +203,7 @@
           "$ref": "#/$defs/MeteoColumnTypesEnum"
         },
         {
-          "$ref": "#/$defs/PvEnergyColumnTypesEnum"
+          "$ref": "#/$defs/EnergySystemColumnTypesEnum"
         },
         {
           "$ref": "#/$defs/SolargisSpecialColumnNamesEnum"
@@ -208,25 +233,30 @@
       ]
     },
     "TemperatureUnitsEnum": {
-      "description": "Units used with temperature data - of air, panel surface or a device temperature.",
+      "description": "Units used with the temperature of air, panel surface or a device temperature.",
       "enum": [
         "deg_C",
         "deg_F",
-        "K"
+        "deg_K"
       ]
     },
     "WindSpeedUnitsEnum": {
       "description": "Units used with wind speed data.",
       "enum": [
         "m/s",
-        "km/h"
+        "km/h",
+        "mph",
+        "fps",
+        "kt"
       ]
     },
     "AngularUnitsEnum": {
       "description": "Various angles - used in wind direction, solar geometry, panels, etc.",
+      "$comments": "deg_azimuth_from_north_clockwise: from  0 to 360 degrees, deg_aspect_from_south_both_directions: 0 South, -90 East, 90 West, -180/180 North.",
       "enum": [
         "deg",
         "deg_azimuth_from_north_clockwise",
+        "deg_aspect_from_south_both_directions",
         "rad"
       ]
     },
@@ -234,17 +264,37 @@
       "description": "Units used with the air pressure.",
       "enum": [
         "hPa",
-        "mbar"
+        "mbar",
+        "mmHg",
+        "inHg",
+        "atm"
       ]
     },
     "PrecipitationUnitsEnum": {
-      "description": "Units used with water vapour, rain and snow.",
+      "description": "Units used with water vapour, rain, snow and atmospheric pollution.",
       "enum": [
         "kg/m2",
         "kg/m3",
         "kg/m2/hour",
         "cm",
-        "mm"
+        "mm",
+        "in"
+      ]
+    },
+    "EnergySystemUnitsEnum": {
+      "description": "Units used with energy systems.",
+      "enum": [
+        "W",
+        "kW",
+        "MW",
+        "Wh",
+        "kWh",
+        "MWh",
+        "kWp",
+        "MWp",
+        "kWh/kWp",
+        "A",
+        "V"
       ]
     },
     "AllUnits": {
@@ -269,11 +319,15 @@
           "$ref": "#/$defs/PressureUnitsEnum"
         },
         {
+          "$ref": "#/$defs/EnergySystemUnitsEnum"
+        },
+        {
           "enum": [
             "%",
             "hour",
-            "kWh",
-            "kW"
+            "m",
+            "km",
+            "mi"
           ]
         },
         {
