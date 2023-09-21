@@ -196,10 +196,8 @@
               "GTI",
               "KC",
               "KT",
+              "KTM",
               "LEADTIME",
-              "PANEL_AZIMUTH",
-              "PANEL_INC",
-              "PANEL_TILT",
               "PAR",
               "SH",
               "SUN_AZIMUTH",
@@ -224,19 +222,22 @@
               "WBT",
               "WD",
               "WG",
-              "WS",
-              "WOUT"
+              "WS"
             ]
           },
           {
-            "description": "Column types from the PV energy data domain (and related).",
+            "description": "Column types from the various energy systems - photovoltaic or wind turbines.",
             "enum": [
               "PVOUT",
-              "TMOD"
+              "TMOD",
+              "WOUT",
+              "PANEL_AZIMUTH",
+              "PANEL_INC",
+              "PANEL_TILT"
             ]
           },
           {
-            "description": "In addition to column type names, Solargis also recognizes the following column names in the request.",
+            "description": "In addition to the most of the column type names, Solargis also recognizes the following column names in the request.",
             "enum": [
               "CI_FLAG",
               "DIF_NOSHD",
@@ -262,7 +263,9 @@
               "GTI_UNC_LOW",
               "PVOUT_UNC_HIGH",
               "PVOUT_UNC_LOW",
-              "SNOW_FLAG"
+              "SNOW_FLAG",
+              "PM10",
+              "PM2P5"
             ]
           },
           {
@@ -702,7 +705,8 @@
     },
     "outputFormat": {
       "enum": [
-        "SOLARGIS_JSON", "SOLARGIS_JSON_HIGH_PREC_FLOAT"
+        "SOLARGIS_JSON",
+        "SOLARGIS_JSON_HIGH_PREC_FLOAT"
       ]
     },
     "compressOutput": {

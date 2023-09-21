@@ -58,7 +58,8 @@
     },
     "outputFormat": {
       "enum": [
-        "SOLARGIS_JSON", "SOLARGIS_JSON_HIGH_PREC_FLOAT"
+        "SOLARGIS_JSON",
+        "SOLARGIS_JSON_HIGH_PREC_FLOAT"
       ]
     },
     "compressOutput": {
@@ -331,7 +332,7 @@
               "$ref": "#/definitions/solargis_common_enums.schema.json#/$defs/MeteoColumnTypesEnum"
             },
             {
-              "$ref": "#/definitions/solargis_common_enums.schema.json#/$defs/PvEnergyColumnTypesEnum"
+              "$ref": "#/definitions/solargis_common_enums.schema.json#/$defs/EnergySystemColumnTypesEnum"
             },
             {
               "$ref": "#/definitions/solargis_common_enums.schema.json#/$defs/SolargisSpecialColumnNamesEnum"
@@ -356,10 +357,8 @@
             "GTI",
             "KC",
             "KT",
+            "KTM",
             "LEADTIME",
-            "PANEL_AZIMUTH",
-            "PANEL_INC",
-            "PANEL_TILT",
             "PAR",
             "SH",
             "SUN_AZIMUTH",
@@ -384,19 +383,22 @@
             "WBT",
             "WD",
             "WG",
-            "WS",
-            "WOUT"
+            "WS"
           ]
         },
-        "PvEnergyColumnTypesEnum": {
-          "description": "Column types from the PV energy data domain (and related).",
+        "EnergySystemColumnTypesEnum": {
+          "description": "Column types from the various energy systems - photovoltaic or wind turbines.",
           "enum": [
             "PVOUT",
-            "TMOD"
+            "TMOD",
+            "WOUT",
+            "PANEL_AZIMUTH",
+            "PANEL_INC",
+            "PANEL_TILT"
           ]
         },
         "SolargisSpecialColumnNamesEnum": {
-          "description": "In addition to column type names, Solargis also recognizes the following column names in the request.",
+          "description": "In addition to the most of the column type names, Solargis also recognizes the following column names in the request.",
           "enum": [
             "CI_FLAG",
             "DIF_NOSHD",
@@ -422,7 +424,9 @@
             "GTI_UNC_LOW",
             "PVOUT_UNC_HIGH",
             "PVOUT_UNC_LOW",
-            "SNOW_FLAG"
+            "SNOW_FLAG",
+            "PM10",
+            "PM2P5"
           ]
         },
         "SolargisUncertaintyColumnNamesPattern": {
