@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/solargis_pv_configuration_v1.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.0.5/solargis_pv_configuration_v1.schema.json",
   "$schema": "https://json-schema.org/draft-07/schema",
 
   "description": "Following type definitions Solargis uses for the simulation of the PV output - in its older (legacy or v1) version of simulation tools.",
