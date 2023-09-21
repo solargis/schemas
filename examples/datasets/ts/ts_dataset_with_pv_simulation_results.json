@@ -1,0 +1,189 @@
+{
+  "description": "Example of a dataset with the results from Solargis PV simulation - internal use.",
+  "created": "2023-03-15T13:32:45.620999+00:00",
+  "datasetType": "TIMESERIES",
+  "site": {
+    "latitude": 43.023903,
+    "longitude": 142.419596
+  },
+  "metadata": {
+    "columns": {
+      "DATETIME": {
+        "timeFormatPattern": "YYYY-MM-DDThh:mm:ss[.sss]±hh:mm",
+        "timeStep": "PT15M",
+        "timeAlignment": "CENTER",
+        "realTimestamps": false,
+        "firstTimestamp": "2022-10-01T00:07:30+09:00",
+        "lastTimestamp": "2022-10-02T23:52:30+09:00"
+      },
+      "SUN_AZIMUTH": {
+        "unit": "deg",
+        "description": "Sun azimuth angle",
+        "columnType": "SUN_AZIMUTH"
+      },
+      "SUN_ELEVATION": {
+        "unit": "deg",
+        "description": "Sun elevation angle",
+        "columnType": "SUN_ELEVATION"
+      },
+      "GHI": {
+        "unit": "W/m2",
+        "description": "Global horizontal irradiance",
+        "columnType": "GHI",
+        "sources": [
+          {
+            "name": "calculated from HIMAWARI satellite data (© 2023 JMA) and from atmospheric data (© 2023 ECMWF, NOAA and NASA) by Solargis method",
+            "version": "2.2.33"
+          }
+        ]
+      },
+      "DNI": {
+        "unit": "W/m2",
+        "description": "Direct normal irradiance",
+        "columnType": "DNI",
+        "sources": [
+          {
+            "name": "calculated from HIMAWARI satellite data (© 2023 JMA) and from atmospheric data (© 2023 ECMWF, NOAA and NASA) by Solargis method",
+            "version": "2.2.33"
+          }
+        ]
+      },
+      "DIF": {
+        "unit": "W/m2",
+        "description": "Diffuse horizontal irradiance",
+        "columnType": "DIF",
+        "sources": [
+          {
+            "name": "calculated from HIMAWARI satellite data (© 2023 JMA) and from atmospheric data (© 2023 ECMWF, NOAA and NASA) by Solargis method",
+            "version": "2.2.33"
+          }
+        ]
+      },
+      "PANEL_AZIMUTH": {
+        "unit": "deg",
+        "description": "Azimuth of inclined surface",
+        "columnType": "PANEL_AZIMUTH"
+      },
+      "PANEL_TILT": {
+        "unit": "deg",
+        "description": "Tilt of inclined surface",
+        "columnType": "PANEL_TILT"
+      },
+      "TEMP": {
+        "unit": "deg_C",
+        "description": "Air temperature at 2 m",
+        "columnType": "TEMP"
+      },
+      "PWAT": {
+        "unit": "kg/m2",
+        "description": "Precipitable water",
+        "columnType": "PWAT"
+      },
+      "surfaceAlbedo": {
+        "unit": null,
+        "description": "Surface albedo",
+        "columnType": "ALB"
+      },
+      "soilingLosses": {
+        "unit": "%",
+        "description": "Soiling losses",
+        "columnType": "PERCENTAGE"
+      },
+      "PANEL_INC": {
+        "unit": "deg",
+        "description": "Incidence angle of direct irradiance",
+        "columnType": "PANEL_INC"
+      },
+      "frontShadowRatio": {
+        "unit": null,
+        "description": "Front shadow ratio",
+        "columnType": "RATIO_BETWEEN_0_1"
+      },
+      "front_gti_without_losses": {
+        "unit": "W/m2",
+        "description": "GTI front side without losses",
+        "columnType": "GTI"
+      },
+      "module_temperature": {
+        "unit": "deg_C",
+        "description": "PV module temperature",
+        "columnType": "TMOD"
+      },
+      "pvout_with_all_gti_losses": {
+        "unit": "kW",
+        "description": "PVOUT with all GTI losses",
+        "columnType": "PVOUT"
+      },
+      "current_inverter_transformer_input": {
+        "unit": "A",
+        "description": "Electric current at transformer input",
+        "columnType": "ELECTRIC_CURRENT"
+      }
+
+    },
+    "createdByApplication": {
+      "name": "solargis/pvsim",
+      "version": "2.2.33"
+    }
+  },
+  "data": {
+    "DATETIME": [
+      "2022-10-01T00:07:30+09:00",
+      "2022-10-01T00:22:30+09:00",
+      "2022-10-01T00:37:30+09:00"
+    ],
+    "SUN_AZIMUTH": [
+      18.15,
+      23.54,
+      28.72
+    ],
+    "SUN_ELEVATION": [
+      -48.34,
+      -47.37,
+      -46.16
+    ],
+    "GHI": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "DNI": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "DIF": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "PANEL_AZIMUTH": [
+      null,
+      null,
+      null
+    ],
+    "PANEL_TILT": [
+      null,
+      null,
+      null
+    ],
+    "TEMP": [
+      10,
+      10,
+      10.4
+    ],
+    "PWAT": [0, 0, 0],
+    "surfaceAlbedo": [0, 0, 0],
+    "soilingLosses": [0, 0, 0],
+    "PANEL_INC": [
+      null,
+      null,
+      null
+    ],
+    "frontShadowRatio": [0, 0, 0],
+    "front_gti_without_losses": [0, 0, 0],
+    "module_temperature": [0, 0, 0],
+    "pvout_with_all_gti_losses": [0, 0, 0],
+    "current_inverter_transformer_input": [0, 0, 0]
+  }
+}
