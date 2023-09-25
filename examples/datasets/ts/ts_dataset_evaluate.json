@@ -238,13 +238,13 @@
         ]
       },
       "PM10": {
-        "unit": "kg/m3",
-        "description": "Particulate matter d <= 10 um",
+        "unit": "µg/m3",
+        "description": "Particulate matter d <= 10 µm",
         "columnType": "PM"
       },
       "PM2P5": {
-        "unit": "kg/m3",
-        "description": "Particulate matter d <= 2.5 um",
+        "unit": "µg/m3",
+        "description": "Particulate matter d <= 2.5 µm",
         "columnType": "PM"
       }
     },
