@@ -275,6 +275,7 @@
       "enum": [
         "kg/m2",
         "kg/m3",
+        "µg/m3",
         "kg/m2/hour",
         "cm",
         "mm",
