@@ -125,7 +125,8 @@
         "SUN_ASPECT",
         "MOR",
         "AOD",
-        "SNOW_HEIGHT"
+        "SNOW_HEIGHT",
+        "TS"
       ]
     },
     "AllColumnTypes": {
