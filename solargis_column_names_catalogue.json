@@ -1,0 +1,629 @@
+{
+  "GHI": {
+    "description": "Global horizontal irradiance",
+    "units": [
+      "W/m2"
+    ]
+  },
+  "DNI": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Direct normal irradiance"
+  },
+  "DIF": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Diffuse horizontal irradiance"
+  },
+  "DHI": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Direct horizontal irradiance"
+  },
+  "GHI_C": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Global horizontal clear-sky irradiance"
+  },
+  "DNI_C": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Direct normal clear-sky irradiance"
+  },
+  "GHI_NOSHD": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Global horizontal irradiance, without shading"
+  },
+  "DNI_NOSHD": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Direct normal irradiance, without shading"
+  },
+  "DIF_NOSHD": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Diffuse horizontal irradiance, without shading"
+  },
+  "GTI_NOSHD": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Global tilted irradiance, without shading"
+  },
+  "GTI": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Global tilted irradiance"
+  },
+  "GTI_C": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Global tilted clear-sky irradiance"
+  },
+  "GTI_DIR": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Global tilted irradiance - direct component"
+  },
+  "GTI_CIRC": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Global tilted irradiance - circumsolar component"
+  },
+  "GTI_REFL": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Global tilted irradiance - reflected component"
+  },
+  "GTI_ISO_HOR": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Global tilted irradiance - isotropic + horizon belt component"
+  },
+  "GTI_DIR_NOSHD": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Global tilted irradiance - direct component, without shading"
+  },
+  "GTI_CIRC_NOSHD": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Global tilted irradiance - circumsolar component, without shading"
+  },
+  "GTI_REFL_NOSHD": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Global tilted irradiance - reflected component, without shading"
+  },
+  "GTI_ISO_HOR_NOSHD": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Global tilted irradiance - isotropic + horizon belt component, without shading"
+  },
+  "GTI_EFF": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Global tilted irradiance - effective"
+  },
+  "GTI_EFF_NOSHD": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Global tilted irradiance - effective, without shading"
+  },
+  "UVA": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Ultraviolet radiation"
+  },
+  "UVB": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Ultraviolet radiation"
+  },
+  "PAR": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "Photosynthetically active radiation"
+  },
+  "KTM": {
+    "units": [
+      null
+    ],
+    "description": "Clear-sky index"
+  },
+  "KT": {
+    "units": [
+      null
+    ],
+    "description": "Clearness index"
+  },
+  "KC": {
+    "units": [
+      null
+    ],
+    "description": "Clear-sky index"
+  },
+  "CI_FLAG": {
+    "units": [
+      null
+    ],
+    "description": "Cloud identification quality flag: 0: sun below horizon, 1: model value, 2: interpolated <=1hour, 3: extrapolated <=1hour, 4: interpolated/extrapolated >1hour,  5: long term monthly median or persistence,  6: synthetic data, 10: nowcast, 11:NWP forecast"
+  },
+  "SNOW_FLAG": {
+    "units": [
+      null
+    ],
+    "description": "Snow classification flag: 0: unknown, 1: snowfree, 2: snow, 3: snow/snowfree mixture"
+  },
+  "SUN_ELEVATION": {
+    "units": [
+      "deg"
+    ],
+    "description": "Sun elevation angle"
+  },
+  "SUN_AZIMUTH": {
+    "units": [
+      "deg"
+    ],
+    "description": "Sun azimuth angle"
+  },
+  "SUN_ASPECT": {
+    "units": [
+      "deg"
+    ],
+    "description": "Sun aspect angle"
+  },
+  "PANEL_AZIMUTH": {
+    "units": [
+      "deg"
+    ],
+    "description": "Azimuth of inclined surface"
+  },
+  "PANEL_TILT": {
+    "units": [
+      "deg"
+    ],
+    "description": "Tilt of inclined surface"
+  },
+  "PANEL_INC": {
+    "units": [
+      "deg"
+    ],
+    "description": "Incidence angle of direct irradiance"
+  },
+  "SH": {
+    "units": [
+      null
+    ],
+    "description": "Sunshine hours"
+  },
+  "ALB": {
+    "units": [
+      null
+    ],
+    "description": "Albedo values"
+  },
+  "TEMP": {
+    "units": [
+      "deg_C"
+    ],
+    "description": "Air temperature at 2 m"
+  },
+  "WS": {
+    "units": [
+      "m/s"
+    ],
+    "description": "Wind speed at 10 m"
+  },
+  "WD": {
+    "units": [
+      "deg"
+    ],
+    "description": "Wind direction at 10 m"
+  },
+  "WS80": {
+    "$comment": "This is just an example of different height levels, refer to solargis_common_enums.schema.json#/$defs/SolargisWindHeightColumnNamesPattern",
+    "units": [
+      "m/s"
+    ],
+    "description": "Wind speed at 80 m"
+  },
+  "WD80": {
+    "units": [
+      "deg"
+    ],
+    "description": "Wind direction at 80 m"
+  },
+  "WS100": {
+    "units": [
+      "m/s"
+    ],
+    "description": "Wind speed at 100 m"
+  },
+  "WD100": {
+    "units": [
+      "deg"
+    ],
+    "description": "Wind direction at 100 m"
+  },
+  "WG": {
+    "units": [
+      "m/s"
+    ],
+    "description": "Wind gusts at surface"
+  },
+  "RH": {
+    "units": [
+      "%"
+    ],
+    "description": "Relative humidity"
+  },
+  "AP": {
+    "units": [
+      "hPa"
+    ],
+    "description": "Atmospheric pressure"
+  },
+  "PWAT": {
+    "units": [
+      "kg/m2"
+    ],
+    "description": "Precipitable water"
+  },
+  "PREC": {
+    "units": [
+      "kg/m2/hour"
+    ],
+    "description": "Precipitation rate"
+  },
+  "TD": {
+    "units": [
+      "deg_C"
+    ],
+    "description": "Dew point temperature"
+  },
+  "WBT": {
+    "units": [
+      "deg_C"
+    ],
+    "description": "Wet bulb temperature"
+  },
+  "SDWE": {
+    "units": [
+      "kg/m2"
+    ],
+    "description": "Water equivalent of accumulated snow depth"
+  },
+  "SFWE": {
+    "units": [
+      "kg/m2/hour"
+    ],
+    "description": "Water equivalent of snowfall rate"
+  },
+  "SDENS": {
+    "units": [
+      "kg/m3"
+    ],
+    "description": "Snow density"
+  },
+  "TSD": {
+    "units": [
+      "mm"
+    ],
+    "description": "True accumulated snow depth"
+  },
+  "LEADTIME": {
+    "units": [
+      "hour"
+    ],
+    "description": "Lead time of forecast"
+  },
+  "PVOUT": {
+    "units": [
+      "kW"
+    ],
+    "description": "PV output"
+  },
+  "TMOD": {
+    "units": [
+      "deg_C"
+    ],
+    "description": "Module temperature"
+  },
+  "WOUT": {
+    "units": [
+      "kW"
+    ],
+    "description": "Wind output"
+  },
+  "PM2P5": {
+    "units": [
+      "µg/m3"
+    ],
+    "description": "Particulate matter d <= 2.5 µm"
+  },
+  "PM10": {
+    "units": [
+      "µg/m3"
+    ],
+    "description": "Particulate matter d <= 10 µm"
+  },
+  "GHI_UNC_LOW": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "low estimate of GHI"
+  },
+  "GHI_UNC_HIGH": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "high estimate of GHI"
+  },
+  "GHI_UNC_P1": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "estimate of GHI for P1 probability of occurrence"
+  },
+  "GHI_UNC_P5": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "estimate of GHI for P5 probability of occurrence"
+  },
+  "GHI_UNC_P10": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "estimate of GHI for P10 probability of occurrence"
+  },
+  "GHI_UNC_P20": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "estimate of GHI for P20 probability of occurrence"
+  },
+  "GHI_UNC_P25": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "estimate of GHI for P25 probability of occurrence"
+  },
+  "GHI_UNC_P75": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "estimate of GHI for P75 probability of occurrence"
+  },
+  "GHI_UNC_P80": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "estimate of GHI for P80 probability of occurrence"
+  },
+  "GHI_UNC_P90": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "estimate of GHI for P90 probability of occurrence"
+  },
+  "GHI_UNC_P95": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "estimate of GHI for P95 probability of occurrence"
+  },
+  "GHI_UNC_P99": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "estimate of GHI for P99 probability of occurrence"
+  },
+  "GTI_UNC_LOW": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "low estimate of GTI"
+  },
+  "GTI_UNC_HIGH": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "high estimate of GTI"
+  },
+  "GTI_UNC_P1": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "estimate of GTI for P1 probability of occurrence"
+  },
+  "GTI_UNC_P5": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "estimate of GTI for P5 probability of occurrence"
+  },
+  "GTI_UNC_P10": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "estimate of GTI for P10 probability of occurrence"
+  },
+  "GTI_UNC_P20": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "estimate of GTI for P20 probability of occurrence"
+  },
+  "GTI_UNC_P25": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "estimate of GTI for P25 probability of occurrence"
+  },
+  "GTI_UNC_P75": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "estimate of GTI for P75 probability of occurrence"
+  },
+  "GTI_UNC_P80": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "estimate of GTI for P80 probability of occurrence"
+  },
+  "GTI_UNC_P90": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "estimate of GTI for P90 probability of occurrence"
+  },
+  "GTI_UNC_P95": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "estimate of GTI for P95 probability of occurrence"
+  },
+  "GTI_UNC_P99": {
+    "units": [
+      "W/m2"
+    ],
+    "description": "estimate of GTI for P99 probability of occurrence"
+  },
+  "PVOUT_UNC_LOW": {
+    "units": [
+      "kW"
+    ],
+    "description": "low estimate of PVOUT"
+  },
+  "PVOUT_UNC_HIGH": {
+    "units": [
+      "kW"
+    ],
+    "description": "high estimate of PVOUT"
+  },
+  "PVOUT_UNC_P1": {
+    "units": [
+      "kW"
+    ],
+    "description": "estimate of PVOUT for P1 probability of occurrence"
+  },
+  "PVOUT_UNC_P5": {
+    "units": [
+      "kW"
+    ],
+    "description": "estimate of PVOUT for P5 probability of occurrence"
+  },
+  "PVOUT_UNC_P10": {
+    "units": [
+      "kW"
+    ],
+    "description": "estimate of PVOUT for P10 probability of occurrence"
+  },
+  "PVOUT_UNC_P20": {
+    "units": [
+      "kW"
+    ],
+    "description": "estimate of PVOUT for P20 probability of occurrence"
+  },
+  "PVOUT_UNC_P25": {
+    "units": [
+      "kW"
+    ],
+    "description": "estimate of PVOUT for P25 probability of occurrence"
+  },
+  "PVOUT_UNC_P75": {
+    "units": [
+      "kW"
+    ],
+    "description": "estimate of PVOUT for P75 probability of occurrence"
+  },
+  "PVOUT_UNC_P80": {
+    "units": [
+      "kW"
+    ],
+    "description": "estimate of PVOUT for P80 probability of occurrence"
+  },
+  "PVOUT_UNC_P90": {
+    "units": [
+      "kW"
+    ],
+    "description": "estimate of PVOUT for P90 probability of occurrence"
+  },
+  "PVOUT_UNC_P95": {
+    "units": [
+      "kW"
+    ],
+    "description": "estimate of PVOUT for P95 probability of occurrence"
+  },
+  "PVOUT_UNC_P99": {
+    "units": [
+      "kW"
+    ],
+    "description": "estimate of PVOUT for P99 probability of occurrence"
+  },
+  "ELECTRIC_CURRENT": {
+    "description": "Electric current",
+    "units": ["A"]
+  },
+  "BATT": {
+    "description": "Battery status",
+    "units": ["V"]
+  },
+  "DFN": {
+    "description": "Diffuse normal irradiance",
+    "units": ["W/m2"]
+  },
+  "LWR": {
+    "description": "Long wave irradiance",
+    "units": ["W/m2"]
+  },
+  "RHI": {
+    "description": "Global reflected irradiance",
+    "units": ["W/m2"]
+  },
+  "ZENITH_ANGLE": {
+    "description": "Zenith angle",
+    "units": ["deg"]
+  },
+  "MOR": {
+    "description": "Meteorological optical range",
+    "units": ["m"]
+  },
+  "AOD": {"description": "atmospheric optical depth at 500 nm",
+    "units": []},
+  "SNOW_HEIGHT": {
+    "description": "Snow height",
+    "units": ["cm"]
+  },
+  "TS": {
+    "description": "TODO: temperature surface?",
+    "units": ["deg_C", "deg_F", "deg_K"]
+  }
+}
