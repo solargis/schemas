@@ -147,7 +147,7 @@
     "units": [
       "W/m2"
     ],
-    "description": "Photosynthetically active radiation"
+    "description": "Photosynthetically active irradiance"
   },
   "KTM": {
     "units": [
