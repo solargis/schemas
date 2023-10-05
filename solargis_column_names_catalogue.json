@@ -135,13 +135,13 @@
     "units": [
       "W/m2"
     ],
-    "description": "Ultraviolet radiation"
+    "description": "Ultraviolet irradiance"
   },
   "UVB": {
     "units": [
       "W/m2"
     ],
-    "description": "Ultraviolet radiation"
+    "description": "Ultraviolet irradiance"
   },
   "PAR": {
     "units": [
@@ -153,7 +153,7 @@
     "units": [
       null
     ],
-    "description": "Clear-sky index"
+    "description": "Modified clearness index"
   },
   "KT": {
     "units": [
@@ -187,21 +187,21 @@
   },
   "SUN_AZIMUTH": {
     "units": [
-      "deg"
+      "deg_azimuth_from_north_clockwise"
     ],
-    "description": "Sun azimuth angle"
+    "description": "Sun azimuth angle. North = 0 (360) deg, East = 90 deg, South = 180 deg, West = 270 deg."
   },
   "SUN_ASPECT": {
     "units": [
-      "deg"
+      "deg_aspect_from_south_both_directions"
     ],
-    "description": "Sun aspect angle"
+    "description": "Sun aspect angle. South = 0 deg, East = -90 deg, West = 90 deg, North = 180 (-180) deg."
   },
   "PANEL_AZIMUTH": {
     "units": [
-      "deg"
+      "deg_azimuth_from_north_clockwise"
     ],
-    "description": "Azimuth of inclined surface"
+    "description": "Azimuth of inclined surface. North = 0 (360) deg, East = 90 deg, South = 180 deg, West = 270 deg."
   },
   "PANEL_TILT": {
     "units": [
@@ -225,7 +225,7 @@
     "units": [
       null
     ],
-    "description": "Albedo values"
+    "description": "Surface albedo"
   },
   "TEMP": {
     "units": [
