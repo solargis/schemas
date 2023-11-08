@@ -274,7 +274,7 @@
     "units": [
       "m/s"
     ],
-    "description": "Wind gusts at surface"
+    "description": "Wind gust at 10 m"
   },
   "RH": {
     "units": [
