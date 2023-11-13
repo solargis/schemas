@@ -1,0 +1,243 @@
+{
+    "created": "2023-10-16T12:18:14.973Z",
+    "datasetType": "TIMESERIES",
+    "site": {
+        "latitude": 41.705727,
+        "longitude": -1.142578
+    },
+    "metadata": {
+        "columns": {
+            "DATETIME": {
+                "timeFormatPattern": "YYYY-MM-DDThh:mm:ss[.sss]±hh:mm"
+            },
+            "sunpos_a0": {
+                "unit": "deg",
+                "columnType": "SUN_AZIMUTH"
+            },
+            "sunpos_h0": {
+                "unit": "deg",
+                "columnType": "SUN_ELEVATION"
+            },
+            "GHI": {
+                "unit": "W/m2",
+                "columnType": "GHI"
+            },
+            "DNI": {
+                "unit": "W/m2",
+                "columnType": "DNI"
+            },
+            "DIF": {
+                "unit": "W/m2",
+                "columnType": "DIF"
+            },
+            "TEMP": {
+                "unit": "deg_C",
+                "columnType": "TEMP"
+            },
+            "PWAT": {
+                "unit": "kg/m2",
+                "columnType": "PWAT"
+            },
+            "surfaceAlbedo": {
+                "unit": null,
+                "columnType": "ALB"
+            },
+            "soilingLosses": {
+                "unit": "%",
+                "columnType": "PERCENTAGE"
+            },
+            "snowLosses": {
+                "unit": "%",
+                "columnType": "PERCENTAGE"
+            },
+            "inc_angle": {
+                "unit": "deg",
+                "columnType": "PANEL_INC"
+            },
+            "frontShadowRatio": {
+                "unit": null,
+                "columnType": "RATIO_BETWEEN_0_1"
+            },
+            "rearShadowRatio": {
+                "unit": null,
+                "columnType": "RATIO_BETWEEN_0_1"
+            },
+            "front_gti_without_losses": {
+                "unit": "W/m2",
+                "columnType": "GTI"
+            },
+            "front_gti_with_shading_losses": {
+                "unit": "W/m2",
+                "columnType": "GTI"
+            },
+            "front_gti_with_shading_and_pollution_losses": {
+                "unit": "W/m2",
+                "columnType": "GTI"
+            },
+            "front_gti_with_shading_and_pollution_and_angular_losses": {
+                "unit": "W/m2",
+                "columnType": "GTI"
+            },
+            "front_gti_with_shading_and_pollution_and_angular_and_spectral_losses": {
+                "unit": "W/m2",
+                "columnType": "GTI"
+            },
+            "rear_gti_without_losses": {
+                "unit": "W/m2",
+                "columnType": "GTI"
+            },
+            "rear_gti_with_shading_losses": {
+                "unit": "W/m2",
+                "columnType": "GTI"
+            },
+            "rear_gti_with_shading_and_pollution_losses": {
+                "unit": "W/m2",
+                "columnType": "GTI"
+            },
+            "rear_gti_with_shading_and_pollution_and_angular_losses": {
+                "unit": "W/m2",
+                "columnType": "GTI"
+            },
+            "rear_gti_with_shading_and_pollution_and_angular_and_spectral_losses": {
+                "unit": "W/m2",
+                "columnType": "GTI"
+            },
+            "module_temperature": {
+                "unit": "deg_C",
+                "columnType": "TMOD"
+            },
+            "pvout_with_all_gti_losses": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "pvout_with_all_gti_and_degradation_losses": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "pvout_with_all_gti_and_degradation_and_dc_losses": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "current_with_all_gti_and_degradation_and_dc_losses": {
+                "unit": "A",
+                "columnType": "ELECTRIC_CURRENT"
+            },
+            "pvout_with_all_gti_and_degradation_and_dc_and_mppt_losses": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "current_with_all_gti_and_degradation_and_dc_and_mppt_losses": {
+                "unit": "A",
+                "columnType": "ELECTRIC_CURRENT"
+            },
+            "pvout_with_all_gti_and_degradation_and_dc_and_inverter_losses": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "current_with_all_gti_and_degradation_and_dc_and_inverter_losses": {
+                "unit": "A",
+                "columnType": "ELECTRIC_CURRENT"
+            },
+            "pvout_with_all_gti_and_degradation_and_dc_and_inverter_and_aux_losses": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "pvout_inverter_transformer_input": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "current_inverter_transformer_input": {
+                "unit": "A",
+                "columnType": "ELECTRIC_CURRENT"
+            },
+            "pvout_inverter_transformer_output": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "current_inverter_transformer_output": {
+                "unit": "A",
+                "columnType": "ELECTRIC_CURRENT"
+            },
+            "pvout_power_transformer_input": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "current_power_transformer_input": {
+                "unit": "A",
+                "columnType": "ELECTRIC_CURRENT"
+            },
+            "pvout_power_transformer_output": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "current_power_transformer_output": {
+                "unit": "A",
+                "columnType": "ELECTRIC_CURRENT"
+            },
+            "pvout_with_all_gti_and_degradation_and_dc_and_inverter_and_aux_and_ac_losses": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "pvout_reactive_with_all_gti_and_degradation_and_dc_and_inverter_and_aux_and_ac_losses": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "pvout_with_all_gti_and_degradation_and_dc_and_external_unavailability_and_mppt_losses": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "pvout_with_all_gti_and_degradation_and_dc_and_external_unavailability_and_inverter_losses": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "pvout_with_all_gti_and_degradation_and_dc_and_external_unavailability_and_inverter_and_aux_losses": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "pvout_with_external_unavailability_losses_inverter_transformer_input": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "pvout_with_external_unavailability_losses_inverter_transformer_output": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "pvout_with_external_unavailability_losses_power_transformer_input": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "pvout_with_external_unavailability_losses_power_transformer_output": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "pvout_with_all_gti_and_degradation_and_dc_and_external_unavailability_and_inverter_and_aux_and_ac_losses": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "pvout_reactive_with_all_gti_and_degradation_and_dc_and_external_unavailability_and_inverter_and_aux_and_ac_losses": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "pvout_with_all_gti_and_degradation_and_dc_and_inverter_and_aux_and_ac_and_internal_unavailability_losses": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "pvout_reactive_with_all_gti_and_degradation_and_dc_and_inverter_and_aux_and_ac_and_internal_unavailability_losses": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "pvout_with_all_gti_and_degradation_and_dc_and_external_unavailability_and_inverter_and_aux_and_ac_and_internal_unavailability_losses": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            },
+            "pvout_reactive_with_all_gti_and_degradation_and_dc_and_external_unavailability_and_inverter_and_aux_and_ac_and_internal_unavailability_losses": {
+                "unit": "kW",
+                "columnType": "PVOUT"
+            }
+        },
+        "createdByApplication": {
+            "name": "solargis/sgsim2-pv",
+            "version": "2.1.0"
+        }
+    }
+}
