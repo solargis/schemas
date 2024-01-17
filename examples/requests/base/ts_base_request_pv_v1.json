@@ -86,35 +86,35 @@
       "nominalOperatingCellTemperature": 46,
       "topologyType": "UNPROPORTIONAL_1",
       "degradation": {
-        startUpDate: "2021-01-01",
+        "startUpDate": "2021-01-01",
         "degradationAnyYear": 0.5,
         "degradationFirstYear": 0.8
       }
     },
     "inverter": {
-      inverterEfficiency: {
-        constant: 97.5
+      "inverterEfficiency": {
+        "constant": 97.5
       },
       "inverterLimitationACPower": 1000
     },
     "selfShading": true,
     "dcLosses": {
-      specific: {
-        cabling: 2.0,
+      "specific": {
+        "cabling": 2.0,
         "dirtAndSnow": {
-          overall: 2,
+          "overall": 2
         },
         "mismatch": 1.0
       }
     },
     "acLosses": {
-      specific: {
-        cabling: 0.5,
+      "specific": {
+        "cabling": 0.5,
         "transformer": 1.0
       }
     },
     "terrainProperties": {
-      terrainAzimuth: 180,
+      "terrainAzimuth": 180,
       "terrainSlope": 0
     }
   },
