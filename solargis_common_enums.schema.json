@@ -295,7 +295,7 @@
         "kWp",
         "MWp",
         "kWh/kWp",
-        "W/kWp",
+        "kW/kWp",
         "Wh/kWp",
         "A",
         "V"
