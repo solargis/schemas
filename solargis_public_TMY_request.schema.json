@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.0.6/solargis_public_TMY_request.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.0.7/solargis_public_TMY_request.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
 
   "description": "Schema for Solargis data request - for TMY datasets.",
