@@ -1,6 +1,7 @@
 Solargis public JSON schema files define JSON instances of various request and response object types.
 
 #### RELEASE NOTES:
+- **v1.0.8** (Mar 21 2024): Adding new unit mm/hour for the precipitation rate parameter.
 - **v1.0.7** (Feb 29 2024): Allowing null value in dataset.DataColumnMetadata.properties.flagColumnName.
 - **v1.0.6** (Jan 17 2024): Added two new units for energy system's related parameters (into common enums).
 - **v1.0.5** (Sep 25 2023): Added new types (test group), properties (dataset.dataOrigin), column types and units (air pollution, PV domain, Solargis Analyst), column catalogue
