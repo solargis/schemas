@@ -280,6 +280,7 @@
         "kg/m2/hour",
         "cm",
         "mm",
+        "mm/hour",
         "in"
       ]
     },

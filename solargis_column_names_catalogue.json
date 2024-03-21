@@ -296,7 +296,7 @@
   },
   "PREC": {
     "units": [
-      "kg/m2/hour"
+      "kg/m2/hour", "mm", "mm/hour"
     ],
     "description": "Precipitation rate"
   },
