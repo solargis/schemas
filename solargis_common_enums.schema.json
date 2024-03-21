@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/main/solargis_common_enums.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.0.8/solargis_common_enums.schema.json",
   "$schema": "https://json-schema.org/draft-07/schema",
 
   "description": "Common enums and other schemas used with requests or datasets.",
@@ -125,7 +125,8 @@
         "SUN_ASPECT",
         "MOR",
         "AOD",
-        "SNOW_HEIGHT"
+        "SNOW_HEIGHT",
+        "TS"
       ]
     },
     "AllColumnTypes": {
@@ -275,9 +276,11 @@
       "enum": [
         "kg/m2",
         "kg/m3",
+        "µg/m3",
         "kg/m2/hour",
         "cm",
         "mm",
+        "mm/hour",
         "in"
       ]
     },
@@ -293,6 +296,8 @@
         "kWp",
         "MWp",
         "kWh/kWp",
+        "kW/kWp",
+        "Wh/kWp",
         "A",
         "V"
       ]
