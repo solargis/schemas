@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.0.8/solargis_public_TS_request.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.0.9/solargis_public_TS_request.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
   "description": "Schema for Solargis data request - for timeseries datasets.",
   "type": "object",
@@ -233,7 +233,9 @@
               "WOUT",
               "PANEL_AZIMUTH",
               "PANEL_INC",
-              "PANEL_TILT"
+              "PANEL_TILT",
+              "LOSS_SNOW",
+              "LOSS_SOIL"
             ]
           },
           {

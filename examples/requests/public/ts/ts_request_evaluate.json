@@ -32,7 +32,9 @@
     "WBT",
     "WD",
     "WG",
-    "WS"
+    "WS",
+    "PM10",
+    "PM2P5"
   ],
   "fromDate": "AUTODETECT-P1D",
   "toDate": "2022-10-02",

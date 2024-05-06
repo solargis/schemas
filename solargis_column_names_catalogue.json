@@ -372,6 +372,18 @@
     ],
     "description": "Particulate matter d <= 10 µm"
   },
+  "LOSS_SNOW": {
+    "units": [
+      "%"
+    ],
+    "description": "Snow losses"
+  },
+  "LOSS_SOIL": {
+    "units": [
+      "%"
+    ],
+    "description": "Soiling losses"
+  },
   "GHI_UNC_LOW": {
     "units": [
       "W/m2"
