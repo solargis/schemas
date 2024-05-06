@@ -75,7 +75,9 @@
         "WOUT",
         "PANEL_AZIMUTH",
         "PANEL_INC",
-        "PANEL_TILT"
+        "PANEL_TILT",
+        "LOSS_SNOW",
+        "LOSS_SOIL"
       ]
     },
     "MeteoColumnTypesEnum": {
