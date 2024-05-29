@@ -1,6 +1,7 @@
 Solargis public JSON schema files define JSON instances of various request and response object types.
 
 #### RELEASE NOTES:
+- **v1.0.10** (May 29, 2024): Adding new units - W/kWp.
 - **v1.0.9** (May 6, 2024): Adding two data parameters - LOSS_SNOW and LOSS_SOIL.
 - **v1.0.8** (Mar 21, 2024): Adding new unit mm/hour for the precipitation rate parameter.
 - **v1.0.7** (Feb 29, 2024): Allowing null value in dataset.DataColumnMetadata.properties.flagColumnName.
