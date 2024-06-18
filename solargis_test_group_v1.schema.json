@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.0.9/solargis_test_group_v1.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.0/solargis_test_group_v1.schema.json",
   "$schema": "https://json-schema.org/draft-07/schema",
   "description": "Test group schema v1 for the Solargis Analyst.",
   "type": "object",
@@ -17,7 +17,8 @@
       "type": "object",
       "$comment": "Typical instance property names are Group 1,...,Group N.",
       "propertyNames": {
-        "$ref": "solargis_common_types.schema.json#/$defs/PatternForColumnNames"
+        "maxLength": 100,
+		"pattern": "^[A-Za-z_][A-Za-z0-9_ ]*$"
       },
       "additionalProperties": {
         "$ref": "#/$defs/TestGroup"
@@ -25,46 +26,6 @@
     }
   },
   "$defs": {
-    "TestGroups": {
-      "$comment": "Nepotrebny objekt, nikto ho nepouziva, podobny so schema root?",
-      "type": "object",
-      "required": [
-        "version",
-        "groups"
-      ],
-      "properties": {
-        "version": {
-          "description": "The version of the test group schema",
-          "type": "integer"
-        },
-        "groups": {
-          "description": "Array of test groups",
-          "type": "object",
-          "minProperties": 1,
-          "additionalProperties": false,
-          "properties": {
-            "GHI": {
-              "$ref": "#/$defs/ParameterAssignment"
-            },
-            "DNI": {
-              "$ref": "#/$defs/ParameterAssignment"
-            },
-            "DIF": {
-              "$ref": "#/$defs/ParameterAssignment"
-            },
-            "GTI": {
-              "$ref": "#/$defs/ParameterAssignment"
-            },
-            "RHI": {
-              "$ref": "#/$defs/ParameterAssignment"
-            },
-            "ALB": {
-              "$ref": "#/$defs/ParameterAssignment"
-            }
-          }
-        }
-      }
-    },
     "TestGroup": {
       "type": "object",
       "propertyNames": {

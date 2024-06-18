@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.0.9/solargis_public_TMY_API_pilot_request.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.0/solargis_public_TMY_API_pilot_request.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
 
   "description": "Schema for public Solargis data request - for TMY API pilot version.",
@@ -49,14 +49,14 @@
       "description": "User provided label used for file name generation only",
       "type": "string",
       "maxLength": 10,
-      "pattern": "^\w*$"
+      "pattern": "^\\w*$"
 
     },
     "siteName": {
       "description": "User provided value",
       "type": "string",
       "maxLength": 50,
-      "pattern": "^\S.*$"
+      "pattern": "^\\S.*$"
 
     }
   }

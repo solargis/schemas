@@ -90,7 +90,8 @@
         "type": "TRACKER_ONE_AXIS_VERTICAL",
         "tilt": 30,
         "azimuthLimitEast": -120,
-        "azimuthLimitWest": 120
+        "azimuthLimitWest": 120,
+        "backtracking": false
       }
     }
   },
