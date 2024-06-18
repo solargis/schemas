@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.0.10/solargis_multisite_dataset.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.0/solargis_multisite_dataset.schema.json",
   "$schema": "https://json-schema.org/draft-07/schema",
 
   "description": "Variant of the Solargis dataset - having data for multiple sites (one portfolio) in a single instance.",
@@ -86,7 +86,7 @@
           "items": {
             "$ref": "solargis_common_types.schema.json#/$defs/Site"
           },
-          "minItems": 1,
+          "minItems": 1
         },
         "metadata": {
           "description": "Metadata properties describing the dataset.",
