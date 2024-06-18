@@ -30,47 +30,34 @@
       "version": "0.33.2"
     },
     "testGroups": {
+      "$comment": "Showing fake column names to illustrate the concept of test groups.",
       "version": 1,
       "groups": {
-        "Group1": {
+        "Group 1": {
           "GHI": {
-            "name": "ghi1",
+            "name": "GHI",
             "primary": true
           },
           "DNI": {
-            "name": "dni",
+            "name": "DNI",
             "primary": true
           },
           "DIF": {
-            "name": "dif1",
-            "primary": false
-          }
-        },
-        "Group2": {
-          "GHI": {
-            "name": "ghi1",
-            "primary": false
-          },
-          "DNI": {
-            "name": "dni2",
-            "primary": true
-          },
-          "DIF": {
-            "name": "dif2",
+            "name": "DIF",
             "primary": true
           }
         },
-        "Group3": {
+        "Group 2": {
           "GHI": {
-            "name": "ghi2",
+            "name": "GHI_1",
             "primary": false
           },
           "DNI": {
-            "name": null,
+            "name": "DNI_1",
             "primary": false
           },
           "DIF": {
-            "name": null,
+            "name": "DIF_1",
             "primary": false
           }
         }

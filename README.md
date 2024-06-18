@@ -1,6 +1,7 @@
 Solargis public JSON schema files define JSON instances of various request and response object types.
 
 ### RELEASE NOTES:
+- **v1.1.0** (Jun 18, 2024): GtiMountingTrackerOneAxisVertical mounting type has backtracking required, TestGroups object redefined 
 - **v1.0.10** (May 29, 2024): Adding new units - W/kWp.
 - **v1.0.9** (May 6, 2024): Adding two data parameters - LOSS_SNOW and LOSS_SOIL.
 - **v1.0.8** (Mar 21, 2024): Adding new unit mm/hour for the precipitation rate parameter.

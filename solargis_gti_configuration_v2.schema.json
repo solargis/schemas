@@ -258,13 +258,17 @@
         },
         "azimuthLimitWest": {
           "$ref": "#/$defs/GtiDegreesAzimuthLimitWestTrackerVerticalTwoAxis"
+        },
+        "backtracking": {
+          "type": "boolean"
         }
       },
       "required": [
         "type",
         "tilt",
         "azimuthLimitEast",
-        "azimuthLimitWest"
+        "azimuthLimitWest",
+        "backtracking"
       ],
       "additionalProperties": false
     },
