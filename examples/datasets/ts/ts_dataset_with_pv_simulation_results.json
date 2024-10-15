@@ -122,8 +122,40 @@
 
     },
     "createdByApplication": {
-      "name": "solargis/pvsim",
-      "version": "2.2.33"
+            "name": "solargis/evaluate",
+            "version": "1.21.0"
+    },
+    "processing": {
+        "timePeriod": {
+            "from": "2022-10-01T00:07:30+09:00",
+            "to": "2022-10-01T00:37:30+09:00"
+        },
+        "modules": [
+            {
+                "name": "solargis/core",
+                "version": "2.2.53"
+            },
+            {
+                "name": "solargis/sgsim2-pv",
+                "version": "2.5.0"
+            }
+        ]
+    },
+    "pvConfiguration": {
+      "dcInstalledCapacityKwp": 100.4,
+      "numberOfSegments": 1,
+      "systemDesign": {
+        "mountingType": "TRACKER_ONE_AXIS_INCLINED",
+        "bifacial": false,
+        "relativeSpacing": 2.5,
+        "azimuth": 180.5,
+        "tilt": 34.4,
+        "backtracking": true,
+        "rotationLimitEast": -180,
+        "rotationLimitWest": 180,
+        "tiltLimitMin": null,
+        "tiltLimitMax": null
+      }
     }
   },
   "data": {

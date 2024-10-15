@@ -2,8 +2,8 @@ import glob
 import os
 from pathlib import Path
 
-old_identity = '/v1.0.10/'
-new_identity = '/v1.1.0/'
+old_identity = '/v1.1.0/'
+new_identity = '/v1.1.1/'
 
 here = Path(__file__).parent
 schema_folder = str(here)
