@@ -1,0 +1,86 @@
+{
+    "site": {
+    "latitude": 43.023903,
+    "longitude": 142.419596,
+    "elevation": 156.9,
+    "name": "Pippu 比布町, Kamikawa District"
+  },
+  "timeStep": "PT15M",
+  "columns": [
+    "CI_FLAG",
+    "DIF",
+    "DNI",
+    "GHI",
+    "GHI_NOSHD",
+    "GTI",
+    "PANEL_AZIMUTH",
+    "PANEL_INC",
+    "PANEL_TILT",
+    "SUN_AZIMUTH",
+    "SUN_ELEVATION"
+  ],
+  "fromDate": "2022-10-01",
+  "toDate": "2022-10-02",
+  "utcOffset": "+09:00",
+  "timeAlignment": "CENTER",
+  "terrainShading": true,
+  "environment": {
+    "surfaceAlbedo": 0.12,
+    "horizon": {
+      "azimuth": [
+        0,
+        37.5,
+        60,
+        82.5,
+        105,
+        127.5,
+        150,
+        172.5,
+        195,
+        217.5,
+        240,
+        262.5,
+        285,
+        307.5,
+        330,
+        352.5
+      ],
+      "height": [
+        0.705,
+        1.0588235,
+        1.058894,
+        1.428,
+        0.70588764,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "outputFormat": "SOLARGIS_JSON",
+  "compressOutput": false,
+  "includeSurfaceAlbedoLongTerm": true,
+  "includeHorizon": true,
+  "fileLabel": "Pippu_AX_987JP",
+  "gtiConfiguration": {
+    "layout": {
+      "azimuth": 180,
+      "relativeSpacing": 2.5,
+      "mounting": {
+        "type": "TRACKER_ONE_AXIS_INCLINED",
+        "axisTilt": 30,
+        "backtracking": true,
+        "rotationLimitEast": -50,
+        "rotationLimitWest": 50
+      }
+    }
+  }
+}
