@@ -1,0 +1,104 @@
+{
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.1/solargis_public_TS_API_request.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+
+  "description": "Schema for Solargis data request - for getting timeseries datasets via API.",
+  "type": "object",
+  "required": [
+    "site",
+    "timeStep",
+    "fromDate",
+    "toDate",
+    "columns",
+    "outputFormat"
+  ],
+  "additionalProperties": true,
+  "properties": {
+    "site": {
+      "description": "Site location definition.",
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/site",
+      "examples": [
+        {
+          "latitude": 43.913961,
+          "longitude": 142.419596,
+          "elevation": 179,
+          "name": "Pippu 比布町, Kamikawa District, Japan"
+        }
+      ]
+    },
+    "timeStep": {
+      "enum": [
+        "PT1M",
+        "PT5M",
+        "PT10M",
+        "PT15M",
+        "PT60M",
+        "P1D",
+        "P1M",
+        "P1Y"
+      ]
+    },
+    "fromDate": {
+      "description": "Start date of the requested data. Inclusive. See also the utcOffset.",
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "const": "AUTODETECT"
+        }
+      ]
+    },
+    "toDate": {
+      "description": "End date of the requested data. Inclusive.",
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/toDate"
+    },
+    "columns": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/columns"
+    },
+    "utcOffset": {
+      "description": "ISO 8601 time zone designator (offset from UTC) formatted as ±hh:mm. Allows only whole hour or half-hour offsets in the range ±14:30. If this property is missing the UTC is used (00:00).",
+      "type": "string",
+      "pattern": "^([+\\\\-])?(0[0-9]|1[0-4]):(00|30)$",
+      "examples": [
+        "+05:30", "-07:00", "02:00"
+      ]
+    },
+    "timeAlignment": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/timeAlignment"
+    },
+    "terrainShading": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/terrainShading"
+    },
+    "environment": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/environment"
+    },
+    "gtiConfiguration": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/gtiConfiguration"
+    },
+    "fileLabel": {
+      "$ref": "solargis_common_types.schema.json#/$defs/FileLabel"
+    },
+    "outputFormat": {
+      "enum": [
+        "SOLARGIS_JSON", "SOLARGIS_CSV"
+      ]
+    },
+    "compressOutput": {
+      "description": "Output dataset file will be zipped.",
+      "type": "boolean",
+      "default": false
+    },
+    "includeSurfaceAlbedoLongTerm": {
+      "description": "Include long-term average of surface albedo in the output dataset. The value is taken from the user request (if value is present) or from the Solargis database (if not provided by user). Only for SOLARGIS_JSON format.",
+      "type": "boolean",
+      "default": false
+    },
+    "includeHorizon": {
+      "description": "Include horizon object in the output dataset (used for shading). The value is taken from the user request (if value is present) or from the Solargis database (if not provided by user). Only for SOLARGIS_JSON format.",
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

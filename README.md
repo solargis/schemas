@@ -1,7 +1,7 @@
 Solargis public JSON schema files define JSON instances of various request and response object types.
 
 ### RELEASE NOTES:
-- **v1.1.1** (Oct 15, 2024): PvEnergySystemMetadata type added into dataset metadata
+- **v1.1.1** (Oct 15, 2024): Added public TS API request, PvEnergySystemMetadata type added into dataset metadata
 - **v1.1.0** (Jun 18, 2024): GtiMountingTrackerOneAxisVertical mounting type has backtracking required, TestGroups object redefined 
 - **v1.0.10** (May 29, 2024): Adding new units - W/kWp.
 - **v1.0.9** (May 6, 2024): Adding two data parameters - LOSS_SNOW and LOSS_SOIL.
