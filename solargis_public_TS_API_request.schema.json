@@ -55,6 +55,7 @@
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/toDate"
     },
     "columns": {
+      "description": "Any valid column name is possible, but success output is generated only if name is allowed in the API subscription.",
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/columns"
     },
     "utcOffset": {
@@ -78,6 +79,7 @@
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/gtiConfiguration"
     },
     "fileLabel": {
+      "description": "The value will be used in the generated file name for output dataset.",
       "$ref": "solargis_common_types.schema.json#/$defs/FileLabel"
     },
     "outputFormat": {
