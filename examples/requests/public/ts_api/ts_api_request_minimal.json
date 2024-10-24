@@ -1,0 +1,13 @@
+{
+  "site": {
+    "latitude": 43.023903,
+    "longitude": 142.419596
+  },
+  "timeStep": "PT15M",
+  "columns": [
+    "GHI"
+  ],
+  "fromDate": "2022-10-01",
+  "toDate": "2022-10-02",
+  "outputFormat": "SOLARGIS_JSON"
+}
