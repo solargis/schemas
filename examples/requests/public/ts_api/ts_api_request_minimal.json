@@ -7,7 +7,7 @@
   "columns": [
     "GHI"
   ],
-  "fromDate": "2022-10-01",
-  "toDate": "2022-10-02",
+  "fromDate": "AUTODETECT",
+  "toDate": "LAST_MONTH",
   "outputFormat": "SOLARGIS_JSON"
 }
