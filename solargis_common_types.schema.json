@@ -57,11 +57,8 @@
           "type": "string",
           "maxLength": 500
         },
-        "horizon": {
-          "$ref": "#/$defs/Horizon"
-        },
         "id": {
-          "description": "Solargis internal or any custom id. Can be used as identifier for referencing another site specific properties.",
+          "description": "Another option to identify the site.",
           "type": "string",
           "maxLength": 100
         }

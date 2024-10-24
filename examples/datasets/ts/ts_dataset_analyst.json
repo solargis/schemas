@@ -30,7 +30,7 @@
       "version": "0.33.2"
     },
     "testGroups": {
-      "$comment": "Showing fake column names to illustrate the concept of test groups.",
+      "$comment": "Showing dummy column names just to illustrate the concept of test groups. Normally the column names should be included in the dataset.",
       "version": 1,
       "groups": {
         "Group 1": {
@@ -62,6 +62,7 @@
           }
         }
       }
+
     },
     "columnOrder": [
       "DATETIME",

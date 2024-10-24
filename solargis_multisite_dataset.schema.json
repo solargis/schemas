@@ -268,9 +268,6 @@
             "$ref": "solargis_common_types.schema.json#/$defs/Instrument"
           }
         },
-        "horizon": {
-          "$ref": "solargis_common_types.schema.json#/$defs/Horizon"
-        },
         "gtiConfiguration": {
           "description": "Configuration object used with the simulation of solar irradiation hitting a tilted surface (GTI or POA).",
           "$ref": "solargis_gti_configuration_v2.schema.json#/$defs/GtiSystem"
@@ -299,7 +296,6 @@
         "sources": true,
         "energySystem": true,
         "instrument": true,
-        "horizon": true,
         "datasetVersion": {
           "title": "Version of the dataset instance itself. Do not confuse with versions in Metadata.processing.modules or Metadata.sources.",
           "type": "string",
@@ -392,7 +388,6 @@
         "sources": true,
         "energySystem": true,
         "instrument": true,
-        "horizon": true,
         "columnType": {
           "description": "Predefined column type.",
           "$ref": "solargis_common_enums.schema.json#/$defs/AllColumnTypes"
