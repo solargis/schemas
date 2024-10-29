@@ -59,12 +59,7 @@
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/columns"
     },
     "utcOffset": {
-      "description": "ISO 8601 time zone designator (offset from UTC) formatted as ±hh:mm. Allows only whole hour or half-hour offsets in the range ±14:30. If this property is missing the UTC is used (00:00).",
-      "type": "string",
-      "pattern": "^([+\\\\-])?(0[0-9]|1[0-4]):(00|30)$",
-      "examples": [
-        "+05:30", "-07:00", "02:00"
-      ]
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/utcOffset"
     },
     "timeAlignment": {
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/timeAlignment"
