@@ -123,5 +123,7 @@
       }
     }
   },
-  "outputFormat": "SOLARGIS_JSON"
+  "includeHorizon": true,
+  "includeSurfaceAlbedoLongTerm": true,
+  "includeJsonData": true
 }

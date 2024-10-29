@@ -91,16 +91,6 @@
       "description": "Output dataset file will be zipped.",
       "type": "boolean",
       "default": false
-    },
-    "includeSurfaceAlbedoLongTerm": {
-      "description": "Include long-term average of surface albedo in the output dataset. The value is taken from the user request (if value is present) or from the Solargis database (if not provided by user). Only for SOLARGIS_JSON format.",
-      "type": "boolean",
-      "default": false
-    },
-    "includeHorizon": {
-      "description": "Include horizon object in the output dataset (used for shading). The value is taken from the user request (if value is present) or from the Solargis database (if not provided by user). Only for SOLARGIS_JSON format.",
-      "type": "boolean",
-      "default": false
     }
   }
 }

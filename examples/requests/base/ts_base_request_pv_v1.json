@@ -26,7 +26,6 @@
   "utcOffset": "+09:00",
   "timeAlignment": "CENTER",
   "terrainShading": true,
-  "fileLabel": "Pippu_AX_987JP",
   "environment": {
     "surfaceAlbedo": 0.12,
     "horizon": {
@@ -118,7 +117,8 @@
       "terrainSlope": 0
     }
   },
-  "outputFormat": "SOLARGIS_JSON",
   "stochasticGenerator": false,
-  "compressOutput": false
+  "includeHorizon": true,
+  "includeSurfaceAlbedoLongTerm": true,
+  "includeJsonData": true
 }
