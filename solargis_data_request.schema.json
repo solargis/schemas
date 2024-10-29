@@ -92,7 +92,8 @@
         },
         "pvConfiguration": {
           "description": "Object is required if at least one PV output related column is present in the array of columns (also the TMOD parameter).",
-          "$comment": "TODO add V2, for now we have only solargis_pv_configuration_v1.schema.json#/$defs/PvConfigurationV1"
+          "$comment": "TODO add v2, for now we have legacy v1",
+          "$ref": "solargis_pv_configuration_v1.schema.json#/$defs/PvConfigurationV1"
         },
         "tmyScenario": {
           "pattern": "^P(1|5|10|25|50|75|90|95|99)$",
@@ -104,9 +105,24 @@
           "default": false
         },
         "requestId": {
-          "description": "Solargis internal request identification.",
+          "description": "Request identification.",
           "type": "string",
           "maxLength": 100
+        },
+        "includeSurfaceAlbedoLongTerm": {
+          "description": "Include long-term average of surface albedo in the output dataset. The value is taken from the user request (if value is present) or from the Solargis database (if not provided by user). Only for SOLARGIS_JSON format.",
+          "type": "boolean",
+          "default": true
+        },
+      "includeHorizon": {
+        "description": "Include horizon object in the output dataset (used for shading). The value is taken from the user request (if value is present) or from the Solargis database (if not provided by user). Only for SOLARGIS_JSON format.",
+        "type": "boolean",
+        "default": true
+        },
+        "includeJsonData": {
+          "description": "Include data section in the dataset. If false, the data is provided elsewhere e.g., as file or URI, and dataset just holds the metadata. Only for SOLARGIS_JSON format.",
+          "type": "boolean",
+          "default": true
         }
       },
       "dependencies": {

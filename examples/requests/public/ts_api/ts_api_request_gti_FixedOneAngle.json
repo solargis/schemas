@@ -67,8 +67,6 @@
   },
   "outputFormat": "SOLARGIS_JSON",
   "compressOutput": false,
-  "includeSurfaceAlbedoLongTerm": true,
-  "includeHorizon": true,
   "fileLabel": "Pippu_AX_987JP",
   "gtiConfiguration": {
     "layout": {
