@@ -126,6 +126,12 @@
           "description": "Include data section in the dataset. If false, the data is provided elsewhere e.g., as file or URI, and dataset just holds the metadata. Only for SOLARGIS_JSON format.",
           "type": "boolean",
           "default": true
+        },
+        "outputFormat": {
+          "enum": [
+            "SOLARGIS_JSON",
+            "SOLARGIS_JSON_HIGH_PREC_FLOAT"
+          ]
         }
       },
       "dependencies": {
