@@ -58,10 +58,7 @@
       "$ref": "solargis_common_types.schema.json#/$defs/FileLabel"
     },
     "outputFormat": {
-      "enum": [
-        "SOLARGIS_JSON",
-        "SOLARGIS_JSON_HIGH_PREC_FLOAT"
-      ]
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/outputFormat"
     },
     "compressOutput": {
       "description": "Output dataset will be zipped.",
