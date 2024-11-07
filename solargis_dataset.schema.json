@@ -91,9 +91,17 @@
                 "$ref": "solargis_common_types.schema.json#/$defs/ChangeLog"
               },
               {
-                "$ref": "solargis_common_types.schema.json#/$defs/TimeShift"
+                "$ref": "solargis_common_types.schema.json#/$defs/TimeShift",
+                "description": "Deprecated: Time shift items are no longer recommended to be part of history, they were moved to timeShifts."
               }
             ]
+          }
+        },
+        "timeShifts": {
+          "description": "Time shifts in the dataset.",
+          "type": "array",
+          "items": {
+            "$ref": "solargis_common_types.schema.json#/$defs/TimeShift"
           }
         },
         "site": {
@@ -363,6 +371,10 @@
         "testGroups": {
           "description": "Used in Solargis Analyst QC procedures.",
           "$ref": "solargis_test_group_v1.schema.json"
+        },
+        "report": {
+          "description": "Information about Solargis report.",
+          "$ref": "solargis_common_types.schema.json#/$defs/Report"
         }
       },
       "additionalProperties": true
@@ -451,6 +463,16 @@
         "priority": {
           "description": "For internal use of the Solargis Analyst, but can be used elsewhere - if you need to express the importance of multiple columns of the same type e.g., multiple sensor GHIs.",
           "type": "integer"
+        },
+        "dataQuality": {
+          "$ref": "solargis_common_enums.schema.json#/$defs/ColumnQualityEnum"
+        },
+        "maintenanceQuality": {
+          "$ref": "solargis_common_enums.schema.json#/$defs/ColumnQualityEnum"
+        },
+        "columnNotes": {
+          "description": "Additional information about column.",
+          "$ref": "solargis_common_types.schema.json#/$defs/ColumnNotes"
         }
       },
       "required": [
