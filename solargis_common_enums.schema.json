@@ -351,6 +351,17 @@
         "MANUAL_QUALITY_CHECK",
         "DRIFT_DETECTION"
       ]
+    },
+    "ColumnQualityEnum": {
+      "description": "Types of the data quality and maintenance quality of the column.",
+      "enum": [
+        "VERY_GOOD",
+        "GOOD",
+        "MEDIUM",
+        "PROBLEMATIC",
+        "INSUFFICIENT",
+        "UNDEFINED"
+      ]
     }
   }
 }
