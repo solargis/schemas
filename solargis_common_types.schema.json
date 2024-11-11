@@ -347,6 +347,10 @@
           "description": "Who did what and why with the resource.",
           "type": "string",
           "maxLength": 500
+        },
+        "log_type": {
+          "description": "Type of change log entry.",
+          "type": "string"
         }
       },
       "required": [
@@ -608,6 +612,31 @@
         },
         "horizon": {
           "$ref": "#/$defs/Horizon"
+        }
+      }
+    },
+    "Report": {
+      "description": "Information about Solargis report.",
+      "type": "object",
+      "properties": {
+        "summary_notes": {
+          "description": "Summary in Solargis report",
+          "type": "string"
+        },
+        "recommendations_notes": {
+          "description": "Recommendations in Solargis report",
+          "type": "string"
+        }
+      }
+    },
+    "ColumnNotes": {
+      "description": "Additional information about column.",
+      "type": "object",
+      "properties": {
+        "original_column_name": {
+          "description": "Original name of the column before it was imported to Analyst",
+          "type": "string",
+          "maxLength": 200
         }
       }
     }
