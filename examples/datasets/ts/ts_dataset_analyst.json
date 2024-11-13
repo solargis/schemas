@@ -137,7 +137,10 @@
             "validData": false,
             "description": "sun below horizon"
           }
-        ]
+        ],
+        "columnNotes": {
+          "originalColumnName": "GHI - sensor"
+        }
       },
       "GHI_model": {
         "columnType": "GHI",
@@ -234,8 +237,16 @@
   "history": [
     {
       "timestamp": "2022-01-01T00:00:00+00:00",
-      "description": "what I did with the dataset at the moment.."
+      "description": "data_file.csv",
+      "logType": "Imported from file"
     },
+    {
+      "timestamp": "2022-01-01T00:00:00+00:00",
+      "description": "Test groups updated to latest version",
+      "logType": "Metadata changed"
+    }
+  ],
+  "timeShifts": [
     {
       "timePeriod": {
         "from": "2022-01-01T00:00:00+09:00",
