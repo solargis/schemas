@@ -7,6 +7,7 @@
   "$defs": {
     "DatasetTypeEnum": {
       "description": "Main type of a response (dataset) object. Also used in requests. TMY and LONG-TERM AVERAGE datasets have 'non-real' timestamps (not representing real instances of time). TIMESERIES datasets have timestamps with the real meaning.",
+      "type": "string",
       "enum": [
         "LONG_TERM_AVERAGE",
         "TIMESERIES",
@@ -15,6 +16,7 @@
     },
     "DataOriginEnum": {
       "description": "Origin of data values in single column or in the whole dataset.",
+      "type": "string",
       "enum": [
         "GROUND_MEASUREMENTS_DATA",
         "MODEL_DATA"
@@ -22,6 +24,7 @@
     },
     "TimeAlignmentEnum": {
       "description": "Datetime strings (labels of time intervals) can represent start, center or end of the time interval (or the left edge, the center and the right edge of the time interval).",
+      "type": "string",
       "enum": [
         "CENTER",
         "START",
@@ -32,6 +35,7 @@
     "TimeStepEnum": {
       "description": "Time step of the datetime column, also known as time resolution or time granularity.",
       "$comment": "Values use ISO 8601 durations standard: https://en.wikipedia.org/wiki/ISO_8601#Durations.",
+      "type": "string",
       "enum": [
         "PT1M",
         "PT5M",
@@ -48,6 +52,7 @@
     "SolarRadiationColumnTypesEnum": {
       "description": "Column types from the solar data domain. Including also tilted solar irradiation types.",
       "$comment": "Do not confuse column types with column names, but prefer using type names for column names if applicable (when creating datasets).",
+      "type": "string",
       "enum": [
         "ALB",
         "DHI",
@@ -69,6 +74,7 @@
     },
     "EnergySystemColumnTypesEnum": {
       "description": "Column types from the various energy systems - photovoltaic or wind turbines.",
+      "type": "string",
       "enum": [
         "PVOUT",
         "TMOD",
@@ -82,6 +88,7 @@
     },
     "MeteoColumnTypesEnum": {
       "description": "Column types from the meteorological data domain.",
+      "type": "string",
       "enum": [
         "AP",
         "PREC",
@@ -102,6 +109,7 @@
     },
     "UncertaintyColumnTypesEnum": {
       "description": "Special type for uncertainty columns e.g., PVOUT_UNC_P25, GHI_UNC_P75 - can occur in datasets, but cannot be requested as names in requests.",
+      "type": "string",
       "enum": [
         "GHI_UNC",
         "GTI_UNC",
@@ -110,6 +118,7 @@
     },
     "OtherColumnTypesEnum": {
       "description": "Following column types can occur in dataset metadata, but cannot be requested as names in Solargis requests.",
+      "type": "string",
       "enum": [
         "FLAG",
         "UNDEFINED",
@@ -154,6 +163,7 @@
 
     "SolargisSpecialColumnNamesEnum": {
       "description": "In addition to the most of the column type names, Solargis also recognizes the following column names in the request.",
+      "type": "string",
       "enum": [
         "CI_FLAG",
         "DIF_NOSHD",
@@ -222,6 +232,7 @@
 
     "SolarRadiationUnitsEnum": {
       "description": "Units used with solar radiation data - either power or energy.",
+      "type": "string",
       "enum": [
         "W/m2",
         "kW/m2",
@@ -237,6 +248,7 @@
     },
     "TemperatureUnitsEnum": {
       "description": "Units used with the temperature of air, panel surface or a device temperature.",
+      "type": "string",
       "enum": [
         "deg_C",
         "deg_F",
@@ -245,6 +257,7 @@
     },
     "WindSpeedUnitsEnum": {
       "description": "Units used with wind speed data.",
+      "type": "string",
       "enum": [
         "m/s",
         "km/h",
@@ -256,6 +269,7 @@
     "AngularUnitsEnum": {
       "description": "Various angles - used in wind direction, solar geometry, panels, etc.",
       "$comments": "deg_azimuth_from_north_clockwise: from  0 to 360 degrees, deg_aspect_from_south_both_directions: 0 South, -90 East, 90 West, -180/180 North.",
+      "type": "string",
       "enum": [
         "deg",
         "deg_azimuth_from_north_clockwise",
@@ -265,6 +279,7 @@
     },
     "PressureUnitsEnum": {
       "description": "Units used with the air pressure.",
+      "type": "string",
       "enum": [
         "hPa",
         "mbar",
@@ -275,6 +290,7 @@
     },
     "PrecipitationUnitsEnum": {
       "description": "Units used with water vapour, rain, snow and atmospheric pollution.",
+      "type": "string",
       "enum": [
         "kg/m2",
         "kg/m3",
@@ -288,6 +304,7 @@
     },
     "EnergySystemUnitsEnum": {
       "description": "Units used with energy systems.",
+      "type": "string",
       "enum": [
         "W",
         "kW",
@@ -330,6 +347,7 @@
           "$ref": "#/$defs/EnergySystemUnitsEnum"
         },
         {
+          "type": "string",
           "enum": [
             "%",
             "hour",
@@ -345,6 +363,7 @@
     },
     "QualityControlStatusEnum": {
       "description": "Types of the QC status entity.",
+      "type": "string",
       "enum": [
         "TIME_REFERENCE_CHECK",
         "AUTOMATIC_QUALITY_CHECK_IRRADIATION",
@@ -354,6 +373,7 @@
     },
     "ColumnQualityEnum": {
       "description": "Types of the data quality and maintenance quality of the column.",
+      "type": "string",
       "enum": [
         "VERY_GOOD",
         "GOOD",

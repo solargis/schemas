@@ -20,6 +20,7 @@
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/site"
     },
     "timeStep": {
+      "type": "string",
       "enum": [
         "PT15M",
         "PT60M"
@@ -27,6 +28,7 @@
     },
     "fromDate": {
       "description": "Start date of the requested data. Inclusive.",
+      "type": "string",
       "enum": [
         "AUTODETECT",
         "AUTODETECT-P1D"
@@ -61,6 +63,7 @@
       "$ref": "solargis_common_types.schema.json#/$defs/FileLabel"
     },
     "outputFormat": {
+      "type": "string",
       "enum": [
         "SOLARGIS_JSON",
         "SOLARGIS_JSON_HIGH_PREC_FLOAT"

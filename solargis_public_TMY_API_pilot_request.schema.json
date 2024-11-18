@@ -24,6 +24,7 @@
       "maximum": 180
     },
     "timeStep": {
+      "type": "string",
       "enum": [
         "PT15M",
         "PT60M"
@@ -37,6 +38,7 @@
       "uniqueItems": true,
       "minItems": 1,
       "items": {
+        "type": "string",
         "enum": [
           "SOLARGIS_JSON",
           "SOLARGIS_CSV",

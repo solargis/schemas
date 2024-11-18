@@ -22,6 +22,7 @@
         },
         "installationType": {
           "description": "This property of the PV system helps to estimate how modules are cooled by the air.",
+          "type": "string",
           "enum": [
             "FREE_STANDING",
             "ROOF_MOUNTED",
@@ -114,6 +115,7 @@
       "properties": {
         "technology": {
           "description": "Codes for materials used in PV modules. Use 'CSI' for crystalline silicon, 'ASI' for amorphous silicon, 'CDTE' for cadmium telluride, 'CIS' for copper indium selenide.",
+          "type": "string",
           "enum": [
             "CSI",
             "ASI",
@@ -124,6 +126,7 @@
         "topologyType": {
           "description": "This parameter estimates a loss of PV system output when modules are self-shaded. The effect depends on wiring interconnections within a module. Shading influence ranges from 0% (no influence) to 100% (full influence) and it's mapped to categories: PROPORTIONAL = 20%, UNPROPORTIONAL_1 = 40%, UNPROPORTIONAL_2 = 60%, UNPROPORTIONAL_3 = 80%. When parameter is missing, the self-shading influence is estimated to 5 %.",
           "$comment": "Defaults: UNPROPORTIONAL_1 for CSI, PROPORTIONAL for all other module technologies",
+          "type": "string",
           "enum": [
             "PROPORTIONAL",
             "UNPROPORTIONAL_1",

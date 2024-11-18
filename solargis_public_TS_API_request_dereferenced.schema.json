@@ -86,6 +86,7 @@
       ]
     },
     "timeStep": {
+      "type": "string",
       "enum": [
         "PT1M",
         "PT5M",
@@ -117,7 +118,8 @@
           "format": "date"
         },
         {
-          "const": "LAST_MONTH"
+          "const": "LAST_MONTH",
+          "type": "string"
         },
         {
           "const": "LAST_YEAR"
@@ -224,7 +226,8 @@
           },
           {
             "description": "Solargis recognizes the names of several uncertainty scenarios for selected column types.",
-            "pattern": "^(GHI|GTI|PVOUT)_UNC_P(1|5|10|20|25|75|80|90|95|99)$"
+            "pattern": "^(GHI|GTI|PVOUT)_UNC_P(1|5|10|20|25|75|80|90|95|99)$",
+            "type": "string"
           },
           {
             "description": "Solargis recognizes a pattern for two wind column names. Wind speed and wind direction can be recorded at the predefined height range above the ground (from 50 to 200 meters).",
@@ -669,6 +672,7 @@
     "outputFormat": {
       "enum": [
         "SOLARGIS_JSON",
+        "SOLARGIS_JSON_HIGH_PREC_FLOAT",
         "SOLARGIS_CSV"
       ]
     },

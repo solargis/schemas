@@ -224,6 +224,7 @@
           "format": "date-time"
         },
         "type": {
+          "type": "string",
           "enum": [
             "CLEANING",
             "CALIBRATION",
@@ -370,6 +371,7 @@
           "$comment": "Here the enum of all Solargis apps and libs could help...",
           "anyOf": [
             {
+              "type": "string",
               "enum": [
                 "solargis/analyst"
               ]
@@ -498,6 +500,7 @@
         },
         "type": {
           "description": "Type of the QC status.",
+          "type": "string",
           "enum": [
             "TIME_REFERENCE_CHECK",
             "AUTOMATIC_QUALITY_CHECK_IRRADIATION",

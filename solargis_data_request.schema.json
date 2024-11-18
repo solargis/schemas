@@ -39,6 +39,7 @@
               "format": "date"
             },
             {
+              "type": "string",
               "enum": [
                 "AUTODETECT",
                 "AUTODETECT-P1D"
@@ -128,6 +129,7 @@
           "default": true
         },
         "outputFormat": {
+          "type": "string",
           "enum": [
             "SOLARGIS_JSON",
             "SOLARGIS_JSON_HIGH_PREC_FLOAT"
