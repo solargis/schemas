@@ -17,6 +17,7 @@
       "type": "object",
       "$comment": "Typical instance property names are Group 1,...,Group N.",
       "propertyNames": {
+        "type": "string",
         "maxLength": 100,
 		"pattern": "^[A-Za-z_][A-Za-z0-9_ ]*$"
       },

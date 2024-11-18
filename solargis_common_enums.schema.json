@@ -197,10 +197,12 @@
     },
     "SolargisWindHeightColumnNamesPattern": {
       "description": "Solargis recognizes a pattern for two wind column names. Wind speed and wind direction can be recorded at the predefined height range above the ground (from 50 to 200 meters).",
+      "type": "string",
       "pattern": "^(WS|WD)(5[0-9]|[6-9][0-9]|1[0-9]{2}|200)$"
     },
     "SolargisUncertaintyColumnNamesPattern": {
       "description": "Solargis recognizes the names of several uncertainty scenarios for selected column types.",
+      "type": "string",
       "pattern": "^(GHI|GTI|PVOUT)_UNC_P(1|5|10|20|25|75|80|90|95|99)$"
     },
     "RequestColumnNames": {

@@ -102,6 +102,7 @@
           "$ref": "solargis_pv_configuration_v1.schema.json#/$defs/PvConfigurationV1"
         },
         "tmyScenario": {
+          "type": "string",
           "pattern": "^P(1|5|10|25|50|75|90|95|99)$",
           "default": "P50"
         },
