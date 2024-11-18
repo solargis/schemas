@@ -36,6 +36,7 @@
     },
     "toDate": {
       "description": "End date of the requested data. Inclusive.",
+      "type": "string",
       "const": "LAST_YEAR"
     },
     "columns": {

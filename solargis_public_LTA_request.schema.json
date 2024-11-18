@@ -15,6 +15,7 @@
   "additionalProperties": true,
   "properties": {
     "requestType": {
+      "type": "string",
       "const": "LONG_TERM_AVERAGE"
     },
     "site": {
@@ -38,6 +39,7 @@
     },
     "toDate": {
       "description": "End date of the requested data. Inclusive.",
+      "type": "string",
       "const": "LAST_YEAR"
     },
     "columns": {

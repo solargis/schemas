@@ -47,6 +47,7 @@
           "format": "date"
         },
         {
+          "type": "string",
           "const": "AUTODETECT"
         }
       ]

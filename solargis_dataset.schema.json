@@ -390,6 +390,7 @@
       "properties": {
         "timeFormatPattern": {
           "description": "Dates and times are defined by RFC 3339, section 5.6. This is the subset of a date format commonly known as ISO8601 format.",
+          "type": "string",
           "const": "YYYY-MM-DDThh:mm:ss[.sss]±hh:mm"
         },
         "timeStep": {
