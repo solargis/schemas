@@ -19,6 +19,7 @@
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/site"
     },
     "timeStep": {
+      "type": "string",
       "enum": [
         "PT15M",
         "PT30M",

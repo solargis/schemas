@@ -15,6 +15,7 @@
   "additionalProperties": true,
   "properties": {
     "requestType": {
+      "type": "string",
       "const": "LONG_TERM_AVERAGE"
     },
     "site": {
@@ -22,6 +23,7 @@
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/site"
     },
     "timeStep": {
+      "type": "string",
       "enum": [
         "P1M",
         "P1Y"
@@ -29,6 +31,7 @@
     },
     "fromDate": {
       "description": "Start date of the requested data. Inclusive.",
+      "type": "string",
       "enum": [
         "AUTODETECT",
         "AUTODETECT-P1D"
@@ -36,6 +39,7 @@
     },
     "toDate": {
       "description": "End date of the requested data. Inclusive.",
+      "type": "string",
       "const": "LAST_YEAR"
     },
     "columns": {
@@ -60,6 +64,7 @@
       "$ref": "solargis_common_types.schema.json#/$defs/FileLabel"
     },
     "outputFormat": {
+      "type": "string",
       "enum": [
         "SOLARGIS_JSON",
         "SOLARGIS_JSON_HIGH_PREC_FLOAT"

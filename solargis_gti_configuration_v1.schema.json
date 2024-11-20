@@ -36,6 +36,7 @@
       "properties": {
         "mounting": {
           "description": "Needed for geometry type identification in the instance documents.",
+          "type": "string",
           "const": "FixedOneAngle"
         },
         "azimuth": {
@@ -77,6 +78,7 @@
       "properties": {
         "mounting": {
           "description": "Needed for easy geometry type identification in the instance documents.",
+          "type": "string",
           "const": "OneAxisHorizontalNS"
         },
         "axisAzimuth": {
@@ -120,6 +122,7 @@
       "properties": {
         "mounting": {
           "description": "Needed for easy geometry type identification in the instance documents.",
+          "type": "string",
           "const": "OneAxisInclined"
         },
         "axisAzimuth": {
@@ -165,6 +168,7 @@
       "properties": {
         "mounting": {
           "description": "Needed for easy geometry type identification in the instance documents.",
+          "type": "string",
           "const": "OneAxisVertical"
         },
         "tilt": {
@@ -206,6 +210,7 @@
       "properties": {
         "mounting": {
           "description": "Needed for easy geometry type identification in the instance documents.",
+          "type": "string",
           "const": "TwoAxisAstronomical"
         },
         "trackerRotationLimits": {

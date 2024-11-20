@@ -27,6 +27,7 @@
       ]
     },
     "timeStep": {
+      "type": "string",
       "enum": [
         "PT1M",
         "PT5M",
@@ -46,6 +47,7 @@
           "format": "date"
         },
         {
+          "type": "string",
           "const": "AUTODETECT"
         }
       ]
@@ -78,8 +80,11 @@
       "$ref": "solargis_common_types.schema.json#/$defs/FileLabel"
     },
     "outputFormat": {
+      "type": "string",
       "enum": [
-        "SOLARGIS_JSON", "SOLARGIS_CSV"
+        "SOLARGIS_JSON",
+        "SOLARGIS_CSV",
+        "SOLARGIS_JSON_HIGH_PREC_FLOAT"
       ]
     },
     "compressOutput": {
