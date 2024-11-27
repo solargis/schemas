@@ -48,7 +48,7 @@
         },
         {
           "type": "string",
-          "const": "AUTODETECT"
+          "enum": ["AUTODETECT", "AUTODETECT-P1D"]
         }
       ]
     },
