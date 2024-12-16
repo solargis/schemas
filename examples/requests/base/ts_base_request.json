@@ -125,5 +125,6 @@
   },
   "includeHorizon": true,
   "includeSurfaceAlbedoLongTerm": true,
-  "includeJsonData": true
+  "includeJsonData": true,
+  "includeModelUncertainty": false
 }
