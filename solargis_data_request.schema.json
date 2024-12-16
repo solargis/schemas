@@ -131,6 +131,11 @@
           "type": "boolean",
           "default": true
         },
+        "includeModelUncertainty": {
+          "description": "Include details about the model uncertainty in the processing section of metadata.",
+          "type": "boolean",
+          "default": false
+        },
         "outputFormat": {
           "type": "string",
           "enum": [
