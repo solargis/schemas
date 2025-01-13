@@ -51,17 +51,18 @@
       },
       "modules": [
         {
-          "name":  "solargis/core",
+          "name": "solargis/core",
           "version": "2.2.59",
           "details": {
-            "uncertainty": {
-                "GHI": {
-                  "model": 4.5
-                },
-                "DNI": {
-                  "model": 10.0
-                }
-            }
+              "uncertaintyYearly": {
+                  "GHI": {
+                      "model": 4.0
+                  },
+                  "DNI": {
+                      "model": 9.0
+                  },
+                  "probabilityOccurrence": 80.0
+              }
           }
         }
       ]
