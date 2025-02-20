@@ -471,6 +471,9 @@
         "maintenanceQuality": {
           "$ref": "solargis_common_enums.schema.json#/$defs/ColumnQualityEnum"
         },
+        "validationPriority": {
+          "$ref": "solargis_common_enums.schema.json#/$defs/ValidationPriorityEnum"
+        },
         "columnNotes": {
           "description": "Additional information about column.",
           "$ref": "solargis_common_types.schema.json#/$defs/ColumnNotes"

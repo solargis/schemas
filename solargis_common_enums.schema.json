@@ -384,6 +384,16 @@
         "INSUFFICIENT",
         "UNDEFINED"
       ]
+    },
+    "ValidationPriorityEnum": {
+      "description": "Types of the validation priority of the column.",
+      "type": "string",
+      "enum": [
+        "PRIMARY",
+        "SECONDARY",
+        "TERTIARY",
+        "UNDEFINED"
+      ]
     }
   }
 }
