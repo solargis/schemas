@@ -392,6 +392,7 @@
         "PRIMARY",
         "SECONDARY",
         "TERTIARY",
+        "INSUFFICIENT",
         "UNDEFINED"
       ]
     }
