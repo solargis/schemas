@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.1/solargis_data_request.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.2/solargis_data_request.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
   "description": "Base schema for a Solargis data request (schema of all request attributes) - not used in public APIs. See special public request types derived from the base.",
 

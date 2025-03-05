@@ -149,6 +149,7 @@
         "description": "Global horizontal irradiation",
         "flagColumnName": "flagR",
         "priority": 2,
+        "validationPriority": "INSUFFICIENT",
         "sources": [
           {
             "name": "Meteosat MSG IODC and Meteosat MFG IODC satellite data ((c) 2022 EUMETSAT) and atmospheric data ((c) 2022 ECMWF, NOAA and NASA)",
