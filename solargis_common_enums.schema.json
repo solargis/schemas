@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.2/solargis_common_enums.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.3/solargis_common_enums.schema.json",
   "$schema": "https://json-schema.org/draft-07/schema",
 
   "description": "Common enums and other schemas used with requests or datasets.",
@@ -34,19 +34,9 @@
     },
     "TimeStepEnum": {
       "description": "Time step of the datetime column, also known as time resolution or time granularity.",
-      "$comment": "Values use ISO 8601 durations standard: https://en.wikipedia.org/wiki/ISO_8601#Durations.",
+      "$comment": "Values use ISO 8601 durations standard from https://en.wikipedia.org/wiki/ISO_8601#Durations with few limitations: not supported week W designator and fractions like P0.5Y.",
       "type": "string",
-      "enum": [
-        "PT1M",
-        "PT5M",
-        "PT10M",
-        "PT15M",
-        "PT30M",
-        "PT60M",
-        "P1D",
-        "P1M",
-        "P1Y"
-      ]
+      "pattern": "^P(?!$)(\\d+Y)?(\\d+M)?(\\d+D)?(T(?=\\d)(\\d+H)?(\\d+M)?(\\d+S)?)?$"
     },
 
     "SolarRadiationColumnTypesEnum": {
@@ -355,7 +345,8 @@
             "hour",
             "m",
             "km",
-            "mi"
+            "mi",
+            "unitless"
           ]
         },
         {

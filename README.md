@@ -1,6 +1,7 @@
 Solargis public JSON schema files define JSON instances of various request and response object types.
 
 ### RELEASE NOTES:
+- **v1.1.3** (Apr 3, 2025): Changed time step pattern to cover almost complete ISO 8601 durations standard. Added 'unitless' as supported unit.
 - **v1.1.2** (Mar 5, 2025): Added validationPriority to DataColumnMetadata plus its enum
 - **v1.1.1** (Dec 16, 2024): Added public TS API request, PvEnergySystemMetadata type added into dataset metadata. TimeShift deprecated as a part of history object in dataset metadata, new timeShifts object added. DataColumnMetadata extended with dataQuality, maintenanceQuality, columnNotes, report added to DatasetMetadata.
 - **v1.1.0** (Jun 18, 2024): GtiMountingTrackerOneAxisVertical mounting type has backtracking required, TestGroups object redefined 
