@@ -2,52 +2,63 @@
   "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.3/solargis_pv_configuration_v1.schema.json",
   "$schema": "https://json-schema.org/draft-07/schema",
 
-  "description": "Following type definitions Solargis uses for the simulation of the PV output - in its older (legacy or v1) version of simulation tools.",
+  "description": "Following type definitions Solargis uses for the simulation of PV output.",
 
   "$defs": {
     "PvConfigurationV1": {
-      "description": "PV configuration object used with the the first version (legacy) of the Solargis PV simulation tools.",
+      "description": "PV configuration object accepted by the first version PV simulation engine.",
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "installedPower",
+        "simulationEngine",
         "installationType",
+        "installedPower",
         "module"
       ],
       "properties": {
-        "installedPower": {
-          "description": "Total PV system rating (nameplate capacity) is the summation of all panel ratings measured in STC, in kilowatt-peaks (kWp)",
-          "type": "number",
-          "minimum": 0
-        },
-        "installationType": {
-          "description": "This property of the PV system helps to estimate how modules are cooled by the air.",
+      "simulationEngine": {
+        "description": "PV simulation engine.",
+        "type": "string",
+        "enum": ["v1"]
+      },
+      "installationType": {
+        "description": "Thermal losses are increased for building and roof PV systems.",
+        "type": "string",
+        "enum": [
+          "FREE_STANDING",
+          "ROOF_MOUNTED",
+          "BUILDING_INTEGRATED"
+        ]
+      },
+      "startupDate": {
+          "description": "Startup date of a PV system (unpacking of PV modules). This parameter is used for calculation of PV module degradation by aging.",
           "type": "string",
-          "enum": [
-            "FREE_STANDING",
-            "ROOF_MOUNTED",
-            "BUILDING_INTEGRATED"
-          ]
-        },
-        "module": {
-          "$ref": "#/$defs/Module"
-        },
-        "selfShading": {
-          "description": "The parameter affects FixedOneAngle geometry, then OneAxisHorizontalNS and OneAxisInclined type of trackers with backTracking=false. When backTracking=true, the parameter does not make sense as self-shading is avoided. No other GTI configs are implemented. The parameter is used to determine the impact of self (inter-row) shading on PV power production. When set to true, the effect of self-shading is taken into account in calculation, otherwise the structure is assumed without neighbors (best possible). Direct shadow is considered, the effect of diffuse shading is not considered in this version.",
-          "type": "boolean",
-          "default": false
-        },
-        "terrainProperties": {
-          "description": "Characteristics of the terrain - applied only when calculating self-shading effect of PV system with FixedOneAngle mounting.",
-          "$ref": "#/$defs/TerrainProperties"
-        },
-        "inverter": {
-          "$ref": "#/$defs/Inverter"
-        },
-        "dcLosses": {
-          "$ref": "#/$defs/DcLosses"
-        },
-        "acLosses": {
+          "format": "date"
+      },
+      "installedPower": {
+        "description": "Total PV system rating (nameplate capacity) is the summation of all panel ratings measured in STC, in kilowatt-peaks (kWp)",
+        "type": "number",
+        "minimum": 0
+      },
+      "module": {
+        "$ref": "#/$defs/Module"
+      },
+      "selfShading": {
+        "description": "The parameter affects FixedOneAngle geometry, then OneAxisHorizontalNS and OneAxisInclined type of trackers with backTracking=false. When backTracking=true, the parameter does not make sense as self-shading is avoided. No other GTI configs are implemented. The parameter is used to determine the impact of self (inter-row) shading on PV power production. When set to true, the effect of self-shading is taken into account in calculation, otherwise the structure is assumed without neighbors (best possible). Direct shadow is considered, the effect of diffuse shading is not considered in this version.",
+        "type": "boolean",
+        "default": false
+      },
+      "terrainProperties": {
+        "description": "Characteristics of the terrain - applied only when calculating self-shading effect of PV system with FixedOneAngle mounting.",
+        "$ref": "#/$defs/TerrainProperties"
+      },
+      "inverter": {
+        "$ref": "#/$defs/Inverter"
+      },
+      "dcLosses": {
+        "$ref": "#/$defs/DcLosses"
+      },
+      "acLosses": {
           "$ref": "#/$defs/AcLosses"
         }
       },
@@ -64,7 +75,7 @@
             "technology": "CSI",
             "topologyType": "UNPROPORTIONAL_2",
             "degradation": {
-              "startUpDate": "2000-01-21",
+              "startupDate": "2000-01-21",
               "degradationAnyYear": 0.5,
               "degradationFirstYear": 0.8
             },
@@ -106,7 +117,7 @@
       ]
     },
     "Module": {
-      "description": "PV configuration used with the the first version (legacy) of Solargis PV simulation tools.",
+      "description": "PV module",
       "type": "object",
       "additionalProperties": true,
       "required": [
@@ -172,15 +183,7 @@
       "description": "Estimated annual percentage degradation of rated output power of PV modules. This parameter is only considered if dateStartup attribute is set.",
       "type": "object",
       "additionalProperties": false,
-      "required": [
-        "startUpDate"
-      ],
       "properties": {
-        "startUpDate": {
-          "description": "Start up date of a PV system (resp. unpacking of modules). This parameter is used for calculation of degradation (or aging) of modules.",
-          "type": "string",
-          "format": "date"
-        },
         "degradationAnyYear": {
           "description": "Annual percentage degradation for any year.",
           "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
