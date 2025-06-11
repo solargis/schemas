@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.3/solargis_gti_configuration_v1.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.4/solargis_gti_configuration_v1.schema.json",
   "$schema": "https://json-schema.org/draft-07/schema",
   "description": "Following type definitions Solargis uses for simulation of the global tilted irradiation (GTI or POA - plain of array) - in its older (legacy or v1) version of simulation tools.",
   "$defs": {
