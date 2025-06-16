@@ -146,7 +146,7 @@
         }
       },
       "if": {
-        "properties": { "pvConfiguration": true }
+        "required": ["pvConfiguration"]
       },
       "then": {
         "not": {
