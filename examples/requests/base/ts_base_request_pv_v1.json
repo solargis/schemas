@@ -66,16 +66,8 @@
       ]
     }
   },
-  "gtiConfiguration": {
-    "layout": {
-      "azimuth": 180,
-      "mounting": {
-        "type": "FIXED_ONE_ANGLE",
-        "tilt": 39
-      }
-    }
-  },
   "pvConfiguration": {
+    "simulationEngine": "v1",
     "gtiConfiguration": {
       "layout": {
         "azimuth": 180,
@@ -85,14 +77,12 @@
         }
       }
     },
-    "simulationEngine": "v1",
     "installationType": "BUILDING_INTEGRATED",
     "installedPower": 1,
     "module": {
       "technology": "ASI"
     }
   },
-
   "stochasticGenerator": false,
   "includeHorizon": true,
   "includeSurfaceAlbedoLongTerm": true,

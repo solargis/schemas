@@ -145,10 +145,13 @@
           ]
         }
       },
-      "dependencies": {
-        "pvConfiguration": [
-          "gtiConfiguration"
-        ]
+      "if": {
+        "properties": { "pvConfiguration": true }
+      },
+      "then": {
+        "not": {
+          "required": ["gtiConfiguration"]
+        }
       }
     }
   }
