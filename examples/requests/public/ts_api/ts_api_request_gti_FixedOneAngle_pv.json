@@ -76,48 +76,5 @@
         "tilt": 39
       }
     }
-  },
-  "pvConfiguration": {
-    "simulationEngine": "v1",
-    "installationType": "FREE_STANDING",
-    "startupDate": "2020-01-10",
-
-    "installedPower": 1,
-    "module": {
-      "technology": "CSI",
-      "temperatureCoefficientPmax": -0.438,
-      "nominalOperatingCellTemperature": 46,
-      "topologyType": "UNPROPORTIONAL_1",
-      "degradation": {
-        "degradationAnyYear": 0.5,
-        "degradationFirstYear": 0.8
-      }
-    },
-    "inverter": {
-      "inverterEfficiency": {
-        "constant": 97.5
-      },
-      "inverterLimitationACPower": 1000
-    },
-    "selfShading": true,
-    "dcLosses": {
-      "specific": {
-        "cabling": 2.0,
-        "dirtAndSnow": {
-          "overall": 2
-        },
-        "mismatch": 1.0
-      }
-    },
-    "acLosses": {
-      "specific": {
-        "cabling": 0.5,
-        "transformer": 1.0
-      }
-    },
-    "terrainProperties": {
-      "terrainAzimuth": 180,
-      "terrainSlope": 0
-    }
   }
 }
