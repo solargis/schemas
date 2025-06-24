@@ -2,7 +2,7 @@
   "created": "2022-05-11T07:25:43.24+00:00",
   "datasetType": "TIMESERIES",
   "name": "Comparison of measured and model GHIs.",
-  "description": "This is an example of custom-made dataset (in Solargis Analyst) having only two GHI columns for comparison of Solargis model data with customer's quality controlled measurements. See how the customer uses custom column names.",
+  "description": "This is an example of custom-made dataset (in Solargis Analyst) in 6 minute time step.",
   "author": {
     "name": "Solargis s.r.o.",
     "address": "Bottova 2A, Bratislava, Slovakia",
@@ -75,9 +75,9 @@
     "columns": {
       "DATETIME": {
         "timeFormatPattern": "YYYY-MM-DDThh:mm:ss[.sss]±hh:mm",
-        "timeStep": "PT60M",
-        "firstTimestamp": "2022-01-01T00:30:00+09:00",
-        "lastTimestamp": "2022-01-01T02:30:00+09:00",
+        "timeStep": "PT6M",
+        "firstTimestamp": "2022-01-01T00:00:00+09:00",
+        "lastTimestamp": "2022-01-01T00:12:00+09:00",
         "timeAlignment": "CENTER",
         "realTimestamps": true
       },
@@ -218,7 +218,7 @@
       },
       "flagR": {
         "columnType": "FLAG",
-        "unit": null
+        "unit": "unitless"
       }
     }
   },
@@ -260,8 +260,8 @@
   "data": {
     "DATETIME": [
       "2022-01-01T00:00:00+09:00",
-      "2022-01-01T01:30:00+09:00",
-      "2022-01-01T02:30:00+09:00"
+      "2022-01-01T00:06:00+09:00",
+      "2022-01-01T00:12:00+09:00"
     ],
     "GHI_sensor": [
       0,

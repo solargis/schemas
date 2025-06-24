@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.1/solargis_data_request.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.4/solargis_data_request.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
   "description": "Base schema for a Solargis data request (schema of all request attributes) - not used in public APIs. See special public request types derived from the base.",
 
@@ -72,7 +72,7 @@
             "$ref": "solargis_common_enums.schema.json#/$defs/RequestColumnNames"
           }
         },
-       "utcOffset": {
+        "utcOffset": {
           "description": "ISO 8601 time zone designator (offset from UTC) formatted as [±]hh:mm. Allows only whole hour or half-hour offsets in the range ±14:30. If this property is missing the UTC is used (00:00).",
           "type": "string",
           "pattern": "^([+\\\\-])?(0[0-9]|1[0-4]):(00|30)$",
@@ -97,8 +97,8 @@
           "$ref": "solargis_gti_configuration_v2.schema.json#/$defs/GtiSystem"
         },
         "pvConfiguration": {
-          "description": "Object is required if at least one PV output related column is present in the array of columns (also the TMOD parameter).",
-          "$comment": "TODO add v2, for now we have legacy v1",
+          "description": "Object is required if at least one PV output related column is present in the array of columns (PVOUT, TMOD).",
+          "$comment": "Each PV simulation engine will have its own separate schema as they are not compatible.",
           "$ref": "solargis_pv_configuration_v1.schema.json#/$defs/PvConfigurationV1"
         },
         "tmyScenario": {
@@ -121,7 +121,7 @@
           "type": "boolean",
           "default": true
         },
-      "includeHorizon": {
+        "includeHorizon": {
         "description": "Include horizon object in the output dataset (used for shading). The value is taken from the user request (if value is present) or from the Solargis database (if not provided by user). Only for SOLARGIS_JSON format.",
         "type": "boolean",
         "default": true
@@ -131,6 +131,12 @@
           "type": "boolean",
           "default": true
         },
+        "includeModelUncertaintyYearly": {
+          "description": "Include details about the yearly model uncertainty in the processing section of the metadata.",
+          "$comment": "For TMY datasets for other scenario than P50 (e.g., P90, P75, PXX...) the false value is ignored internally and the uncertainty details are always included in datasets.",
+          "type": "boolean",
+          "default": false
+        },
         "outputFormat": {
           "type": "string",
           "enum": [
@@ -139,10 +145,13 @@
           ]
         }
       },
-      "dependencies": {
-        "pvConfiguration": [
-          "gtiConfiguration"
-        ]
+      "if": {
+        "required": ["pvConfiguration"]
+      },
+      "then": {
+        "not": {
+          "required": ["gtiConfiguration"]
+        }
       }
     }
   }

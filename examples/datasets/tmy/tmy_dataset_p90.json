@@ -135,23 +135,25 @@
       "modules": [
         {
           "name": "solargis/tmy",
-          "version": "2.2.28",
+          "version": "2.2.59",
           "details": {
-            "scenario": "P90",
-            "method": "Solargis_3",
-            "description": "TMY created from synthesized monthly data - recombination of data from different months (or parts) increases the chance of finding the desired TMY scenario.",
-            "uncertainty": {
-              "GHI": {
-                "model": 4.5,
-                "interannual": 2.9,
-                "combined": 5.4
-              },
-              "DNI": {
-                "model": 10.0,
-                "interannual": 6.2,
-                "combined": 11.8
+              "scenario": "P90",
+              "method": "Solargis_3",
+              "description": "TMY created from synthetized monthly data (recombination of monthly data from different years)",
+              "uncertaintyYearly": {
+                  "GHI": {
+                      "model": 4.0,
+                      "interannual": 7.6,
+                      "combined": 8.6
+                  },
+                  "DNI": {
+                      "model": 9.0,
+                      "interannual": 13.4,
+                      "combined": 16.1
+                  },
+                  "probabilityExceedance": 90.0,
+                  "probabilityOccurrence": 80.0
               }
-            }
           }
         }
       ]
