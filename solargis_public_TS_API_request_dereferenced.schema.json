@@ -106,7 +106,10 @@
         },
         {
           "type": "string",
-          "enum": ["AUTODETECT", "AUTODETECT-P1D"]
+          "enum": [
+            "AUTODETECT",
+            "AUTODETECT-P1D"
+          ]
         }
       ]
     },
@@ -671,6 +674,665 @@
       },
       "additionalProperties": false
     },
+    "pvConfiguration": {
+      "description": "Object is required if at least one PV output related column is present in the array of requested columns (PVOUT, TMOD).",
+      "$comment": "Each PV simulation engine will have its own separate schema as they are not fully compatible.",
+      "oneOf": [
+        {
+          "description": "PV configuration object accepted by the first version PV simulation engine.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "simulationEngine",
+            "installationType",
+            "installedPower",
+            "module",
+            "gtiConfiguration"
+          ],
+          "properties": {
+            "simulationEngine": {
+              "description": "PV simulation engine.",
+              "type": "string",
+              "enum": [
+                "v1"
+              ]
+            },
+            "installationType": {
+              "description": "Thermal losses are increased for building and roof PV systems.",
+              "type": "string",
+              "enum": [
+                "FREE_STANDING",
+                "ROOF_MOUNTED",
+                "BUILDING_INTEGRATED"
+              ]
+            },
+            "startupDate": {
+              "description": "Startup date of a PV system (unpacking of PV modules). This parameter is used for calculation of PV module degradation by aging.",
+              "type": "string",
+              "format": "date"
+            },
+            "installedPower": {
+              "description": "Total PV system rating (nameplate capacity) is the summation of all panel ratings measured in STC, in kilowatt-peaks (kWp)",
+              "type": "number",
+              "minimum": 0
+            },
+            "module": {
+              "description": "PV module",
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "technology"
+              ],
+              "properties": {
+                "technology": {
+                  "description": "Codes for materials used in PV modules. Use 'CSI' for crystalline silicon, 'ASI' for amorphous silicon, 'CDTE' for cadmium telluride, 'CIS' for copper indium selenide.",
+                  "type": "string",
+                  "enum": [
+                    "CSI",
+                    "ASI",
+                    "CDTE",
+                    "CIS"
+                  ]
+                },
+                "topologyType": {
+                  "description": "This parameter estimates a loss of PV system output when modules are self-shaded. The effect depends on wiring interconnections within a module. Shading influence ranges from 0% (no influence) to 100% (full influence) and it's mapped to categories: PROPORTIONAL = 20%, UNPROPORTIONAL_1 = 40%, UNPROPORTIONAL_2 = 60%, UNPROPORTIONAL_3 = 80%. When parameter is missing, the self-shading influence is estimated to 5 %.",
+                  "$comment": "Defaults: UNPROPORTIONAL_1 for CSI, PROPORTIONAL for all other module technologies",
+                  "type": "string",
+                  "enum": [
+                    "PROPORTIONAL",
+                    "UNPROPORTIONAL_1",
+                    "UNPROPORTIONAL_2",
+                    "UNPROPORTIONAL_3"
+                  ]
+                },
+                "degradation": {
+                  "description": "Estimated annual percentage degradation of rated output power of PV modules. This parameter is only considered if dateStartup attribute is set.",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "degradationAnyYear": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100
+                    },
+                    "degradationFirstYear": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100
+                    }
+                  }
+                },
+                "nominalOperatingCellTemperature": {
+                  "description": "Normal operating cell temperature. Float value of the temperature in degrees Celsius of a free standing PV module exposed to irradiance of 800 W/m2 and ambient air temperature of 20°C and wind speed of 1 m/s. The value is given by manufacturer and only for ventilated free standing PV system.",
+                  "$comment": "Defaults according to moduleTechnology value: CSI=46°C, ASI=44°C, CDTE=48°C, CIS=47°C.",
+                  "type": "number"
+                },
+                "temperatureCoefficientPmax": {
+                  "description": "Negative percent float value representing the change in PV panel output power for temperatures other than 25°C (decrease of output power with raising temperature). This property is given by the manufacturer at STC.",
+                  "$comment": "Defaults according to moduleTechnology: CSI=-0.438%/°C, ASI=-0.18%/°C, CDTE=-0.297%/°C, CIS=-0.36%/°C.",
+                  "type": "number",
+                  "exclusiveMaximum": 0
+                }
+              }
+            },
+            "selfShading": {
+              "description": "The parameter affects FixedOneAngle geometry, then OneAxisHorizontalNS and OneAxisInclined type of trackers with backTracking=false. When backTracking=true, the parameter does not make sense as self-shading is avoided. No other GTI configs are implemented. The parameter is used to determine the impact of self (inter-row) shading on PV power production. When set to true, the effect of self-shading is taken into account in calculation, otherwise the structure is assumed without neighbors (best possible). Direct shadow is considered, the effect of diffuse shading is not considered in this version.",
+              "type": "boolean",
+              "default": false
+            },
+            "terrainProperties": {
+              "description": "PV configuration used with the the first version (legacy) of Solargis PV simulation tools.",
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "terrainAzimuth",
+                "terrainSlope"
+              ],
+              "properties": {
+                "terrainAzimuth": {
+                  "description": "Horizontal angle from north (going clockwise). Examples: North=0° (or 360°), East=90°, South=180°, West=270°",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 360,
+                  "default": 180
+                },
+                "terrainSlope": {
+                  "description": "Vertical angle (of a PV panel surface) from the horizontal position (tilt=0°) towards vertical (tilt=90°).",
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 90,
+                  "default": 0
+                }
+              }
+            },
+            "inverter": {
+              "description": "Properties of the PV inverter.",
+              "type": "object",
+              "additionalProperties": true,
+              "properties": {
+                "inverterEfficiency": {
+                  "description": "Efficiency of the PV inverter.",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "oneOf": [
+                    {
+                      "required": [
+                        "constant"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "curve"
+                      ]
+                    }
+                  ],
+                  "properties": {
+                    "constant": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100
+                    },
+                    "curve": {
+                      "description": "Non-linear efficiency of the inverter can be described as a simplified curve defined as list of data points.",
+                      "type": "object",
+                      "required": [
+                        "inputPowerKilowatts",
+                        "efficiencyPercentage"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "inputPowerKilowatts": {
+                          "description": "Input power in kilowatts (kW).",
+                          "type": "array",
+                          "items": {
+                            "type": [
+                              "number"
+                            ],
+                            "minimum": 0
+                          }
+                        },
+                        "efficiencyPercentage": {
+                          "description": "Inverter's efficiency (%).",
+                          "type": "array",
+                          "items": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "inverterLimitationACPower": {
+                  "description": "Maximum AC power in kW delivered by the inverter without the limitation (clipping) of AC output. Clipping refers to the situation where the AC power output of an inverter is limited due to the peak rating of the inverter (the parameter value in kw), even though additional power may still be available from the solar modules. If you have power factor (PF) and AC limit in kVA available, use this formula: PF * AC_limit_kVA = kW, which is the value of this parameter.",
+                  "type": "number",
+                  "minimum": 0
+                }
+              }
+            },
+            "dcLosses": {
+              "description": "PV power losses on the DC side.",
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "overall": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "specific": {
+                  "description": "Specific PV power losses on the DC side.",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "mismatch",
+                    "cabling",
+                    "dirtAndSnow"
+                  ],
+                  "properties": {
+                    "mismatch": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100
+                    },
+                    "cabling": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100
+                    },
+                    "dirtAndSnow": {
+                      "description": "PV power losses due to dirt and/or snow.",
+                      "type": "object",
+                      "additionalProperties": false,
+                      "oneOf": [
+                        {
+                          "required": [
+                            "overall"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "monthly"
+                          ]
+                        }
+                      ],
+                      "properties": {
+                        "overall": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 100
+                        },
+                        "monthly": {
+                          "description": "Distribution of the dirt and/or snow losses into 12 average calendar months.",
+                          "type": "array",
+                          "minItems": 12,
+                          "maxItems": 12,
+                          "items": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 100
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "oneOf": [
+                {
+                  "required": [
+                    "overall"
+                  ]
+                },
+                {
+                  "required": [
+                    "specific"
+                  ]
+                }
+              ]
+            },
+            "acLosses": {
+              "description": "PV power losses on the AC side.",
+              "type": "object",
+              "additionalProperties": false,
+              "oneOf": [
+                {
+                  "required": [
+                    "overall"
+                  ]
+                },
+                {
+                  "required": [
+                    "specific"
+                  ]
+                }
+              ],
+              "properties": {
+                "overall": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "specific": {
+                  "description": "Specific PV power losses on the AC side.",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "transformer",
+                    "cabling"
+                  ],
+                  "properties": {
+                    "transformer": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100
+                    },
+                    "cabling": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100
+                    }
+                  }
+                }
+              }
+            },
+            "gtiConfiguration": {
+              "type": "object",
+              "properties": {
+                "layout": {
+                  "type": "object",
+                  "properties": {
+                    "azimuth": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 360
+                    },
+                    "relativeSpacing": {
+                      "type": "number",
+                      "minimum": 0.1
+                    },
+                    "mounting": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "FIXED_ONE_ANGLE"
+                              ]
+                            },
+                            "tilt": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 90
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "tilt"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "FIXED_ONE_ANGLE_MONTHLY"
+                              ]
+                            },
+                            "tilt": {
+                              "type": "array",
+                              "items": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 90
+                              },
+                              "minItems": 12,
+                              "maxItems": 12
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "tilt"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "FIXED_ONE_ANGLE_SEASONAL"
+                              ]
+                            },
+                            "tilt": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "dateOfChange": {
+                                    "type": "string",
+                                    "pattern": "^\\d{2}-\\d{2}$"
+                                  },
+                                  "tilt": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 90
+                                  }
+                                },
+                                "required": [
+                                  "dateOfChange",
+                                  "tilt"
+                                ]
+                              }
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "tilt"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "TRACKER_ONE_AXIS_HORIZONTAL"
+                              ]
+                            },
+                            "backtracking": {
+                              "type": "boolean"
+                            },
+                            "rotationLimitEast": {
+                              "type": "number",
+                              "minimum": -90,
+                              "maximum": 90
+                            },
+                            "rotationLimitWest": {
+                              "type": "number",
+                              "minimum": -90,
+                              "maximum": 90
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "backtracking",
+                            "rotationLimitEast",
+                            "rotationLimitWest"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "TRACKER_ONE_AXIS_INCLINED"
+                              ]
+                            },
+                            "axisTilt": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 90
+                            },
+                            "backtracking": {
+                              "type": "boolean"
+                            },
+                            "rotationLimitEast": {
+                              "type": "number",
+                              "minimum": -90,
+                              "maximum": 90
+                            },
+                            "rotationLimitWest": {
+                              "type": "number",
+                              "minimum": -90,
+                              "maximum": 90
+                            }
+                          },
+                          "required": [
+                            "axisTilt",
+                            "type",
+                            "backtracking",
+                            "rotationLimitEast",
+                            "rotationLimitWest"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "TRACKER_ONE_AXIS_VERTICAL"
+                              ]
+                            },
+                            "tilt": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 90
+                            },
+                            "azimuthLimitEast": {
+                              "type": "number",
+                              "minimum": -180,
+                              "maximum": 180
+                            },
+                            "azimuthLimitWest": {
+                              "type": "number",
+                              "minimum": -180,
+                              "maximum": 180
+                            },
+                            "backtracking": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "tilt",
+                            "azimuthLimitEast",
+                            "azimuthLimitWest",
+                            "backtracking"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "TRACKER_TWO_AXIS"
+                              ]
+                            },
+                            "tiltLimitMin": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 90
+                            },
+                            "tiltLimitMax": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 90
+                            },
+                            "azimuthLimitEast": {
+                              "type": "number",
+                              "minimum": -180,
+                              "maximum": 180
+                            },
+                            "azimuthLimitWest": {
+                              "type": "number",
+                              "minimum": -180,
+                              "maximum": 180
+                            },
+                            "backtracking": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "tiltLimitMin",
+                            "tiltLimitMax",
+                            "azimuthLimitEast",
+                            "azimuthLimitWest",
+                            "backtracking"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "mounting"
+                  ],
+                  "additionalProperties": false
+                },
+                "environment": {
+                  "type": "object",
+                  "properties": {
+                    "surfaceAlbedo": {
+                      "oneOf": [
+                        {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "minItems": 12,
+                          "maxItems": 12
+                        }
+                      ]
+                    },
+                    "horizon": {
+                      "description": "An outline (modeled as a set of points) of land and other objects defined against the sky - a skyline.",
+                      "type": "object",
+                      "required": [
+                        "azimuth",
+                        "height"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "azimuth": {
+                          "description": "Geographical azimuth of the point in degrees. From the 0 degree (North) advancing clockwise.",
+                          "type": "array",
+                          "items": {
+                            "type": [
+                              "number"
+                            ],
+                            "minimum": 0,
+                            "maximum": 360
+                          }
+                        },
+                        "height": {
+                          "description": "Angular height of the point in degrees. From the 0 degree up to 90 degrees.",
+                          "type": "array",
+                          "items": {
+                            "type": [
+                              "number"
+                            ],
+                            "minimum": 0,
+                            "maximum": 90
+                          }
+                        }
+                      },
+                      "examples": [
+                        [
+                          {
+                            "azimuth": [
+                              0,
+                              360
+                            ],
+                            "height": [
+                              19.0581,
+                              31.2
+                            ]
+                          }
+                        ]
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        }
+      ]
+    },
     "fileLabel": {
       "description": "Contains only ASCII letters, numbers and underscores, and it must not start with a number.",
       "type": "string",
@@ -688,6 +1350,18 @@
       "description": "Output dataset file will be zipped.",
       "type": "boolean",
       "default": false
+    },
+    "if": {
+      "required": [
+        "pvConfiguration"
+      ]
+    },
+    "then": {
+      "not": {
+        "required": [
+          "gtiConfiguration"
+        ]
+      }
     }
   }
 }
