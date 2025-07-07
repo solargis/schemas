@@ -1,0 +1,63 @@
+{
+  "site": {
+    "latitude": 43.023903,
+    "longitude": 142.419596
+  },
+  "timeStep": "PT15M",
+  "columns": [
+    "PVOUT"
+  ],
+  "fromDate": "AUTODETECT",
+  "toDate": "LAST_MONTH",
+  "outputFormat": "SOLARGIS_JSON",
+  "pvConfiguration": {
+    "simulationEngine": "v1",
+    "installationType": "BUILDING_INTEGRATED",
+    "startupDate": "2020-01-01",
+    "installedPower": 1,
+    "module": {
+      "technology": "ASI",
+      "topologyType": "UNPROPORTIONAL_3",
+      "degradation": {
+        "degradationAnyYear": 0.5,
+        "degradationFirstYear": 0.8
+      },
+      "nominalOperatingCellTemperature": 44,
+      "temperatureCoefficientPmax": -0.18
+    },
+    "selfShading": false,
+    "terrainProperties": {
+      "terrainAzimuth": 180,
+      "terrainSlope": 0
+    },
+    "inverter": {
+      "inverterEfficiency": {
+        "constant": 97.5
+      }
+    },
+    "dcLosses": {
+      "specific": {
+        "cabling": 2.0,
+        "dirtAndSnow": {
+          "overall": 3
+        },
+        "mismatch": 1.0
+      }
+    },
+    "acLosses": {
+      "specific": {
+        "cabling": 0.5,
+        "transformer": 1.0
+      }
+    },
+    "gtiConfiguration": {
+      "layout": {
+        "azimuth": 180,
+        "mounting": {
+          "type": "FIXED_ONE_ANGLE",
+          "tilt": 39
+        }
+      }
+    }
+  }
+}

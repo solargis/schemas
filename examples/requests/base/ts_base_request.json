@@ -66,7 +66,8 @@
     "WG",
     "WS",
     "WS100",
-    "WS80"
+    "WS80",
+    "PVOUT"
   ],
   "fromDate": "2022-10-01",
   "toDate": "2022-10-02",
@@ -114,15 +115,23 @@
       ]
     }
   },
-  "gtiConfiguration": {
-    "layout": {
-      "azimuth": 180,
-      "mounting": {
-        "type": "FIXED_ONE_ANGLE",
-        "tilt": 39
+  "pvConfiguration": {
+    "simulationEngine": "v1",
+    "gtiConfiguration": {
+      "layout": {
+        "azimuth": 180,
+        "mounting": {
+          "type": "FIXED_ONE_ANGLE",
+          "tilt": 39
+        }
       }
+    },
+    "installationType": "BUILDING_INTEGRATED",
+    "installedPower": 1,
+    "module": {
+      "technology": "ASI"
     }
-  },
+},
   "includeHorizon": true,
   "includeSurfaceAlbedoLongTerm": true,
   "includeJsonData": true,

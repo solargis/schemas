@@ -122,39 +122,40 @@
 
     },
     "createdByApplication": {
-            "name": "solargis/evaluate",
-            "version": "1.21.0"
+      "name": "solargis/evaluate",
+      "version": "1.21.0"
     },
     "processing": {
-        "timePeriod": {
-            "from": "2022-10-01T00:07:30+09:00",
-            "to": "2022-10-01T00:37:30+09:00"
+      "timePeriod": {
+        "from": "2022-10-01T00:07:30+09:00",
+        "to": "2022-10-01T00:37:30+09:00"
+      },
+      "modules": [
+        {
+          "name": "solargis/core",
+          "version": "2.2.53"
         },
-        "modules": [
-            {
-                "name": "solargis/core",
-                "version": "2.2.53"
-            },
-            {
-                "name": "solargis/sgsim2-pv",
-                "version": "2.5.0"
-            }
-        ]
+        {
+          "name": "solargis/sgsim2-pv",
+          "version": "2.5.0"
+        }
+      ]
     },
     "pvConfiguration": {
-      "dcInstalledCapacityKwp": 100.4,
-      "numberOfSegments": 1,
-      "systemDesign": {
-        "mountingType": "TRACKER_ONE_AXIS_INCLINED",
-        "bifacial": false,
-        "relativeSpacing": 2.5,
-        "azimuth": 180.5,
-        "tilt": 34.4,
-        "backtracking": true,
-        "rotationLimitEast": -180,
-        "rotationLimitWest": 180,
-        "tiltLimitMin": null,
-        "tiltLimitMax": null
+      "simulationEngine": "v1",
+      "gtiConfiguration": {
+        "layout": {
+          "azimuth": 180,
+          "mounting": {
+            "type": "FIXED_ONE_ANGLE",
+            "tilt": 39
+          }
+        }
+      },
+      "installationType": "BUILDING_INTEGRATED",
+      "installedPower": 1,
+      "module": {
+        "technology": "ASI"
       }
     }
   },
@@ -204,18 +205,50 @@
       10,
       10.4
     ],
-    "PWAT": [0, 0, 0],
-    "surfaceAlbedo": [0, 0, 0],
-    "soilingLosses": [0, 0, 0],
+    "PWAT": [
+      0,
+      0,
+      0
+    ],
+    "surfaceAlbedo": [
+      0,
+      0,
+      0
+    ],
+    "soilingLosses": [
+      0,
+      0,
+      0
+    ],
     "PANEL_INC": [
       null,
       null,
       null
     ],
-    "frontShadowRatio": [0, 0, 0],
-    "front_gti_without_losses": [0, 0, 0],
-    "module_temperature": [0, 0, 0],
-    "pvout_with_all_gti_losses": [0, 0, 0],
-    "current_inverter_transformer_input": [0, 0, 0]
+    "frontShadowRatio": [
+      0,
+      0,
+      0
+    ],
+    "front_gti_without_losses": [
+      0,
+      0,
+      0
+    ],
+    "module_temperature": [
+      0,
+      0,
+      0
+    ],
+    "pvout_with_all_gti_losses": [
+      0,
+      0,
+      0
+    ],
+    "current_inverter_transformer_input": [
+      0,
+      0,
+      0
+    ]
   }
 }

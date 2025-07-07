@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema",
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.4/solargis_column_names_catalogue.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.5/solargis_column_names_catalogue.schema.json",
 
   "description": "By using this schema, Solargis created a catalogue of predefined column names used in the domain.",
   "type": "object",
