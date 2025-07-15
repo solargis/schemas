@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.4/solargis_public_LTA_request.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.5/solargis_public_LTA_request.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
 
   "description": "Schema for Solargis data request - for long-term average (LTA) datasets.",
@@ -60,6 +60,15 @@
     "gtiConfiguration": {
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/gtiConfiguration"
     },
+    "pvConfiguration": {
+      "description": "Object is required if at least one PV output related column is present in the array of requested columns (PVOUT, TMOD).",
+      "$comment": "Each PV simulation engine will have its own separate schema as they are not fully compatible.",
+      "oneOf": [
+        {
+          "$ref": "solargis_pv_configuration_v1.schema.json#/$defs/PvConfigurationV1"
+        }
+      ]
+    },
     "fileLabel": {
       "$ref": "solargis_common_types.schema.json#/$defs/FileLabel"
     },
@@ -69,6 +78,18 @@
         "SOLARGIS_JSON",
         "SOLARGIS_JSON_HIGH_PREC_FLOAT"
       ]
+    },
+    "if": {
+      "required": [
+        "pvConfiguration"
+      ]
+    },
+    "then": {
+      "not": {
+        "required": [
+          "gtiConfiguration"
+        ]
+      }
     }
   }
 }
