@@ -1,7 +1,7 @@
 Solargis public JSON schema files define JSON instances of various request and response object types.
 
 ### RELEASE NOTES:
-- **v1.1.6** (Jul 15, 2025): Added new optional properties to Site in solargis_common_types.
+- **v1.1.5** (Jul 15, 2025): Added new optional properties to Site in solargis_common_types.
 - **v1.1.5** (Jul 07, 2025): PV configuration v1 support included in all requests and datasets (not yet implemented in backend).
 - **v1.1.4** (Jun 24, 2025): Added 'PT1M' as supported timeStep for TMY public request. Preparation for having PV system in requests (not yet implemented).
 - **v1.1.3** (Apr 3, 2025): Changed time step pattern to cover almost complete ISO 8601 durations standard. Added 'unitless' as supported unit.
