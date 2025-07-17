@@ -36,7 +36,7 @@
           "type": "string",
           "maxLength": 100
         },
-        "name_short": {
+        "nameShort": {
           "description": "Short name of site",
           "type": "string",
           "maxLength": 100
