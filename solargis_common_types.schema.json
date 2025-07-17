@@ -36,6 +36,11 @@
           "type": "string",
           "maxLength": 100
         },
+        "name_short": {
+          "description": "Short name of site",
+          "type": "string",
+          "maxLength": 100
+        },
         "countryName": {
           "description": "Country name.",
           "type": "string",
@@ -61,6 +66,10 @@
           "description": "Another option to identify the site.",
           "type": "string",
           "maxLength": 100
+        },
+        "confidential": {
+          "description": "Site confidentiality",
+          "type": "boolean"
         }
       },
       "examples": [
