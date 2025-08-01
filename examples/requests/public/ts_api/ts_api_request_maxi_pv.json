@@ -5,58 +5,73 @@
   },
   "timeStep": "PT15M",
   "columns": [
-    "PVOUT"
+    "GTI", "PVOUT"
   ],
-  "fromDate": "AUTODETECT",
-  "toDate": "LAST_MONTH",
+  "fromDate": "2025-01-01",
+  "toDate": "2025-01-01",
+  "terrainShading": true,
+  "timeAlignment": "START",
+  "utcOffset": "+09:00",
   "outputFormat": "SOLARGIS_JSON",
   "pvConfiguration": {
-    "simulationEngine": "v1",
+    "simulationEngine": "v1.0",
     "installationType": "BUILDING_INTEGRATED",
+    "availability": 100,
     "startupDate": "2020-01-01",
     "installedPower": 1,
     "module": {
       "technology": "ASI",
       "topologyType": "UNPROPORTIONAL_3",
-      "degradation": {
-        "degradationAnyYear": 0.5,
-        "degradationFirstYear": 0.8
-      },
-      "nominalOperatingCellTemperature": 44,
+      "degradation": 0.5,
+      "degradationFirstYear": 0.8,
+      "NOCT": 44,
       "temperatureCoefficientPmax": -0.18
     },
     "selfShading": false,
-    "terrainProperties": {
-      "terrainAzimuth": 180,
-      "terrainSlope": 0
+    "terrain": {
+      "azimuth": 180,
+      "slope": 0
     },
     "inverter": {
       "inverterEfficiency": {
-        "constant": 97.5
-      }
+        "curve": {
+          "efficiencyPercentage": [100.0],
+          "inputPowerKilowatts": [1]
+        }
+      },
+      "startPower": 1,
+      "inverterLimitationACPower": 1
     },
     "dcLosses": {
       "specific": {
         "cabling": 2.0,
-        "dirtAndSnow": {
-          "overall": 3
+        "soiling": {
+          "monthly": [2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5]
         },
         "mismatch": 1.0
       }
     },
     "acLosses": {
       "specific": {
-        "cabling": 0.5,
-        "transformer": 1.0
+        "transformer": 1.0,
+        "cabling": 0.5
       }
     },
     "gtiConfiguration": {
       "layout": {
         "azimuth": 180,
+        "relativeSpacing": 2.5,
         "mounting": {
           "type": "FIXED_ONE_ANGLE",
           "tilt": 39
         }
+      },
+      "environment": {
+        "horizon": {
+          "azimuth": [0, 360],
+          "height": [10, 20.1]
+        },
+        "surfaceAlbedo": [1,1,1,1,1,1,1,1,1,1,1,1]
       }
     }
   }
