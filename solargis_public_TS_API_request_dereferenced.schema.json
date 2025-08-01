@@ -44,6 +44,11 @@
           "type": "string",
           "maxLength": 100
         },
+        "nameShort": {
+          "description": "Short name of site",
+          "type": "string",
+          "maxLength": 100
+        },
         "countryName": {
           "description": "Country name.",
           "type": "string",
@@ -69,6 +74,10 @@
           "description": "Another option to identify the site.",
           "type": "string",
           "maxLength": 100
+        },
+        "confidential": {
+          "description": "Site confidentiality",
+          "type": "boolean"
         }
       },
       "examples": [
@@ -694,7 +703,7 @@
               "description": "PV simulation engine.",
               "type": "string",
               "enum": [
-                "v1"
+                "v1.0"
               ]
             },
             "installationType": {
@@ -710,6 +719,11 @@
               "description": "Startup date of a PV system (unpacking of PV modules). This parameter is used for calculation of PV module degradation by aging.",
               "type": "string",
               "format": "date"
+            },
+            "availability": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
             },
             "installedPower": {
               "description": "Total PV system rating (nameplate capacity) is the summation of all panel ratings measured in STC, in kilowatt-peaks (kWp)",
@@ -746,29 +760,22 @@
                   ]
                 },
                 "degradation": {
-                  "description": "Estimated annual percentage degradation of rated output power of PV modules. This parameter is only considered if dateStartup attribute is set.",
-                  "type": "object",
-                  "additionalProperties": false,
-                  "properties": {
-                    "degradationAnyYear": {
-                      "type": "number",
-                      "minimum": 0,
-                      "maximum": 100
-                    },
-                    "degradationFirstYear": {
-                      "type": "number",
-                      "minimum": 0,
-                      "maximum": 100
-                    }
-                  }
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
                 },
-                "nominalOperatingCellTemperature": {
-                  "description": "Normal operating cell temperature. Float value of the temperature in degrees Celsius of a free standing PV module exposed to irradiance of 800 W/m2 and ambient air temperature of 20°C and wind speed of 1 m/s. The value is given by manufacturer and only for ventilated free standing PV system.",
+                "degradationFirstYear": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "NOCT": {
+                  "description": "Normal operating cell temperature. Temperature in degrees Celsius of a free standing PV module exposed to irradiance of 800 W/m2 and ambient air temperature of 20°C and wind speed of 1 m/s. The value is given by manufacturer and only for ventilated free standing PV system.",
                   "$comment": "Defaults according to moduleTechnology value: CSI=46°C, ASI=44°C, CDTE=48°C, CIS=47°C.",
                   "type": "number"
                 },
                 "temperatureCoefficientPmax": {
-                  "description": "Negative percent float value representing the change in PV panel output power for temperatures other than 25°C (decrease of output power with raising temperature). This property is given by the manufacturer at STC.",
+                  "description": "Negative percentage value representing the change in PV panel output power for temperatures other than 25°C (decrease of output power with raising temperature). This property is given by the manufacturer at STC.",
                   "$comment": "Defaults according to moduleTechnology: CSI=-0.438%/°C, ASI=-0.18%/°C, CDTE=-0.297%/°C, CIS=-0.36%/°C.",
                   "type": "number",
                   "exclusiveMaximum": 0
@@ -776,27 +783,27 @@
               }
             },
             "selfShading": {
-              "description": "The parameter affects FixedOneAngle geometry, then OneAxisHorizontalNS and OneAxisInclined type of trackers with backTracking=false. When backTracking=true, the parameter does not make sense as self-shading is avoided. No other GTI configs are implemented. The parameter is used to determine the impact of self (inter-row) shading on PV power production. When set to true, the effect of self-shading is taken into account in calculation, otherwise the structure is assumed without neighbors (best possible). Direct shadow is considered, the effect of diffuse shading is not considered in this version.",
+              "description": "The parameter affects FixedOneAngle geometry, then OneAxisHorizontalNS and OneAxisInclined type of trackers with backTracking=false. When backTracking=true, the parameter does not make sense as self-shading is avoided. The parameter is used to determine the impact of self (inter-row) shading on PV power production. When set to true, the effect of self-shading is taken into account in calculation, otherwise the structure is assumed without neighbors (best possible). Direct shadow is considered, the effect of diffuse shading is not considered in this version.",
               "type": "boolean",
               "default": false
             },
-            "terrainProperties": {
-              "description": "PV configuration used with the the first version (legacy) of Solargis PV simulation tools.",
+            "terrain": {
+              "description": "Properties of the terrain.",
               "type": "object",
               "additionalProperties": false,
               "required": [
-                "terrainAzimuth",
-                "terrainSlope"
+                "azimuth",
+                "slope"
               ],
               "properties": {
-                "terrainAzimuth": {
+                "azimuth": {
                   "description": "Horizontal angle from north (going clockwise). Examples: North=0° (or 360°), East=90°, South=180°, West=270°",
                   "type": "number",
                   "minimum": 0,
                   "maximum": 360,
                   "default": 180
                 },
-                "terrainSlope": {
+                "slope": {
                   "description": "Vertical angle (of a PV panel surface) from the horizontal position (tilt=0°) towards vertical (tilt=90°).",
                   "type": "number",
                   "minimum": 0,
@@ -868,6 +875,11 @@
                   "description": "Maximum AC power in kW delivered by the inverter without the limitation (clipping) of AC output. Clipping refers to the situation where the AC power output of an inverter is limited due to the peak rating of the inverter (the parameter value in kw), even though additional power may still be available from the solar modules. If you have power factor (PF) and AC limit in kVA available, use this formula: PF * AC_limit_kVA = kW, which is the value of this parameter.",
                   "type": "number",
                   "minimum": 0
+                },
+                "startPower": {
+                  "description": "Minimum power in kW when inverter starts to work.",
+                  "type": "number",
+                  "minimum": 0
                 }
               }
             },
@@ -885,11 +897,7 @@
                   "description": "Specific PV power losses on the DC side.",
                   "type": "object",
                   "additionalProperties": false,
-                  "required": [
-                    "mismatch",
-                    "cabling",
-                    "dirtAndSnow"
-                  ],
+                  "required": [],
                   "properties": {
                     "mismatch": {
                       "type": "number",
@@ -901,8 +909,8 @@
                       "minimum": 0,
                       "maximum": 100
                     },
-                    "dirtAndSnow": {
-                      "description": "PV power losses due to dirt and/or snow.",
+                    "soiling": {
+                      "description": "PV power losses due to soiling.",
                       "type": "object",
                       "additionalProperties": false,
                       "oneOf": [
@@ -924,7 +932,7 @@
                           "maximum": 100
                         },
                         "monthly": {
-                          "description": "Distribution of the dirt and/or snow losses into 12 average calendar months.",
+                          "description": "Distribution of the soiling losses into 12 average calendar months.",
                           "type": "array",
                           "minItems": 12,
                           "maxItems": 12,
@@ -978,10 +986,7 @@
                   "description": "Specific PV power losses on the AC side.",
                   "type": "object",
                   "additionalProperties": false,
-                  "required": [
-                    "transformer",
-                    "cabling"
-                  ],
+                  "required": [],
                   "properties": {
                     "transformer": {
                       "type": "number",
