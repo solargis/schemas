@@ -46,6 +46,27 @@
         "type": "number",
         "minimum": 0
       },
+      "topologyType": {
+        "description": "This parameter estimates a loss of PV system output when modules are self-shaded. The effect depends on wiring interconnections within a module. Shading influence ranges from 0% (no influence) to 100% (full influence) and it's mapped to categories: PROPORTIONAL = 20%, UNPROPORTIONAL_1 = 40%, UNPROPORTIONAL_2 = 60%, UNPROPORTIONAL_3 = 80%. When parameter is missing, the self-shading influence is estimated to 5 %.",
+        "$comment": "Defaults: UNPROPORTIONAL_1 for CSI, PROPORTIONAL for all other module technologies",
+        "type": "string",
+        "enum": [
+          "PROPORTIONAL",
+          "UNPROPORTIONAL_1",
+          "UNPROPORTIONAL_2",
+          "UNPROPORTIONAL_3"
+        ]
+      },
+      "degradation": {
+        "description": "Annual percentage degradation.",
+        "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
+        "default": 0.5
+      },
+      "degradationFirstYear": {
+        "description": "Annual percentage degradation specifically for the first year of operation.",
+        "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
+        "default": 0.8
+      },
       "module": {
         "$ref": "#/$defs/Module"
       },
@@ -89,27 +110,6 @@
             "CDTE",
             "CIS"
           ]
-        },
-        "topologyType": {
-          "description": "This parameter estimates a loss of PV system output when modules are self-shaded. The effect depends on wiring interconnections within a module. Shading influence ranges from 0% (no influence) to 100% (full influence) and it's mapped to categories: PROPORTIONAL = 20%, UNPROPORTIONAL_1 = 40%, UNPROPORTIONAL_2 = 60%, UNPROPORTIONAL_3 = 80%. When parameter is missing, the self-shading influence is estimated to 5 %.",
-          "$comment": "Defaults: UNPROPORTIONAL_1 for CSI, PROPORTIONAL for all other module technologies",
-          "type": "string",
-          "enum": [
-            "PROPORTIONAL",
-            "UNPROPORTIONAL_1",
-            "UNPROPORTIONAL_2",
-            "UNPROPORTIONAL_3"
-          ]
-        },
-        "degradation": {
-          "description": "Annual percentage degradation.",
-          "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
-          "default": 0.5
-        },
-        "degradationFirstYear": {
-          "description": "Annual percentage degradation specifically for the first year of operation.",
-          "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
-          "default": 0.8
         },
         "NOCT": {
           "description": "Normal operating cell temperature. Temperature in degrees Celsius of a free standing PV module exposed to irradiance of 800 W/m2 and ambient air temperature of 20°C and wind speed of 1 m/s. The value is given by manufacturer and only for ventilated free standing PV system.",
