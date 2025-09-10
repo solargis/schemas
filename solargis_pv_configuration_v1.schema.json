@@ -76,7 +76,7 @@
         "default": false
       },
       "terrain": {
-        "description": "Properties of the terrain - applied only calculation self-shading effect of the FixedOneAngle PV system.",
+        "description": "Properties of the terrain - used only for the calculation of self-shading effect of the FixedOneAngle PV system.",
         "$ref": "#/$defs/Terrain"
       },
       "inverter": {
