@@ -1,34 +1,50 @@
 {
   "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.5/solargis_pv_configuration_v1.schema.json",
   "$schema": "https://json-schema.org/draft-07/schema",
-
   "description": "Following type definitions Solargis uses for the simulation of PV output.",
-
   "$defs": {
     "PvConfigurationV1": {
       "description": "PV configuration object supported by the first version PV simulation engine.",
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "simulationEngine",
-        "segments"
+        "simulationEngine"
       ],
       "properties": {
         "simulationEngine": {
           "description": "PV simulation engine.",
           "type": "string",
-          "enum": ["v1.0"]
-        },
-        "segments": {
-          "description": "One or multiple homogeneous PV system arrays.",
-          "type": "array",
-          "minItems": 1,
-          "maxItems": 10,
-          "items": {
-            "$ref": "#/$defs/PvSystemSegment"
-          }
+          "enum": [
+            "v1.0"
+          ]
         }
-      }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "segments"
+          ],
+          "properties": {
+            "segments": {
+              "description": "One or multiple homogeneous PV system segments.",
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 10,
+              "items": {
+                "$ref": "#/$defs/PvSystemSegment"
+              }
+            }
+          }
+        },
+        {
+          "description": "PV system with a single homogeneous array.",
+          "allOf": [
+            {
+              "$ref": "#/$defs/PvSystemSegment"
+            }
+          ]
+        }
+      ]
     },
     "PvSystemSegment": {
       "description": "PV system segment represents a homogeneous PV array with the same installation type. Azimuth and tilt of PV modules are homogeneous or the same tracking system is used in the array.",
@@ -41,7 +57,7 @@
         "gtiConfiguration"
       ],
       "properties": {
-          "installationType": {
+        "installationType": {
           "description": "Thermal losses are increased for building and roof PV systems.",
           "type": "string",
           "enum": [
@@ -49,28 +65,28 @@
             "ROOF_MOUNTED",
             "BUILDING_INTEGRATED"
           ]
-          },
-          "GCR": {
+        },
+        "GCR": {
           "description": "Ground Cover Ratio [%] (=1/relativeSpacing*100), convenience helper to calculate the relativeSpacing. If the gtiConfiguration.layout.relativeSpacing if present, it will override the GCR value. The relativeSpacing = 100/GCR.",
           "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
-          "default": "40"
-          },
-          "startupDate": {
-            "description": "Startup date of a PV system (unpacking of PV modules). This parameter is used for calculation of PV module degradation by aging.",
-            "type": "string",
-            "format": "date"
-          },
-          "availability": {
+          "default": 40
+        },
+        "startupDate": {
+          "description": "Startup date of a PV system (unpacking of PV modules). This parameter is used for calculation of PV module degradation by aging.",
+          "type": "string",
+          "format": "date"
+        },
+        "availability": {
           "description": "Percentage of time during the reporting period when the PV power plant was allowed by the external grid to export its full available power output without curtailment or grid-imposed limitations. A value of 100% indicates no external restrictions on power export. This does not include internal unavailability due to plant faults or maintenance.",
           "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
           "default": 100
-          },
-          "installedPower": {
+        },
+        "installedPower": {
           "description": "Total PV system rating (nameplate capacity) is the summation of all panel ratings measured in STC, in kilowatt-peaks (kWp)",
           "type": "number",
           "minimum": 0
-          },
-          "topologyType": {
+        },
+        "topologyType": {
           "description": "This parameter estimates a loss of PV system output when modules are self-shaded. The effect depends on wiring interconnections within a module. Shading influence ranges from 0% (no influence) to 100% (full influence) and it's mapped to categories: PROPORTIONAL = 20%, UNPROPORTIONAL_1 = 40%, UNPROPORTIONAL_2 = 60%, UNPROPORTIONAL_3 = 80%. When parameter is missing, the self-shading influence is estimated to 5 %.",
           "$comment": "Defaults: UNPROPORTIONAL_1 for CSI, PROPORTIONAL for all other module technologies",
           "type": "string",
@@ -80,47 +96,47 @@
             "UNPROPORTIONAL_2",
             "UNPROPORTIONAL_3"
           ]
-          },
-          "degradation": {
-            "description": "Annual percentage degradation.",
-            "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
-            "default": 0.5
-          },
-          "degradationFirstYear": {
+        },
+        "degradation": {
+          "description": "Annual percentage degradation. The default is 0.5% perf. degradation every year.",
+          "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
+          "default": 0.5
+        },
+        "degradationFirstYear": {
           "description": "Annual percentage degradation specifically for the first year of operation.",
           "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
           "default": 0.8
-          },
-          "module": {
-            "$ref": "#/$defs/Module"
-          },
-          "selfShading": {
+        },
+        "module": {
+          "$ref": "#/$defs/Module"
+        },
+        "selfShading": {
           "description": "The parameter affects FixedOneAngle geometry, then OneAxisHorizontalNS and OneAxisInclined type of trackers with backTracking=false. When backTracking=true, the parameter does not make sense as self-shading is avoided. The parameter is used to determine the impact of self (inter-row) shading on PV power production. When set to true, the effect of self-shading is taken into account in calculation, otherwise the structure is assumed without neighbors (best possible). Direct shadow is considered, the effect of diffuse shading is not considered in this version.",
           "type": "boolean",
           "default": false
-          },
-          "terrain": {
+        },
+        "terrain": {
           "description": "Properties of the terrain - used only for the calculation of self-shading effect of the FixedOneAngle PV system.",
           "$ref": "#/$defs/Terrain"
-          },
-          "inverter": {
+        },
+        "inverter": {
           "$ref": "#/$defs/Inverter"
-          },
-          "dcLosses": {
+        },
+        "dcLosses": {
           "$ref": "#/$defs/DcLosses"
-          },
-          "acLosses": {
-            "$ref": "#/$defs/AcLosses"
-          },
-          "gtiConfiguration": {
-            "$ref": "solargis_gti_configuration_v2.schema.json#/$defs/GtiSystem"
-            }
+        },
+        "acLosses": {
+          "$ref": "#/$defs/AcLosses"
+        },
+        "gtiConfiguration": {
+          "$ref": "solargis_gti_configuration_v2.schema.json#/$defs/GtiSystem"
+        }
       }
     },
     "Module": {
       "description": "PV module",
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "technology"
       ],
@@ -263,7 +279,7 @@
       }
     },
     "DcLosses": {
-      "description": "PV power losses on the DC side.",
+      "description": "PV power losses on the DC side. We allow exactly one way - either specific or overall losses.",
       "type": "object",
       "additionalProperties": false,
       "properties": {
@@ -293,7 +309,6 @@
       "description": "Specific PV power losses on the DC side.",
       "type": "object",
       "additionalProperties": false,
-      "required": [],
       "properties": {
         "mismatch": {
           "description": "% estimate of the mismatch losses.",
@@ -345,7 +360,7 @@
       }
     },
     "AcLosses": {
-      "description": "PV power losses on the AC side.",
+      "description": "PV power losses on the AC side. We allow exactly one way - either specific or overall losses.",
       "type": "object",
       "additionalProperties": false,
       "oneOf": [
@@ -375,8 +390,6 @@
       "description": "Specific PV power losses on the AC side.",
       "type": "object",
       "additionalProperties": false,
-      "required": [
-      ],
       "properties": {
         "transformer": {
           "description": "% estimate of the transformer losses.",
