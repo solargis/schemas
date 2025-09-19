@@ -186,7 +186,7 @@
     "Inverter": {
       "description": "Properties of the PV inverter.",
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "properties": {
         "inverterEfficiency": {
           "$ref": "#/$defs/InverterEfficiency"
