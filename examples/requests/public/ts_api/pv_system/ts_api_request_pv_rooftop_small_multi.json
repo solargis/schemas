@@ -1,4 +1,5 @@
 {
+  "description": "Simulation request for a residential rooftop PV system. The system consists of two 2 kWp roof-mounted segments (facing east and facing west). Inverters has 5 kW AC output limit",
   "site": {
     "latitude": 43.023903,
     "longitude": 142.419596
@@ -30,8 +31,6 @@
             }
           }
         },
-        "degradation": 0.5,
-        "degradationFirstYear": 0.8,
         "module": {
           "technology": "CSI"
         },
@@ -39,7 +38,7 @@
           "inverterLimitationACPower": 5,
           "startPower": 0.02,
           "inverterEfficiency": {
-            "constant": 97.5
+            "constant": 95.9
           }
         },
         "dcLosses": {
@@ -62,8 +61,6 @@
             }
           }
         },
-        "degradation": 0.5,
-        "degradationFirstYear": 0.8,
         "module": {
           "technology": "CSI"
         },

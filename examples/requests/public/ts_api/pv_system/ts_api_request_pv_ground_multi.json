@@ -1,0 +1,126 @@
+{
+  "description": "PV system composed of two ground-mounted (free-standing) segments (one fixed, one tracking) with a total installed DC capacity of 2 MWp. 2 central inverters.",
+  "site": {
+    "latitude": 43.023903,
+    "longitude": 142.419596
+  },
+  "timeStep": "PT15M",
+  "columns": [
+    "GTI", "PVOUT"
+  ],
+  "fromDate": "2025-01-01",
+  "toDate": "2025-01-01",
+  "terrainShading": true,
+  "timeAlignment": "START",
+  "utcOffset": "+09:00",
+  "outputFormat": "SOLARGIS_JSON",
+  "pvConfiguration": {
+    "simulationEngine": "v1.0",
+    "segments": [
+      {
+          "installationType": "FREE_STANDING",
+          "GCR": 40,
+          "availability": 99.5,
+          "startupDate": "2020-01-01",
+          "installedPower": 1000,
+          "degradation": 0.5,
+          "degradationFirstYear": 0.8,
+          "topologyType": "UNPROPORTIONAL_2",
+          "module": {
+            "technology": "CSI",
+            "NOCT": 44,
+            "temperatureCoefficientPmax": -0.18
+          },
+          "selfShading": true,
+          "terrain": {
+            "azimuth": 180,
+            "slope": 0
+          },
+          "inverter": {
+            "inverterEfficiency": {
+              "constant": 97.8
+            },
+            "startPower": 8.1,
+            "inverterLimitationACPower": 900
+          },
+          "dcLosses": {
+            "specific": {
+              "cabling": 2.0,
+              "soiling": {
+                "monthly": [2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5]
+              },
+              "mismatch": 0.3
+            }
+          },
+          "acLosses": {
+            "specific": {
+              "transformer": 0.9,
+              "cabling": 0.5
+            }
+          },
+          "gtiConfiguration": {
+            "layout": {
+              "azimuth": 180,
+              "mounting": {
+                "type": "FIXED_ONE_ANGLE",
+                "tilt": 38
+              }
+            }
+          }
+      },
+      {
+          "installationType": "FREE_STANDING",
+          "GCR": 40,
+          "topologyType": "UNPROPORTIONAL_2",
+          "availability": 99.5,
+          "startupDate": "2020-01-01",
+          "installedPower": 1000,
+          "degradation": 0.5,
+          "degradationFirstYear": 0.8,
+          "module": {
+            "technology": "CSI",
+            "NOCT": 44,
+            "temperatureCoefficientPmax": -0.18
+          },
+          "selfShading": true,
+          "terrain": {
+            "azimuth": 180,
+            "slope": 0
+          },
+          "inverter": {
+            "inverterEfficiency": {
+              "constant": 97.8
+            },
+            "startPower": 8.1,
+            "inverterLimitationACPower": 900
+          },
+          "dcLosses": {
+            "specific": {
+              "cabling": 2.0,
+              "soiling": {
+                "monthly": [2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5]
+              },
+              "mismatch": 0.3
+            }
+          },
+          "acLosses": {
+            "specific": {
+              "transformer": 0.9,
+              "cabling": 0.5
+            }
+          },
+          "gtiConfiguration": {
+            "layout": {
+              "azimuth": 180,
+              "mounting": {
+                "type": "TRACKER_ONE_AXIS_HORIZONTAL",
+                "backtracking": true,
+                "rotationLimitEast": -60,
+                "rotationLimitWest": 60
+              }
+            }
+          }
+      }
+    ]
+  }
+}
