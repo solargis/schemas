@@ -17,6 +17,11 @@
           "enum": [
             "v1.0"
           ]
+        },
+        "addResultsPerSegment": {
+          "description": "If true, per-segment results (GTI, PVOUT, TMOD) can be added into the response dataset, otherwise only total results are provided.",
+          "type": "boolean",
+          "default": false
         }
       },
       "oneOf": [
@@ -57,6 +62,11 @@
         "gtiConfiguration"
       ],
       "properties": {
+        "segmentName": {
+          "description": "Optional human-readable name for the PV segment.",
+          "$ref": "solargis_common_types.schema.json#/$defs/VariableSafePattern",
+          "maxLength": 20
+        },
         "installationType": {
           "description": "Thermal losses are increased for building and roof PV systems.",
           "type": "string",
