@@ -4,11 +4,12 @@
   "description": "Following type definitions Solargis uses for the simulation of PV output.",
   "$defs": {
     "PvConfigurationV1": {
-      "description": "PV configuration object supported by the first version PV simulation engine.",
+      "description": "PV configuration object supported by the first version PV simulation engine. In case of multiple segments the aggregated results are provided.",
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "simulationEngine"
+        "simulationEngine",
+        "segments"
       ],
       "properties": {
         "simulationEngine": {
@@ -18,38 +19,21 @@
             "v1.0"
           ]
         },
+        "segments": {
+          "description": "One or multiple homogeneous PV system segments.",
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 10,
+          "items": {
+            "$ref": "#/$defs/PvSystemSegment"
+          }
+        },
         "addResultsPerSegment": {
           "description": "If true, per-segment results (e.g., PVOUT_segmentA, PVOUT_segmentB) will be added into the response dataset, otherwise only total results are provided.",
           "type": "boolean",
           "default": false
         }
-      },
-      "oneOf": [
-        {
-          "required": [
-            "segments"
-          ],
-          "properties": {
-            "segments": {
-              "description": "One or multiple homogeneous PV system segments.",
-              "type": "array",
-              "minItems": 1,
-              "maxItems": 10,
-              "items": {
-                "$ref": "#/$defs/PvSystemSegment"
-              }
-            }
-          }
-        },
-        {
-          "description": "PV system with a single homogeneous array.",
-          "allOf": [
-            {
-              "$ref": "#/$defs/PvSystemSegment"
-            }
-          ]
-        }
-      ]
+      }
     },
     "PvSystemSegment": {
       "description": "PV system segment represents a homogeneous PV array with the same installation type. Azimuth and tilt of PV modules are homogeneous or the same tracking system is used in the array.",
