@@ -17,8 +17,10 @@
   "outputFormat": "SOLARGIS_JSON",
   "pvConfiguration": {
     "simulationEngine": "v1.0",
+    "addResultsPerSegment": true,
     "segments": [
       {
+        "segmentName": "east",
         "installationType": "ROOF_MOUNTED",
         "installedPower": 2,
         "startupDate": "2020-01-01",
@@ -49,6 +51,7 @@
         }
       },
       {
+        "segmentName": "west",
         "installationType": "ROOF_MOUNTED",
         "installedPower": 2,
         "startupDate": "2020-01-01",

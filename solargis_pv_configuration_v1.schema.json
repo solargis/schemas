@@ -19,7 +19,7 @@
           ]
         },
         "addResultsPerSegment": {
-          "description": "If true, per-segment results (GTI, PVOUT, TMOD) can be added into the response dataset, otherwise only total results are provided.",
+          "description": "If true, per-segment results (e.g., PVOUT_segmentA, PVOUT_segmentB) will be added into the response dataset, otherwise only total results are provided.",
           "type": "boolean",
           "default": false
         }
