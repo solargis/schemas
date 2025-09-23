@@ -48,8 +48,10 @@
       "properties": {
         "segmentName": {
           "description": "Optional human-readable name for the PV segment.",
-          "$ref": "solargis_common_types.schema.json#/$defs/VariableSafePattern",
-          "maxLength": 20
+          "allOf": [
+            {"$ref": "solargis_common_types.schema.json#/$defs/VariableSafePattern"},
+            {"maxLength": 20}
+          ]
         },
         "installationType": {
           "description": "Thermal losses are increased for building and roof PV systems.",
