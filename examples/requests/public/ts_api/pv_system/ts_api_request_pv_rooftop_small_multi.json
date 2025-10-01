@@ -1,5 +1,5 @@
 {
-  "description": "Simulation request for a residential rooftop PV system. The system consists of two 2 kWp roof-mounted segments (facing east and facing west). Inverters has 5 kW AC output limit",
+  "description": "Simulation request for a residential rooftop PV system in Japan - total 5 kWp DC.",
   "site": {
     "latitude": 43.023903,
     "longitude": 142.419596
@@ -18,9 +18,54 @@
   "pvConfiguration": {
     "simulationEngine": "v1.0",
     "addResultsPerSegment": true,
+    "$comment": "What about shared transformer or main cable after both inverters? Include also global AC losses on system level after aggregating inverter outputs?",
+    "inverters": [
+      {
+        "name": "mainInv",
+        "inverterLimitationACPower": 4,
+        "startPower": 0.05,
+        "inverterEfficiency": {
+          "constant": 96.0
+        },
+        "acLosses": {
+          "overall": 1.5
+        }
+      },
+      {
+        "name": "garageInv",
+        "inverterLimitationACPower": 2,
+        "startPower": 0.05,
+        "inverterEfficiency": {
+        "curve": {
+          "inputPowerKilowatts": [
+            0.1,
+            0.3,
+            0.6,
+            1.0,
+            1.5,
+            2.0
+          ],
+          "efficiencyPercentage": [
+            83.0,
+            92.0,
+            96.0,
+            97.5,
+            97.8,
+            96.5
+          ]
+        }
+      },
+        "acLosses": {
+          "specific": {
+            "cabling": 0.5,
+            "transformer": 1.0
+          }
+        }
+      }
+    ],
     "segments": [
       {
-        "segmentName": "east",
+        "segmentName": "east_roof",
         "installationType": "ROOF_MOUNTED",
         "installedPower": 2,
         "startupDate": "2020-01-01",
@@ -36,22 +81,13 @@
         "module": {
           "technology": "CSI"
         },
-        "inverter": {
-          "inverterLimitationACPower": 5,
-          "startPower": 0.02,
-          "inverterEfficiency": {
-            "constant": 95.9
-          }
-        },
         "dcLosses": {
           "overall": 5.4
         },
-        "acLosses": {
-          "overall": 1.5
-        }
+        "inverterRef": "mainInv"
       },
       {
-        "segmentName": "west",
+        "segmentName": "west_roof",
         "installationType": "ROOF_MOUNTED",
         "installedPower": 2,
         "startupDate": "2020-01-01",
@@ -67,19 +103,32 @@
         "module": {
           "technology": "CSI"
         },
-        "inverter": {
-          "inverterLimitationACPower": 5,
-          "startPower": 0.02,
-          "inverterEfficiency": {
-            "constant": 97.5
+        "dcLosses": {
+          "overall": 5.4
+        },
+        "inverterRef": "mainInv"
+      },
+      {
+        "segmentName": "garage_roof",
+        "installationType": "ROOF_MOUNTED",
+        "installedPower": 1,
+        "startupDate": "2020-01-01",
+        "gtiConfiguration": {
+          "layout": {
+            "azimuth": 180,
+            "mounting": {
+              "type": "FIXED_ONE_ANGLE",
+              "tilt": 20
+            }
           }
+        },
+        "module": {
+          "technology": "CSI"
         },
         "dcLosses": {
           "overall": 5.4
         },
-        "acLosses": {
-          "overall": 1.5
-        }
+        "inverterRef": "garageInv"
       }
     ]
   }
