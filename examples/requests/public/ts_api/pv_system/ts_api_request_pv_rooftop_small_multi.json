@@ -18,117 +18,117 @@
   "pvConfiguration": {
     "simulationEngine": "v1.0",
     "addResultsPerSegment": true,
-    "$comment": "What about shared transformer or main cable after both inverters? Include also global AC losses on system level after aggregating inverter outputs?",
+    "acLosses": {
+      "specific": {
+        "cabling": 0.90
+      }
+    },
     "inverters": [
       {
-        "name": "mainInv",
+        "inverterName": "mainInv",
         "inverterLimitationACPower": 4,
         "startPower": 0.05,
         "inverterEfficiency": {
           "constant": 96.0
         },
-        "acLosses": {
-          "overall": 1.5
-        }
+        "segments": [
+          {
+            "segmentName": "east_roof",
+            "installationType": "ROOF_MOUNTED",
+            "installedPower": 2,
+            "startupDate": "2020-01-01",
+            "gtiConfiguration": {
+              "layout": {
+                "azimuth": 90,
+                "mounting": {
+                  "type": "FIXED_ONE_ANGLE",
+                  "tilt": 39
+                }
+              }
+            },
+            "module": {
+              "technology": "CSI"
+            },
+            "dcLosses": {
+              "specific": {
+                "cabling": 2.0,
+                "mismatch": 1.0,
+                "soiling": {
+                  "overall": 2.5
+                }
+              }
+            }
+          },
+          {
+            "segmentName": "west_roof",
+            "installationType": "ROOF_MOUNTED",
+            "installedPower": 2,
+            "startupDate": "2020-01-01",
+            "gtiConfiguration": {
+              "layout": {
+                "azimuth": 270,
+                "mounting": {
+                  "type": "FIXED_ONE_ANGLE",
+                  "tilt": 39
+                }
+              }
+            },
+            "module": {
+              "technology": "CSI"
+            },
+            "dcLosses": {
+              "overall": 5.4
+            }
+          }
+        ]
       },
       {
-        "name": "garageInv",
+        "inverterName": "garageInv",
         "inverterLimitationACPower": 2,
         "startPower": 0.05,
         "inverterEfficiency": {
-        "curve": {
-          "inputPowerKilowatts": [
-            0.1,
-            0.3,
-            0.6,
-            1.0,
-            1.5,
-            2.0
-          ],
-          "efficiencyPercentage": [
-            83.0,
-            92.0,
-            96.0,
-            97.5,
-            97.8,
-            96.5
-          ]
-        }
-      },
-        "acLosses": {
-          "specific": {
-            "cabling": 0.5,
-            "transformer": 1.0
+          "curve": {
+            "inputPowerKilowatts": [
+              0.1,
+              0.3,
+              0.6,
+              1.0,
+              1.5,
+              2.0
+            ],
+            "efficiencyPercentage": [
+              83.0,
+              92.0,
+              96.0,
+              97.5,
+              97.8,
+              96.5
+            ]
           }
-        }
-      }
-    ],
-    "segments": [
-      {
-        "segmentName": "east_roof",
-        "installationType": "ROOF_MOUNTED",
-        "installedPower": 2,
-        "startupDate": "2020-01-01",
-        "gtiConfiguration": {
-          "layout": {
-            "azimuth": 90,
-            "mounting": {
-              "type": "FIXED_ONE_ANGLE",
-              "tilt": 39
+        },
+        "segments": [
+          {
+            "segmentName": "garage_roof",
+            "installationType": "ROOF_MOUNTED",
+            "installedPower": 1,
+            "startupDate": "2020-01-01",
+            "gtiConfiguration": {
+              "layout": {
+                "azimuth": 180,
+                "mounting": {
+                  "type": "FIXED_ONE_ANGLE",
+                  "tilt": 20
+                }
+              }
+            },
+            "module": {
+              "technology": "CSI"
+            },
+            "dcLosses": {
+              "overall": 5.4
             }
           }
-        },
-        "module": {
-          "technology": "CSI"
-        },
-        "dcLosses": {
-          "overall": 5.4
-        },
-        "inverterRef": "mainInv"
-      },
-      {
-        "segmentName": "west_roof",
-        "installationType": "ROOF_MOUNTED",
-        "installedPower": 2,
-        "startupDate": "2020-01-01",
-        "gtiConfiguration": {
-          "layout": {
-            "azimuth": 270,
-            "mounting": {
-              "type": "FIXED_ONE_ANGLE",
-              "tilt": 39
-            }
-          }
-        },
-        "module": {
-          "technology": "CSI"
-        },
-        "dcLosses": {
-          "overall": 5.4
-        },
-        "inverterRef": "mainInv"
-      },
-      {
-        "segmentName": "garage_roof",
-        "installationType": "ROOF_MOUNTED",
-        "installedPower": 1,
-        "startupDate": "2020-01-01",
-        "gtiConfiguration": {
-          "layout": {
-            "azimuth": 180,
-            "mounting": {
-              "type": "FIXED_ONE_ANGLE",
-              "tilt": 20
-            }
-          }
-        },
-        "module": {
-          "technology": "CSI"
-        },
-        "dcLosses": {
-          "overall": 5.4
-        },
-        "inverterRef": "garageInv"
+        ]
       }
     ]
   }

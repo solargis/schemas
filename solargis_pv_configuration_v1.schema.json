@@ -6,10 +6,10 @@
     "PvConfigurationV1": {
       "description": "PV configuration object supported by the first version PV simulation engine. In case of multiple segments the aggregated results are provided.",
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "simulationEngine",
-        "segments"
+        "inverters"
       ],
       "properties": {
         "simulationEngine": {
@@ -19,26 +19,29 @@
             "v1.0"
           ]
         },
-        "segments": {
-          "description": "One or multiple homogeneous PV system segments.",
+        "inverters": {
+          "description": "One or multiple PV inverters.",
           "type": "array",
           "minItems": 1,
-          "maxItems": 10,
+          "maxItems": 100,
           "items": {
-            "$ref": "#/$defs/PvSystemSegment"
+            "$ref": "#/$defs/Inverter"
           }
         },
         "addResultsPerSegment": {
           "description": "If true, per-segment results (e.g., PVOUT_segmentA, PVOUT_segmentB) will be added into the response dataset, otherwise only total results are provided.",
           "type": "boolean",
           "default": false
+        },
+        "acLosses": {
+          "$ref": "#/$defs/AcLosses"
         }
       }
     },
     "PvSystemSegment": {
-      "description": "PV system segment represents a homogeneous PV array with the same installation type. Azimuth and tilt of PV modules are homogeneous or the same tracking system is used in the array.",
+      "description": "PV system segment represents a homogeneous PV array. Azimuth and tilt of PV modules are homogeneous or the same tracking system is used in the array.",
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "required": [
         "installationType",
         "installedPower",
@@ -49,8 +52,12 @@
         "segmentName": {
           "description": "Optional human-readable name for the PV segment.",
           "allOf": [
-            {"$ref": "solargis_common_types.schema.json#/$defs/VariableSafePattern"},
-            {"maxLength": 20}
+            {
+              "$ref": "solargis_common_types.schema.json#/$defs/VariableSafePattern"
+            },
+            {
+              "maxLength": 50
+            }
           ]
         },
         "installationType": {
@@ -121,9 +128,6 @@
         "dcLosses": {
           "$ref": "#/$defs/DcLosses"
         },
-        "acLosses": {
-          "$ref": "#/$defs/AcLosses"
-        },
         "gtiConfiguration": {
           "$ref": "solargis_gti_configuration_v2.schema.json#/$defs/GtiSystem"
         }
@@ -182,8 +186,31 @@
     "Inverter": {
       "description": "Properties of the PV inverter.",
       "type": "object",
+      "required": [
+        "segments"
+      ],
       "additionalProperties": false,
       "properties": {
+        "inverterName": {
+          "description": "Optional human-readable name for the PV inverter.",
+          "allOf": [
+            {
+              "$ref": "solargis_common_types.schema.json#/$defs/VariableSafePattern"
+            },
+            {
+              "maxLength": 50
+            }
+          ]
+        },
+        "segments": {
+          "description": "One or multiple PV array segments.",
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 100,
+          "items": {
+            "$ref": "#/$defs/PvSystemSegment"
+          }
+        },
         "inverterEfficiency": {
           "$ref": "#/$defs/InverterEfficiency"
         },

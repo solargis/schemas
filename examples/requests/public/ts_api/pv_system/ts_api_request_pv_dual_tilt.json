@@ -1,0 +1,97 @@
+{
+  "description": "Simulation request for a small dual-tilt PV system in Slovakia - total 4 kWp DC.",
+  "site": {
+    "latitude": 48.894151,
+    "longitude": 18.044744
+  },
+  "timeStep": "PT15M",
+  "columns": [
+    "GTI",
+    "PVOUT"
+  ],
+  "fromDate": "2025-01-01",
+  "toDate": "2025-01-01",
+  "terrainShading": true,
+  "timeAlignment": "START",
+  "utcOffset": "+01:00",
+  "outputFormat": "SOLARGIS_JSON",
+  "pvConfiguration": {
+    "simulationEngine": "v1.0",
+    "addResultsPerSegment": true,
+    "acLosses": {
+      "specific": {
+        "cabling": 0.90
+      }
+    },
+    "inverters": [
+      {
+        "inverterName": "inv1",
+        "inverterLimitationACPower": 1.6,
+        "startPower": 0.05,
+        "inverterEfficiency": {
+          "constant": 96.0
+        },
+        "segments": [
+          {
+            "segmentName": "southEastField",
+            "installationType": "FREE_STANDING",
+            "installedPower": 2,
+            "startupDate": "2024-01-01",
+            "gtiConfiguration": {
+              "layout": {
+                "azimuth": 125,
+                "mounting": {
+                  "type": "FIXED_ONE_ANGLE",
+                  "tilt": 40
+                }
+              }
+            },
+            "module": {
+              "technology": "CSI"
+            },
+            "dcLosses": {
+              "specific": {
+                "cabling": 2.0,
+                "mismatch": 1.0,
+                "soiling": {
+                  "overall": 2.5
+                }
+              }
+            }
+          }
+        ]
+      },
+        {
+        "inverterName": "inv2",
+        "inverterLimitationACPower": 1.6,
+        "startPower": 0.05,
+        "inverterEfficiency": {
+          "constant": 96.0
+        },
+        "segments": [
+          {
+            "segmentName": "northWestField",
+            "installationType": "FREE_STANDING",
+            "installedPower": 2,
+            "startupDate": "2024-01-01",
+            "gtiConfiguration": {
+              "layout": {
+                "azimuth": 280,
+                "mounting": {
+                  "type": "FIXED_ONE_ANGLE",
+                  "tilt": 23
+                }
+              }
+            },
+            "module": {
+              "technology": "CSI"
+            },
+            "dcLosses": {
+              "overall": 5.4
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
