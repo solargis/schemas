@@ -129,9 +129,6 @@
           "description": "Properties of the terrain - used only for the calculation of self-shading effect of the FixedOneAngle PV system.",
           "$ref": "#/$defs/Terrain"
         },
-        "inverter": {
-          "$ref": "#/$defs/Inverter"
-        },
         "dcLosses": {
           "$ref": "#/$defs/DcLosses"
         },
