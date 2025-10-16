@@ -17,7 +17,7 @@
   "outputFormat": "SOLARGIS_JSON",
   "pvConfiguration": {
     "simulationEngine": "v1.0",
-    "addResultsPerSegment": true,
+    "addResultsPerSegment": false,
     "acLosses": {
       "specific": {
         "cabling": 0.90
@@ -54,7 +54,7 @@
                 "cabling": 2.0,
                 "mismatch": 1.0,
                 "soiling": {
-                  "overall": 2.5
+                  "yearly": 2.5
                 }
               }
             }

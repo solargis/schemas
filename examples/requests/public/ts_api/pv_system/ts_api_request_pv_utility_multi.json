@@ -58,7 +58,7 @@
                 "cabling": 2.0,
                 "mismatch": 1.0,
                 "soiling": {
-                  "overall": 2.5
+                  "yearly": 2.5
                 }
               }
             }
@@ -96,7 +96,7 @@
                 "cabling": 2.0,
                 "mismatch": 1.0,
                 "soiling": {
-                  "overall": 2.5
+                  "yearly": 2.5
                 }
               }
             }

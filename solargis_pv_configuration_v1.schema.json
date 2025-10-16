@@ -2,6 +2,7 @@
   "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.5/solargis_pv_configuration_v1.schema.json",
   "$schema": "https://json-schema.org/draft-07/schema",
   "description": "Following type definitions Solargis uses for the simulation of PV output.",
+  "$comment": "Required post-schema validations: InverterEfficiencyCurve inputPowerKilowatts and efficiencyPercentage arrays must have same length, inverterLimitationACPower ≥ startPower",
   "$defs": {
     "PvConfigurationV1": {
       "description": "PV configuration object supported by the first version PV simulation engine. In case of multiple segments the aggregated results are provided.",
@@ -29,7 +30,12 @@
           }
         },
         "addResultsPerSegment": {
-          "description": "If true, per-segment results (e.g., PVOUT_segmentA, PVOUT_segmentB) will be added into the response dataset, otherwise only total results are provided.",
+          "description": "If true, per-segment DC input (DC losses applied) to the inverter will be added into the response dataset.",
+          "type": "boolean",
+          "default": false
+        },
+        "addResultsPerInverter": {
+          "description": "If true, per-inverter output before applying AC losses will be added into the response dataset.",
           "type": "boolean",
           "default": false
         },
@@ -87,7 +93,8 @@
         "installedPower": {
           "description": "Total PV system rating (nameplate capacity) is the summation of all panel ratings measured in STC, in kilowatt-peaks (kWp)",
           "type": "number",
-          "minimum": 0
+          "minimum": 0,
+          "maximum": 500000
         },
         "topologyType": {
           "description": "This parameter estimates a loss of PV system output when modules are self-shaded. The effect depends on wiring interconnections within a module. Shading influence ranges from 0% (no influence) to 100% (full influence) and it's mapped to categories: PROPORTIONAL = 20%, UNPROPORTIONAL_1 = 40%, UNPROPORTIONAL_2 = 60%, UNPROPORTIONAL_3 = 80%. When parameter is missing, the self-shading influence is estimated to 5 %.",
@@ -356,7 +363,7 @@
       "oneOf": [
         {
           "required": [
-            "overall"
+            "yearly"
           ]
         },
         {
@@ -366,8 +373,8 @@
         }
       ],
       "properties": {
-        "overall": {
-          "description": "Overall % estimate of soiling losses.",
+        "yearly": {
+          "description": "Yearly % estimate of soiling losses.",
           "$ref": "solargis_common_types.schema.json#/$defs/PercentagePositive",
           "default": 2.5
         },
