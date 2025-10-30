@@ -191,7 +191,8 @@
               "WBT",
               "WD",
               "WG",
-              "WS"
+              "WS",
+              "HAILRISK"
             ]
           },
           {
@@ -709,7 +710,7 @@
               "minItems": 1,
               "maxItems": 100,
               "items": {
-                "description": "Properties of the PV inverter.",
+                "description": "Properties of the single PV inverter. Take this as an inverter template. If you have more inverters of the same type, use the numberOfInverters property. ",
                 "type": "object",
                 "required": [
                   "segments"
@@ -725,9 +726,15 @@
                         "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
                       },
                       {
-                        "maxLength": 50
+                        "maxLength": 80
                       }
                     ]
+                  },
+                  "numberOfInverters": {
+                    "description": "Number of inverters of the same type.",
+                    "type": "integer",
+                    "minimum": 1,
+                    "default": 1
                   },
                   "segments": {
                     "description": "One or multiple PV array segments.",
