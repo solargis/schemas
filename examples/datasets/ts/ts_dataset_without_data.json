@@ -9,15 +9,15 @@
   "metadata": {
     "columnOrder": [
       "DATETIME",
-      "GHI"
+      "HAILRISK"
     ],
     "columns": {
       "DATETIME": {
         "timeFormatPattern": "YYYY-MM-DDThh:mm:ss[.sss]±hh:mm"
       },
       "GHI": {
-        "columnType": "GHI",
-        "unit": "kWh/m2"
+        "columnType": "HAILRISK",
+        "unit": "%"
       }
     }
   }
