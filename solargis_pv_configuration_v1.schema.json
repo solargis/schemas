@@ -188,7 +188,7 @@
       }
     },
     "Inverter": {
-      "description": "Properties of the PV inverter.",
+      "description": "Properties of the single PV inverter. Take this as an inverter template. If you have more inverters of the same type, use the numberOfInverters property. ",
       "type": "object",
       "required": [
         "segments"
@@ -202,9 +202,15 @@
               "$ref": "solargis_common_types.schema.json#/$defs/VariableSafePattern"
             },
             {
-              "maxLength": 50
+              "maxLength": 80
             }
           ]
+        },
+        "numberOfInverters": {
+          "description": "Number of inverters of the same type.",
+          "type": "integer",
+          "minimum": 1,
+          "default": 1
         },
         "segments": {
           "description": "One or multiple PV array segments.",

@@ -18,6 +18,7 @@
   "pvConfiguration": {
     "simulationEngine": "v1.0",
     "addResultsPerSegment": true,
+    "addResultsPerInverter": false,
     "acLosses": {
       "specific": {
         "transformer": 1.0,
@@ -26,9 +27,10 @@
     },
     "inverters": [
       {
-        "inverterName": "trackerInverterStation",
-        "inverterLimitationACPower": 6000,
-        "startPower": 0.5,
+        "inverterName": "Sungrow_SG250HX",
+        "numberOfInverters": 20,
+        "inverterLimitationACPower": 315,
+        "startPower": 1.5,
         "inverterEfficiency": {
           "constant": 98.5
         },
@@ -66,9 +68,10 @@
         ]
       },
       {
-        "inverterName": "fixedInverterStation",
-        "inverterLimitationACPower": 4000,
-        "startPower": 0.3,
+        "inverterName": "Huawei_SUN2000_215KTL",
+        "numberOfInverters": 16,
+        "inverterLimitationACPower": 215,
+        "startPower": 1.0,
         "inverterEfficiency": {
           "constant": 98.3
         },

@@ -28,6 +28,7 @@
       {
         "inverterName": "mainInv",
         "inverterLimitationACPower": 4,
+        "numberOfInverters": 1,
         "startPower": 0.05,
         "inverterEfficiency": {
           "constant": 96.0

@@ -300,6 +300,10 @@
     ],
     "description": "Precipitation rate"
   },
+  "HAILRISK": {
+    "units": ["%"],
+    "description": "Hail risk"
+  },
   "TD": {
     "units": [
       "deg_C"
