@@ -10,22 +10,5 @@
   "tmyScenario": "P50",
   "fromDate": "AUTODETECT",
   "toDate": "LAST_YEAR",
-  "outputFormat": "SOLARGIS_JSON",
-  "pvConfiguration": {
-    "simulationEngine": "v1",
-    "gtiConfiguration": {
-      "layout": {
-        "azimuth": 180,
-        "mounting": {
-          "type": "FIXED_ONE_ANGLE",
-          "tilt": 39
-        }
-      }
-    },
-    "installationType": "BUILDING_INTEGRATED",
-    "installedPower": 1,
-    "module": {
-      "technology": "ASI"
-    }
-}
+  "outputFormat": "SOLARGIS_JSON"
 }

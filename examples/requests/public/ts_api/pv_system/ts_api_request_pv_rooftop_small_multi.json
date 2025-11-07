@@ -15,7 +15,7 @@
   "timeAlignment": "START",
   "utcOffset": "+09:00",
   "outputFormat": "SOLARGIS_JSON",
-  "pvConfiguration": {
+  "pvSystem": {
     "simulationEngine": "v1.0",
     "addResultsPerSegment": false,
     "addResultsPerInverter": false,
@@ -26,12 +26,14 @@
     },
     "inverters": [
       {
-        "inverterName": "mainInv",
-        "inverterLimitationACPower": 4,
-        "numberOfInverters": 1,
-        "startPower": 0.05,
-        "inverterEfficiency": {
-          "constant": 96.0
+        "inverterParameters": {
+          "inverterName": "mainInv",
+          "inverterLimitationACPower": 4,
+          "numberOfInverters": 1,
+          "startPower": 0.05,
+          "inverterEfficiency": {
+            "constant": 96.0
+          }
         },
         "segments": [
           {
@@ -85,27 +87,29 @@
         ]
       },
       {
-        "inverterName": "garageInv",
-        "inverterLimitationACPower": 2,
-        "startPower": 0.05,
-        "inverterEfficiency": {
-          "curve": {
-            "inputPowerKilowatts": [
-              0.1,
-              0.3,
-              0.6,
-              1.0,
-              1.5,
-              2.0
-            ],
-            "efficiencyPercentage": [
-              83.0,
-              92.0,
-              96.0,
-              97.5,
-              97.8,
-              96.5
-            ]
+        "inverterParameters": {
+          "inverterName": "garageInv",
+          "inverterLimitationACPower": 2,
+          "startPower": 0.05,
+          "inverterEfficiency": {
+            "curve": {
+              "inputPowerKilowatts": [
+                0.1,
+                0.3,
+                0.6,
+                1.0,
+                1.5,
+                2.0
+              ],
+              "efficiencyPercentage": [
+                83.0,
+                92.0,
+                96.0,
+                97.5,
+                97.8,
+                96.5
+              ]
+            }
           }
         },
         "segments": [

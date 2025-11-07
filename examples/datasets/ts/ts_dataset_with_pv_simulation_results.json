@@ -141,22 +141,78 @@
         }
       ]
     },
-    "pvConfiguration": {
-      "simulationEngine": "v1",
-      "gtiConfiguration": {
-        "layout": {
-          "azimuth": 180,
-          "mounting": {
-            "type": "FIXED_ONE_ANGLE",
-            "tilt": 39
-          }
+    "pvSystem": {
+      simulationEngine: "v1.0",
+      "addResultsPerSegment": false,
+      "addResultsPerInverter": false,
+      "acLosses": {
+        "specific": {
+          "cabling": 0.90
         }
       },
-      "installationType": "BUILDING_INTEGRATED",
-      "installedPower": 1,
-      "module": {
-        "technology": "ASI"
-      }
+      "inverters": [
+        {
+          "inverterParameters": {
+            "inverterName": "mainInv",
+            "inverterLimitationACPower": 4,
+            "numberOfInverters": 1,
+            "startPower": 0.05,
+            "inverterEfficiency": {
+              "constant": 96.0
+            }
+          },
+          "segments": [
+            {
+              "segmentName": "east_roof",
+              "installationType": "ROOF_MOUNTED",
+              "installedPower": 2,
+              "startupDate": "2020-01-01",
+              "gtiConfiguration": {
+                "layout": {
+                  "azimuth": 90,
+                  "mounting": {
+                    "type": "FIXED_ONE_ANGLE",
+                    "tilt": 39
+                  }
+                }
+              },
+              "module": {
+                "technology": "CSI"
+              },
+              "dcLosses": {
+                "specific": {
+                  "cabling": 2.0,
+                  "mismatch": 1.0,
+                  "soiling": {
+                    "yearly": 2.5
+                  }
+                }
+              }
+            },
+            {
+              "segmentName": "west_roof",
+              "installationType": "ROOF_MOUNTED",
+              "installedPower": 2,
+              "startupDate": "2020-01-01",
+              "gtiConfiguration": {
+                "layout": {
+                  "azimuth": 270,
+                  "mounting": {
+                    "type": "FIXED_ONE_ANGLE",
+                    "tilt": 39
+                  }
+                }
+              },
+              "module": {
+                "technology": "CSI"
+              },
+              "dcLosses": {
+                "overall": 5.4
+              }
+            }
+          ]
+        }
+      ]
     }
   },
   "data": {

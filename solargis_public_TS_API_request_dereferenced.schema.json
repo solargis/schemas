@@ -684,7 +684,7 @@
       },
       "additionalProperties": false
     },
-    "pvConfiguration": {
+    "pvSystem": {
       "description": "Object is required if at least one PV output related column is present in the array of requested columns (PVOUT, TMOD).",
       "$comment": "Each PV simulation engine will have its own separate schema as they are not fully compatible.",
       "oneOf": [
@@ -693,17 +693,9 @@
           "type": "object",
           "additionalProperties": false,
           "required": [
-            "simulationEngine",
             "inverters"
           ],
           "properties": {
-            "simulationEngine": {
-              "description": "PV simulation engine.",
-              "type": "string",
-              "enum": [
-                "v1.0"
-              ]
-            },
             "inverters": {
               "description": "One or multiple PV inverters.",
               "type": "array",
@@ -1430,7 +1422,7 @@
     },
     "if": {
       "required": [
-        "pvConfiguration"
+        "pvSystem"
       ]
     },
     "then": {

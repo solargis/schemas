@@ -15,7 +15,7 @@
   "timeAlignment": "START",
   "utcOffset": "+09:00",
   "outputFormat": "SOLARGIS_JSON",
-  "pvConfiguration": {
+  "pvSystem": {
     "simulationEngine": "v1.0",
     "addResultsPerSegment": true,
     "addResultsPerInverter": false,
@@ -27,12 +27,14 @@
     },
     "inverters": [
       {
-        "inverterName": "Sungrow_SG250HX",
-        "numberOfInverters": 20,
-        "inverterLimitationACPower": 315,
-        "startPower": 1.5,
-        "inverterEfficiency": {
-          "constant": 98.5
+        "inverterParameters": {
+          "inverterName": "Sungrow_SG250HX",
+          "numberOfInverters": 20,
+          "inverterLimitationACPower": 315,
+          "startPower": 1.5,
+          "inverterEfficiency": {
+            "constant": 98.5
+          }
         },
         "segments": [
           {
@@ -68,12 +70,14 @@
         ]
       },
       {
-        "inverterName": "Huawei_SUN2000_215KTL",
-        "numberOfInverters": 16,
-        "inverterLimitationACPower": 215,
-        "startPower": 1.0,
-        "inverterEfficiency": {
-          "constant": 98.3
+        "inverterParameters": {
+          "inverterName": "Huawei_SUN2000_215KTL",
+          "numberOfInverters": 16,
+          "inverterLimitationACPower": 215,
+          "startPower": 1.0,
+          "inverterEfficiency": {
+            "constant": 98.3
+          }
         },
         "segments": [
           {

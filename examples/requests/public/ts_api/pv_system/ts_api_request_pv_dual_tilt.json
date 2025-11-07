@@ -15,7 +15,7 @@
   "timeAlignment": "START",
   "utcOffset": "+01:00",
   "outputFormat": "SOLARGIS_JSON",
-  "pvConfiguration": {
+  "pvSystem": {
     "simulationEngine": "v1.0",
     "addResultsPerSegment": false,
     "acLosses": {
@@ -25,11 +25,13 @@
     },
     "inverters": [
       {
-        "inverterName": "inv1",
-        "inverterLimitationACPower": 1.6,
-        "startPower": 0.05,
-        "inverterEfficiency": {
-          "constant": 96.0
+        "inverterParameters": {
+          "inverterName": "inv1",
+          "inverterLimitationACPower": 1.6,
+          "startPower": 0.05,
+          "inverterEfficiency": {
+            "constant": 96.0
+          }
         },
         "segments": [
           {
@@ -61,12 +63,14 @@
           }
         ]
       },
-        {
-        "inverterName": "inv2",
-        "inverterLimitationACPower": 1.6,
-        "startPower": 0.05,
-        "inverterEfficiency": {
-          "constant": 96.0
+      {
+        "inverterParameters": {
+          "inverterName": "inv2",
+          "inverterLimitationACPower": 1.6,
+          "startPower": 0.05,
+          "inverterEfficiency": {
+            "constant": 96.0
+          }
         },
         "segments": [
           {

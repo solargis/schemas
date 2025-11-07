@@ -4,13 +4,13 @@
   "description": "Following type definitions Solargis uses for the simulation of PV output.",
   "$comment": "Required post-schema validations: InverterEfficiencyCurve inputPowerKilowatts and efficiencyPercentage arrays must have same length, inverterLimitationACPower ≥ startPower",
   "$defs": {
-    "PvConfigurationV1": {
-      "description": "PV configuration object supported by the first version PV simulation engine. In case of multiple segments the aggregated results are provided.",
+    "PvSystem": {
+      "description": "PV system object supported by the first version PV simulation engine. In case of multiple segments the aggregated results are provided.",
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "simulationEngine",
-        "inverters"
+        "inverters",
+        "simulationEngine"
       ],
       "properties": {
         "simulationEngine": {
@@ -187,12 +187,8 @@
         }
       }
     },
-    "Inverter": {
-      "description": "Properties of the single PV inverter. Take this as an inverter template. If you have more inverters of the same type, use the numberOfInverters property. ",
-      "type": "object",
-      "required": [
-        "segments"
-      ],
+    "InverterParameters": {
+      "description": "Defines the electrical and operational properties of a single PV inverter. This object serves as a template for a specific inverter type. If multiple inverters of the same type are used in the system, specify their count using the numberOfInverters property.",
       "additionalProperties": false,
       "properties": {
         "inverterName": {
@@ -212,15 +208,6 @@
           "minimum": 1,
           "default": 1
         },
-        "segments": {
-          "description": "One or multiple PV array segments.",
-          "type": "array",
-          "minItems": 1,
-          "maxItems": 100,
-          "items": {
-            "$ref": "#/$defs/PvSystemSegment"
-          }
-        },
         "inverterEfficiency": {
           "$ref": "#/$defs/InverterEfficiency"
         },
@@ -233,6 +220,29 @@
           "description": "Minimum power in kW when inverter starts to work.",
           "type": "number",
           "minimum": 0
+        }
+      }
+    },
+    "Inverter": {
+      "type": "object",
+      "description": "Each inverter receives input from one or more segments. You can connect multiple segments to multiple instances of the same inverter type. The PV simulation will automatically manage these connections, but if you prefer a custom electrical layout, you can assign specific inverters to specific segments.",
+      "required": [
+        "inverterParameters",
+        "segments"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "inverterParameters": {
+          "$ref": "#/$defs/InverterParameters"
+        },
+        "segments": {
+          "description": "One or multiple PV array segments.",
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 100,
+          "items": {
+            "$ref": "#/$defs/PvSystemSegment"
+          }
         }
       }
     },

@@ -55,12 +55,12 @@
     "gtiConfiguration": {
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/gtiConfiguration"
     },
-    "pvConfiguration": {
+    "pvSystem": {
       "description": "Object is required if at least one PV output related column is present in the array of requested columns (PVOUT, TMOD).",
       "$comment": "Each PV simulation engine will have its own separate schema as they are not fully compatible.",
       "oneOf": [
         {
-          "$ref": "solargis_pv_configuration_v1.schema.json#/$defs/PvConfigurationV1"
+          "$ref": "solargis_pv_configuration_v1.schema.json#/$defs/PvSystem"
         }
       ]
     },
@@ -81,7 +81,7 @@
   },
   "if": {
     "required": [
-      "pvConfiguration"
+      "pvSystem"
     ]
   },
   "then": {
