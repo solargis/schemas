@@ -44,7 +44,8 @@
           "SOLARGIS_JSON",
           "SOLARGIS_CSV",
           "SAM",
-          "HELIOSCOPE"
+          "HELIOSCOPE",
+          "SOLARGIS_PARQUET"
         ]
       }
     },

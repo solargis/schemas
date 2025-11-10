@@ -12,5 +12,6 @@
   "tmyScenario": "P50",
   "fromDate": "1994-01-10",
   "toDate": "LAST_YEAR",
-  "includeModelUncertaintyYearly": true
+  "includeModelUncertaintyYearly": true,
+  "outputFormat": "SOLARGIS_PARQUET"
 }

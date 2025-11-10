@@ -68,7 +68,8 @@
       "type": "string",
       "enum": [
         "SOLARGIS_JSON",
-        "SOLARGIS_JSON_HIGH_PREC_FLOAT"
+        "SOLARGIS_JSON_HIGH_PREC_FLOAT",
+        "SOLARGIS_PARQUET"
       ]
     },
     "compressOutput": {
