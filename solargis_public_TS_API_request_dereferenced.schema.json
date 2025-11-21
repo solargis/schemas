@@ -694,6 +694,11 @@
       "type": "boolean",
       "default": false
     },
+    "splitOutputByYears": {
+      "description": "Process can return multiple dataset files, one file per one year. Instead of providing single dataset.",
+      "type": "boolean",
+      "default": false
+    },
     "pvConfiguration": {
       "description": "Object is required if at least one PV output related column is present in the array of requested columns (PVOUT, TMOD).",
       "$comment": "Each PV simulation engine will have its own separate schema as they are not fully compatible.",
