@@ -77,9 +77,11 @@
           "type": "string",
           "pattern": "^([+\\\\-])?(0[0-9]|1[0-4]):(00|30)$",
           "examples": [
-            "+05:30", "-07:00", "02:00"
+            "+05:30",
+            "-07:00",
+            "02:00"
           ]
-       },
+        },
         "timeAlignment": {
           "description": "Datetime strings (labels of time intervals) can be positioned or aligned with the start, center or end of the time interval (or the left edge, the middle and the right edge of the time interval).",
           "$ref": "solargis_common_enums.schema.json#/$defs/TimeAlignmentEnum"
@@ -122,9 +124,9 @@
           "default": true
         },
         "includeHorizon": {
-        "description": "Include horizon object in the output dataset (used for shading). The value is taken from the user request (if value is present) or from the Solargis database (if not provided by user). Only for SOLARGIS_JSON and SOLARGIS_PARQUET format.",
-        "type": "boolean",
-        "default": true
+          "description": "Include horizon object in the output dataset (used for shading). The value is taken from the user request (if value is present) or from the Solargis database (if not provided by user). Only for SOLARGIS_JSON and SOLARGIS_PARQUET format.",
+          "type": "boolean",
+          "default": true
         },
         "includeJsonData": {
           "description": "Include data section in the dataset. If false, the data is provided elsewhere e.g., as file or URI, and dataset just holds the metadata. Only for SOLARGIS_JSON and SOLARGIS_PARQUET format.",
@@ -141,17 +143,22 @@
           "type": "string",
           "enum": [
             "SOLARGIS_JSON",
+            "SOLARGIS_CSV",
             "SOLARGIS_JSON_HIGH_PREC_FLOAT",
             "SOLARGIS_PARQUET"
           ]
         }
       },
       "if": {
-        "required": ["pvConfiguration"]
+        "required": [
+          "pvConfiguration"
+        ]
       },
       "then": {
         "not": {
-          "required": ["gtiConfiguration"]
+          "required": [
+            "gtiConfiguration"
+          ]
         }
       }
     }

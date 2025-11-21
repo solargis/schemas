@@ -41,16 +41,7 @@
     },
     "fromDate": {
       "description": "Start date of the requested data. Inclusive. See also the utcOffset.",
-      "oneOf": [
-        {
-          "type": "string",
-          "format": "date"
-        },
-        {
-          "type": "string",
-          "enum": ["AUTODETECT", "AUTODETECT-P1D"]
-        }
-      ]
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/fromDate"
     },
     "toDate": {
       "description": "End date of the requested data. Inclusive.",
@@ -81,18 +72,13 @@
       "$ref": "solargis_common_types.schema.json#/$defs/FileLabel"
     },
     "outputFormat": {
-      "type": "string",
-      "enum": [
-        "SOLARGIS_JSON",
-        "SOLARGIS_CSV",
-        "SOLARGIS_JSON_HIGH_PREC_FLOAT",
-        "SOLARGIS_PARQUET"
-      ]
+       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/outputFormat"
     },
     "compressOutput": {
-      "description": "Output dataset file will be zipped.",
-      "type": "boolean",
-      "default": false
+      "$ref": "solargis_public_TS_request.schema.json#/properties/compressOutput"
+    },
+    "splitOutputByYears":{
+      "$ref": "solargis_public_TS_request.schema.json#/properties/splitOutputByYears"
     },
     "pvConfiguration": {
       "description": "Object is required if at least one PV output related column is present in the array of requested columns (PVOUT, TMOD).",

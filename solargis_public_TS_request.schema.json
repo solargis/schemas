@@ -62,12 +62,17 @@
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/outputFormat"
     },
     "compressOutput": {
-      "description": "Output dataset will be zipped.",
+      "description": "Output dataset file will be zipped.",
       "type": "boolean",
       "default": false
     },
     "stochasticGenerator": {
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/stochasticGenerator"
+    },
+    "splitOutputByYears": {
+      "description": "Process can return multiple dataset files, one file per one year. Instead of providing single dataset.",
+      "type": "boolean",
+      "default": false
     }
   }
 }
