@@ -73,13 +73,14 @@
       "flagR"
     ],
     "columns": {
-      "DATETIME": {
+      "DATETIME":  {
         "timeFormatPattern": "YYYY-MM-DDThh:mm:ss[.sss]±hh:mm",
         "timeStep": "PT60M",
-        "firstTimestamp": "2022-01-01T00:30:00+09:00",
-        "lastTimestamp": "2022-01-01T02:30:00+09:00",
+        "firstTimestamp": "2022-03-20T00:30:00+01:00",
+        "lastTimestamp": "2022-03-31T12:30:00+02:00",
         "timeAlignment": "CENTER",
-        "realTimestamps": true
+        "realTimestamps": true,
+        "timezone": "Europe/Bratislava"
       },
       "GHI_sensor": {
         "columnType": "GHI",
