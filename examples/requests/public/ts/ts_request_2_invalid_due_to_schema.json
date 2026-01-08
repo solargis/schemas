@@ -1,0 +1,16 @@
+{
+  "description": "Invalid request due to schema - outputRoundingLevel wrong.",
+  "site": {
+    "latitude": 45.09,
+    "longitude": 17.34
+  },
+  "timeStep": "PT15M",
+  "columns": [
+    ".GHI"
+  ],
+  "fromDate": "1995-09-09",
+  "toDate": "LAST_MONTH",
+  "terrainShading": false,
+  "outputFormat": "SOLARGIS_JSON",
+  "outputRoundingLevel": "high_precisionXXx"
+}
