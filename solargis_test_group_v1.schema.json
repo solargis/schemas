@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.4/solargis_test_group_v1.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.6/solargis_test_group_v1.schema.json",
   "$schema": "https://json-schema.org/draft-07/schema",
   "description": "Test group schema v1 for the Solargis Analyst.",
   "type": "object",

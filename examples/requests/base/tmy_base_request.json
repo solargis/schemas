@@ -13,5 +13,6 @@
   "fromDate": "1994-01-10",
   "toDate": "LAST_YEAR",
   "includeModelUncertaintyYearly": true,
-  "outputFormat": "SOLARGIS_PARQUET"
+  "outputFormat": "SOLARGIS_PARQUET",
+  "outputRoundingLevel": "high_precision"
 }

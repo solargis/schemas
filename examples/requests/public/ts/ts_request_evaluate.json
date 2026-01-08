@@ -41,7 +41,8 @@
   "utcOffset": "00:00",
   "timeAlignment": "CENTER",
   "terrainShading": false,
-  "outputFormat": "SOLARGIS_JSON_HIGH_PREC_FLOAT",
+  "outputFormat": "SOLARGIS_JSON",
+  "outputRoundingLevel": "high_precision",
   "stochasticGenerator": false,
   "compressOutput": false
 }

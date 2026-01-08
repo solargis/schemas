@@ -126,5 +126,6 @@
   "includeHorizon": true,
   "includeSurfaceAlbedoLongTerm": true,
   "includeJsonData": true,
-  "includeModelUncertaintyYearly": false
+  "includeModelUncertaintyYearly": false,
+  "outputFormat": "SOLARGIS_JSON"
 }

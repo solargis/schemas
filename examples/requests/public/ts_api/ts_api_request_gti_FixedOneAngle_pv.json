@@ -66,6 +66,7 @@
     }
   },
   "outputFormat": "SOLARGIS_JSON",
+  "outputRoundingLevel": "standard",
   "compressOutput": false,
   "fileLabel": "Pippu_AX_987JP",
   "gtiConfiguration": {

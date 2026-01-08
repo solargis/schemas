@@ -1,8 +1,7 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.4/solargis_data_request.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.6/solargis_data_request.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
-  "description": "Base schema for a Solargis data request (schema of all request attributes) - not used in public APIs. See special public request types derived from the base.",
-
+  "description": "Base schema for a Solargis data request - not used directly in public APIs. See special public request types derived from the base.",
   "allOf": [
     {
       "$ref": "#/$defs/DataRequest"
@@ -146,7 +145,17 @@
             "SOLARGIS_CSV",
             "SOLARGIS_JSON_HIGH_PREC_FLOAT",
             "SOLARGIS_PARQUET"
-          ]
+          ],
+          "default": "SOLARGIS_JSON"
+        },
+        "outputRoundingLevel": {
+          "description": "Defines the decimal precision used for numeric output values in datasets.",
+          "type": "string",
+          "enum": [
+            "standard",
+            "high_precision"
+          ],
+          "default": "standard"
         }
       },
       "if": {

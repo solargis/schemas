@@ -10,5 +10,6 @@
   "tmyScenario": "P50",
   "fromDate": "AUTODETECT",
   "toDate": "LAST_YEAR",
-  "outputFormat": "SOLARGIS_JSON"
+  "outputFormat": "SOLARGIS_JSON",
+  "outputRoundingLevel": "standard"
 }
