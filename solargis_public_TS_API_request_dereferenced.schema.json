@@ -687,7 +687,17 @@
         "SOLARGIS_CSV",
         "SOLARGIS_JSON_HIGH_PREC_FLOAT",
         "SOLARGIS_PARQUET"
-      ]
+      ],
+      "default": "SOLARGIS_JSON"
+    },
+    "outputRoundingLevel": {
+      "description": "Defines the decimal precision used for numeric output values in datasets.",
+      "type": "string",
+      "enum": [
+        "standard",
+        "high_precision"
+      ],
+      "default": "standard"
     },
     "compressOutput": {
       "description": "Output dataset file will be zipped.",
