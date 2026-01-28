@@ -1,4 +1,8 @@
-Solargis public JSON schema files define JSON instances of various request and response object types.
+Solargis JSON schemas define JSON instances of:
+* datasets (e.g., API responses)
+* requests: may not be fully aligned with current Solargis products. Please, always refer to the official [Solargis documentation](https://kb.solargis.com/) as the primary source. 
+ 
+**Note**: This repository may contain content that is not reflected in current Solargis products.
 
 ### RELEASE NOTES:
 - **v1.1.6** (Jan 07, 2026): Added 'outputRoundingLevel' as request property.
@@ -21,7 +25,8 @@ Solargis public JSON schema files define JSON instances of various request and r
 
 
 ### Versioning guidelines
-For versioning our JSON schemas, we adopted semantic versioning (SemVer). Semantic versioning uses a three-part version number: MAJOR.MINOR.PATCH. Here's how you should update the version number for different types of changes.
+We use git branches for each new schema version. The main branch is always synced with the latest version branch.
+For versioning our JSON schemas, we use semantic versioning (SemVer). Semantic versioning uses a three-part version number: MAJOR.MINOR.PATCH. Here's how you should update the version number for different types of changes.
 
 #### MAJOR version
 Incremented for breaking changes. This is when changes are made that are not backward-compatible. Examples include:

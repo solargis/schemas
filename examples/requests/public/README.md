@@ -1,1 +1,1 @@
-Simplified request types for Solargis products suitable for public endpoints.
+For using Solargis API products, please always refer to our Knowledge Base https://kb.solargis.com/apidocs/introduction.
