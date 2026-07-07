@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.6/solargis_common_enums.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.7/solargis_common_enums.schema.json",
   "$schema": "https://json-schema.org/draft-07/schema",
 
   "description": "Common enums and other schemas used with requests or datasets.",
@@ -365,6 +365,24 @@
         "DRIFT_DETECTION"
       ]
     },
+    "QualityControlStepEnum": {
+      "description": "Identifier of a QC check step.",
+      "type": "string",
+      "enum": [
+        "BELOW_PHYSICAL_MINIMUM",
+        "ABOVE_PHYSICAL_MAXIMUM",
+        "TIME_REFERENCE_CHECK"
+      ]
+    },
+    "QualityControlPlatform": {
+      "description": "Platform or system that executed a QC step.",
+      "type": "string",
+      "enum": [
+        "SOLARGIS_QC_PIPELINE",
+        "SOLARGIS_ANALYST",
+        "SOLARGIS_EXPERT"
+      ]
+    },
     "ColumnQualityEnum": {
       "description": "Types of the data quality and maintenance quality of the column.",
       "type": "string",
@@ -386,6 +404,18 @@
         "TERTIARY",
         "INSUFFICIENT",
         "UNDEFINED"
+      ]
+    },
+    "SatelliteRegionEnum": {
+      "description": "???",
+      "type": "string",
+      "enum": [
+        "PRIME",
+        "IODC",
+        "IODC-HIMAWARI",
+        "MTSAT-HIMAWARI",
+        "GOES-WEST",
+        "GOES-EAST"
       ]
     }
   }

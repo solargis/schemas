@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.6/solargis_common_types.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.7/solargis_common_types.schema.json",
   "$schema": "https://json-schema.org/draft-07/schema",
   "description": "Common type definitions Solargis uses with requests or responses.",
   "$defs": {
@@ -185,6 +185,14 @@
           "title": "Description of the flag value.",
           "type": "string",
           "maxLength": 500
+        },
+        "color": {
+          "description": "Color associated with flag for visualization purposes",
+          "type": "string"
+        },
+        "priority": {
+          "description": "Priority of flag in relation to other flags",
+          "type": "integer"
         }
       },
       "required": [
@@ -217,6 +225,83 @@
         },
         "heightAboveGroundInMeters": {
           "type": "number"
+        },
+        "ventilationHeating": {
+          "type": "string",
+          "enum": [
+            "NONE",
+            "INTERNAL",
+            "EXTERNAL",
+            "PARTIAL"
+          ]
+        },
+        "shadingRing": {
+          "type": "boolean"
+        },
+        "shadingBall": {
+          "type": "boolean"
+        }
+      }
+    },
+    "InstrumentCoordinates": {
+      "description": "Specific coordinates of instrument",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "latitude",
+        "longitude"
+      ],
+      "properties": {
+        "latitude": {
+          "description": "Geographic coordinate in degrees that specifies the north–south position of a point on the Earth's surface. Positive latitudes are north of the equator (0), and negative ones are south.",
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90
+        },
+        "longitude": {
+          "description": "Geographic coordinate in degrees that specifies the east–west position of a point on the Earth's surface. Positive longitudes are east of the prime meridian (0), and negative ones are west.",
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
+        },
+        "elevation": {
+          "description": "Elevation of the site on Earth above (or below) mean sea level in meters.",
+          "type": "number",
+          "minimum": -500,
+          "maximum": 9000
+        }
+      }
+    },
+    "InstrumentMisalignment": {
+      "description": "A detected period where the instrument was misaligned.",
+      "type": "object",
+      "required": ["from", "to", "misalignment"],
+      "additionalProperties": false,
+      "properties": {
+        "from": {
+          "description": "Start of the misalignment period.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "to": {
+          "description": "End of the misalignment period.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "misalignment": {
+          "description": "Detected misalignment angles in degrees. Both properties are optional; additional properties may be present.",
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "tilt": {
+              "description": "Tilt misalignment in degrees.",
+              "type": "number"
+            },
+            "azimuth": {
+              "description": "Azimuth misalignment in degrees.",
+              "type": "number"
+            }
+          }
         }
       }
     },
@@ -335,6 +420,21 @@
         "disclaimer": {
           "type": "string",
           "maxLength": 1000
+        },
+        "licenseCode": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "attribution": {
+          "type": "string",
+          "maxLength": 5000
+        },
+        "citation": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "dataSharing": {
+          "type": "boolean"
         }
       },
       "additionalProperties": true,
@@ -535,7 +635,86 @@
         },
         "description": {
           "type": "string",
-          "maxLenght": 100
+          "maxLength": 500
+        }
+      }
+    },
+    "QualityControlHistoryEntry": {
+      "description": "A single QC step execution record. Only successfully processed steps are recorded; failed or errored steps are excluded.",
+      "type": "object",
+      "required": ["qcStep", "timestamp", "platform"],
+      "additionalProperties": false,
+      "properties": {
+        "qcStep": {
+          "description": "Identifier of the QC check that was executed.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/QualityControlStepEnum"
+        },
+        "timestamp": {
+          "description": "Timestamp when this QC step was executed.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "qcStepConfig": {
+          "description": "Configuration or parameters used for this QC step execution.",
+          "type": "object",
+          "additionalProperties": true
+        },
+        "platform": {
+          "description": "Platform or system that executed the QC step.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/QualityControlPlatform"
+        },
+        "softwareComponent": {
+          "description": "Software component that performed the QC step. May be absent for manual QC steps (e.g. platform SOLARGIS_EXPERT).",
+          "$ref": "#/$defs/SoftwareComponent"
+        },
+        "warnings": {
+          "description": "Free-text warnings produced during this QC step execution. Absence of this field or an empty array means the step passed cleanly with no warnings.",
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "note": {
+          "description": "Optional free-text note about this QC step execution.",
+          "type": "string"
+        }
+      }
+    },
+    "TimeColumnQualityControl": {
+      "description": "Quality control outputs for the DATETIME column.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "history": {
+          "description": "Ordered log of QC steps applied to the DATETIME column.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/QualityControlHistoryEntry"
+          }
+        }
+      }
+    },
+    "MeasurementColumnQualityControl": {
+      "description": "Quality control outputs for a measurement column.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "instrumentMisalignments": {
+          "description": "Detected periods of instrument misalignment.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InstrumentMisalignment"
+          }
+        }
+      }
+    },
+    "FlagColumnQualityControl": {
+      "description": "Quality control outputs for a flag column.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "history": {
+          "description": "Ordered log of QC steps applied to this flag column.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/QualityControlHistoryEntry" }
         }
       }
     },
@@ -637,6 +816,35 @@
         },
         "horizon": {
           "$ref": "#/$defs/Horizon"
+        },
+        "landscapeRepresentativeness": {
+          "description": "???",
+          "type": "string",
+          "enum": [
+            "REPRESENTATIVE",
+            "PARTIALLY_REPRESENTATIVE",
+            "NON_REPRESENTATIVE",
+            "UNKNOWN"
+          ]
+        },
+        "surroundings": {
+          "description": "???",
+          "type": "string",
+          "enum": [
+            "UNOBSTRUCTED_NO_HEAT_SOURCES",
+            "MINOR_OBSTACLES_OR_HEAT_SOURCES",
+            "SIGNIFICANT_OBSTACLES",
+            "UNKNOWN"
+          ]
+        },
+        "photodocumentation": {
+          "description": "???",
+          "type": "string",
+          "enum": [
+            "FULL",
+            "PARTIAL",
+            "MISSING"
+          ]
         }
       }
     },
@@ -651,6 +859,41 @@
         "recommendationsNotes": {
           "description": "Recommendations in Solargis report.",
           "type": "string"
+        },
+        "satelliteRegion": {
+          "description": "???",
+          "$ref": "solargis_common_enums.schema.json#/$defs/SatelliteRegionEnum"
+        },
+        "comparisonModelType": {
+          "description": "???",
+          "type": "string",
+          "enum": [
+            "RAW_DB",
+            "DELIVERY_RAST",
+            "DELIVERY_DB"
+          ]
+        },
+        "reportPublishing": {
+          "description": "???",
+          "type": "string",
+          "enum": [
+            "NO_PUBLISH",
+            "PUBLISH_QC_ONLY",
+            "PUBLISH_QC_AND_VALIDATION",
+            "PUBLISH_VALIDATION_ONLY",
+            "UNDEFINED"
+          ]
+        },
+        "validationSitePublishing": {
+          "description": "???",
+          "type": "string",
+          "enum": [
+            "NO_PUBLISH",
+            "PUBLISH_LOCATION_ONLY",
+            "PUBLISH_VALIDATION_STATISTICS",
+            "PUBLISH_ALL",
+            "UNDEFINED"
+          ]
         }
       }
     },
