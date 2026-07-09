@@ -388,7 +388,7 @@
       "description": "Interpretation of datetime text values included in the DATETIME column.",
       "$comment": "The schema requires full date-time format as defined by https://datatracker.ietf.org/doc/html/rfc3339#section-5.6. Time zone is required part of the timestamp strings.",
       "type": "object",
-      "additionalProperties": false,
+      "additionalProperties": true,
       "required": [
         "timeFormatPattern"
       ],
@@ -433,10 +433,6 @@
             "Etc/UTC",
             "Etc/GMT-2"
           ]
-        },
-        "qualityControl": {
-          "description": "Quality control outputs for the DATETIME column.",
-          "$ref": "solargis_common_types.schema.json#/$defs/TimeColumnQualityControl"
         }
       }
     },
@@ -504,14 +500,7 @@
         },
         "qualityControl": {
           "description": "Quality control outputs for measurement or flag column",
-          "oneOf": [
-            {
-              "$ref": "solargis_common_types.schema.json#/$defs/MeasurementColumnQualityControl"
-            },
-            {
-              "$ref": "solargis_common_types.schema.json#/$defs/FlagColumnQualityControl"
-            }
-          ]
+          "$ref": "solargis_common_types.schema.json#/$defs/ColumnQualityControl"
         },
         "instrumentCoordinates": {
           "description": "Specific coordinates of instrument",

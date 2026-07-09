@@ -172,7 +172,7 @@
     "Flag": {
       "description": "Flags interpret data values. The flag value is an integer code together with its meaning.",
       "type": "object",
-      "additionalProperties": false,
+      "additionalProperties": true,
       "properties": {
         "value": {
           "type": "integer"
@@ -185,14 +185,6 @@
           "title": "Description of the flag value.",
           "type": "string",
           "maxLength": 500
-        },
-        "color": {
-          "description": "Color associated with flag for visualization purposes",
-          "type": "string"
-        },
-        "priority": {
-          "description": "Priority of flag in relation to other flags",
-          "type": "integer"
         }
       },
       "required": [
@@ -227,19 +219,12 @@
           "type": "number"
         },
         "ventilationHeating": {
-          "type": "string",
-          "enum": [
-            "NONE",
-            "INTERNAL",
-            "EXTERNAL",
-            "PARTIAL"
-          ]
+          "description": "HVAC - heating, ventilation, air conditioning",
+          "$ref": "solargis_common_enums.schema.json#/$defs/VentilationHeatingEnum"
         },
-        "shadingRing": {
-          "type": "boolean"
-        },
-        "shadingBall": {
-          "type": "boolean"
+        "shadingTechnology": {
+          "description": "Shading technology used with the instrument.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/ShadingTechnologyEnum"
         }
       }
     },
@@ -249,7 +234,8 @@
       "additionalProperties": false,
       "required": [
         "latitude",
-        "longitude"
+        "longitude",
+        "elevation"
       ],
       "properties": {
         "latitude": {
@@ -275,8 +261,8 @@
     "InstrumentMisalignment": {
       "description": "A detected period where the instrument was misaligned.",
       "type": "object",
-      "required": ["from", "to", "misalignment"],
-      "additionalProperties": false,
+      "required": ["from", "to", "tilt", "azimuth"],
+      "additionalProperties": true,
       "properties": {
         "from": {
           "description": "Start of the misalignment period.",
@@ -288,20 +274,13 @@
           "type": "string",
           "format": "date-time"
         },
-        "misalignment": {
-          "description": "Detected misalignment angles in degrees. Both properties are optional; additional properties may be present.",
-          "type": "object",
-          "additionalProperties": true,
-          "properties": {
-            "tilt": {
-              "description": "Tilt misalignment in degrees.",
-              "type": "number"
-            },
-            "azimuth": {
-              "description": "Azimuth misalignment in degrees.",
-              "type": "number"
-            }
-          }
+        "tilt": {
+          "description": "Tilt misalignment in degrees.",
+          "type": "number"
+        },
+        "azimuth": {
+          "description": "Azimuth misalignment in degrees.",
+          "type": "number"
         }
       }
     },
@@ -639,15 +618,51 @@
         }
       }
     },
+    "QualityControlConfidence": {
+      "description": "Confidence of quality control based of available dataset/column metadata",
+      "type": "object",
+      "required": ["code", "timestamp", "platform"],
+      "additionalProperties": true,
+      "properties": {
+        "code": {
+          "description": "Confidence code",
+          "type": "string"
+        },
+        "timestamp": {
+          "description": "Timestamp when this QC confidence was created.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "platform": {
+          "description": "Platform or system that executed the confidence evaluation.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/QualityControlPlatformEnum"
+        },
+        "softwareComponent": {
+          "description": "Software component that performed the confidence evaluation, may be absent when done manually by SOLARGIS_EXPERT",
+          "$ref": "#/$defs/SoftwareComponent"
+        },
+        "notes": {
+          "description": "Additional confidence related notes",
+          "type": "string"
+        }
+      }
+    },
     "QualityControlHistoryEntry": {
       "description": "A single QC step execution record. Only successfully processed steps are recorded; failed or errored steps are excluded.",
       "type": "object",
       "required": ["qcStep", "timestamp", "platform"],
-      "additionalProperties": false,
+      "additionalProperties": true,
       "properties": {
         "qcStep": {
           "description": "Identifier of the QC check that was executed.",
-          "$ref": "solargis_common_enums.schema.json#/$defs/QualityControlStepEnum"
+          "anyOf": [
+            {
+              "$ref": "solargis_common_enums.schema.json#/$defs/QualityControlStepEnum"
+            },
+            {
+              "type": "string"
+            }
+          ]
         },
         "timestamp": {
           "description": "Timestamp when this QC step was executed.",
@@ -661,7 +676,7 @@
         },
         "platform": {
           "description": "Platform or system that executed the QC step.",
-          "$ref": "solargis_common_enums.schema.json#/$defs/QualityControlPlatform"
+          "$ref": "solargis_common_enums.schema.json#/$defs/QualityControlPlatformEnum"
         },
         "softwareComponent": {
           "description": "Software component that performed the QC step. May be absent for manual QC steps (e.g. platform SOLARGIS_EXPERT).",
@@ -678,24 +693,10 @@
         }
       }
     },
-    "TimeColumnQualityControl": {
-      "description": "Quality control outputs for the DATETIME column.",
+    "ColumnQualityControl": {
+      "description": "Quality control outputs for a column.",
       "type": "object",
       "additionalProperties": true,
-      "properties": {
-        "history": {
-          "description": "Ordered log of QC steps applied to the DATETIME column.",
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/QualityControlHistoryEntry"
-          }
-        }
-      }
-    },
-    "MeasurementColumnQualityControl": {
-      "description": "Quality control outputs for a measurement column.",
-      "type": "object",
-      "additionalProperties": false,
       "properties": {
         "instrumentMisalignments": {
           "description": "Detected periods of instrument misalignment.",
@@ -703,18 +704,15 @@
           "items": {
             "$ref": "#/$defs/InstrumentMisalignment"
           }
-        }
-      }
-    },
-    "FlagColumnQualityControl": {
-      "description": "Quality control outputs for a flag column.",
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
+        },
         "history": {
-          "description": "Ordered log of QC steps applied to this flag column.",
+          "description": "Ordered log of QC steps applied to this column.",
           "type": "array",
           "items": { "$ref": "#/$defs/QualityControlHistoryEntry" }
+        },
+        "confidence": {
+          "description": "Confidence of quality control",
+          "$ref": "#/$defs/QualityControlConfidence"
         }
       }
     },
@@ -818,33 +816,16 @@
           "$ref": "#/$defs/Horizon"
         },
         "landscapeRepresentativeness": {
-          "description": "???",
-          "type": "string",
-          "enum": [
-            "REPRESENTATIVE",
-            "PARTIALLY_REPRESENTATIVE",
-            "NON_REPRESENTATIVE",
-            "UNKNOWN"
-          ]
+          "description": "Degree to which the site's local landscape represents the broader surrounding region for the measured variable - e.g. whether terrain, land cover, and albedo at the sensor are typical of the wider area.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/LandscapeRepresentativenessEnum"
         },
         "surroundings": {
-          "description": "???",
-          "type": "string",
-          "enum": [
-            "UNOBSTRUCTED_NO_HEAT_SOURCES",
-            "MINOR_OBSTACLES_OR_HEAT_SOURCES",
-            "SIGNIFICANT_OBSTACLES",
-            "UNKNOWN"
-          ]
+          "description": "Classification of the immediate surroundings of the instrument in terms of obstructions and nearby heat sources that could affect measurements.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/SurroundingsEnum"
         },
         "photodocumentation": {
-          "description": "???",
-          "type": "string",
-          "enum": [
-            "FULL",
-            "PARTIAL",
-            "MISSING"
-          ]
+          "description": "Availability of photographic documentation of the site and instrument installation.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/PhotodocumentationEnum"
         }
       }
     },
@@ -861,39 +842,20 @@
           "type": "string"
         },
         "satelliteRegion": {
-          "description": "???",
+          "description": "Satellite data source region used as the basis for the model data in this report.",
           "$ref": "solargis_common_enums.schema.json#/$defs/SatelliteRegionEnum"
         },
         "comparisonModelType": {
-          "description": "???",
-          "type": "string",
-          "enum": [
-            "RAW_DB",
-            "DELIVERY_RAST",
-            "DELIVERY_DB"
-          ]
+          "description": "Source of the Solargis model data used for comparison against measurements in the report.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/ComparisonModelTypeEnum"
         },
         "reportPublishing": {
-          "description": "???",
-          "type": "string",
-          "enum": [
-            "NO_PUBLISH",
-            "PUBLISH_QC_ONLY",
-            "PUBLISH_QC_AND_VALIDATION",
-            "PUBLISH_VALIDATION_ONLY",
-            "UNDEFINED"
-          ]
+          "description": "Controls which parts of the report may be published — quality control results, validation results, both, or neither.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/ReportPublishingEnum"
         },
         "validationSitePublishing": {
-          "description": "???",
-          "type": "string",
-          "enum": [
-            "NO_PUBLISH",
-            "PUBLISH_LOCATION_ONLY",
-            "PUBLISH_VALIDATION_STATISTICS",
-            "PUBLISH_ALL",
-            "UNDEFINED"
-          ]
+          "description": "Controls how much validation-site information may be published — nothing, location only, validation statistics, or all details.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/ValidationSitePublishingEnum"
         }
       }
     },

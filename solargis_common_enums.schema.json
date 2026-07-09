@@ -19,7 +19,9 @@
       "type": "string",
       "enum": [
         "GROUND_MEASUREMENTS_DATA",
-        "MODEL_DATA"
+        "MODEL_DATA",
+        "CALCULATED_DATA",
+        "UNDEFINED"
       ]
     },
     "TimeAlignmentEnum": {
@@ -369,12 +371,27 @@
       "description": "Identifier of a QC check step.",
       "type": "string",
       "enum": [
-        "BELOW_PHYSICAL_MINIMUM",
         "ABOVE_PHYSICAL_MAXIMUM",
-        "TIME_REFERENCE_CHECK"
+        "BELOW_PHYSICAL_MINIMUM",
+        "CONSECUTIVE_STATIC_VALUES",
+        "CONSISTENCY",
+        "COPY_DETECTION",
+        "INVALID_VALUES",
+        "LIN_INTERPOLATION_TEST",
+        "MAINTENANCE_EVENT_DETECTION",
+        "MULTI_INSTRUMENT_DETECTION",
+        "NOISE",
+        "POSTFILTERING",
+        "SHADING_DETECTION",
+        "SUN_BELOW_HORIZON",
+        "TIME_REFERENCE_CHECK",
+        "TWO_COMPONENT_TESTS",
+        "STOW_POSITION",
+        "TRACKER_MALFUNCTION",
+        "TRACKER_MALFUNCTION_DNI_DIF"
       ]
     },
-    "QualityControlPlatform": {
+    "QualityControlPlatformEnum": {
       "description": "Platform or system that executed a QC step.",
       "type": "string",
       "enum": [
@@ -407,7 +424,7 @@
       ]
     },
     "SatelliteRegionEnum": {
-      "description": "???",
+      "description": "Satellite source for model data",
       "type": "string",
       "enum": [
         "PRIME",
@@ -416,6 +433,85 @@
         "MTSAT-HIMAWARI",
         "GOES-WEST",
         "GOES-EAST"
+      ]
+    },
+    "VentilationHeatingEnum": {
+      "description": "HVAC - heating, ventilation, air conditioning of the instrument.",
+      "type": "string",
+      "enum": [
+        "NONE",
+        "INTERNAL",
+        "EXTERNAL",
+        "PARTIAL"
+      ]
+    },
+    "ShadingTechnologyEnum": {
+      "description": "Shading technology used with the instrument.",
+      "type": "string",
+      "enum": [
+        "SHADING_RING",
+        "SHADING_BALL",
+        "SHADOW_BAND"
+      ]
+    },
+    "LandscapeRepresentativenessEnum": {
+      "description": "Degree to which the site's local landscape represents the broader surrounding region for the measured variable.",
+      "type": "string",
+      "enum": [
+        "REPRESENTATIVE",
+        "PARTIALLY_REPRESENTATIVE",
+        "NON_REPRESENTATIVE",
+        "UNDEFINED"
+      ]
+    },
+    "SurroundingsEnum": {
+      "description": "Classification of the immediate surroundings of the instrument in terms of obstructions and nearby heat sources that could affect measurements.",
+      "type": "string",
+      "enum": [
+        "UNOBSTRUCTED_NO_HEAT_SOURCES",
+        "MINOR_OBSTACLES_OR_HEAT_SOURCES",
+        "SIGNIFICANT_OBSTACLES",
+        "UNDEFINED"
+      ]
+    },
+    "PhotodocumentationEnum": {
+      "description": "Availability of photographic documentation of the site and instrument installation.",
+      "type": "string",
+      "enum": [
+        "FULL",
+        "PARTIAL",
+        "MISSING"
+      ]
+    },
+    "ComparisonModelTypeEnum": {
+      "description": "Source of the Solargis model data used for comparison against measurements in the report.",
+      "type": "string",
+      "enum": [
+        "RAW_DB",
+        "DELIVERY_RAST",
+        "DELIVERY_DB"
+      ]
+    },
+    "ReportPublishingEnum": {
+      "description": "Controls which parts of the report may be published - quality control results, validation results, both, or neither.",
+      "type": "string",
+      "enum": [
+        "NO_PUBLISH",
+        "PUBLISH_QC_ONLY",
+        "PUBLISH_QC_AND_VALIDATION",
+        "PUBLISH_VALIDATION_ONLY",
+        "UNDEFINED"
+      ]
+    },
+    "ValidationSitePublishingEnum": {
+      "description": "Controls how much validation-site information may be published - nothing, location only, validation statistics, or all details.",
+      "type": "string",
+      "enum": [
+        "NO_PUBLISH",
+        "PUBLISH_LOCATION_ONLY",
+        "PUBLISH_VALIDATION_STATISTICS",
+        "PUBLISH_ALL",
+        "UNDEFINED"
       ]
     }
   }
