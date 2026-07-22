@@ -492,25 +492,15 @@
         "DELIVERY_DB"
       ]
     },
-    "ReportPublishingEnum": {
-      "description": "Controls which parts of the report may be published - quality control results, validation results, both, or neither.",
-      "type": "string",
-      "enum": [
-        "NO_PUBLISH",
-        "PUBLISH_QC_ONLY",
-        "PUBLISH_QC_AND_VALIDATION",
-        "PUBLISH_VALIDATION_ONLY",
-        "UNDEFINED"
-      ]
-    },
-    "ValidationSitePublishingEnum": {
-      "description": "Controls how much validation-site information may be published - nothing, location only, validation statistics, or all details.",
+    "PublishingEnum": {
+      "description": "Enum for rules what information may be published - nothing, location only, validation statistics, etc.",
       "type": "string",
       "enum": [
         "NO_PUBLISH",
         "PUBLISH_LOCATION_ONLY",
-        "PUBLISH_VALIDATION_STATISTICS",
-        "PUBLISH_ALL",
+        "PUBLISH_QC_ONLY",
+        "PUBLISH_QC_AND_VALIDATION",
+        "PUBLISH_VALIDATION_ONLY",
         "UNDEFINED"
       ]
     }

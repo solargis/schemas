@@ -851,11 +851,11 @@
         },
         "reportPublishing": {
           "description": "Controls which parts of the report may be published — quality control results, validation results, both, or neither.",
-          "$ref": "solargis_common_enums.schema.json#/$defs/ReportPublishingEnum"
+          "$ref": "solargis_common_enums.schema.json#/$defs/PublishingEnum"
         },
         "validationSitePublishing": {
           "description": "Controls how much validation-site information may be published — nothing, location only, validation statistics, or all details.",
-          "$ref": "solargis_common_enums.schema.json#/$defs/ValidationSitePublishingEnum"
+          "$ref": "solargis_common_enums.schema.json#/$defs/PublishingEnum"
         }
       }
     },
