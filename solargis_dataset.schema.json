@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.6/solargis_dataset.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.7/solargis_dataset.schema.json",
   "$schema": "https://json-schema.org/draft-07/schema",
 
   "description": "This is the schema for the Solargis dataset - a structure for data and metadata you can exchange with Solargis. You can use this schema for two dimensional tabular data (one column is reserved for datetime strings, others are numeric columns) for a single site location or a single portfolio.",
@@ -375,6 +375,11 @@
         "report": {
           "description": "Information about Solargis report.",
           "$ref": "solargis_common_types.schema.json#/$defs/Report"
+        },
+        "projectCode": {
+          "description": "Solargis internal project identifier",
+          "type": "string",
+          "maxLength": 100
         }
       },
       "additionalProperties": true
@@ -383,7 +388,7 @@
       "description": "Interpretation of datetime text values included in the DATETIME column.",
       "$comment": "The schema requires full date-time format as defined by https://datatracker.ietf.org/doc/html/rfc3339#section-5.6. Time zone is required part of the timestamp strings.",
       "type": "object",
-      "additionalProperties": false,
+      "additionalProperties": true,
       "required": [
         "timeFormatPattern"
       ],
@@ -492,6 +497,14 @@
         "columnNotes": {
           "description": "Additional information about column.",
           "$ref": "solargis_common_types.schema.json#/$defs/ColumnNotes"
+        },
+        "qualityControl": {
+          "description": "Quality control outputs for measurement or flag column",
+          "$ref": "solargis_common_types.schema.json#/$defs/ColumnQualityControl"
+        },
+        "instrumentCoordinates": {
+          "description": "Specific coordinates of instrument",
+          "$ref": "solargis_common_types.schema.json#/$defs/InstrumentCoordinates"
         }
       },
       "required": [

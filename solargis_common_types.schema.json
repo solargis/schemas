@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.6/solargis_common_types.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.7/solargis_common_types.schema.json",
   "$schema": "https://json-schema.org/draft-07/schema",
   "description": "Common type definitions Solargis uses with requests or responses.",
   "$defs": {
@@ -172,7 +172,7 @@
     "Flag": {
       "description": "Flags interpret data values. The flag value is an integer code together with its meaning.",
       "type": "object",
-      "additionalProperties": false,
+      "additionalProperties": true,
       "properties": {
         "value": {
           "type": "integer"
@@ -216,6 +216,70 @@
           "maxLength": 100
         },
         "heightAboveGroundInMeters": {
+          "type": "number"
+        },
+        "ventilationHeating": {
+          "description": "HVAC - heating, ventilation, air conditioning",
+          "$ref": "solargis_common_enums.schema.json#/$defs/VentilationHeatingEnum"
+        },
+        "shadingTechnology": {
+          "description": "Shading technology used with the instrument.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/ShadingTechnologyEnum"
+        }
+      }
+    },
+    "InstrumentCoordinates": {
+      "description": "Specific coordinates of instrument",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "latitude",
+        "longitude",
+        "elevation"
+      ],
+      "properties": {
+        "latitude": {
+          "description": "Geographic coordinate in degrees that specifies the north–south position of a point on the Earth's surface. Positive latitudes are north of the equator (0), and negative ones are south.",
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90
+        },
+        "longitude": {
+          "description": "Geographic coordinate in degrees that specifies the east–west position of a point on the Earth's surface. Positive longitudes are east of the prime meridian (0), and negative ones are west.",
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
+        },
+        "elevation": {
+          "description": "Elevation of the site on Earth above (or below) mean sea level in meters.",
+          "type": "number",
+          "minimum": -500,
+          "maximum": 9000
+        }
+      }
+    },
+    "InstrumentMisalignment": {
+      "description": "A detected period where the instrument was misaligned.",
+      "type": "object",
+      "required": ["from", "to", "tilt", "azimuth"],
+      "additionalProperties": true,
+      "properties": {
+        "from": {
+          "description": "Start of the misalignment period.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "to": {
+          "description": "End of the misalignment period.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "tilt": {
+          "description": "Tilt misalignment in degrees.",
+          "type": "number"
+        },
+        "azimuth": {
+          "description": "Azimuth misalignment in degrees.",
           "type": "number"
         }
       }
@@ -335,6 +399,21 @@
         "disclaimer": {
           "type": "string",
           "maxLength": 1000
+        },
+        "licenseCode": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "attribution": {
+          "type": "string",
+          "maxLength": 5000
+        },
+        "citation": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "dataSharing": {
+          "type": "boolean"
         }
       },
       "additionalProperties": true,
@@ -535,7 +614,105 @@
         },
         "description": {
           "type": "string",
-          "maxLenght": 100
+          "maxLength": 500
+        }
+      }
+    },
+    "QualityControlConfidence": {
+      "description": "Confidence of quality control based of available dataset/column metadata",
+      "type": "object",
+      "required": ["code", "timestamp", "platform"],
+      "additionalProperties": true,
+      "properties": {
+        "code": {
+          "description": "Confidence code",
+          "type": "string"
+        },
+        "timestamp": {
+          "description": "Timestamp when this QC confidence was created.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "platform": {
+          "description": "Platform or system that executed the confidence evaluation.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/QualityControlPlatformEnum"
+        },
+        "softwareComponent": {
+          "description": "Software component that performed the confidence evaluation, may be absent when done manually by SOLARGIS_EXPERT",
+          "$ref": "#/$defs/SoftwareComponent"
+        },
+        "notes": {
+          "description": "Additional confidence related notes",
+          "type": "string"
+        }
+      }
+    },
+    "QualityControlHistoryEntry": {
+      "description": "A single QC step execution record. Only successfully processed steps are recorded; failed or errored steps are excluded.",
+      "type": "object",
+      "required": ["qcStep", "timestamp", "platform"],
+      "additionalProperties": true,
+      "properties": {
+        "qcStep": {
+          "description": "Identifier of the QC check that was executed.",
+          "anyOf": [
+            {
+              "$ref": "solargis_common_enums.schema.json#/$defs/QualityControlStepEnum"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "timestamp": {
+          "description": "Timestamp when this QC step was executed.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "qcStepConfig": {
+          "description": "Configuration or parameters used for this QC step execution.",
+          "type": "object",
+          "additionalProperties": true
+        },
+        "platform": {
+          "description": "Platform or system that executed the QC step.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/QualityControlPlatformEnum"
+        },
+        "softwareComponent": {
+          "description": "Software component that performed the QC step. May be absent for manual QC steps (e.g. platform SOLARGIS_EXPERT).",
+          "$ref": "#/$defs/SoftwareComponent"
+        },
+        "warnings": {
+          "description": "Free-text warnings produced during this QC step execution. Absence of this field or an empty array means the step passed cleanly with no warnings.",
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "note": {
+          "description": "Optional free-text note about this QC step execution.",
+          "type": "string"
+        }
+      }
+    },
+    "ColumnQualityControl": {
+      "description": "Quality control outputs for a column.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "instrumentMisalignments": {
+          "description": "Detected periods of instrument misalignment.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InstrumentMisalignment"
+          }
+        },
+        "history": {
+          "description": "Ordered log of QC steps applied to this column.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/QualityControlHistoryEntry" }
+        },
+        "confidence": {
+          "description": "Confidence of quality control",
+          "$ref": "#/$defs/QualityControlConfidence"
         }
       }
     },
@@ -637,6 +814,18 @@
         },
         "horizon": {
           "$ref": "#/$defs/Horizon"
+        },
+        "landscapeRepresentativeness": {
+          "description": "Degree to which the site's local landscape represents the broader surrounding region for the measured variable - e.g. whether terrain, land cover, and albedo at the sensor are typical of the wider area.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/LandscapeRepresentativenessEnum"
+        },
+        "surroundings": {
+          "description": "Classification of the immediate surroundings of the instrument in terms of obstructions and nearby heat sources that could affect measurements.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/SurroundingsEnum"
+        },
+        "photodocumentation": {
+          "description": "Availability of photographic documentation of the site and instrument installation.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/PhotodocumentationEnum"
         }
       }
     },
@@ -651,6 +840,22 @@
         "recommendationsNotes": {
           "description": "Recommendations in Solargis report.",
           "type": "string"
+        },
+        "satelliteRegion": {
+          "description": "Satellite data source region used as the basis for the model data in this report.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/SatelliteRegionEnum"
+        },
+        "comparisonModelType": {
+          "description": "Source of the Solargis model data used for comparison against measurements in the report.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/ComparisonModelTypeEnum"
+        },
+        "reportPublishing": {
+          "description": "Controls which parts of the report may be published — quality control results, validation results, both, or neither.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/PublishingEnum"
+        },
+        "validationSitePublishing": {
+          "description": "Controls how much validation-site information may be published — nothing, location only, validation statistics, or all details.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/PublishingEnum"
         }
       }
     },
