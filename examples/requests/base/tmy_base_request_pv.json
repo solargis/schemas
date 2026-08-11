@@ -1,0 +1,42 @@
+{
+  "requestType": "TMY",
+  "requestId": "HGSGL8234jasv6",
+  "site": {
+    "latitude": 45.09,
+    "longitude": 17.34
+  },
+  "timeStep": "PT15M",
+  "columns": [
+    "GHI",
+    "GTI",
+    "TMOD",
+    "PVOUT"
+  ],
+  "tmyScenario": "P50",
+  "fromDate": "1994-01-10",
+  "toDate": "LAST_YEAR",
+  "outputFormat": "SOLARGIS_PARQUET",
+  "pvConfiguration": {
+    "simulationEngine": "S1",
+    "system": {
+      "components": {
+        "modules": {
+          "type": "CSI"
+        }
+      },
+      "layout": {
+        "segments": [
+          {
+            "installationType": "GROUND_BASED",
+            "installedPowerKWp": 1000,
+            "mounting": {
+              "type": "FIXED_ONE_ANGLE",
+              "tilt": 25,
+              "azimuth": 180
+            }
+          }
+        ]
+      }
+    }
+  }
+}

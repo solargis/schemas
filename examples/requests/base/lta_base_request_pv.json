@@ -1,0 +1,40 @@
+{
+  "requestType": "LONG_TERM_AVERAGE",
+  "requestId": "HGSGL8234jasv6",
+  "site": {
+    "latitude": 45.09,
+    "longitude": 17.34
+  },
+  "timeStep": "P1M",
+  "columns": [
+    "GHI",
+    "GTI",
+    "TMOD",
+    "PVOUT"
+  ],
+  "fromDate": "AUTODETECT",
+  "toDate": "LAST_YEAR",
+  "pvConfiguration": {
+    "simulationEngine": "S1",
+    "system": {
+      "components": {
+        "modules": {
+          "type": "CSI"
+        }
+      },
+      "layout": {
+        "segments": [
+          {
+            "installationType": "GROUND_BASED",
+            "installedPowerKWp": 1000,
+            "mounting": {
+              "type": "FIXED_ONE_ANGLE",
+              "tilt": 25,
+              "azimuth": 180
+            }
+          }
+        ]
+      }
+    }
+  }
+}

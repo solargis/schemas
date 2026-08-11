@@ -1,0 +1,42 @@
+{
+  "site": {
+    "latitude": 43.023903,
+    "longitude": 142.419596,
+    "elevation": 156.9,
+    "name": "Pippu 比布町, Kamikawa District"
+  },
+  "timeStep": "PT15M",
+  "columns": [
+    "GHI",
+    "GTI",
+    "TMOD",
+    "PVOUT"
+  ],
+  "fromDate": "2022-10-01",
+  "toDate": "2022-10-02",
+  "utcOffset": "+09:00",
+  "outputFormat": "SOLARGIS_JSON",
+  "pvConfiguration": {
+    "simulationEngine": "S1",
+    "system": {
+      "components": {
+        "modules": {
+          "type": "CSI"
+        }
+      },
+      "layout": {
+        "segments": [
+          {
+            "installationType": "BUILDING_INTEGRATED",
+            "installedPowerKWp": 1,
+            "mounting": {
+              "type": "FIXED_ONE_ANGLE",
+              "tilt": 39,
+              "azimuth": 180
+            }
+          }
+        ]
+      }
+    }
+  }
+}

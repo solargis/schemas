@@ -55,6 +55,10 @@
     "gtiConfiguration": {
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/gtiConfiguration"
     },
+    "pvConfiguration": {
+      "description": "Object is required if at least one PV output related column is present in the array of requested columns (PVOUT*, TMOD).",
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/pvConfiguration"
+    },
     "fileLabel": {
       "$ref": "solargis_common_types.schema.json#/$defs/FileLabel"
     },
@@ -76,6 +80,19 @@
       "description": "Process can return multiple dataset files, one file per one year. Instead of providing single dataset.",
       "type": "boolean",
       "default": false
+    }
+  },
+  "$comment": "The mounting of the PV system is a part of pvConfiguration, so a separate gtiConfiguration would be ambiguous. Same rule as in solargis_data_request.schema.json.",
+  "if": {
+    "required": [
+      "pvConfiguration"
+    ]
+  },
+  "then": {
+    "not": {
+      "required": [
+        "gtiConfiguration"
+      ]
     }
   }
 }
