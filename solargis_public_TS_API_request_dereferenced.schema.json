@@ -710,82 +710,2353 @@
       "default": false
     },
     "pvConfiguration": {
-      "description": "Object is required if at least one PV output related column is present in the array of requested columns (PVOUT, TMOD).",
-      "$comment": "Each PV simulation engine will have its own separate schema as they are not fully compatible.",
-      "oneOf": [
-        {
-          "description": "PV configuration object accepted by the first version PV simulation engine.",
+      "type": "object",
+      "description": "PV configuration definition with PV system and simulation options.",
+      "properties": {
+        "system": {
           "type": "object",
-          "additionalProperties": false,
-          "required": [
-            "simulationEngine",
-            "installationType",
-            "installedPower",
-            "module",
-            "gtiConfiguration"
-          ],
           "properties": {
-            "simulationEngine": {
-              "description": "PV simulation engine.",
-              "type": "string",
-              "enum": [
-                "v1"
-              ]
-            },
-            "installationType": {
-              "description": "Thermal losses are increased for building and roof PV systems.",
-              "type": "string",
-              "enum": [
-                "FREE_STANDING",
-                "ROOF_MOUNTED",
-                "BUILDING_INTEGRATED"
-              ]
-            },
-            "startupDate": {
-              "description": "Startup date of a PV system (unpacking of PV modules). This parameter is used for calculation of PV module degradation by aging.",
-              "type": "string",
-              "format": "date"
-            },
-            "installedPower": {
-              "description": "Total PV system rating (nameplate capacity) is the summation of all panel ratings measured in STC, in kilowatt-peaks (kWp)",
-              "type": "number",
-              "minimum": 0
-            },
-            "module": {
-              "description": "PV module",
+            "components": {
               "type": "object",
-              "additionalProperties": true,
-              "required": [
-                "technology"
-              ],
               "properties": {
-                "technology": {
-                  "description": "Codes for materials used in PV modules. Use 'CSI' for crystalline silicon, 'ASI' for amorphous silicon, 'CDTE' for cadmium telluride, 'CIS' for copper indium selenide.",
-                  "type": "string",
-                  "enum": [
-                    "CSI",
-                    "ASI",
-                    "CDTE",
-                    "CIS"
-                  ]
+                "modules": {
+                  "oneOf": [
+                    {
+                      "allOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "MONO_CSI",
+                                "POLY_CSI",
+                                "CDTE",
+                                "CSI",
+                                "CIS",
+                                "ASI"
+                              ],
+                              "description": "Solar panel technology. MONO_CSI, POLY_CSI, CDTE are the standard values. CSI (generic crystalline silicon), CIS, ASI are additional values accepted for simplified requests. CSI is resolved to MONO_CSI when expanding to full module spec.",
+                              "$comment": "CSI supported by all simulationEngines. MONO_CSI, POLY_CSI: S1 only. CDTE, CIS, ASI: GERAS, CHRONOS only."
+                            },
+                            "length": {
+                              "type": "number"
+                            },
+                            "width": {
+                              "type": "number"
+                            },
+                            "thickness": {
+                              "type": "number",
+                              "minimum": 0.004,
+                              "description": "[m] Panel thickness."
+                            },
+                            "cellSizeU": {
+                              "type": "number"
+                            },
+                            "cellSizeV": {
+                              "type": "number"
+                            },
+                            "nCells": {
+                              "oneOf": [
+                                {
+                                  "type": "integer",
+                                  "minimum": 1
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "u": {
+                                      "type": "integer",
+                                      "minimum": 1,
+                                      "description": "Number of cells in panel horizontally in LANDSCAPE orientation, vertically in PORTRAIT."
+                                    },
+                                    "v": {
+                                      "type": "integer",
+                                      "minimum": 1,
+                                      "description": "Number of cells in panel vertically in LANDSCAPE orientation, horizontally in PORTRAIT."
+                                    }
+                                  },
+                                  "required": [
+                                    "u",
+                                    "v"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              ],
+                              "description": "Number of cells on one solar panel, given as total count N, or as UxV counts. If using N, then there must be only one UxV layout for given N which fits into panel dimensions (length x width minus margins & padding). Total cell count must be divisible by number of submodules (nBypassDiodes)."
+                            },
+                            "cutCellOptions": {
+                              "type": "object",
+                              "properties": {
+                                "type": {
+                                  "type": "string",
+                                  "enum": [
+                                    "HALF_CELL"
+                                  ]
+                                },
+                                "middleFrameBorderSizeU": {
+                                  "type": "number"
+                                },
+                                "middleFramePaddingU": {
+                                  "type": "number"
+                                }
+                              },
+                              "description": "If this set of options is provided, then module uses half-cut cells. Otherwise it uses full cells."
+                            },
+                            "frameBorderSizeU": {
+                              "type": "number"
+                            },
+                            "frameBorderSizeV": {
+                              "type": "number"
+                            },
+                            "framePaddingU": {
+                              "type": "number"
+                            },
+                            "framePaddingV": {
+                              "type": "number"
+                            },
+                            "nBypassDiodes": {
+                              "type": "integer",
+                              "description": "Number of submodules. Each submodule is bridged by a bypass diode. Ignored for non-CSI panels (which have 1 submodule)."
+                            }
+                          },
+                          "required": [
+                            "type"
+                          ],
+                          "description": "Module geometry. Only type is required; dimension fields are optional."
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "bifaciality": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            },
+                            "nameplatePower": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            },
+                            "nominalOperatingCellTemperature": {
+                              "type": "number",
+                              "minimum": -100
+                            },
+                            "diode": {
+                              "type": "object",
+                              "properties": {
+                                "alpha_sc": {
+                                  "type": "number"
+                                },
+                                "a_ref": {
+                                  "type": "number"
+                                },
+                                "I_L_ref": {
+                                  "type": "number"
+                                },
+                                "I_o_ref": {
+                                  "type": "number"
+                                },
+                                "R_sh_ref": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "R_s": {
+                                  "type": "number",
+                                  "minimum": 0
+                                },
+                                "V_oc_ref": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "alpha_sc",
+                                "a_ref",
+                                "I_L_ref",
+                                "I_o_ref",
+                                "R_sh_ref",
+                                "R_s",
+                                "V_oc_ref"
+                              ]
+                            },
+                            "unitMass": {
+                              "type": "number",
+                              "minimum": 0
+                            },
+                            "temperatureCoefficientPmax": {
+                              "type": "number",
+                              "maximum": 0
+                            }
+                          },
+                          "description": "Module electrical properties. All fields are optional; nominalOperatingCellTemperature is recommended when available."
+                        }
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Name identifying this entry, referenced by dcElectricalLayout.moduleName. Required when the entry is part of a list; optional for a single object."
+                        }
+                      }
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "allOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "type": {
+                                    "type": "string",
+                                    "enum": [
+                                      "MONO_CSI",
+                                      "POLY_CSI",
+                                      "CDTE",
+                                      "CSI",
+                                      "CIS",
+                                      "ASI"
+                                    ],
+                                    "description": "Solar panel technology. MONO_CSI, POLY_CSI, CDTE are the standard values. CSI (generic crystalline silicon), CIS, ASI are additional values accepted for simplified requests. CSI is resolved to MONO_CSI when expanding to full module spec.",
+                                    "$comment": "CSI supported by all simulationEngines. MONO_CSI, POLY_CSI: S1 only. CDTE, CIS, ASI: GERAS, CHRONOS only."
+                                  },
+                                  "length": {
+                                    "type": "number"
+                                  },
+                                  "width": {
+                                    "type": "number"
+                                  },
+                                  "thickness": {
+                                    "type": "number",
+                                    "minimum": 0.004,
+                                    "description": "[m] Panel thickness."
+                                  },
+                                  "cellSizeU": {
+                                    "type": "number"
+                                  },
+                                  "cellSizeV": {
+                                    "type": "number"
+                                  },
+                                  "nCells": {
+                                    "oneOf": [
+                                      {
+                                        "type": "integer",
+                                        "minimum": 1
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "u": {
+                                            "type": "integer",
+                                            "minimum": 1,
+                                            "description": "Number of cells in panel horizontally in LANDSCAPE orientation, vertically in PORTRAIT."
+                                          },
+                                          "v": {
+                                            "type": "integer",
+                                            "minimum": 1,
+                                            "description": "Number of cells in panel vertically in LANDSCAPE orientation, horizontally in PORTRAIT."
+                                          }
+                                        },
+                                        "required": [
+                                          "u",
+                                          "v"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    ],
+                                    "description": "Number of cells on one solar panel, given as total count N, or as UxV counts. If using N, then there must be only one UxV layout for given N which fits into panel dimensions (length x width minus margins & padding). Total cell count must be divisible by number of submodules (nBypassDiodes)."
+                                  },
+                                  "cutCellOptions": {
+                                    "type": "object",
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "enum": [
+                                          "HALF_CELL"
+                                        ]
+                                      },
+                                      "middleFrameBorderSizeU": {
+                                        "type": "number"
+                                      },
+                                      "middleFramePaddingU": {
+                                        "type": "number"
+                                      }
+                                    },
+                                    "description": "If this set of options is provided, then module uses half-cut cells. Otherwise it uses full cells."
+                                  },
+                                  "frameBorderSizeU": {
+                                    "type": "number"
+                                  },
+                                  "frameBorderSizeV": {
+                                    "type": "number"
+                                  },
+                                  "framePaddingU": {
+                                    "type": "number"
+                                  },
+                                  "framePaddingV": {
+                                    "type": "number"
+                                  },
+                                  "nBypassDiodes": {
+                                    "type": "integer",
+                                    "description": "Number of submodules. Each submodule is bridged by a bypass diode. Ignored for non-CSI panels (which have 1 submodule)."
+                                  }
+                                },
+                                "required": [
+                                  "type"
+                                ],
+                                "description": "Module geometry. Only type is required; dimension fields are optional."
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "bifaciality": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                  },
+                                  "nameplatePower": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0
+                                  },
+                                  "nominalOperatingCellTemperature": {
+                                    "type": "number",
+                                    "minimum": -100
+                                  },
+                                  "diode": {
+                                    "type": "object",
+                                    "properties": {
+                                      "alpha_sc": {
+                                        "type": "number"
+                                      },
+                                      "a_ref": {
+                                        "type": "number"
+                                      },
+                                      "I_L_ref": {
+                                        "type": "number"
+                                      },
+                                      "I_o_ref": {
+                                        "type": "number"
+                                      },
+                                      "R_sh_ref": {
+                                        "type": "number",
+                                        "minimum": 0
+                                      },
+                                      "R_s": {
+                                        "type": "number",
+                                        "minimum": 0
+                                      },
+                                      "V_oc_ref": {
+                                        "type": "number"
+                                      }
+                                    },
+                                    "required": [
+                                      "alpha_sc",
+                                      "a_ref",
+                                      "I_L_ref",
+                                      "I_o_ref",
+                                      "R_sh_ref",
+                                      "R_s",
+                                      "V_oc_ref"
+                                    ]
+                                  },
+                                  "unitMass": {
+                                    "type": "number",
+                                    "minimum": 0
+                                  },
+                                  "temperatureCoefficientPmax": {
+                                    "type": "number",
+                                    "maximum": 0
+                                  }
+                                },
+                                "description": "Module electrical properties. All fields are optional; nominalOperatingCellTemperature is recommended when available."
+                              }
+                            ],
+                            "properties": {
+                              "name": {
+                                "type": "string",
+                                "minLength": 1,
+                                "description": "Name identifying this entry, referenced by dcElectricalLayout.moduleName. Required when the entry is part of a list; optional for a single object."
+                              }
+                            }
+                          },
+                          {
+                            "required": [
+                              "name"
+                            ]
+                          }
+                        ],
+                        "description": "A Module entry in list form: `name` is required."
+                      },
+                      "minItems": 1
+                    }
+                  ],
+                  "description": "Solar panel type(s) used in the power plant: a single Module object, or a list of Module entries each carrying a unique name. Segments select a type via dcElectricalLayout.moduleName; with a single module the reference is optional."
                 },
-                "topologyType": {
-                  "description": "This parameter estimates a loss of PV system output when modules are self-shaded. The effect depends on wiring interconnections within a module. Shading influence ranges from 0% (no influence) to 100% (full influence) and it's mapped to categories: PROPORTIONAL = 20%, UNPROPORTIONAL_1 = 40%, UNPROPORTIONAL_2 = 60%, UNPROPORTIONAL_3 = 80%. When parameter is missing, the self-shading influence is estimated to 5 %.",
-                  "$comment": "Defaults: UNPROPORTIONAL_1 for CSI, PROPORTIONAL for all other module technologies",
-                  "type": "string",
-                  "enum": [
-                    "PROPORTIONAL",
-                    "UNPROPORTIONAL_1",
-                    "UNPROPORTIONAL_2",
-                    "UNPROPORTIONAL_3"
-                  ]
+                "inverters": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "parameters": {
+                          "oneOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "Paco": {
+                                  "type": "number"
+                                },
+                                "Pdco": {
+                                  "type": "number"
+                                },
+                                "Vdco": {
+                                  "type": "number"
+                                },
+                                "Pso": {
+                                  "type": "number"
+                                },
+                                "C0": {
+                                  "type": "number",
+                                  "description": "Curvature of the relationship between AC output power and DC input power."
+                                },
+                                "C1": {
+                                  "type": "number"
+                                },
+                                "C2": {
+                                  "type": "number"
+                                },
+                                "C3": {
+                                  "type": "number"
+                                },
+                                "Pnt": {
+                                  "type": "number"
+                                },
+                                "dcLimitsPerMppt": {
+                                  "type": "object",
+                                  "properties": {
+                                    "Vmppopermin": {
+                                      "type": "number"
+                                    },
+                                    "Vmppopermax": {
+                                      "type": "number"
+                                    },
+                                    "Vmppnommin": {
+                                      "type": "number"
+                                    },
+                                    "Vmppnommax": {
+                                      "type": "number"
+                                    },
+                                    "Vdcmax": {
+                                      "type": "number"
+                                    },
+                                    "Imax": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "Vmppopermin",
+                                    "Vmppopermax",
+                                    "Imax"
+                                  ],
+                                  "description": "Advanced limits the MPPT imposes on connected strings of solar panels. Search for maximum power point on IV curve considers only points which satisfy these limits."
+                                }
+                              },
+                              "required": [
+                                "Paco",
+                                "Pdco",
+                                "Vdco",
+                                "Pso",
+                                "C0",
+                                "C1",
+                                "C2",
+                                "C3",
+                                "Pnt",
+                                "dcLimitsPerMppt"
+                              ],
+                              "$comment": "Supported by: S1 only."
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "efficiency": {
+                                  "type": "number",
+                                  "minimum": 0,
+                                  "maximum": 100
+                                }
+                              },
+                              "required": [
+                                "efficiency"
+                              ],
+                              "$comment": "Supported by all simulationEngines."
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "effCurveDataPairs": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "number"
+                                    },
+                                    "minItems": 2,
+                                    "maxItems": 2
+                                  },
+                                  "minItems": 1,
+                                  "description": "[[power_fraction, efficiency_pct], ...] pairs defining inverter efficiency as function of load."
+                                },
+                                "nominalDCPower": {
+                                  "type": "number",
+                                  "exclusiveMinimum": 0,
+                                  "description": "[W] Nominal DC input power for curve reference."
+                                },
+                                "startPower": {
+                                  "type": "number",
+                                  "minimum": 0,
+                                  "description": "[W] Minimum DC power to start."
+                                }
+                              },
+                              "required": [
+                                "effCurveDataPairs"
+                              ],
+                              "$comment": "Supported by: GERAS, CHRONOS only."
+                            }
+                          ]
+                        },
+                        "name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Name identifying this entry, referenced by dcElectricalLayout.inverterName. Required when the entry is part of a list; optional for a single object."
+                        },
+                        "nMppTrackers": {
+                          "type": "integer",
+                          "description": "Number of MPP trackers that the inverter component has available."
+                        },
+                        "Vac": {
+                          "type": "number"
+                        },
+                        "nOutputAcPhases": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 3,
+                          "description": "Number of output AC phases of the inverter. Must be 1 or 3. All inverters must have the same value."
+                        }
+                      },
+                      "required": [
+                        "parameters"
+                      ],
+                      "description": "Inverter component. Only parameters is required; nMppTrackers defaults to 1, other fields use system defaults."
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "parameters": {
+                                "oneOf": [
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "Paco": {
+                                        "type": "number"
+                                      },
+                                      "Pdco": {
+                                        "type": "number"
+                                      },
+                                      "Vdco": {
+                                        "type": "number"
+                                      },
+                                      "Pso": {
+                                        "type": "number"
+                                      },
+                                      "C0": {
+                                        "type": "number",
+                                        "description": "Curvature of the relationship between AC output power and DC input power."
+                                      },
+                                      "C1": {
+                                        "type": "number"
+                                      },
+                                      "C2": {
+                                        "type": "number"
+                                      },
+                                      "C3": {
+                                        "type": "number"
+                                      },
+                                      "Pnt": {
+                                        "type": "number"
+                                      },
+                                      "dcLimitsPerMppt": {
+                                        "type": "object",
+                                        "properties": {
+                                          "Vmppopermin": {
+                                            "type": "number"
+                                          },
+                                          "Vmppopermax": {
+                                            "type": "number"
+                                          },
+                                          "Vmppnommin": {
+                                            "type": "number"
+                                          },
+                                          "Vmppnommax": {
+                                            "type": "number"
+                                          },
+                                          "Vdcmax": {
+                                            "type": "number"
+                                          },
+                                          "Imax": {
+                                            "type": "number"
+                                          }
+                                        },
+                                        "required": [
+                                          "Vmppopermin",
+                                          "Vmppopermax",
+                                          "Imax"
+                                        ],
+                                        "description": "Advanced limits the MPPT imposes on connected strings of solar panels. Search for maximum power point on IV curve considers only points which satisfy these limits."
+                                      }
+                                    },
+                                    "required": [
+                                      "Paco",
+                                      "Pdco",
+                                      "Vdco",
+                                      "Pso",
+                                      "C0",
+                                      "C1",
+                                      "C2",
+                                      "C3",
+                                      "Pnt",
+                                      "dcLimitsPerMppt"
+                                    ],
+                                    "$comment": "Supported by: S1 only."
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "efficiency": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 100
+                                      }
+                                    },
+                                    "required": [
+                                      "efficiency"
+                                    ],
+                                    "$comment": "Supported by all simulationEngines."
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "effCurveDataPairs": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "array",
+                                          "items": {
+                                            "type": "number"
+                                          },
+                                          "minItems": 2,
+                                          "maxItems": 2
+                                        },
+                                        "minItems": 1,
+                                        "description": "[[power_fraction, efficiency_pct], ...] pairs defining inverter efficiency as function of load."
+                                      },
+                                      "nominalDCPower": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "description": "[W] Nominal DC input power for curve reference."
+                                      },
+                                      "startPower": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "description": "[W] Minimum DC power to start."
+                                      }
+                                    },
+                                    "required": [
+                                      "effCurveDataPairs"
+                                    ],
+                                    "$comment": "Supported by: GERAS, CHRONOS only."
+                                  }
+                                ]
+                              },
+                              "name": {
+                                "type": "string",
+                                "minLength": 1,
+                                "description": "Name identifying this entry, referenced by dcElectricalLayout.inverterName. Required when the entry is part of a list; optional for a single object."
+                              },
+                              "nMppTrackers": {
+                                "type": "integer",
+                                "description": "Number of MPP trackers that the inverter component has available."
+                              },
+                              "Vac": {
+                                "type": "number"
+                              },
+                              "nOutputAcPhases": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 3,
+                                "description": "Number of output AC phases of the inverter. Must be 1 or 3. All inverters must have the same value."
+                              }
+                            },
+                            "required": [
+                              "parameters"
+                            ],
+                            "description": "Inverter component. Only parameters is required; nMppTrackers defaults to 1, other fields use system defaults."
+                          },
+                          {
+                            "required": [
+                              "name"
+                            ]
+                          }
+                        ],
+                        "description": "An Inverter entry in list form: `name` is required."
+                      },
+                      "minItems": 1
+                    }
+                  ],
+                  "description": "Inverter type(s) used in the power plant: a single Inverter object, or a list of Inverter entries each carrying a unique name. Segments select a type via dcElectricalLayout.inverterName; with a single inverter the reference is optional."
+                },
+                "transformers": {
+                  "type": "object",
+                  "properties": {
+                    "inverterTransformers": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "params": {
+                              "oneOf": [
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "apparentRatedPower": {
+                                      "type": "number"
+                                    },
+                                    "noLoadLosses": {
+                                      "type": "number"
+                                    },
+                                    "loadLosses": {
+                                      "type": "number"
+                                    }
+                                  },
+                                  "additionalProperties": false,
+                                  "$comment": "Supported by: S1 only."
+                                },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "losses": {
+                                      "type": "number",
+                                      "minimum": 0,
+                                      "maximum": 100
+                                    }
+                                  },
+                                  "required": [
+                                    "losses"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              ]
+                            },
+                            "outputVoltage": {
+                              "type": "number"
+                            },
+                            "name": {
+                              "type": "string",
+                              "minLength": 1,
+                              "description": "Name identifying this entry, referenced by the segment-level inverterTransformerName. Required when the entry is part of a list; optional for a single object."
+                            }
+                          }
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "allOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "params": {
+                                    "oneOf": [
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "apparentRatedPower": {
+                                            "type": "number"
+                                          },
+                                          "noLoadLosses": {
+                                            "type": "number"
+                                          },
+                                          "loadLosses": {
+                                            "type": "number"
+                                          }
+                                        },
+                                        "additionalProperties": false,
+                                        "$comment": "Supported by: S1 only."
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "losses": {
+                                            "type": "number",
+                                            "minimum": 0,
+                                            "maximum": 100
+                                          }
+                                        },
+                                        "required": [
+                                          "losses"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    ]
+                                  },
+                                  "outputVoltage": {
+                                    "type": "number"
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "description": "Name identifying this entry, referenced by the segment-level inverterTransformerName. Required when the entry is part of a list; optional for a single object."
+                                  }
+                                }
+                              },
+                              {
+                                "required": [
+                                  "name"
+                                ]
+                              }
+                            ],
+                            "description": "A Transformer entry in list form: `name` is required."
+                          },
+                          "minItems": 1
+                        }
+                      ],
+                      "description": "Transformer type(s) connected to the inverter outputs (lower level): a single Transformer object, or a list of Transformer entries each carrying a unique name (same model as modules/inverters). Segments select a type via the segment-level inverterTransformerName; with a single transformer the reference is optional. Physical counts are derived from AC power and apparentRatedPower."
+                    },
+                    "powerTransformer": {
+                      "type": "object",
+                      "properties": {
+                        "params": {
+                          "oneOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "apparentRatedPower": {
+                                  "type": "number"
+                                },
+                                "noLoadLosses": {
+                                  "type": "number"
+                                },
+                                "loadLosses": {
+                                  "type": "number"
+                                }
+                              },
+                              "additionalProperties": false,
+                              "$comment": "Supported by: S1 only."
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "losses": {
+                                  "type": "number",
+                                  "minimum": 0,
+                                  "maximum": 100
+                                }
+                              },
+                              "required": [
+                                "losses"
+                              ],
+                              "additionalProperties": false
+                            }
+                          ]
+                        },
+                        "outputVoltage": {
+                          "type": "number"
+                        },
+                        "name": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Name identifying this entry, referenced by the segment-level inverterTransformerName. Required when the entry is part of a list; optional for a single object."
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "inverterTransformers"
+                  ],
+                  "additionalProperties": false,
+                  "description": "Transformer types used in the power plant, keyed by role."
+                },
+                "gridConnection": {
+                  "type": "object",
+                  "properties": {
+                    "powerLimit": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "cosPhi": {
+                      "type": "number",
+                      "minimum": 0.5,
+                      "maximum": 1,
+                      "description": "Phase shift. Typically 0.95 or 1.0, reasonable range is about 0.8-1.0."
+                    },
+                    "nAcPhases": {
+                      "type": "number",
+                      "minimum": 1,
+                      "maximum": 3,
+                      "description": "Number of AC phases to external grid. Must be 1 or 3. Valid combinations of inverters.nOutputAcPhases-gridConnection.nAcPhases are: 1-1, 1-3, 3-3."
+                    }
+                  }
+                }
+              }
+            },
+            "layout": {
+              "type": "object",
+              "properties": {
+                "segments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "installationType": {
+                        "type": "string",
+                        "enum": [
+                          "GROUND_BASED",
+                          "ROOF_MOUNTED_FLAT",
+                          "ROOF_MOUNTED_TILTED",
+                          "BUILDING_INTEGRATED"
+                        ],
+                        "description": "Installation type. Sets the NOCT temperature correction and, for roof types, how the mounting tilt is read. GROUND_BASED = 0°C (open rack). ROOF_MOUNTED_FLAT = +3°C: flat roof, panels raised on racks to the mounting tilt (ventilating air gap). ROOF_MOUNTED_TILTED = +5°C: panels flush on a pitched roof, so the mounting tilt is both the panel tilt and the roof pitch (restricted rear airflow). BUILDING_INTEGRATED = +10°C (no rear ventilation). Roof types take their orientation from the mounting tilt/azimuth and must not set terrain or orientationConvention. The two flush types (ROOF_MOUNTED_TILTED, BUILDING_INTEGRATED) must not set mounting.installationHeight either: the panels sit on the surface, so the simulation uses a clearance of 0."
+                      },
+                      "installedPowerKWp": {
+                        "type": "number",
+                        "exclusiveMinimum": 0
+                      },
+                      "mounting": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "FIXED_ONE_ANGLE"
+                                ]
+                              },
+                              "tilt": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 90
+                              },
+                              "azimuth": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 360
+                              },
+                              "orientationConvention": {
+                                "type": "string",
+                                "enum": [
+                                  "SPECIFIC",
+                                  "NOMINAL",
+                                  "EFFECTIVE"
+                                ],
+                                "description": "Reference frame in which a `FIXED_ONE_ANGLE` mounting's `azimuth` and `tilt` are expressed as one pair. When omitted, `SPECIFIC` is used. The conventions differ only on sloped terrain (`terrain.slope` > 0); on flat terrain all three coincide.\n\n- `SPECIFIC` (default, engine-native): angles relative to the terrain. `tilt` is the angle between the panel and the ground surface beneath it, so the racks follow the hill; `azimuth` is the compass direction the table rows are laid out to face.\n- `NOMINAL`: angles as designed. `tilt` is the rack's build angle measured from the horizontal plane - a '20° rack' stays 20° regardless of ground slope; `azimuth` is the same row layout direction as in `SPECIFIC`.\n- `EFFECTIVE`: angles as measured on the installed panels. `tilt` is the inclination of the panel plane from the horizontal and `azimuth` is the compass direction the panel plane actually faces, both including the terrain contribution.\n\nSee https://kb.solargis.com/docs/array-configuration#array-mounting-setup for illustrated definitions of the three conventions and their azimuth and tilt interpretations."
+                              },
+                              "installationHeight": {
+                                "type": "number",
+                                "description": "[m] Height above surface where the panels are installed. Must not be set for ROOF_MOUNTED_TILTED and BUILDING_INTEGRATED segments: those panels lie flush on the roof or building surface, so the simulation uses a clearance of 0."
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "tilt"
+                            ],
+                            "additionalProperties": false,
+                            "description": "Rack contains one table which is fixed at specified tilt angle. When mounting.azimuth=180 long side (U axis) is oriented east-west, panels tilt south and rows of racks span north-south. If mounting.azimuth is set to other value, the entire segment and racks rotate, including tilt direction. Behavior in northern and southern hemisphere is the same. Because panels should tilt south in northern hemisphere and north in southern hemisphere, value of mounting.azimuth should be set to 180 or 0 depending on the hemisphere, respectively.",
+                            "$comment": "Supported by all simulationEngines."
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "FIXED_EAST_WEST"
+                                ]
+                              },
+                              "tilt": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 90
+                              },
+                              "azimuth": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 360
+                              },
+                              "installationHeight": {
+                                "type": "number",
+                                "description": "[m] Height above surface where the panels are installed. Must not be set for ROOF_MOUNTED_TILTED and BUILDING_INTEGRATED segments: those panels lie flush on the roof or building surface, so the simulation uses a clearance of 0."
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "tilt"
+                            ],
+                            "additionalProperties": false,
+                            "description": "Rack contains two tables in parallel. When mounting.azimuth=180 long side (U axis) will be oriented north-south, one table facing east and one west and rows of racks span east-west. If mounting.azimuth is set to other value, the entire segment and racks rotate. Behavior in northern and southern hemisphere is the same.",
+                            "$comment": "Supported by: S1 only."
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "TRACKER_ONE_AXIS_HORIZONTAL"
+                                ]
+                              },
+                              "backtracking": {
+                                "type": "boolean",
+                                "description": "Enable avoidance of neighboring panels shading each other."
+                              },
+                              "backtrackingOptions": {
+                                "type": "object",
+                                "properties": {
+                                  "params": {
+                                    "oneOf": [
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "type": {
+                                            "type": "string",
+                                            "enum": [
+                                              "FROM_LAYOUT"
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "type"
+                                        ],
+                                        "description": "Relative spacing needed for backtracking is calculated automatically from system layout. Assuming horizontal ground."
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "type": {
+                                            "type": "string",
+                                            "enum": [
+                                              "FROM_REL_SPACING"
+                                            ]
+                                          },
+                                          "relativeSpacing": {
+                                            "type": "number",
+                                            "minimum": 0.01
+                                          }
+                                        },
+                                        "required": [
+                                          "type",
+                                          "relativeSpacing"
+                                        ],
+                                        "description": "Relative spacing needed for backtracking is given explicitly as a single constant value."
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "type": {
+                                            "type": "string",
+                                            "enum": [
+                                              "FROM_REL_SPACING_ADVANCED"
+                                            ]
+                                          },
+                                          "relativeSpacing": {
+                                            "oneOf": [
+                                              {
+                                                "type": "number",
+                                                "minimum": 0.01
+                                              },
+                                              {
+                                                "type": "object",
+                                                "description": "Defines relative spacing multipliers separately for different stages of the day.",
+                                                "properties": {
+                                                  "east": {
+                                                    "description": "Relative spacing multiplier applied for East.",
+                                                    "allOf": [
+                                                      {
+                                                        "type": "number",
+                                                        "minimum": 0.01
+                                                      }
+                                                    ]
+                                                  },
+                                                  "west": {
+                                                    "description": "Relative spacing multiplier applied for West.",
+                                                    "allOf": [
+                                                      {
+                                                        "type": "number",
+                                                        "minimum": 0.01
+                                                      }
+                                                    ]
+                                                  }
+                                                },
+                                                "required": [
+                                                  "east",
+                                                  "west"
+                                                ]
+                                              }
+                                            ],
+                                            "description": "[multiplier] If a single number is provided, it is applied for the full range.  If an object with 'east' and 'west' properties is provided, the respective values are applied for East and West (different for different stages of the day).\n"
+                                          },
+                                          "orientation": {
+                                            "type": "object",
+                                            "properties": {
+                                              "azimuth": {
+                                                "type": "number",
+                                                "maximum": 360,
+                                                "minimum": -360
+                                              },
+                                              "planeAzimuth": {
+                                                "type": "number",
+                                                "maximum": 360,
+                                                "minimum": -360
+                                              },
+                                              "planeSlope": {
+                                                "type": "number",
+                                                "maximum": 360,
+                                                "minimum": -360
+                                              }
+                                            },
+                                            "required": [
+                                              "azimuth",
+                                              "planeAzimuth",
+                                              "planeSlope"
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "type",
+                                          "relativeSpacing"
+                                        ],
+                                        "description": "Relative spacing needed for backtracking is given explicitly. Supports constant spacing or dual spacing (east/west), along with optional plane orientation.  Note: FROM_REL_SPACING_ADVANCED is applicable only for TRACKER_ONE_AXIS_HORIZONTAL and TRACKER_ONE_AXIS_INCLINED.\n"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "params"
+                                ],
+                                "description": "These options affects tracker azimuth and tilt (as relevant) such that nearby panels don't shade each other."
+                              },
+                              "rotationLimitEast": {
+                                "type": "number",
+                                "minimum": -90,
+                                "maximum": 90
+                              },
+                              "rotationLimitWest": {
+                                "type": "number",
+                                "minimum": -90,
+                                "maximum": 90
+                              },
+                              "nightStowAngle": {
+                                "type": "number",
+                                "minimum": -90,
+                                "maximum": 90
+                              },
+                              "snowRemoval": {
+                                "type": "boolean",
+                                "description": "Enable tracker snow removal - the tracker rotates to snowStowAngle to shed accumulated snow. Relevant only when snow losses are modeled."
+                              },
+                              "snowStowAngle": {
+                                "type": "number",
+                                "minimum": -90,
+                                "maximum": 90,
+                                "description": "[degrees] The rotation angle the tracker assumes to shed snow when snowRemoval is enabled. If omitted, defaults to the maximum rotation limit of the tracker."
+                              },
+                              "azimuth": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 360
+                              },
+                              "installationHeight": {
+                                "type": "number",
+                                "description": "[m] Height of the torque tube (the rotation axis) above the surface. The clearance under the panels is derived from this height and the table width, so it is lower than the torque tube height. Defaults to 1.8."
+                              }
+                            },
+                            "required": [
+                              "type"
+                            ],
+                            "additionalProperties": false,
+                            "description": "Rack contains one table rotating around horizontal axis. When mounting.azimuth=180 long side (U axis) and the rotation axis are oriented north-south, the east & west limits face east & west respectively, table rotates automatically to follow the sun from east to west, and rows of racks span east-west. If mounting.azimuth is set to other value, the entire segment and racks rotate, including the east & west limits direction. Behavior in northern and southern hemisphere is the same.",
+                            "$comment": "Supported by all simulationEngines."
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "TRACKER_ONE_AXIS_INCLINED"
+                                ]
+                              },
+                              "axisTilt": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 90
+                              },
+                              "backtracking": {
+                                "type": "boolean",
+                                "description": "Enable avoidance of neighboring panels shading each other."
+                              },
+                              "backtrackingOptions": {
+                                "type": "object",
+                                "properties": {
+                                  "params": {
+                                    "oneOf": [
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "type": {
+                                            "type": "string",
+                                            "enum": [
+                                              "FROM_LAYOUT"
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "type"
+                                        ],
+                                        "description": "Relative spacing needed for backtracking is calculated automatically from system layout. Assuming horizontal ground."
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "type": {
+                                            "type": "string",
+                                            "enum": [
+                                              "FROM_REL_SPACING"
+                                            ]
+                                          },
+                                          "relativeSpacing": {
+                                            "type": "number",
+                                            "minimum": 0.01
+                                          }
+                                        },
+                                        "required": [
+                                          "type",
+                                          "relativeSpacing"
+                                        ],
+                                        "description": "Relative spacing needed for backtracking is given explicitly as a single constant value."
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "type": {
+                                            "type": "string",
+                                            "enum": [
+                                              "FROM_REL_SPACING_ADVANCED"
+                                            ]
+                                          },
+                                          "relativeSpacing": {
+                                            "oneOf": [
+                                              {
+                                                "type": "number",
+                                                "minimum": 0.01
+                                              },
+                                              {
+                                                "type": "object",
+                                                "description": "Defines relative spacing multipliers separately for different stages of the day.",
+                                                "properties": {
+                                                  "east": {
+                                                    "description": "Relative spacing multiplier applied for East.",
+                                                    "allOf": [
+                                                      {
+                                                        "type": "number",
+                                                        "minimum": 0.01
+                                                      }
+                                                    ]
+                                                  },
+                                                  "west": {
+                                                    "description": "Relative spacing multiplier applied for West.",
+                                                    "allOf": [
+                                                      {
+                                                        "type": "number",
+                                                        "minimum": 0.01
+                                                      }
+                                                    ]
+                                                  }
+                                                },
+                                                "required": [
+                                                  "east",
+                                                  "west"
+                                                ]
+                                              }
+                                            ],
+                                            "description": "[multiplier] If a single number is provided, it is applied for the full range.  If an object with 'east' and 'west' properties is provided, the respective values are applied for East and West (different for different stages of the day).\n"
+                                          },
+                                          "orientation": {
+                                            "type": "object",
+                                            "properties": {
+                                              "azimuth": {
+                                                "type": "number",
+                                                "maximum": 360,
+                                                "minimum": -360
+                                              },
+                                              "planeAzimuth": {
+                                                "type": "number",
+                                                "maximum": 360,
+                                                "minimum": -360
+                                              },
+                                              "planeSlope": {
+                                                "type": "number",
+                                                "maximum": 360,
+                                                "minimum": -360
+                                              }
+                                            },
+                                            "required": [
+                                              "azimuth",
+                                              "planeAzimuth",
+                                              "planeSlope"
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "type",
+                                          "relativeSpacing"
+                                        ],
+                                        "description": "Relative spacing needed for backtracking is given explicitly. Supports constant spacing or dual spacing (east/west), along with optional plane orientation.  Note: FROM_REL_SPACING_ADVANCED is applicable only for TRACKER_ONE_AXIS_HORIZONTAL and TRACKER_ONE_AXIS_INCLINED.\n"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "params"
+                                ],
+                                "description": "These options affects tracker azimuth and tilt (as relevant) such that nearby panels don't shade each other."
+                              },
+                              "rotationLimitEast": {
+                                "type": "number",
+                                "minimum": -90,
+                                "maximum": 90
+                              },
+                              "rotationLimitWest": {
+                                "type": "number",
+                                "minimum": -90,
+                                "maximum": 90
+                              },
+                              "nightStowAngle": {
+                                "type": "number",
+                                "minimum": -90,
+                                "maximum": 90
+                              },
+                              "snowRemoval": {
+                                "type": "boolean",
+                                "description": "Enable tracker snow removal - the tracker rotates to snowStowAngle to shed accumulated snow. Relevant only when snow losses are modeled."
+                              },
+                              "snowStowAngle": {
+                                "type": "number",
+                                "minimum": -90,
+                                "maximum": 90,
+                                "description": "[degrees] The rotation angle the tracker assumes to shed snow when snowRemoval is enabled. If omitted, defaults to the maximum rotation limit of the tracker."
+                              },
+                              "azimuth": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 360
+                              },
+                              "installationHeight": {
+                                "type": "number",
+                                "description": "[m] Minimum height above surface where the panels are installed - the clearance at maximum tilt."
+                              }
+                            },
+                            "required": [
+                              "type"
+                            ],
+                            "additionalProperties": false,
+                            "description": "Same as TRACKER_ONE_AXIS_HORIZONTAL, but one end of the rack is raised.",
+                            "$comment": "Supported by: GERAS only."
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "TRACKER_ONE_AXIS_VERTICAL"
+                                ]
+                              },
+                              "tilt": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 90
+                              },
+                              "backtracking": {
+                                "type": "boolean",
+                                "description": "Enable avoidance of neighboring panels shading each other."
+                              },
+                              "backtrackingOptions": {
+                                "type": "object",
+                                "properties": {
+                                  "params": {
+                                    "oneOf": [
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "type": {
+                                            "type": "string",
+                                            "enum": [
+                                              "FROM_LAYOUT"
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "type"
+                                        ],
+                                        "description": "Relative spacing needed for backtracking is calculated automatically from system layout. Assuming horizontal ground."
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "type": {
+                                            "type": "string",
+                                            "enum": [
+                                              "FROM_REL_SPACING"
+                                            ]
+                                          },
+                                          "relativeSpacing": {
+                                            "type": "number",
+                                            "minimum": 0.01
+                                          }
+                                        },
+                                        "required": [
+                                          "type",
+                                          "relativeSpacing"
+                                        ],
+                                        "description": "Relative spacing needed for backtracking is given explicitly as a single constant value."
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "type": {
+                                            "type": "string",
+                                            "enum": [
+                                              "FROM_REL_SPACING_ADVANCED"
+                                            ]
+                                          },
+                                          "relativeSpacing": {
+                                            "oneOf": [
+                                              {
+                                                "type": "number",
+                                                "minimum": 0.01
+                                              },
+                                              {
+                                                "type": "object",
+                                                "description": "Defines relative spacing multipliers separately for different stages of the day.",
+                                                "properties": {
+                                                  "east": {
+                                                    "description": "Relative spacing multiplier applied for East.",
+                                                    "allOf": [
+                                                      {
+                                                        "type": "number",
+                                                        "minimum": 0.01
+                                                      }
+                                                    ]
+                                                  },
+                                                  "west": {
+                                                    "description": "Relative spacing multiplier applied for West.",
+                                                    "allOf": [
+                                                      {
+                                                        "type": "number",
+                                                        "minimum": 0.01
+                                                      }
+                                                    ]
+                                                  }
+                                                },
+                                                "required": [
+                                                  "east",
+                                                  "west"
+                                                ]
+                                              }
+                                            ],
+                                            "description": "[multiplier] If a single number is provided, it is applied for the full range.  If an object with 'east' and 'west' properties is provided, the respective values are applied for East and West (different for different stages of the day).\n"
+                                          },
+                                          "orientation": {
+                                            "type": "object",
+                                            "properties": {
+                                              "azimuth": {
+                                                "type": "number",
+                                                "maximum": 360,
+                                                "minimum": -360
+                                              },
+                                              "planeAzimuth": {
+                                                "type": "number",
+                                                "maximum": 360,
+                                                "minimum": -360
+                                              },
+                                              "planeSlope": {
+                                                "type": "number",
+                                                "maximum": 360,
+                                                "minimum": -360
+                                              }
+                                            },
+                                            "required": [
+                                              "azimuth",
+                                              "planeAzimuth",
+                                              "planeSlope"
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "type",
+                                          "relativeSpacing"
+                                        ],
+                                        "description": "Relative spacing needed for backtracking is given explicitly. Supports constant spacing or dual spacing (east/west), along with optional plane orientation.  Note: FROM_REL_SPACING_ADVANCED is applicable only for TRACKER_ONE_AXIS_HORIZONTAL and TRACKER_ONE_AXIS_INCLINED.\n"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "params"
+                                ],
+                                "description": "These options affects tracker azimuth and tilt (as relevant) such that nearby panels don't shade each other."
+                              },
+                              "azimuthLimitEast": {
+                                "type": "number",
+                                "minimum": -180,
+                                "maximum": 180
+                              },
+                              "azimuthLimitWest": {
+                                "type": "number",
+                                "minimum": -180,
+                                "maximum": 180
+                              },
+                              "azimuth": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 360
+                              },
+                              "installationHeight": {
+                                "type": "number",
+                                "description": "[m] Minimum height above surface where the panels are installed - the clearance at maximum tilt."
+                              }
+                            },
+                            "required": [
+                              "type"
+                            ],
+                            "additionalProperties": false,
+                            "description": "Rack contains one table rotating around vertical axis. Table has the specified vertical tilt and automatic azimuth. When mounting.azimuth=180 rows of racks span north-south. If mounting.azimuth is set to other value, the entire segment rotates, but there is no effect on azimuthLimitEast and azimuthLimitWest.",
+                            "$comment": "Supported by: GERAS only."
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "TRACKER_TWO_AXIS"
+                                ]
+                              },
+                              "tiltLimitMin": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 90
+                              },
+                              "tiltLimitMax": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 90
+                              },
+                              "azimuthLimitEast": {
+                                "type": "number",
+                                "minimum": -180,
+                                "maximum": 180
+                              },
+                              "azimuthLimitWest": {
+                                "type": "number",
+                                "minimum": -180,
+                                "maximum": 180
+                              },
+                              "backtracking": {
+                                "type": "boolean",
+                                "description": "Enable avoidance of neighboring panels shading each other."
+                              },
+                              "backtrackingOptions": {
+                                "type": "object",
+                                "properties": {
+                                  "params": {
+                                    "oneOf": [
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "type": {
+                                            "type": "string",
+                                            "enum": [
+                                              "FROM_LAYOUT"
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "type"
+                                        ],
+                                        "description": "Relative spacing needed for backtracking is calculated automatically from system layout. Assuming horizontal ground."
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "type": {
+                                            "type": "string",
+                                            "enum": [
+                                              "FROM_REL_SPACING"
+                                            ]
+                                          },
+                                          "relativeSpacing": {
+                                            "type": "number",
+                                            "minimum": 0.01
+                                          }
+                                        },
+                                        "required": [
+                                          "type",
+                                          "relativeSpacing"
+                                        ],
+                                        "description": "Relative spacing needed for backtracking is given explicitly as a single constant value."
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "type": {
+                                            "type": "string",
+                                            "enum": [
+                                              "FROM_REL_SPACING_ADVANCED"
+                                            ]
+                                          },
+                                          "relativeSpacing": {
+                                            "oneOf": [
+                                              {
+                                                "type": "number",
+                                                "minimum": 0.01
+                                              },
+                                              {
+                                                "type": "object",
+                                                "description": "Defines relative spacing multipliers separately for different stages of the day.",
+                                                "properties": {
+                                                  "east": {
+                                                    "description": "Relative spacing multiplier applied for East.",
+                                                    "allOf": [
+                                                      {
+                                                        "type": "number",
+                                                        "minimum": 0.01
+                                                      }
+                                                    ]
+                                                  },
+                                                  "west": {
+                                                    "description": "Relative spacing multiplier applied for West.",
+                                                    "allOf": [
+                                                      {
+                                                        "type": "number",
+                                                        "minimum": 0.01
+                                                      }
+                                                    ]
+                                                  }
+                                                },
+                                                "required": [
+                                                  "east",
+                                                  "west"
+                                                ]
+                                              }
+                                            ],
+                                            "description": "[multiplier] If a single number is provided, it is applied for the full range.  If an object with 'east' and 'west' properties is provided, the respective values are applied for East and West (different for different stages of the day).\n"
+                                          },
+                                          "orientation": {
+                                            "type": "object",
+                                            "properties": {
+                                              "azimuth": {
+                                                "type": "number",
+                                                "maximum": 360,
+                                                "minimum": -360
+                                              },
+                                              "planeAzimuth": {
+                                                "type": "number",
+                                                "maximum": 360,
+                                                "minimum": -360
+                                              },
+                                              "planeSlope": {
+                                                "type": "number",
+                                                "maximum": 360,
+                                                "minimum": -360
+                                              }
+                                            },
+                                            "required": [
+                                              "azimuth",
+                                              "planeAzimuth",
+                                              "planeSlope"
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "type",
+                                          "relativeSpacing"
+                                        ],
+                                        "description": "Relative spacing needed for backtracking is given explicitly. Supports constant spacing or dual spacing (east/west), along with optional plane orientation.  Note: FROM_REL_SPACING_ADVANCED is applicable only for TRACKER_ONE_AXIS_HORIZONTAL and TRACKER_ONE_AXIS_INCLINED.\n"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "params"
+                                ],
+                                "description": "These options affects tracker azimuth and tilt (as relevant) such that nearby panels don't shade each other."
+                              },
+                              "azimuth": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 360
+                              },
+                              "installationHeight": {
+                                "type": "number",
+                                "description": "[m] Minimum height above surface where the panels are installed - the clearance at maximum tilt."
+                              }
+                            },
+                            "required": [
+                              "type"
+                            ],
+                            "additionalProperties": false,
+                            "description": "Rack contains one table rotating around vertical and horizontal axis. Table has automatic azimuth and vertical tilt. When mounting.azimuth=180 rows of racks span north-south. If mounting.azimuth is set to other value, the entire segment rotates, but there is no effect on azimuthLimitEast and azimuthLimitWest.",
+                            "$comment": "Supported by: GERAS only."
+                          }
+                        ],
+                        "definition": "Describes how table is attached to the rack."
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Optional human-readable name for this segment. Not used by the simulation; purely a label to identify the segment in requests and results."
+                      },
+                      "acTotalInverterLimit": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "terrain": {
+                        "type": "object",
+                        "description": "Orientation of the sloped ground beneath the segment. Used for GROUND_BASED segments; roof-mounted and building-integrated types express their geometry through the mounting tilt and azimuth instead and must not set terrain. slopeAzimuth points in the downhill direction.",
+                        "properties": {
+                          "slopeAzimuth": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 360,
+                            "description": "Azimuth the terrain faces downhill. 0=north, clockwise."
+                          },
+                          "slope": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 90,
+                            "description": "Terrain slope in degrees (0=flat)."
+                          }
+                        },
+                        "required": [
+                          "slopeAzimuth",
+                          "slope"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "segmentLayout": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "relativeRowSpacing": {
+                                "type": "number",
+                                "minimum": 0.01,
+                                "description": "[multiplier] Step from one row of racks to the next as a multiple of rack width, i.e. 1.0=back-to-back."
+                              },
+                              "groundCoverageRatio": {
+                                "type": "number",
+                                "exclusiveMinimum": 0,
+                                "description": "Ground coverage ratio (GCR): ratio of module area to total ground area. Alternative to relativeRowSpacing - exactly one of the two must be provided. GCR is converted to relativeRowSpacing before simulation."
+                              },
+                              "nRows": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "description": "Number of rack rows (along V). Number of columns is assumed to be 1."
+                              }
+                            },
+                            "additionalProperties": false,
+                            "oneOf": [
+                              {
+                                "required": [
+                                  "relativeRowSpacing"
+                                ]
+                              },
+                              {
+                                "required": [
+                                  "groundCoverageRatio"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "relativeRowSpacing": {
+                                "type": "number",
+                                "minimum": 0.01,
+                                "description": "[multiplier] Step from one row of racks to the next as a multiple of rack width, i.e. 1.0=back-to-back."
+                              },
+                              "groundCoverageRatio": {
+                                "type": "number",
+                                "exclusiveMinimum": 0,
+                                "description": "Ground coverage ratio (GCR): ratio of module area to total ground area. Alternative to relativeRowSpacing. GCR is converted to relativeRowSpacing before simulation."
+                              },
+                              "nRows": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "description": "Number of rows of racks (along V)."
+                              },
+                              "relativeColumnSpacing": {
+                                "type": "number",
+                                "minimum": 0.01,
+                                "description": "Step from one column of racks to the next as a multiple of rack length, i.e. 1.0=back-to-back."
+                              },
+                              "nColumns": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "description": "Number of columns of racks (along U) in every row of this segment."
+                              }
+                            },
+                            "required": [
+                              "relativeColumnSpacing"
+                            ]
+                          }
+                        ]
+                      },
+                      "rowLayout": {
+                        "type": "object",
+                        "properties": {
+                          "moduleOrientation": {
+                            "type": "string",
+                            "enum": [
+                              "LANDSCAPE",
+                              "PORTRAIT"
+                            ],
+                            "description": "If LANDSCAPE, modules are placed horizontally (in module definition U is horizontal, V is vertical). If PORTRAIT, modules are rotated 90 degrees (in module definition U is vertical, V is horizontal)."
+                          },
+                          "nStringsPerRow": {
+                            "type": "object",
+                            "description": "Number of strings per table along each axis of the module plane. Optional layout detail.",
+                            "properties": {
+                              "horizontal": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "description": "Number of strings across the table horizontally (along the row). One string can consist of multiple modules."
+                              },
+                              "vertical": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "description": "Number of strings stacked vertically, up the tilt of the table. One string can consist of multiple modules."
+                              }
+                            },
+                            "additionalProperties": false
+                          },
+                          "modulesGap": {
+                            "type": "object",
+                            "description": "Size of the gap between modules along each axis of the module plane. Optional layout detail. Default 0.",
+                            "properties": {
+                              "horizontal": {
+                                "type": "number"
+                              },
+                              "vertical": {
+                                "type": "number"
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "dcElectricalLayout": {
+                        "type": "object",
+                        "properties": {
+                          "moduleName": {
+                            "type": "string",
+                            "description": "Type of solar panels used in this segment: the name of an entry in system.components.modules. Required if modules is a list with more than one entry, optional otherwise."
+                          },
+                          "inverterName": {
+                            "type": "string",
+                            "description": "Type of inverters used in this segment: the name of an entry in system.components.inverters. Required if inverters is a list with more than one entry, optional otherwise."
+                          },
+                          "nInverters": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "description": "Number of inverters in this segment."
+                          },
+                          "stringSize": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "description": "Number of modules connected in series to form one string. Optional; if omitted it is computed to fit the inverter MPPT voltage window. Modules in a string are always arranged in a single row along the table (no vertical 2-D stringing), as the simulation does not model the localized partial shading where such wiring would matter."
+                          }
+                        }
+                      },
+                      "inverterTransformerName": {
+                        "type": "string",
+                        "description": "Inverter transformer serving this segment: the name of an entry in components.transformers.inverterTransformers. Required if that list has more than one entry, optional otherwise. Segment-level (not dcElectricalLayout) because the transformer is an AC component - the parent node of this segment's inverter setup."
+                      },
+                      "horizon": {
+                        "type": "object",
+                        "properties": {
+                          "azimuth": {
+                            "type": "array",
+                            "items": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 360,
+                              "description": "Degrees. 0=north, clockwise."
+                            },
+                            "description": "Azimuth values of horizon points, in degrees. At least one value. In increasing clockwise order, 0=north."
+                          },
+                          "height": {
+                            "type": "array",
+                            "items": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 90,
+                              "description": "Angular height in degrees, 0=horizontal, 90=up."
+                            },
+                            "description": "Angular height of horizon points, in degrees. Values in \"height\" and \"azimuth\" must correspond."
+                          }
+                        },
+                        "required": [
+                          "azimuth",
+                          "height"
+                        ]
+                      },
+                      "surfaceAlbedo": {
+                        "oneOf": [
+                          {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          {
+                            "type": "array",
+                            "items": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            },
+                            "minItems": 12,
+                            "maxItems": 12,
+                            "description": "Normalized percentage for each month."
+                          }
+                        ],
+                        "description": "[%norm <0,1>] Reflectivity of the ground surface under this segment. Given as a flat value or 12 monthly values. When omitted, the system-level surfaceAlbedo applies."
+                      },
+                      "thermalLosses": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "noctCorrection": {
+                                "type": "number",
+                                "description": "['C] Module temperature depends on its surroundings - e.g. it may be cooler in open space and hotter on a building wall. The parameter controls how much module temperature increases depending on module surroundings, roughly 0-5. For both old and new thermal model this is added to nominal operating cell temperature."
+                              },
+                              "windSpeedContribution": {
+                                "type": "number",
+                                "maximum": 4,
+                                "minimum": 0,
+                                "description": "[0-4] Amount of cooling effect of wind speed on panel temperature. 0=no effect, 4=maximum effect. Default 2."
+                              }
+                            },
+                            "required": [
+                              "noctCorrection"
+                            ],
+                            "additionalProperties": false,
+                            "description": "Configuration for the NOCT thermal model (NOCT=nominal operating cell temperature)."
+                          }
+                        ]
+                      },
+                      "dcLossesMismatch": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 100
+                      },
+                      "fieldTopologyType": {
+                        "type": "string",
+                        "enum": [
+                          "PROPORTIONAL",
+                          "UNPROPORTIONAL_1",
+                          "UNPROPORTIONAL_2",
+                          "UNPROPORTIONAL_3"
+                        ],
+                        "description": "Field topology proportionality. Affects how partial shading distributes across strings."
+                      }
+                    },
+                    "required": [
+                      "installationType",
+                      "installedPowerKWp",
+                      "mounting"
+                    ],
+                    "additionalProperties": false,
+                    "description": "Generic PV segment definition. Derived from BasicSegmentGround but without a type discriminator. installationType is used to determine noctCorrection.",
+                    "allOf": [
+                      {
+                        "if": {
+                          "properties": {
+                            "installationType": {
+                              "enum": [
+                                "ROOF_MOUNTED_FLAT",
+                                "ROOF_MOUNTED_TILTED",
+                                "BUILDING_INTEGRATED"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "installationType"
+                          ]
+                        },
+                        "then": {
+                          "not": {
+                            "required": [
+                              "terrain"
+                            ]
+                          },
+                          "properties": {
+                            "mounting": {
+                              "not": {
+                                "required": [
+                                  "orientationConvention"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "if": {
+                          "properties": {
+                            "installationType": {
+                              "const": "ROOF_MOUNTED_FLAT"
+                            }
+                          },
+                          "required": [
+                            "installationType"
+                          ]
+                        },
+                        "then": {
+                          "properties": {
+                            "mounting": {
+                              "properties": {
+                                "type": {
+                                  "enum": [
+                                    "FIXED_ONE_ANGLE",
+                                    "FIXED_EAST_WEST"
+                                  ]
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      {
+                        "if": {
+                          "properties": {
+                            "installationType": {
+                              "enum": [
+                                "ROOF_MOUNTED_TILTED",
+                                "BUILDING_INTEGRATED"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "installationType"
+                          ]
+                        },
+                        "then": {
+                          "properties": {
+                            "mounting": {
+                              "properties": {
+                                "type": {
+                                  "const": "FIXED_ONE_ANGLE"
+                                }
+                              },
+                              "not": {
+                                "required": [
+                                  "installationHeight"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "$comment": "Multiple segments supported by: S1 only. GERAS and CHRONOS support single segment only."
+                },
+                "dcElectricalLayout": {
+                  "type": "object",
+                  "properties": {
+                    "moduleName": {
+                      "type": "string",
+                      "description": "Type of solar panels used in this segment: the name of an entry in system.components.modules. Required if modules is a list with more than one entry, optional otherwise."
+                    },
+                    "inverterName": {
+                      "type": "string",
+                      "description": "Type of inverters used in this segment: the name of an entry in system.components.inverters. Required if inverters is a list with more than one entry, optional otherwise."
+                    },
+                    "nInverters": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "description": "Number of inverters in this segment."
+                    },
+                    "stringSize": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "description": "Number of modules connected in series to form one string. Optional; if omitted it is computed to fit the inverter MPPT voltage window. Modules in a string are always arranged in a single row along the table (no vertical 2-D stringing), as the simulation does not model the localized partial shading where such wiring would matter."
+                    }
+                  }
+                },
+                "acElectricalLayout": {
+                  "type": "object",
+                  "properties": {
+                    "nPowerTransformers": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "description": "Number of identical power-transformer units (each per components.transformers.powerTransformer). Optional, default 1; only meaningful when powerTransformer is defined."
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "cableLosses": {
+                  "type": "object",
+                  "properties": {
+                    "dcCableLosses": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100
+                    },
+                    "acCableLossesFromInverter": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100
+                    },
+                    "acCableLossesFromInverterTransformer": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100
+                    },
+                    "acCableLossesFromPowerTransformer": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100
+                    }
+                  },
+                  "description": "Cable losses are not supported if system has combiner boxes."
+                },
+                "dcLossesTotal": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "acLossesTotal": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "segments"
+              ]
+            },
+            "losses": {
+              "type": "object",
+              "properties": {
+                "unavailability": {
+                  "type": "object",
+                  "properties": {
+                    "internalLosses": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "yearlyLosses": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 100
+                            }
+                          },
+                          "required": [
+                            "yearlyLosses"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "from": {
+                                "type": "object",
+                                "properties": {
+                                  "date": {
+                                    "type": "string",
+                                    "pattern": "^\\d{2}-\\d{2}$",
+                                    "description": "Day and month in format MM-DD."
+                                  },
+                                  "time": {
+                                    "type": "string",
+                                    "pattern": "^\\d{2}:\\d{2}$",
+                                    "description": "Hour and minute in format HH:NN."
+                                  }
+                                },
+                                "required": [
+                                  "date",
+                                  "time"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "to": {
+                                "type": "object",
+                                "properties": {
+                                  "date": {
+                                    "type": "string",
+                                    "pattern": "^\\d{2}-\\d{2}$",
+                                    "description": "Day and month in format MM-DD."
+                                  },
+                                  "time": {
+                                    "type": "string",
+                                    "pattern": "^\\d{2}:\\d{2}$",
+                                    "description": "Hour and minute in format HH:NN."
+                                  }
+                                },
+                                "required": [
+                                  "date",
+                                  "time"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "losses": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 100
+                              }
+                            },
+                            "required": [
+                              "from",
+                              "to",
+                              "losses"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "description": "Internal losses given as time intervals which repeat annually. The intervals must not overlap or touch, they must be at least 1 minute apart. They do not have to be in sorted order."
+                        }
+                      ],
+                      "description": "Power production losses due to internal causes, e.g. maintenance or other on-site reasons. Given either as a flat percentage, or varying value during the year applied annually."
+                    },
+                    "externalGridLimit": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "yearlyGridLimit": {
+                              "type": "number",
+                              "minimum": 0
+                            }
+                          },
+                          "required": [
+                            "yearlyGridLimit"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "from": {
+                                "type": "object",
+                                "properties": {
+                                  "date": {
+                                    "type": "string",
+                                    "pattern": "^\\d{2}-\\d{2}$",
+                                    "description": "Day and month in format MM-DD."
+                                  },
+                                  "time": {
+                                    "type": "string",
+                                    "pattern": "^\\d{2}:\\d{2}$",
+                                    "description": "Hour and minute in format HH:NN."
+                                  }
+                                },
+                                "required": [
+                                  "date",
+                                  "time"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "to": {
+                                "type": "object",
+                                "properties": {
+                                  "date": {
+                                    "type": "string",
+                                    "pattern": "^\\d{2}-\\d{2}$",
+                                    "description": "Day and month in format MM-DD."
+                                  },
+                                  "time": {
+                                    "type": "string",
+                                    "pattern": "^\\d{2}:\\d{2}$",
+                                    "description": "Hour and minute in format HH:NN."
+                                  }
+                                },
+                                "required": [
+                                  "date",
+                                  "time"
+                                ],
+                                "additionalProperties": false
+                              },
+                              "gridLimit": {
+                                "type": "number",
+                                "minimum": 0
+                              }
+                            },
+                            "required": [
+                              "from",
+                              "to",
+                              "gridLimit"
+                            ],
+                            "additionalProperties": false
+                          }
+                        }
+                      ],
+                      "description": "Limits on maximum power output imposed by the external grid. Given as flat limit or varying limits in custom time ranges which repeat annually. If specified, this limit has priority over (overrides) input.systemExternalUnavailabilityGridLimit."
+                    }
+                  }
+                },
+                "selfConsumption": {
+                  "type": "object",
+                  "properties": {
+                    "dayConstantLosses": {
+                      "type": "number"
+                    },
+                    "dayConstantLossesFromInverterPowerThreshold": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "dayProportionalLosses": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1000
+                    },
+                    "dayProportionalLossesFromInverterPowerThreshold": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "nightConstantLosses": {
+                      "type": "number"
+                    }
+                  },
+                  "additionalProperties": false,
+                  "description": "Losses due to power consumption of inverters."
                 },
                 "degradation": {
-                  "description": "Estimated annual percentage degradation of rated output power of PV modules. This parameter is only considered if dateStartup attribute is set.",
                   "type": "object",
-                  "additionalProperties": false,
                   "properties": {
-                    "degradationAnyYear": {
+                    "dateStartup": {
+                      "type": "string",
+                      "format": "date",
+                      "description": "Date in ISO8601 format: YYYY-MM-DD."
+                    },
+                    "degradation": {
                       "type": "number",
                       "minimum": 0,
                       "maximum": 100
@@ -795,577 +3066,155 @@
                       "minimum": 0,
                       "maximum": 100
                     }
-                  }
-                },
-                "nominalOperatingCellTemperature": {
-                  "description": "Normal operating cell temperature. Float value of the temperature in degrees Celsius of a free standing PV module exposed to irradiance of 800 W/m2 and ambient air temperature of 20°C and wind speed of 1 m/s. The value is given by manufacturer and only for ventilated free standing PV system.",
-                  "$comment": "Defaults according to moduleTechnology value: CSI=46°C, ASI=44°C, CDTE=48°C, CIS=47°C.",
-                  "type": "number"
-                },
-                "temperatureCoefficientPmax": {
-                  "description": "Negative percent float value representing the change in PV panel output power for temperatures other than 25°C (decrease of output power with raising temperature). This property is given by the manufacturer at STC.",
-                  "$comment": "Defaults according to moduleTechnology: CSI=-0.438%/°C, ASI=-0.18%/°C, CDTE=-0.297%/°C, CIS=-0.36%/°C.",
-                  "type": "number",
-                  "exclusiveMaximum": 0
-                }
-              }
-            },
-            "selfShading": {
-              "description": "The parameter affects FixedOneAngle geometry, then OneAxisHorizontalNS and OneAxisInclined type of trackers with backTracking=false. When backTracking=true, the parameter does not make sense as self-shading is avoided. No other GTI configs are implemented. The parameter is used to determine the impact of self (inter-row) shading on PV power production. When set to true, the effect of self-shading is taken into account in calculation, otherwise the structure is assumed without neighbors (best possible). Direct shadow is considered, the effect of diffuse shading is not considered in this version.",
-              "type": "boolean",
-              "default": false
-            },
-            "terrainProperties": {
-              "description": "PV configuration used with the the first version (legacy) of Solargis PV simulation tools.",
-              "type": "object",
-              "additionalProperties": false,
-              "required": [
-                "terrainAzimuth",
-                "terrainSlope"
-              ],
-              "properties": {
-                "terrainAzimuth": {
-                  "description": "Horizontal angle from north (going clockwise). Examples: North=0° (or 360°), East=90°, South=180°, West=270°",
-                  "type": "number",
-                  "minimum": 0,
-                  "maximum": 360,
-                  "default": 180
-                },
-                "terrainSlope": {
-                  "description": "Vertical angle (of a PV panel surface) from the horizontal position (tilt=0°) towards vertical (tilt=90°).",
-                  "type": "number",
-                  "minimum": 0,
-                  "maximum": 90,
-                  "default": 0
-                }
-              }
-            },
-            "inverter": {
-              "description": "Properties of the PV inverter.",
-              "type": "object",
-              "additionalProperties": true,
-              "properties": {
-                "inverterEfficiency": {
-                  "description": "Efficiency of the PV inverter.",
-                  "type": "object",
-                  "additionalProperties": false,
-                  "oneOf": [
-                    {
-                      "required": [
-                        "constant"
-                      ]
-                    },
-                    {
-                      "required": [
-                        "curve"
-                      ]
-                    }
-                  ],
-                  "properties": {
-                    "constant": {
-                      "type": "number",
-                      "minimum": 0,
-                      "maximum": 100
-                    },
-                    "curve": {
-                      "description": "Non-linear efficiency of the inverter can be described as a simplified curve defined as list of data points.",
-                      "type": "object",
-                      "required": [
-                        "inputPowerKilowatts",
-                        "efficiencyPercentage"
-                      ],
-                      "additionalProperties": false,
-                      "properties": {
-                        "inputPowerKilowatts": {
-                          "description": "Input power in kilowatts (kW).",
-                          "type": "array",
-                          "items": {
-                            "type": [
-                              "number"
-                            ],
-                            "minimum": 0
-                          }
-                        },
-                        "efficiencyPercentage": {
-                          "description": "Inverter's efficiency (%).",
-                          "type": "array",
-                          "items": {
-                            "type": "number",
-                            "minimum": 0,
-                            "maximum": 100
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "inverterLimitationACPower": {
-                  "description": "Maximum AC power in kW delivered by the inverter without the limitation (clipping) of AC output. Clipping refers to the situation where the AC power output of an inverter is limited due to the peak rating of the inverter (the parameter value in kw), even though additional power may still be available from the solar modules. If you have power factor (PF) and AC limit in kVA available, use this formula: PF * AC_limit_kVA = kW, which is the value of this parameter.",
-                  "type": "number",
-                  "minimum": 0
-                }
-              }
-            },
-            "dcLosses": {
-              "description": "PV power losses on the DC side.",
-              "type": "object",
-              "additionalProperties": false,
-              "properties": {
-                "overall": {
-                  "type": "number",
-                  "minimum": 0,
-                  "maximum": 100
-                },
-                "specific": {
-                  "description": "Specific PV power losses on the DC side.",
-                  "type": "object",
-                  "additionalProperties": false,
-                  "required": [
-                    "mismatch",
-                    "cabling",
-                    "dirtAndSnow"
-                  ],
-                  "properties": {
-                    "mismatch": {
-                      "type": "number",
-                      "minimum": 0,
-                      "maximum": 100
-                    },
-                    "cabling": {
-                      "type": "number",
-                      "minimum": 0,
-                      "maximum": 100
-                    },
-                    "dirtAndSnow": {
-                      "description": "PV power losses due to dirt and/or snow.",
-                      "type": "object",
-                      "additionalProperties": false,
-                      "oneOf": [
-                        {
-                          "required": [
-                            "overall"
-                          ]
-                        },
-                        {
-                          "required": [
-                            "monthly"
-                          ]
-                        }
-                      ],
-                      "properties": {
-                        "overall": {
-                          "type": "number",
-                          "minimum": 0,
-                          "maximum": 100
-                        },
-                        "monthly": {
-                          "description": "Distribution of the dirt and/or snow losses into 12 average calendar months.",
-                          "type": "array",
-                          "minItems": 12,
-                          "maxItems": 12,
-                          "items": {
-                            "type": "number",
-                            "minimum": 0,
-                            "maximum": 100
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "oneOf": [
-                {
-                  "required": [
-                    "overall"
-                  ]
-                },
-                {
-                  "required": [
-                    "specific"
-                  ]
-                }
-              ]
-            },
-            "acLosses": {
-              "description": "PV power losses on the AC side.",
-              "type": "object",
-              "additionalProperties": false,
-              "oneOf": [
-                {
-                  "required": [
-                    "overall"
-                  ]
-                },
-                {
-                  "required": [
-                    "specific"
-                  ]
-                }
-              ],
-              "properties": {
-                "overall": {
-                  "type": "number",
-                  "minimum": 0,
-                  "maximum": 100
-                },
-                "specific": {
-                  "description": "Specific PV power losses on the AC side.",
-                  "type": "object",
-                  "additionalProperties": false,
-                  "required": [
-                    "transformer",
-                    "cabling"
-                  ],
-                  "properties": {
-                    "transformer": {
-                      "type": "number",
-                      "minimum": 0,
-                      "maximum": 100
-                    },
-                    "cabling": {
-                      "type": "number",
-                      "minimum": 0,
-                      "maximum": 100
-                    }
-                  }
-                }
-              }
-            },
-            "gtiConfiguration": {
-              "type": "object",
-              "properties": {
-                "layout": {
-                  "type": "object",
-                  "properties": {
-                    "azimuth": {
-                      "type": "number",
-                      "minimum": 0,
-                      "maximum": 360
-                    },
-                    "relativeSpacing": {
-                      "type": "number",
-                      "minimum": 0.1
-                    },
-                    "mounting": {
-                      "oneOf": [
-                        {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "enum": [
-                                "FIXED_ONE_ANGLE"
-                              ]
-                            },
-                            "tilt": {
-                              "type": "number",
-                              "minimum": 0,
-                              "maximum": 90
-                            }
-                          },
-                          "required": [
-                            "type",
-                            "tilt"
-                          ],
-                          "additionalProperties": false
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "enum": [
-                                "FIXED_ONE_ANGLE_MONTHLY"
-                              ]
-                            },
-                            "tilt": {
-                              "type": "array",
-                              "items": {
-                                "type": "number",
-                                "minimum": 0,
-                                "maximum": 90
-                              },
-                              "minItems": 12,
-                              "maxItems": 12
-                            }
-                          },
-                          "required": [
-                            "type",
-                            "tilt"
-                          ],
-                          "additionalProperties": false
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "enum": [
-                                "FIXED_ONE_ANGLE_SEASONAL"
-                              ]
-                            },
-                            "tilt": {
-                              "type": "array",
-                              "items": {
-                                "type": "object",
-                                "properties": {
-                                  "dateOfChange": {
-                                    "type": "string",
-                                    "pattern": "^\\d{2}-\\d{2}$"
-                                  },
-                                  "tilt": {
-                                    "type": "number",
-                                    "minimum": 0,
-                                    "maximum": 90
-                                  }
-                                },
-                                "required": [
-                                  "dateOfChange",
-                                  "tilt"
-                                ]
-                              }
-                            }
-                          },
-                          "required": [
-                            "type",
-                            "tilt"
-                          ],
-                          "additionalProperties": false
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "enum": [
-                                "TRACKER_ONE_AXIS_HORIZONTAL"
-                              ]
-                            },
-                            "backtracking": {
-                              "type": "boolean"
-                            },
-                            "rotationLimitEast": {
-                              "type": "number",
-                              "minimum": -90,
-                              "maximum": 90
-                            },
-                            "rotationLimitWest": {
-                              "type": "number",
-                              "minimum": -90,
-                              "maximum": 90
-                            }
-                          },
-                          "required": [
-                            "type",
-                            "backtracking",
-                            "rotationLimitEast",
-                            "rotationLimitWest"
-                          ],
-                          "additionalProperties": false
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "enum": [
-                                "TRACKER_ONE_AXIS_INCLINED"
-                              ]
-                            },
-                            "axisTilt": {
-                              "type": "number",
-                              "minimum": 0,
-                              "maximum": 90
-                            },
-                            "backtracking": {
-                              "type": "boolean"
-                            },
-                            "rotationLimitEast": {
-                              "type": "number",
-                              "minimum": -90,
-                              "maximum": 90
-                            },
-                            "rotationLimitWest": {
-                              "type": "number",
-                              "minimum": -90,
-                              "maximum": 90
-                            }
-                          },
-                          "required": [
-                            "axisTilt",
-                            "type",
-                            "backtracking",
-                            "rotationLimitEast",
-                            "rotationLimitWest"
-                          ],
-                          "additionalProperties": false
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "enum": [
-                                "TRACKER_ONE_AXIS_VERTICAL"
-                              ]
-                            },
-                            "tilt": {
-                              "type": "number",
-                              "minimum": 0,
-                              "maximum": 90
-                            },
-                            "azimuthLimitEast": {
-                              "type": "number",
-                              "minimum": -180,
-                              "maximum": 180
-                            },
-                            "azimuthLimitWest": {
-                              "type": "number",
-                              "minimum": -180,
-                              "maximum": 180
-                            },
-                            "backtracking": {
-                              "type": "boolean"
-                            }
-                          },
-                          "required": [
-                            "type",
-                            "tilt",
-                            "azimuthLimitEast",
-                            "azimuthLimitWest",
-                            "backtracking"
-                          ],
-                          "additionalProperties": false
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "enum": [
-                                "TRACKER_TWO_AXIS"
-                              ]
-                            },
-                            "tiltLimitMin": {
-                              "type": "number",
-                              "minimum": 0,
-                              "maximum": 90
-                            },
-                            "tiltLimitMax": {
-                              "type": "number",
-                              "minimum": 0,
-                              "maximum": 90
-                            },
-                            "azimuthLimitEast": {
-                              "type": "number",
-                              "minimum": -180,
-                              "maximum": 180
-                            },
-                            "azimuthLimitWest": {
-                              "type": "number",
-                              "minimum": -180,
-                              "maximum": 180
-                            },
-                            "backtracking": {
-                              "type": "boolean"
-                            }
-                          },
-                          "required": [
-                            "type",
-                            "tiltLimitMin",
-                            "tiltLimitMax",
-                            "azimuthLimitEast",
-                            "azimuthLimitWest",
-                            "backtracking"
-                          ],
-                          "additionalProperties": false
-                        }
-                      ]
-                    }
                   },
-                  "required": [
-                    "mounting"
-                  ],
-                  "additionalProperties": false
+                  "description": "Losses due to system degradation over time. Applied to installed power and PVOUT."
                 },
                 "environment": {
                   "type": "object",
                   "properties": {
-                    "surfaceAlbedo": {
+                    "soilingLosses": {
                       "oneOf": [
                         {
                           "type": "number",
                           "minimum": 0,
-                          "maximum": 1
+                          "maximum": 100
                         },
                         {
                           "type": "array",
                           "items": {
                             "type": "number",
                             "minimum": 0,
-                            "maximum": 1
+                            "maximum": 100
                           },
                           "minItems": 12,
-                          "maxItems": 12
+                          "maxItems": 12,
+                          "description": "Percentage for each month."
                         }
-                      ]
-                    },
-                    "horizon": {
-                      "description": "An outline (modeled as a set of points) of land and other objects defined against the sky - a skyline.",
-                      "type": "object",
-                      "required": [
-                        "azimuth",
-                        "height"
-                      ],
-                      "additionalProperties": false,
-                      "properties": {
-                        "azimuth": {
-                          "description": "Geographical azimuth of the point in degrees. From the 0 degree (North) advancing clockwise.",
-                          "type": "array",
-                          "items": {
-                            "type": [
-                              "number"
-                            ],
-                            "minimum": 0,
-                            "maximum": 360
-                          }
-                        },
-                        "height": {
-                          "description": "Angular height of the point in degrees. From the 0 degree up to 90 degrees.",
-                          "type": "array",
-                          "items": {
-                            "type": [
-                              "number"
-                            ],
-                            "minimum": 0,
-                            "maximum": 90
-                          }
-                        }
-                      },
-                      "examples": [
-                        [
-                          {
-                            "azimuth": [
-                              0,
-                              360
-                            ],
-                            "height": [
-                              19.0581,
-                              31.2
-                            ]
-                          }
-                        ]
                       ]
                     }
                   },
-                  "additionalProperties": false
+                  "required": [
+                    "soilingLosses"
+                  ],
+                  "description": "Losses due to soiling of solar panels. Given as flat percentage or monthly percentages. Applied during GTI calculation. Overrides input.systemSoilingLosses."
                 }
-              },
-              "additionalProperties": false
+              }
+            },
+            "environment": {
+              "type": "object",
+              "properties": {
+                "surfaceAlbedo": {
+                  "oneOf": [
+                    {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1
+                      },
+                      "minItems": 12,
+                      "maxItems": 12,
+                      "description": "Normalized percentage for each month."
+                    }
+                  ],
+                  "description": "[%norm <0,1>] Reflectivity of terrain surface, given as flat percentage or monthly percentages repeated annually. Overrides input.surfaceAlbedo."
+                },
+                "horizon": {
+                  "type": "object",
+                  "properties": {
+                    "azimuth": {
+                      "type": "array",
+                      "items": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 360,
+                        "description": "Degrees. 0=north, clockwise."
+                      },
+                      "description": "Azimuth values of horizon points, in degrees. At least one value. In increasing clockwise order, 0=north."
+                    },
+                    "height": {
+                      "type": "array",
+                      "items": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 90,
+                        "description": "Angular height in degrees, 0=horizontal, 90=up."
+                      },
+                      "description": "Angular height of horizon points, in degrees. Values in \"height\" and \"azimuth\" must correspond."
+                    }
+                  },
+                  "required": [
+                    "azimuth",
+                    "height"
+                  ]
+                }
+              }
             }
-          }
+          },
+          "required": [
+            "layout"
+          ],
+          "additionalProperties": false,
+          "description": "PV configuration definition. Accepts full PV system and simulation options or their simplified equivalent."
+        },
+        "options": {
+          "type": "object",
+          "properties": {
+            "applyFarHorizonShading": {
+              "type": "boolean",
+              "description": "Include shadows casted by horizon in GTI calculation. Default: true."
+            },
+            "applySelfShadingPanels": {
+              "type": "boolean",
+              "description": "Enables shadows casted by solar panels. Default: true."
+            },
+            "disableBypassDiodes": {
+              "type": "boolean",
+              "description": "Disable diodes which bypass particular submodules. Default: false."
+            },
+            "applyBlockingDiodes": {
+              "type": "boolean",
+              "description": "Enable blocking diode at the end of each string of panels. Default: true."
+            },
+            "spectralCorrection": {
+              "type": "boolean",
+              "description": "Enable spectral correction. Default: enabled for CDTE, MONO_CSI and POLY_CSI panels, disabled otherwise."
+            }
+          },
+          "description": "Simulation options. All fields are optional."
+        },
+        "simulationEngine": {
+          "type": "string",
+          "enum": [
+            "S1",
+            "GERAS",
+            "CHRONOS"
+          ],
+          "default": "S1",
+          "description": "Simulation engine to use. Default: S1. Each engine supports a different subset of mounting types, module types, and features. See $comment fields throughout the schema for details."
         }
+      },
+      "required": [
+        "system"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$comment": "The mounting of the PV system is a part of pvConfiguration, so a separate gtiConfiguration would be ambiguous. Same rule as in solargis_data_request.schema.json.",
+  "if": {
+    "required": [
+      "pvConfiguration"
+    ]
+  },
+  "then": {
+    "not": {
+      "required": [
+        "gtiConfiguration"
       ]
     }
   }

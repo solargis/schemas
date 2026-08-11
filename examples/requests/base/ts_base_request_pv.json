@@ -18,7 +18,8 @@
     "PANEL_INC",
     "PANEL_TILT",
     "SUN_AZIMUTH",
-    "SUN_ELEVATION"
+    "SUN_ELEVATION",
+    "PVOUT"
   ],
   "fromDate": "2022-10-01",
   "toDate": "2022-10-02",
@@ -67,20 +68,26 @@
     }
   },
   "pvConfiguration": {
-    "simulationEngine": "v1",
-    "gtiConfiguration": {
-      "layout": {
-        "azimuth": 180,
-        "mounting": {
-          "type": "FIXED_ONE_ANGLE",
-          "tilt": 39
+    "simulationEngine": "S1",
+    "system": {
+      "components": {
+        "modules": {
+          "type": "CSI"
         }
+      },
+      "layout": {
+        "segments": [
+          {
+            "installationType": "BUILDING_INTEGRATED",
+            "installedPowerKWp": 1,
+            "mounting": {
+              "type": "FIXED_ONE_ANGLE",
+              "tilt": 39,
+              "azimuth": 180
+            }
+          }
+        ]
       }
-    },
-    "installationType": "BUILDING_INTEGRATED",
-    "installedPower": 1,
-    "module": {
-      "technology": "ASI"
     }
   },
   "stochasticGenerator": false,

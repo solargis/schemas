@@ -1,0 +1,21 @@
+#!/bin/sh
+# Refuses a commit that would leave solargis_public_TS_API_request_dereferenced.schema.json out of
+# sync with the schemas it inlines. Runs only when the commit touches a *.schema.json file.
+#
+# Install once per clone (hooks are not shared by git itself):
+#
+#     git config core.hooksPath .githooks
+#
+# Caveat: the check reads the working tree, not the index, so a partially staged commit can still
+# get through. Bypass deliberately with `git commit --no-verify`.
+
+if git diff --cached --name-only --diff-filter=ACMR | grep -q '\.schema\.json$'; then
+    repo_root=$(git rev-parse --show-toplevel)
+    if ! python3 "$repo_root/dereference_schema.py" --check; then
+        echo
+        echo 'pre-commit: regenerate it with'
+        echo '    python3 dereference_schema.py'
+        echo 'and stage the result, or commit with --no-verify.'
+        exit 1
+    fi
+fi
