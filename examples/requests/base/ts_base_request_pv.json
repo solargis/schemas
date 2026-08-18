@@ -78,7 +78,7 @@
       "layout": {
         "segments": [
           {
-            "installationType": "BUILDING_INTEGRATED",
+            "installationType": "GROUND_BASED",
             "installedPowerKWp": 1,
             "mounting": {
               "type": "FIXED_ONE_ANGLE",
