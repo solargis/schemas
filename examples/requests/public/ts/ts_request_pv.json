@@ -17,7 +17,7 @@
   "utcOffset": "+09:00",
   "outputFormat": "SOLARGIS_JSON",
   "pvConfiguration": {
-    "simulationEngine": "S1",
+    "simulationEngine": "SOLARGIS_S1",
     "system": {
       "components": {
         "modules": {

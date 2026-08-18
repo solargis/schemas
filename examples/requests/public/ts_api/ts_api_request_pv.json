@@ -1,9 +1,9 @@
 {
-  "requestType": "TMY",
-  "requestId": "HGSGL8234jasv6",
   "site": {
-    "latitude": 45.09,
-    "longitude": 17.34
+    "latitude": 43.023903,
+    "longitude": 142.419596,
+    "elevation": 156.9,
+    "name": "Pippu 比布町, Kamikawa District"
   },
   "timeStep": "PT15M",
   "columns": [
@@ -12,27 +12,32 @@
     "TMOD",
     "PVOUT"
   ],
-  "tmyScenario": "P50",
-  "fromDate": "1994-01-10",
-  "toDate": "LAST_YEAR",
-  "outputFormat": "SOLARGIS_PARQUET",
+  "fromDate": "2022-10-01",
+  "toDate": "2022-10-02",
+  "utcOffset": "+09:00",
+  "outputFormat": "SOLARGIS_JSON",
   "pvConfiguration": {
     "simulationEngine": "SOLARGIS_S1",
     "system": {
       "components": {
         "modules": {
-          "type": "CSI"
+          "type": "MONO_CSI"
         }
       },
       "layout": {
         "segments": [
           {
+            "name": "ground segment",
             "installationType": "GROUND_BASED",
             "installedPowerKWp": 1000,
             "mounting": {
               "type": "FIXED_ONE_ANGLE",
-              "tilt": 25,
+              "tilt": 39,
               "azimuth": 180
+            },
+            "terrain": {
+              "slopeAzimuth": 180,
+              "slope": 5
             }
           }
         ]

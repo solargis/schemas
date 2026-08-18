@@ -15,7 +15,7 @@
   "fromDate": "AUTODETECT",
   "toDate": "LAST_YEAR",
   "pvConfiguration": {
-    "simulationEngine": "S1",
+    "simulationEngine": "SOLARGIS_S1",
     "system": {
       "components": {
         "modules": {

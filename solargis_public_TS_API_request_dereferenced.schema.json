@@ -737,7 +737,7 @@
                                 "ASI"
                               ],
                               "description": "Solar panel technology. MONO_CSI, POLY_CSI, CDTE are the standard values. CSI (generic crystalline silicon), CIS, ASI are additional values accepted for simplified requests. CSI is resolved to MONO_CSI when expanding to full module spec.",
-                              "$comment": "CSI supported by all simulationEngines. MONO_CSI, POLY_CSI: S1 only. CDTE, CIS, ASI: GERAS, CHRONOS only."
+                              "$comment": "CSI supported by all simulationEngines. MONO_CSI, POLY_CSI: SOLARGIS_S1 only. CDTE, CIS, ASI: SOLARGIS_A1, SOLARGIS_A2 only."
                             },
                             "length": {
                               "type": "number"
@@ -918,7 +918,7 @@
                                       "ASI"
                                     ],
                                     "description": "Solar panel technology. MONO_CSI, POLY_CSI, CDTE are the standard values. CSI (generic crystalline silicon), CIS, ASI are additional values accepted for simplified requests. CSI is resolved to MONO_CSI when expanding to full module spec.",
-                                    "$comment": "CSI supported by all simulationEngines. MONO_CSI, POLY_CSI: S1 only. CDTE, CIS, ASI: GERAS, CHRONOS only."
+                                    "$comment": "CSI supported by all simulationEngines. MONO_CSI, POLY_CSI: SOLARGIS_S1 only. CDTE, CIS, ASI: SOLARGIS_A1, SOLARGIS_A2 only."
                                   },
                                   "length": {
                                     "type": "number"
@@ -1172,7 +1172,7 @@
                                 "Pnt",
                                 "dcLimitsPerMppt"
                               ],
-                              "$comment": "Supported by: S1 only."
+                              "$comment": "Supported by: SOLARGIS_S1 only."
                             },
                             {
                               "type": "object",
@@ -1218,7 +1218,7 @@
                               "required": [
                                 "effCurveDataPairs"
                               ],
-                              "$comment": "Supported by: GERAS, CHRONOS only."
+                              "$comment": "Supported by: SOLARGIS_A1, SOLARGIS_A2 only."
                             }
                           ]
                         },
@@ -1328,7 +1328,7 @@
                                       "Pnt",
                                       "dcLimitsPerMppt"
                                     ],
-                                    "$comment": "Supported by: S1 only."
+                                    "$comment": "Supported by: SOLARGIS_S1 only."
                                   },
                                   {
                                     "type": "object",
@@ -1374,7 +1374,7 @@
                                     "required": [
                                       "effCurveDataPairs"
                                     ],
-                                    "$comment": "Supported by: GERAS, CHRONOS only."
+                                    "$comment": "Supported by: SOLARGIS_A1, SOLARGIS_A2 only."
                                   }
                                 ]
                               },
@@ -1439,7 +1439,7 @@
                                     }
                                   },
                                   "additionalProperties": false,
-                                  "$comment": "Supported by: S1 only."
+                                  "$comment": "Supported by: SOLARGIS_S1 only."
                                 },
                                 {
                                   "type": "object",
@@ -1490,7 +1490,7 @@
                                           }
                                         },
                                         "additionalProperties": false,
-                                        "$comment": "Supported by: S1 only."
+                                        "$comment": "Supported by: SOLARGIS_S1 only."
                                       },
                                       {
                                         "type": "object",
@@ -1550,7 +1550,7 @@
                                 }
                               },
                               "additionalProperties": false,
-                              "$comment": "Supported by: S1 only."
+                              "$comment": "Supported by: SOLARGIS_S1 only."
                             },
                             {
                               "type": "object",
@@ -1703,7 +1703,7 @@
                             ],
                             "additionalProperties": false,
                             "description": "Rack contains two tables in parallel. When mounting.azimuth=180 long side (U axis) will be oriented north-south, one table facing east and one west and rows of racks span east-west. If mounting.azimuth is set to other value, the entire segment and racks rotate. Behavior in northern and southern hemisphere is the same.",
-                            "$comment": "Supported by: S1 only."
+                            "$comment": "Supported by: SOLARGIS_S1 only."
                           },
                           {
                             "type": "object",
@@ -2070,7 +2070,7 @@
                             ],
                             "additionalProperties": false,
                             "description": "Same as TRACKER_ONE_AXIS_HORIZONTAL, but one end of the rack is raised.",
-                            "$comment": "Supported by: GERAS only."
+                            "$comment": "Supported by: SOLARGIS_A1 only."
                           },
                           {
                             "type": "object",
@@ -2241,7 +2241,7 @@
                             ],
                             "additionalProperties": false,
                             "description": "Rack contains one table rotating around vertical axis. Table has the specified vertical tilt and automatic azimuth. When mounting.azimuth=180 rows of racks span north-south. If mounting.azimuth is set to other value, the entire segment rotates, but there is no effect on azimuthLimitEast and azimuthLimitWest.",
-                            "$comment": "Supported by: GERAS only."
+                            "$comment": "Supported by: SOLARGIS_A1 only."
                           },
                           {
                             "type": "object",
@@ -2417,7 +2417,7 @@
                             ],
                             "additionalProperties": false,
                             "description": "Rack contains one table rotating around vertical and horizontal axis. Table has automatic azimuth and vertical tilt. When mounting.azimuth=180 rows of racks span north-south. If mounting.azimuth is set to other value, the entire segment rotates, but there is no effect on azimuthLimitEast and azimuthLimitWest.",
-                            "$comment": "Supported by: GERAS only."
+                            "$comment": "Supported by: SOLARGIS_A1 only."
                           }
                         ],
                         "definition": "Describes how table is attached to the rack."
@@ -2782,7 +2782,7 @@
                       }
                     ]
                   },
-                  "$comment": "Multiple segments supported by: S1 only. GERAS and CHRONOS support single segment only."
+                  "$comment": "Multiple segments supported by: SOLARGIS_S1 only. SOLARGIS_A1 and SOLARGIS_A2 support single segment only."
                 },
                 "dcElectricalLayout": {
                   "type": "object",
@@ -3191,12 +3191,12 @@
         "simulationEngine": {
           "type": "string",
           "enum": [
-            "S1",
-            "GERAS",
-            "CHRONOS"
+            "SOLARGIS_S1",
+            "SOLARGIS_A1",
+            "SOLARGIS_A2"
           ],
-          "default": "S1",
-          "description": "Simulation engine to use. Default: S1. Each engine supports a different subset of mounting types, module types, and features. See $comment fields throughout the schema for details."
+          "default": "SOLARGIS_S1",
+          "description": "Simulation engine to use. Default: SOLARGIS_S1. Each engine supports a different subset of mounting types, module types, and features. See $comment fields throughout the schema for details."
         }
       },
       "required": [
