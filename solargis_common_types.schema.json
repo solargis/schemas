@@ -816,9 +816,9 @@
           "description": "Classification of the immediate surroundings of the instrument in terms of obstructions and nearby heat sources that could affect measurements.",
           "$ref": "solargis_common_enums.schema.json#/$defs/SurroundingsEnum"
         },
-        "photodocumentation": {
+        "photoDocumentation": {
           "description": "Availability of photographic documentation of the site and instrument installation.",
-          "$ref": "solargis_common_enums.schema.json#/$defs/PhotodocumentationEnum"
+          "$ref": "solargis_common_enums.schema.json#/$defs/PhotoDocumentationEnum"
         }
       }
     },

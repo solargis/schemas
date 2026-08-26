@@ -480,7 +480,7 @@
         "UNDEFINED"
       ]
     },
-    "PhotodocumentationEnum": {
+    "PhotoDocumentationEnum": {
       "description": "Availability of photographic documentation of the site and instrument installation.",
       "type": "string",
       "enum": [

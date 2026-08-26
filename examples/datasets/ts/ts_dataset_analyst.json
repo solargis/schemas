@@ -163,7 +163,7 @@
         "environment": {
           "landscapeRepresentativeness": "PARTIALLY_REPRESENTATIVE",
           "surroundings": "MINOR_OBSTACLES_OR_HEAT_SOURCES",
-          "photodocumentation": "FULL"
+          "photoDocumentation": "FULL"
         },
         "qualityControl": {
           "history": [
@@ -202,7 +202,7 @@
             "code": "HIGH",
             "timestamp": "2022-04-02T10:05:00+09:00",
             "platform": "SOLARGIS_EXPERT",
-            "notes": "Complete instrument metadata and photodocumentation available for the whole period."
+            "notes": "Complete instrument metadata and photo documentation available for the whole period."
           },
           "instrumentMisalignments": [
             {
