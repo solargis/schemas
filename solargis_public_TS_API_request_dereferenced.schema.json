@@ -340,6 +340,35 @@
               }
             ]
           ]
+        },
+        "landscapeRepresentativeness": {
+          "description": "Degree to which the site's local landscape represents the broader surrounding region for the measured variable.",
+          "type": "string",
+          "enum": [
+            "REPRESENTATIVE",
+            "PARTIALLY_REPRESENTATIVE",
+            "NON_REPRESENTATIVE",
+            "UNDEFINED"
+          ]
+        },
+        "surroundings": {
+          "description": "Classification of the immediate surroundings of the instrument in terms of obstructions and nearby heat sources that could affect measurements.",
+          "type": "string",
+          "enum": [
+            "UNOBSTRUCTED_NO_HEAT_SOURCES",
+            "MINOR_OBSTACLES_OR_HEAT_SOURCES",
+            "SIGNIFICANT_OBSTACLES",
+            "UNDEFINED"
+          ]
+        },
+        "photodocumentation": {
+          "description": "Availability of photographic documentation of the site and instrument installation.",
+          "type": "string",
+          "enum": [
+            "FULL",
+            "PARTIAL",
+            "MISSING"
+          ]
         }
       }
     },

@@ -19,7 +19,9 @@
       "type": "string",
       "enum": [
         "GROUND_MEASUREMENTS_DATA",
-        "MODEL_DATA"
+        "MODEL_DATA",
+        "CALCULATED_DATA",
+        "UNDEFINED"
       ]
     },
     "TimeAlignmentEnum": {
@@ -355,14 +357,53 @@
         }
       ]
     },
-    "QualityControlStatusEnum": {
-      "description": "Types of the QC status entity.",
+    "QualityControlStepEnum": {
+      "description": "Identifier of a QC check step.",
       "type": "string",
       "enum": [
-        "TIME_REFERENCE_CHECK",
-        "AUTOMATIC_QUALITY_CHECK_IRRADIATION",
-        "MANUAL_QUALITY_CHECK",
-        "DRIFT_DETECTION"
+        "ABOVE_PHYSICAL_MAX",
+        "BELOW_PHYSICAL_MIN",
+        "CLIPPING_DETECTION",
+        "CONSISTENCY_DETECTION",
+        "DEGRADATION_DETECTION",
+        "DEW_DETECTION",
+        "DUPLICATE_DATA_DETECTION",
+        "FLAG_RESOLUTION",
+        "GET_SOLARGIS_MODEL_DATA",
+        "INVALID_PATTERN_DETECTION",
+        "INVALID_VALUES_DETECTION",
+        "LINEAR_INTERPOLATION_DETECTION",
+        "LOGGER_DETECTION",
+        "MAINTENANCE_DETECTION",
+        "MOUNTING_CONFIG_DETECTION",
+        "MOUNTING_TYPE_IDENTIFICATION",
+        "MULTI_INSTRUMENT_DETECTION",
+        "NOISE_DETECTION",
+        "PARAMETER_TYPE_DETECTION",
+        "POINT_OUTLIER_DETECTION",
+        "POSTFILTERING",
+        "PRECISION_EXTREMA_DETECTION",
+        "RECALL_EXTREMA_DETECTION",
+        "SHADING_DETECTION",
+        "SNOW_DETECTION",
+        "STATIC_VALUES_DETECTION",
+        "STOW_TRACKER_MALFUNCTION_DETECTION",
+        "SUN_BELOW_HORIZON",
+        "SOILING_DETECTION",
+        "TIME_SHIFT_ML_DETECTION",
+        "TIME_REFERENCE_SHIFT_DETECTION",
+        "TRACKER_MALFUNCTION_DNI_DIF",
+        "TWO_COMPONENT_TEST",
+        "UNDERPRODUCTION_DETECTION"
+      ]
+    },
+    "QualityControlPlatformEnum": {
+      "description": "Platform or system that executed a QC step.",
+      "type": "string",
+      "enum": [
+        "SOLARGIS_QC_PIPELINE",
+        "SOLARGIS_ANALYST",
+        "SOLARGIS_EXPERT"
       ]
     },
     "ColumnQualityEnum": {
@@ -385,6 +426,87 @@
         "SECONDARY",
         "TERTIARY",
         "INSUFFICIENT",
+        "UNDEFINED"
+      ]
+    },
+    "SatelliteRegionEnum": {
+      "description": "Satellite source for model data",
+      "type": "string",
+      "enum": [
+        "PRIME",
+        "IODC",
+        "IODC-HIMAWARI",
+        "MTSAT-HIMAWARI",
+        "GOES-WEST",
+        "GOES-EAST"
+      ]
+    },
+    "VentilationHeatingEnum": {
+      "description": "HVAC - heating, ventilation, air conditioning of the instrument.",
+      "type": "string",
+      "enum": [
+        "NONE",
+        "INTERNAL",
+        "EXTERNAL",
+        "PARTIAL"
+      ]
+    },
+    "ShadingTechnologyEnum": {
+      "description": "Shading technology used with the instrument.",
+      "type": "string",
+      "enum": [
+        "SHADING_RING",
+        "SHADING_BALL",
+        "SHADOW_BAND"
+      ]
+    },
+    "LandscapeRepresentativenessEnum": {
+      "description": "Degree to which the site's local landscape represents the broader surrounding region for the measured variable.",
+      "type": "string",
+      "enum": [
+        "REPRESENTATIVE",
+        "PARTIALLY_REPRESENTATIVE",
+        "NON_REPRESENTATIVE",
+        "UNDEFINED"
+      ]
+    },
+    "SurroundingsEnum": {
+      "description": "Classification of the immediate surroundings of the instrument in terms of obstructions and nearby heat sources that could affect measurements.",
+      "type": "string",
+      "enum": [
+        "UNOBSTRUCTED_NO_HEAT_SOURCES",
+        "MINOR_OBSTACLES_OR_HEAT_SOURCES",
+        "SIGNIFICANT_OBSTACLES",
+        "UNDEFINED"
+      ]
+    },
+    "PhotodocumentationEnum": {
+      "description": "Availability of photographic documentation of the site and instrument installation.",
+      "type": "string",
+      "enum": [
+        "FULL",
+        "PARTIAL",
+        "MISSING"
+      ]
+    },
+    "ComparisonModelTypeEnum": {
+      "description": "Source of the Solargis model data used for comparison against measurements in the report.",
+      "type": "string",
+      "enum": [
+        "RAW_DB",
+        "DELIVERY_RAST",
+        "DELIVERY_DB"
+      ]
+    },
+    "PublishingEnum": {
+      "description": "Enum for rules what information may be published - nothing, location only, validation statistics, etc.",
+      "type": "string",
+      "enum": [
+        "NO_PUBLISH",
+        "PUBLISH_LOCATION_ONLY",
+        "PUBLISH_QC_ONLY",
+        "PUBLISH_QC_AND_VALIDATION",
+        "PUBLISH_VALIDATION_ONLY",
         "UNDEFINED"
       ]
     }
