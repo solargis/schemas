@@ -505,6 +505,27 @@
         "instrumentCoordinates": {
           "description": "Specific coordinates of instrument",
           "$ref": "solargis_common_types.schema.json#/$defs/InstrumentCoordinates"
+        },
+        "categoryScheme": {
+          "description": "Lookup table interpreting categorical (coded) values occurring in this column, e.g. ranks or classes. Use with the CATEGORY column type. For flag columns use flagScheme instead.",
+          "type": "array",
+          "items": {
+            "$ref": "solargis_common_types.schema.json#/$defs/Category"
+          },
+          "examples": [
+            [
+              {
+                "value": 1,
+                "label": "A",
+                "description": "The best rank."
+              },
+              {
+                "value": 2,
+                "label": "B",
+                "description": "The medium rank."
+              }
+            ]
+          ]
         }
       },
       "required": [

@@ -193,6 +193,31 @@
         "description"
       ]
     },
+    "Category": {
+      "description": "One categorical value and its meaning. Used with columns holding coded values, e.g. ranks or classes.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "value": {
+          "description": "Integer code occurring in the data column.",
+          "type": "integer"
+        },
+        "label": {
+          "description": "Short human readable name of the category, suitable for chart legends and table headers.",
+          "type": "string",
+          "maxLength": 50
+        },
+        "description": {
+          "description": "Full explanation of the category.",
+          "type": "string",
+          "maxLength": 500
+        }
+      },
+      "required": [
+        "value",
+        "label"
+      ]
+    },
     "Instrument": {
       "description": "Measuring instrument or sensor of any type.",
       "type": "object",

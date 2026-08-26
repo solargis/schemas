@@ -114,6 +114,7 @@
       "type": "string",
       "enum": [
         "FLAG",
+        "CATEGORY",
         "UNDEFINED",
         "GENERIC_AVERAGE",
         "GENERIC_SUM",

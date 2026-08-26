@@ -82,7 +82,8 @@
       "GHI_model",
       "my_difference",
       "flg_GHI",
-      "flagR"
+      "flagR",
+      "GHI_rank"
     ],
     "columns": {
       "DATETIME":  {
@@ -293,6 +294,28 @@
       "flagR": {
         "columnType": "FLAG",
         "unit": null
+      },
+      "GHI_rank": {
+        "columnType": "CATEGORY",
+        "unit": null,
+        "description": "Rank assigned to the measured GHI value, expressing how much it can be relied on.",
+        "categoryScheme": [
+          {
+            "value": 1,
+            "label": "A",
+            "description": "Measurement passed all quality control steps without a warning."
+          },
+          {
+            "value": 2,
+            "label": "B",
+            "description": "Measurement passed quality control, but at least one step reported a warning."
+          },
+          {
+            "value": 3,
+            "label": "C",
+            "description": "Measurement is usable only with caution, e.g. during a detected instrument misalignment."
+          }
+        ]
       }
     }
   },
@@ -361,6 +384,11 @@
       0,
       0,
       0
+    ],
+    "GHI_rank": [
+      1,
+      2,
+      3
     ]
   }
 }
