@@ -44,6 +44,11 @@
           "type": "string",
           "maxLength": 100
         },
+        "nameShort": {
+          "description": "Short name of the site, suitable for chart titles and table headers.",
+          "type": "string",
+          "maxLength": 100
+        },
         "countryName": {
           "description": "Country name.",
           "type": "string",
@@ -69,6 +74,10 @@
           "description": "Another option to identify the site.",
           "type": "string",
           "maxLength": 100
+        },
+        "confidential": {
+          "description": "The site location and its name are confidential and must not be published.",
+          "type": "boolean"
         }
       },
       "examples": [
