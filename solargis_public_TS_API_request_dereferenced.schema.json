@@ -3221,7 +3221,7 @@
             },
             "spectralCorrection": {
               "type": "boolean",
-              "description": "Enable spectral correction. Default: enabled for CDTE, MONO_CSI and POLY_CSI panels, disabled otherwise."
+              "description": "Enable spectral correction. Default: enabled on SOLARGIS_S1 for every module; on SOLARGIS_A1 / SOLARGIS_A2 enabled only for thin-film modules (ASI, CDTE, CIS), disabled otherwise."
             }
           },
           "description": "Simulation options. All fields are optional."

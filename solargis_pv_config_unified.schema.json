@@ -1,7 +1,11 @@
 {
   "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.7/solargis_pv_config_unified.schema.json",
-  "$schema": "http://json-schema.org/draft-07/schema",
-  "description": "Schema for Solargis PV simulation request",
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "version": "0.1.0",
+  "x-compatiblePackages": {
+    "sg_sgsim_s1": ">=0.1.9"
+  },
+  "description": "Schema for Solargis PV simulation request. Version: `0.1.0`.",
   "allOf": [
     {
       "$ref": "#/$defs/PvConfiguration"
@@ -1910,7 +1914,7 @@
             },
             "spectralCorrection": {
               "type": "boolean",
-              "description": "Enable spectral correction. Default: enabled for CDTE, MONO_CSI and POLY_CSI panels, disabled otherwise."
+              "description": "Enable spectral correction. Default: enabled on SOLARGIS_S1 for every module; on SOLARGIS_A1 / SOLARGIS_A2 enabled only for thin-film modules (ASI, CDTE, CIS), disabled otherwise."
             }
           },
           "description": "Simulation options. All fields are optional."
