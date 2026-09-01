@@ -1,6 +1,6 @@
 {
   "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.7/solargis_dataset.schema.json",
-  "$schema": "https://json-schema.org/draft-07/schema",
+  "$schema": "http://json-schema.org/draft-07/schema",
 
   "description": "This is the schema for the Solargis dataset - a structure for data and metadata you can exchange with Solargis. You can use this schema for two dimensional tabular data (one column is reserved for datetime strings, others are numeric columns) for a single site location or a single portfolio.",
   "$comment": "Important - all columns must refer to a single site location (or portfolio). If you want to compare data from multiple sites, create multiple datasets.",
