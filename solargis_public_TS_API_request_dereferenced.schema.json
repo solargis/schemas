@@ -758,687 +758,401 @@
               "type": "object",
               "properties": {
                 "modules": {
-                  "oneOf": [
-                    {
-                      "allOf": [
-                        {
-                          "type": "object",
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "enum": [
-                                "MONO_CSI",
-                                "POLY_CSI",
-                                "CDTE",
-                                "CSI",
-                                "CIS",
-                                "ASI"
-                              ],
-                              "description": "Solar panel technology. MONO_CSI, POLY_CSI, CDTE are the standard values. CSI (generic crystalline silicon), CIS, ASI are additional values accepted for simplified requests. CSI is resolved to MONO_CSI when expanding to full module spec.",
-                              "$comment": "CSI supported by all simulationEngines. MONO_CSI, POLY_CSI: SOLARGIS_S1 only. CDTE, CIS, ASI: SOLARGIS_A1, SOLARGIS_A2 only."
-                            },
-                            "length": {
-                              "type": "number"
-                            },
-                            "width": {
-                              "type": "number"
-                            },
-                            "thickness": {
-                              "type": "number",
-                              "minimum": 0.004,
-                              "description": "[m] Panel thickness."
-                            },
-                            "cellSizeU": {
-                              "type": "number"
-                            },
-                            "cellSizeV": {
-                              "type": "number"
-                            },
-                            "nCells": {
-                              "oneOf": [
-                                {
-                                  "type": "integer",
-                                  "minimum": 1
-                                },
-                                {
-                                  "type": "object",
-                                  "properties": {
-                                    "u": {
-                                      "type": "integer",
-                                      "minimum": 1,
-                                      "description": "Number of cells in panel horizontally in LANDSCAPE orientation, vertically in PORTRAIT."
-                                    },
-                                    "v": {
-                                      "type": "integer",
-                                      "minimum": 1,
-                                      "description": "Number of cells in panel vertically in LANDSCAPE orientation, horizontally in PORTRAIT."
-                                    }
-                                  },
-                                  "required": [
-                                    "u",
-                                    "v"
-                                  ],
-                                  "additionalProperties": false
-                                }
-                              ],
-                              "description": "Number of cells on one solar panel, given as total count N, or as UxV counts. If using N, then there must be only one UxV layout for given N which fits into panel dimensions (length x width minus margins & padding). Total cell count must be divisible by number of submodules (nBypassDiodes)."
-                            },
-                            "cutCellOptions": {
-                              "type": "object",
-                              "properties": {
-                                "type": {
-                                  "type": "string",
-                                  "enum": [
-                                    "HALF_CELL"
-                                  ]
-                                },
-                                "middleFrameBorderSizeU": {
-                                  "type": "number"
-                                },
-                                "middleFramePaddingU": {
-                                  "type": "number"
-                                }
-                              },
-                              "description": "If this set of options is provided, then module uses half-cut cells. Otherwise it uses full cells."
-                            },
-                            "frameBorderSizeU": {
-                              "type": "number"
-                            },
-                            "frameBorderSizeV": {
-                              "type": "number"
-                            },
-                            "framePaddingU": {
-                              "type": "number"
-                            },
-                            "framePaddingV": {
-                              "type": "number"
-                            },
-                            "nBypassDiodes": {
-                              "type": "integer",
-                              "description": "Number of submodules. Each submodule is bridged by a bypass diode. Ignored for non-CSI panels (which have 1 submodule)."
-                            }
+                  "type": "array",
+                  "items": {
+                    "allOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "MONO_CSI",
+                              "POLY_CSI",
+                              "CDTE",
+                              "CSI",
+                              "CIS",
+                              "ASI"
+                            ],
+                            "description": "Solar panel technology. MONO_CSI, POLY_CSI, CDTE are the standard values. CSI (generic crystalline silicon), CIS, ASI are additional values accepted for simplified requests. CSI is resolved to MONO_CSI when expanding to full module spec.",
+                            "$comment": "CSI supported by all simulationEngines. MONO_CSI, POLY_CSI: SOLARGIS_S1 only. CDTE, CIS, ASI: SOLARGIS_A1, SOLARGIS_A2 only."
                           },
-                          "required": [
-                            "type"
-                          ],
-                          "description": "Module geometry. Only type is required; dimension fields are optional."
-                        },
-                        {
-                          "type": "object",
-                          "properties": {
-                            "bifaciality": {
-                              "type": "number",
-                              "minimum": 0,
-                              "maximum": 1
-                            },
-                            "nameplatePower": {
-                              "type": "number",
-                              "exclusiveMinimum": 0
-                            },
-                            "nominalOperatingCellTemperature": {
-                              "type": "number",
-                              "minimum": -100
-                            },
-                            "diode": {
-                              "type": "object",
-                              "properties": {
-                                "alpha_sc": {
-                                  "type": "number"
-                                },
-                                "a_ref": {
-                                  "type": "number"
-                                },
-                                "I_L_ref": {
-                                  "type": "number"
-                                },
-                                "I_o_ref": {
-                                  "type": "number"
-                                },
-                                "R_sh_ref": {
-                                  "type": "number",
-                                  "minimum": 0
-                                },
-                                "R_s": {
-                                  "type": "number",
-                                  "minimum": 0
-                                },
-                                "V_oc_ref": {
-                                  "type": "number"
-                                }
-                              },
-                              "required": [
-                                "alpha_sc",
-                                "a_ref",
-                                "I_L_ref",
-                                "I_o_ref",
-                                "R_sh_ref",
-                                "R_s",
-                                "V_oc_ref"
-                              ]
-                            },
-                            "unitMass": {
-                              "type": "number",
-                              "minimum": 0
-                            },
-                            "temperatureCoefficientPmax": {
-                              "type": "number",
-                              "maximum": 0
-                            }
+                          "length": {
+                            "type": "number"
                           },
-                          "description": "Module electrical properties. All fields are optional; nominalOperatingCellTemperature is recommended when available."
-                        }
-                      ],
-                      "properties": {
-                        "name": {
-                          "type": "string",
-                          "minLength": 1,
-                          "description": "Name identifying this entry, referenced by dcElectricalLayout.moduleName. Required when the entry is part of a list; optional for a single object."
-                        }
-                      }
-                    },
-                    {
-                      "type": "array",
-                      "items": {
-                        "allOf": [
-                          {
-                            "allOf": [
+                          "width": {
+                            "type": "number"
+                          },
+                          "thickness": {
+                            "type": "number",
+                            "minimum": 0.004,
+                            "description": "[m] Panel thickness."
+                          },
+                          "cellSizeU": {
+                            "type": "number"
+                          },
+                          "cellSizeV": {
+                            "type": "number"
+                          },
+                          "nCells": {
+                            "oneOf": [
+                              {
+                                "type": "integer",
+                                "minimum": 1
+                              },
                               {
                                 "type": "object",
                                 "properties": {
-                                  "type": {
-                                    "type": "string",
-                                    "enum": [
-                                      "MONO_CSI",
-                                      "POLY_CSI",
-                                      "CDTE",
-                                      "CSI",
-                                      "CIS",
-                                      "ASI"
-                                    ],
-                                    "description": "Solar panel technology. MONO_CSI, POLY_CSI, CDTE are the standard values. CSI (generic crystalline silicon), CIS, ASI are additional values accepted for simplified requests. CSI is resolved to MONO_CSI when expanding to full module spec.",
-                                    "$comment": "CSI supported by all simulationEngines. MONO_CSI, POLY_CSI: SOLARGIS_S1 only. CDTE, CIS, ASI: SOLARGIS_A1, SOLARGIS_A2 only."
-                                  },
-                                  "length": {
-                                    "type": "number"
-                                  },
-                                  "width": {
-                                    "type": "number"
-                                  },
-                                  "thickness": {
-                                    "type": "number",
-                                    "minimum": 0.004,
-                                    "description": "[m] Panel thickness."
-                                  },
-                                  "cellSizeU": {
-                                    "type": "number"
-                                  },
-                                  "cellSizeV": {
-                                    "type": "number"
-                                  },
-                                  "nCells": {
-                                    "oneOf": [
-                                      {
-                                        "type": "integer",
-                                        "minimum": 1
-                                      },
-                                      {
-                                        "type": "object",
-                                        "properties": {
-                                          "u": {
-                                            "type": "integer",
-                                            "minimum": 1,
-                                            "description": "Number of cells in panel horizontally in LANDSCAPE orientation, vertically in PORTRAIT."
-                                          },
-                                          "v": {
-                                            "type": "integer",
-                                            "minimum": 1,
-                                            "description": "Number of cells in panel vertically in LANDSCAPE orientation, horizontally in PORTRAIT."
-                                          }
-                                        },
-                                        "required": [
-                                          "u",
-                                          "v"
-                                        ],
-                                        "additionalProperties": false
-                                      }
-                                    ],
-                                    "description": "Number of cells on one solar panel, given as total count N, or as UxV counts. If using N, then there must be only one UxV layout for given N which fits into panel dimensions (length x width minus margins & padding). Total cell count must be divisible by number of submodules (nBypassDiodes)."
-                                  },
-                                  "cutCellOptions": {
-                                    "type": "object",
-                                    "properties": {
-                                      "type": {
-                                        "type": "string",
-                                        "enum": [
-                                          "HALF_CELL"
-                                        ]
-                                      },
-                                      "middleFrameBorderSizeU": {
-                                        "type": "number"
-                                      },
-                                      "middleFramePaddingU": {
-                                        "type": "number"
-                                      }
-                                    },
-                                    "description": "If this set of options is provided, then module uses half-cut cells. Otherwise it uses full cells."
-                                  },
-                                  "frameBorderSizeU": {
-                                    "type": "number"
-                                  },
-                                  "frameBorderSizeV": {
-                                    "type": "number"
-                                  },
-                                  "framePaddingU": {
-                                    "type": "number"
-                                  },
-                                  "framePaddingV": {
-                                    "type": "number"
-                                  },
-                                  "nBypassDiodes": {
+                                  "u": {
                                     "type": "integer",
-                                    "description": "Number of submodules. Each submodule is bridged by a bypass diode. Ignored for non-CSI panels (which have 1 submodule)."
+                                    "minimum": 1,
+                                    "description": "Number of cells in panel horizontally in LANDSCAPE orientation, vertically in PORTRAIT."
+                                  },
+                                  "v": {
+                                    "type": "integer",
+                                    "minimum": 1,
+                                    "description": "Number of cells in panel vertically in LANDSCAPE orientation, horizontally in PORTRAIT."
                                   }
                                 },
                                 "required": [
-                                  "type"
+                                  "u",
+                                  "v"
                                 ],
-                                "description": "Module geometry. Only type is required; dimension fields are optional."
-                              },
-                              {
-                                "type": "object",
-                                "properties": {
-                                  "bifaciality": {
-                                    "type": "number",
-                                    "minimum": 0,
-                                    "maximum": 1
-                                  },
-                                  "nameplatePower": {
-                                    "type": "number",
-                                    "exclusiveMinimum": 0
-                                  },
-                                  "nominalOperatingCellTemperature": {
-                                    "type": "number",
-                                    "minimum": -100
-                                  },
-                                  "diode": {
-                                    "type": "object",
-                                    "properties": {
-                                      "alpha_sc": {
-                                        "type": "number"
-                                      },
-                                      "a_ref": {
-                                        "type": "number"
-                                      },
-                                      "I_L_ref": {
-                                        "type": "number"
-                                      },
-                                      "I_o_ref": {
-                                        "type": "number"
-                                      },
-                                      "R_sh_ref": {
-                                        "type": "number",
-                                        "minimum": 0
-                                      },
-                                      "R_s": {
-                                        "type": "number",
-                                        "minimum": 0
-                                      },
-                                      "V_oc_ref": {
-                                        "type": "number"
-                                      }
-                                    },
-                                    "required": [
-                                      "alpha_sc",
-                                      "a_ref",
-                                      "I_L_ref",
-                                      "I_o_ref",
-                                      "R_sh_ref",
-                                      "R_s",
-                                      "V_oc_ref"
-                                    ]
-                                  },
-                                  "unitMass": {
-                                    "type": "number",
-                                    "minimum": 0
-                                  },
-                                  "temperatureCoefficientPmax": {
-                                    "type": "number",
-                                    "maximum": 0
-                                  }
-                                },
-                                "description": "Module electrical properties. All fields are optional; nominalOperatingCellTemperature is recommended when available."
+                                "additionalProperties": false
                               }
                             ],
-                            "properties": {
-                              "name": {
-                                "type": "string",
-                                "minLength": 1,
-                                "description": "Name identifying this entry, referenced by dcElectricalLayout.moduleName. Required when the entry is part of a list; optional for a single object."
-                              }
-                            }
+                            "description": "Number of cells on one solar panel, given as total count N, or as UxV counts. If using N, then there must be only one UxV layout for given N which fits into panel dimensions (length x width minus margins & padding). Total cell count must be divisible by number of submodules (nBypassDiodes)."
                           },
-                          {
-                            "required": [
-                              "name"
-                            ]
+                          "cutCellOptions": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "HALF_CELL"
+                                ]
+                              },
+                              "middleFrameBorderSizeU": {
+                                "type": "number"
+                              },
+                              "middleFramePaddingU": {
+                                "type": "number"
+                              }
+                            },
+                            "description": "If this set of options is provided, then module uses half-cut cells. Otherwise it uses full cells."
+                          },
+                          "frameBorderSizeU": {
+                            "type": "number"
+                          },
+                          "frameBorderSizeV": {
+                            "type": "number"
+                          },
+                          "framePaddingU": {
+                            "type": "number"
+                          },
+                          "framePaddingV": {
+                            "type": "number"
+                          },
+                          "nBypassDiodes": {
+                            "type": "integer",
+                            "description": "Number of submodules. Each submodule is bridged by a bypass diode. Ignored for non-CSI panels (which have 1 submodule)."
                           }
+                        },
+                        "required": [
+                          "type"
                         ],
-                        "description": "A Module entry in list form: `name` is required."
+                        "description": "Module geometry. Only type is required; dimension fields are optional."
                       },
-                      "minItems": 1
-                    }
-                  ],
-                  "description": "Solar panel type(s) used in the power plant: a single Module object, or a list of Module entries each carrying a unique name. Segments select a type via dcElectricalLayout.moduleName; with a single module the reference is optional."
+                      {
+                        "type": "object",
+                        "properties": {
+                          "bifaciality": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "nameplatePower": {
+                            "type": "number",
+                            "exclusiveMinimum": 0
+                          },
+                          "nominalOperatingCellTemperature": {
+                            "type": "number",
+                            "minimum": -100
+                          },
+                          "diode": {
+                            "type": "object",
+                            "properties": {
+                              "alpha_sc": {
+                                "type": "number"
+                              },
+                              "a_ref": {
+                                "type": "number"
+                              },
+                              "I_L_ref": {
+                                "type": "number"
+                              },
+                              "I_o_ref": {
+                                "type": "number"
+                              },
+                              "R_sh_ref": {
+                                "type": "number",
+                                "minimum": 0
+                              },
+                              "R_s": {
+                                "type": "number",
+                                "minimum": 0
+                              },
+                              "V_oc_ref": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "alpha_sc",
+                              "a_ref",
+                              "I_L_ref",
+                              "I_o_ref",
+                              "R_sh_ref",
+                              "R_s",
+                              "V_oc_ref"
+                            ]
+                          },
+                          "unitMass": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "temperatureCoefficientPmax": {
+                            "type": "number",
+                            "maximum": 0
+                          }
+                        },
+                        "description": "Module electrical properties. All fields are optional; nominalOperatingCellTemperature is recommended when available."
+                      }
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Name identifying this entry, referenced by dcElectricalLayout.moduleName."
+                      }
+                    },
+                    "required": [
+                      "name"
+                    ]
+                  },
+                  "minItems": 1,
+                  "description": "Solar panel type(s) used in the power plant: a list of Module entries, each with a unique `name`. Segments select a type via dcElectricalLayout.moduleName; with a single module the reference is optional."
                 },
                 "inverters": {
-                  "oneOf": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "parameters": {
-                          "oneOf": [
-                            {
-                              "type": "object",
-                              "properties": {
-                                "Paco": {
-                                  "type": "number"
-                                },
-                                "Pdco": {
-                                  "type": "number"
-                                },
-                                "Vdco": {
-                                  "type": "number"
-                                },
-                                "Pso": {
-                                  "type": "number"
-                                },
-                                "C0": {
-                                  "type": "number",
-                                  "description": "Curvature of the relationship between AC output power and DC input power."
-                                },
-                                "C1": {
-                                  "type": "number"
-                                },
-                                "C2": {
-                                  "type": "number"
-                                },
-                                "C3": {
-                                  "type": "number"
-                                },
-                                "Pnt": {
-                                  "type": "number"
-                                },
-                                "dcLimitsPerMppt": {
-                                  "type": "object",
-                                  "properties": {
-                                    "Vmppopermin": {
-                                      "type": "number"
-                                    },
-                                    "Vmppopermax": {
-                                      "type": "number"
-                                    },
-                                    "Vmppnommin": {
-                                      "type": "number"
-                                    },
-                                    "Vmppnommax": {
-                                      "type": "number"
-                                    },
-                                    "Vdcmax": {
-                                      "type": "number"
-                                    },
-                                    "Imax": {
-                                      "type": "number"
-                                    }
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "parameters": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "Paco": {
+                                "type": "number"
+                              },
+                              "Pdco": {
+                                "type": "number"
+                              },
+                              "Vdco": {
+                                "type": "number"
+                              },
+                              "Pso": {
+                                "type": "number"
+                              },
+                              "C0": {
+                                "type": "number",
+                                "description": "Curvature of the relationship between AC output power and DC input power."
+                              },
+                              "C1": {
+                                "type": "number"
+                              },
+                              "C2": {
+                                "type": "number"
+                              },
+                              "C3": {
+                                "type": "number"
+                              },
+                              "Pnt": {
+                                "type": "number"
+                              },
+                              "dcLimitsPerMppt": {
+                                "type": "object",
+                                "properties": {
+                                  "Vmppopermin": {
+                                    "type": "number"
                                   },
-                                  "required": [
-                                    "Vmppopermin",
-                                    "Vmppopermax",
-                                    "Imax"
-                                  ],
-                                  "description": "Advanced limits the MPPT imposes on connected strings of solar panels. Search for maximum power point on IV curve considers only points which satisfy these limits."
-                                }
-                              },
-                              "required": [
-                                "Paco",
-                                "Pdco",
-                                "Vdco",
-                                "Pso",
-                                "C0",
-                                "C1",
-                                "C2",
-                                "C3",
-                                "Pnt",
-                                "dcLimitsPerMppt"
-                              ],
-                              "$comment": "Supported by: SOLARGIS_S1 only."
+                                  "Vmppopermax": {
+                                    "type": "number"
+                                  },
+                                  "Vmppnommin": {
+                                    "type": "number"
+                                  },
+                                  "Vmppnommax": {
+                                    "type": "number"
+                                  },
+                                  "Vdcmax": {
+                                    "type": "number"
+                                  },
+                                  "Imax": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "Vmppopermin",
+                                  "Vmppopermax",
+                                  "Imax"
+                                ],
+                                "description": "Advanced limits the MPPT imposes on connected strings of solar panels. Search for maximum power point on IV curve considers only points which satisfy these limits."
+                              }
                             },
-                            {
-                              "type": "object",
-                              "properties": {
-                                "efficiency": {
-                                  "type": "number",
-                                  "minimum": 0,
-                                  "maximum": 100
-                                }
-                              },
-                              "required": [
-                                "efficiency"
-                              ],
-                              "$comment": "Supported by all simulationEngines."
+                            "required": [
+                              "Paco",
+                              "Pdco",
+                              "Vdco",
+                              "Pso",
+                              "C0",
+                              "C1",
+                              "C2",
+                              "C3",
+                              "Pnt",
+                              "dcLimitsPerMppt"
+                            ],
+                            "$comment": "Supported by: SOLARGIS_S1 only."
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "efficiency": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 100
+                              }
                             },
-                            {
-                              "type": "object",
-                              "properties": {
-                                "effCurveDataPairs": {
+                            "required": [
+                              "efficiency"
+                            ],
+                            "$comment": "Supported by all simulationEngines."
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "effCurveDataPairs": {
+                                "type": "array",
+                                "items": {
                                   "type": "array",
                                   "items": {
-                                    "type": "array",
-                                    "items": {
-                                      "type": "number"
-                                    },
-                                    "minItems": 2,
-                                    "maxItems": 2
+                                    "type": "number"
                                   },
-                                  "minItems": 1,
-                                  "description": "[[power_fraction, efficiency_pct], ...] pairs defining inverter efficiency as function of load."
+                                  "minItems": 2,
+                                  "maxItems": 2
                                 },
-                                "nominalDCPower": {
-                                  "type": "number",
-                                  "exclusiveMinimum": 0,
-                                  "description": "[W] Nominal DC input power for curve reference."
-                                },
-                                "startPower": {
-                                  "type": "number",
-                                  "minimum": 0,
-                                  "description": "[W] Minimum DC power to start."
-                                }
+                                "minItems": 1,
+                                "description": "[[power_fraction, efficiency_pct], ...] pairs defining inverter efficiency as function of load."
                               },
-                              "required": [
-                                "effCurveDataPairs"
-                              ],
-                              "$comment": "Supported by: SOLARGIS_A1, SOLARGIS_A2 only."
-                            }
-                          ]
-                        },
-                        "name": {
-                          "type": "string",
-                          "minLength": 1,
-                          "description": "Name identifying this entry, referenced by dcElectricalLayout.inverterName. Required when the entry is part of a list; optional for a single object."
-                        },
-                        "nMppTrackers": {
-                          "type": "integer",
-                          "description": "Number of MPP trackers that the inverter component has available."
-                        },
-                        "Vac": {
-                          "type": "number"
-                        },
-                        "nOutputAcPhases": {
-                          "type": "integer",
-                          "minimum": 1,
-                          "maximum": 3,
-                          "description": "Number of output AC phases of the inverter. Must be 1 or 3. All inverters must have the same value."
-                        }
+                              "nominalDCPower": {
+                                "type": "number",
+                                "exclusiveMinimum": 0,
+                                "description": "[W] Nominal DC input power for curve reference."
+                              },
+                              "startPower": {
+                                "type": "number",
+                                "minimum": 0,
+                                "description": "[W] Minimum DC power to start."
+                              }
+                            },
+                            "required": [
+                              "effCurveDataPairs"
+                            ],
+                            "$comment": "Supported by: SOLARGIS_A1, SOLARGIS_A2 only."
+                          }
+                        ]
                       },
-                      "required": [
-                        "parameters"
-                      ],
-                      "description": "Inverter component. Only parameters is required; nMppTrackers defaults to 1, other fields use system defaults."
+                      "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "Name identifying this entry, referenced by dcElectricalLayout.inverterName."
+                      },
+                      "nMppTrackers": {
+                        "type": "integer",
+                        "description": "Number of MPP trackers that the inverter component has available."
+                      },
+                      "Vac": {
+                        "type": "number"
+                      },
+                      "nOutputAcPhases": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 3,
+                        "description": "Number of output AC phases of the inverter. Must be 1 or 3. All inverters must have the same value."
+                      }
                     },
-                    {
+                    "required": [
+                      "parameters",
+                      "name"
+                    ],
+                    "description": "Inverter component. Only parameters is required; nMppTrackers defaults to 1, other fields use system defaults."
+                  },
+                  "minItems": 1,
+                  "description": "Inverter type(s) used in the power plant: a list of Inverter entries, each with a unique `name`. Segments select a type via dcElectricalLayout.inverterName; with a single inverter the reference is optional."
+                },
+                "transformers": {
+                  "type": "object",
+                  "properties": {
+                    "inverterTransformers": {
                       "type": "array",
                       "items": {
                         "allOf": [
                           {
                             "type": "object",
                             "properties": {
-                              "parameters": {
+                              "params": {
                                 "oneOf": [
                                   {
                                     "type": "object",
                                     "properties": {
-                                      "Paco": {
+                                      "apparentRatedPower": {
                                         "type": "number"
                                       },
-                                      "Pdco": {
+                                      "noLoadLosses": {
                                         "type": "number"
                                       },
-                                      "Vdco": {
+                                      "loadLosses": {
                                         "type": "number"
-                                      },
-                                      "Pso": {
-                                        "type": "number"
-                                      },
-                                      "C0": {
-                                        "type": "number",
-                                        "description": "Curvature of the relationship between AC output power and DC input power."
-                                      },
-                                      "C1": {
-                                        "type": "number"
-                                      },
-                                      "C2": {
-                                        "type": "number"
-                                      },
-                                      "C3": {
-                                        "type": "number"
-                                      },
-                                      "Pnt": {
-                                        "type": "number"
-                                      },
-                                      "dcLimitsPerMppt": {
-                                        "type": "object",
-                                        "properties": {
-                                          "Vmppopermin": {
-                                            "type": "number"
-                                          },
-                                          "Vmppopermax": {
-                                            "type": "number"
-                                          },
-                                          "Vmppnommin": {
-                                            "type": "number"
-                                          },
-                                          "Vmppnommax": {
-                                            "type": "number"
-                                          },
-                                          "Vdcmax": {
-                                            "type": "number"
-                                          },
-                                          "Imax": {
-                                            "type": "number"
-                                          }
-                                        },
-                                        "required": [
-                                          "Vmppopermin",
-                                          "Vmppopermax",
-                                          "Imax"
-                                        ],
-                                        "description": "Advanced limits the MPPT imposes on connected strings of solar panels. Search for maximum power point on IV curve considers only points which satisfy these limits."
                                       }
                                     },
-                                    "required": [
-                                      "Paco",
-                                      "Pdco",
-                                      "Vdco",
-                                      "Pso",
-                                      "C0",
-                                      "C1",
-                                      "C2",
-                                      "C3",
-                                      "Pnt",
-                                      "dcLimitsPerMppt"
-                                    ],
+                                    "additionalProperties": false,
                                     "$comment": "Supported by: SOLARGIS_S1 only."
                                   },
                                   {
                                     "type": "object",
                                     "properties": {
-                                      "efficiency": {
+                                      "losses": {
                                         "type": "number",
                                         "minimum": 0,
                                         "maximum": 100
                                       }
                                     },
                                     "required": [
-                                      "efficiency"
+                                      "losses"
                                     ],
-                                    "$comment": "Supported by all simulationEngines."
-                                  },
-                                  {
-                                    "type": "object",
-                                    "properties": {
-                                      "effCurveDataPairs": {
-                                        "type": "array",
-                                        "items": {
-                                          "type": "array",
-                                          "items": {
-                                            "type": "number"
-                                          },
-                                          "minItems": 2,
-                                          "maxItems": 2
-                                        },
-                                        "minItems": 1,
-                                        "description": "[[power_fraction, efficiency_pct], ...] pairs defining inverter efficiency as function of load."
-                                      },
-                                      "nominalDCPower": {
-                                        "type": "number",
-                                        "exclusiveMinimum": 0,
-                                        "description": "[W] Nominal DC input power for curve reference."
-                                      },
-                                      "startPower": {
-                                        "type": "number",
-                                        "minimum": 0,
-                                        "description": "[W] Minimum DC power to start."
-                                      }
-                                    },
-                                    "required": [
-                                      "effCurveDataPairs"
-                                    ],
-                                    "$comment": "Supported by: SOLARGIS_A1, SOLARGIS_A2 only."
+                                    "additionalProperties": false
                                   }
                                 ]
+                              },
+                              "outputVoltage": {
+                                "type": "number"
                               },
                               "name": {
                                 "type": "string",
                                 "minLength": 1,
-                                "description": "Name identifying this entry, referenced by dcElectricalLayout.inverterName. Required when the entry is part of a list; optional for a single object."
-                              },
-                              "nMppTrackers": {
-                                "type": "integer",
-                                "description": "Number of MPP trackers that the inverter component has available."
-                              },
-                              "Vac": {
-                                "type": "number"
-                              },
-                              "nOutputAcPhases": {
-                                "type": "integer",
-                                "minimum": 1,
-                                "maximum": 3,
-                                "description": "Number of output AC phases of the inverter. Must be 1 or 3. All inverters must have the same value."
+                                "description": "Name identifying this entry, referenced by the segment-level inverterTransformerName."
                               }
-                            },
-                            "required": [
-                              "parameters"
-                            ],
-                            "description": "Inverter component. Only parameters is required; nMppTrackers defaults to 1, other fields use system defaults."
+                            }
                           },
                           {
                             "required": [
@@ -1446,128 +1160,10 @@
                             ]
                           }
                         ],
-                        "description": "An Inverter entry in list form: `name` is required."
+                        "description": "An inverterTransformers list entry: `name` is required."
                       },
-                      "minItems": 1
-                    }
-                  ],
-                  "description": "Inverter type(s) used in the power plant: a single Inverter object, or a list of Inverter entries each carrying a unique name. Segments select a type via dcElectricalLayout.inverterName; with a single inverter the reference is optional."
-                },
-                "transformers": {
-                  "type": "object",
-                  "properties": {
-                    "inverterTransformers": {
-                      "oneOf": [
-                        {
-                          "type": "object",
-                          "properties": {
-                            "params": {
-                              "oneOf": [
-                                {
-                                  "type": "object",
-                                  "properties": {
-                                    "apparentRatedPower": {
-                                      "type": "number"
-                                    },
-                                    "noLoadLosses": {
-                                      "type": "number"
-                                    },
-                                    "loadLosses": {
-                                      "type": "number"
-                                    }
-                                  },
-                                  "additionalProperties": false,
-                                  "$comment": "Supported by: SOLARGIS_S1 only."
-                                },
-                                {
-                                  "type": "object",
-                                  "properties": {
-                                    "losses": {
-                                      "type": "number",
-                                      "minimum": 0,
-                                      "maximum": 100
-                                    }
-                                  },
-                                  "required": [
-                                    "losses"
-                                  ],
-                                  "additionalProperties": false
-                                }
-                              ]
-                            },
-                            "outputVoltage": {
-                              "type": "number"
-                            },
-                            "name": {
-                              "type": "string",
-                              "minLength": 1,
-                              "description": "Name identifying this entry, referenced by the segment-level inverterTransformerName. Required when the entry is part of a list; optional for a single object."
-                            }
-                          }
-                        },
-                        {
-                          "type": "array",
-                          "items": {
-                            "allOf": [
-                              {
-                                "type": "object",
-                                "properties": {
-                                  "params": {
-                                    "oneOf": [
-                                      {
-                                        "type": "object",
-                                        "properties": {
-                                          "apparentRatedPower": {
-                                            "type": "number"
-                                          },
-                                          "noLoadLosses": {
-                                            "type": "number"
-                                          },
-                                          "loadLosses": {
-                                            "type": "number"
-                                          }
-                                        },
-                                        "additionalProperties": false,
-                                        "$comment": "Supported by: SOLARGIS_S1 only."
-                                      },
-                                      {
-                                        "type": "object",
-                                        "properties": {
-                                          "losses": {
-                                            "type": "number",
-                                            "minimum": 0,
-                                            "maximum": 100
-                                          }
-                                        },
-                                        "required": [
-                                          "losses"
-                                        ],
-                                        "additionalProperties": false
-                                      }
-                                    ]
-                                  },
-                                  "outputVoltage": {
-                                    "type": "number"
-                                  },
-                                  "name": {
-                                    "type": "string",
-                                    "minLength": 1,
-                                    "description": "Name identifying this entry, referenced by the segment-level inverterTransformerName. Required when the entry is part of a list; optional for a single object."
-                                  }
-                                }
-                              },
-                              {
-                                "required": [
-                                  "name"
-                                ]
-                              }
-                            ],
-                            "description": "A Transformer entry in list form: `name` is required."
-                          },
-                          "minItems": 1
-                        }
-                      ],
-                      "description": "Transformer type(s) connected to the inverter outputs (lower level): a single Transformer object, or a list of Transformer entries each carrying a unique name (same model as modules/inverters). Segments select a type via the segment-level inverterTransformerName; with a single transformer the reference is optional. Physical counts are derived from AC power and apparentRatedPower."
+                      "minItems": 1,
+                      "description": "Transformer type(s) connected to the inverter outputs (lower level): a list of Transformer entries, each with a unique `name`. Segments select a type via the segment-level inverterTransformerName; with a single transformer the reference is optional. Physical counts are derived from AC power and apparentRatedPower."
                     },
                     "powerTransformer": {
                       "type": "object",
@@ -1612,7 +1208,7 @@
                         "name": {
                           "type": "string",
                           "minLength": 1,
-                          "description": "Name identifying this entry, referenced by the segment-level inverterTransformerName. Required when the entry is part of a list; optional for a single object."
+                          "description": "Name identifying this entry, referenced by the segment-level inverterTransformerName."
                         }
                       }
                     }
@@ -3203,10 +2799,6 @@
         "options": {
           "type": "object",
           "properties": {
-            "applyFarHorizonShading": {
-              "type": "boolean",
-              "description": "Include shadows casted by horizon in GTI calculation. Default: true."
-            },
             "applySelfShadingPanels": {
               "type": "boolean",
               "description": "Enables shadows casted by solar panels. Default: true."
@@ -3230,11 +2822,11 @@
           "type": "string",
           "enum": [
             "SOLARGIS_S1",
-            "SOLARGIS_A1",
-            "SOLARGIS_A2"
+            "SOLARGIS_A2",
+            "SOLARGIS_A1"
           ],
           "default": "SOLARGIS_S1",
-          "description": "Simulation engine to use. Default: SOLARGIS_S1. Each engine supports a different subset of mounting types, module types, and features. See $comment fields throughout the schema for details."
+          "description": "Simulation engine to use. Default: SOLARGIS_S1.\n\n- SOLARGIS_S1: state-of-the-art view factor simulator, supporting multi-segment systems, detailed hardware specifications, and the most advanced technology, including bifacial systems. Default for the unified schema.\n- SOLARGIS_A2: fast, machine-learning-based simulator, supporting bifacial systems.\n- SOLARGIS_A1: Solargis' legacy, battle-tested simulation engine.\n\nSee $comment fields throughout the schema for which mounting types, module types, and features each engine supports."
         }
       },
       "required": [

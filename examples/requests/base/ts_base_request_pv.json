@@ -71,9 +71,12 @@
     "simulationEngine": "SOLARGIS_S1",
     "system": {
       "components": {
-        "modules": {
-          "type": "CSI"
-        }
+        "modules": [
+          {
+            "name": "generic",
+            "type": "CSI"
+          }
+        ]
       },
       "layout": {
         "segments": [

@@ -2,9 +2,6 @@
   "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.7/solargis_pv_config_unified.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
   "version": "0.1.0",
-  "x-compatiblePackages": {
-    "sg_sgsim_s1": ">=0.1.9"
-  },
   "description": "Schema for Solargis PV simulation request. Version: `0.1.0`.",
   "allOf": [
     {
@@ -16,52 +13,31 @@
       "type": "object",
       "properties": {
         "modules": {
-          "oneOf": [
-            {
-              "$ref": "#/$defs/Module"
-            },
-            {
-              "type": "array",
-              "items": {
-                "$ref": "#/$defs/NamedModule"
-              },
-              "minItems": 1
-            }
-          ],
-          "description": "Solar panel type(s) used in the power plant: a single Module object, or a list of Module entries each carrying a unique name. Segments select a type via dcElectricalLayout.moduleName; with a single module the reference is optional."
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Module"
+          },
+          "minItems": 1,
+          "description": "Solar panel type(s) used in the power plant: a list of Module entries, each with a unique `name`. Segments select a type via dcElectricalLayout.moduleName; with a single module the reference is optional."
         },
         "inverters": {
-          "oneOf": [
-            {
-              "$ref": "#/$defs/Inverter"
-            },
-            {
-              "type": "array",
-              "items": {
-                "$ref": "#/$defs/NamedInverter"
-              },
-              "minItems": 1
-            }
-          ],
-          "description": "Inverter type(s) used in the power plant: a single Inverter object, or a list of Inverter entries each carrying a unique name. Segments select a type via dcElectricalLayout.inverterName; with a single inverter the reference is optional."
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Inverter"
+          },
+          "minItems": 1,
+          "description": "Inverter type(s) used in the power plant: a list of Inverter entries, each with a unique `name`. Segments select a type via dcElectricalLayout.inverterName; with a single inverter the reference is optional."
         },
         "transformers": {
           "type": "object",
           "properties": {
             "inverterTransformers": {
-              "oneOf": [
-                {
-                  "$ref": "#/$defs/Transformer"
-                },
-                {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/$defs/NamedTransformer"
-                  },
-                  "minItems": 1
-                }
-              ],
-              "description": "Transformer type(s) connected to the inverter outputs (lower level): a single Transformer object, or a list of Transformer entries each carrying a unique name (same model as modules/inverters). Segments select a type via the segment-level inverterTransformerName; with a single transformer the reference is optional. Physical counts are derived from AC power and apparentRatedPower."
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/NamedTransformer"
+              },
+              "minItems": 1,
+              "description": "Transformer type(s) connected to the inverter outputs (lower level): a list of Transformer entries, each with a unique `name`. Segments select a type via the segment-level inverterTransformerName; with a single transformer the reference is optional. Physical counts are derived from AC power and apparentRatedPower."
             },
             "powerTransformer": {
               "$ref": "#/$defs/Transformer",
@@ -125,7 +101,7 @@
         "name": {
           "type": "string",
           "minLength": 1,
-          "description": "Name identifying this entry, referenced by dcElectricalLayout.inverterName. Required when the entry is part of a list; optional for a single object."
+          "description": "Name identifying this entry, referenced by dcElectricalLayout.inverterName."
         },
         "nMppTrackers": {
           "type": "integer",
@@ -143,7 +119,8 @@
         }
       },
       "required": [
-        "parameters"
+        "parameters",
+        "name"
       ],
       "description": "Inverter component. Only parameters is required; nMppTrackers defaults to 1, other fields use system defaults."
     },
@@ -160,7 +137,7 @@
         "name": {
           "type": "string",
           "minLength": 1,
-          "description": "Name identifying this entry, referenced by the segment-level inverterTransformerName. Required when the entry is part of a list; optional for a single object."
+          "description": "Name identifying this entry, referenced by the segment-level inverterTransformerName."
         }
       }
     },
@@ -317,9 +294,12 @@
         "name": {
           "type": "string",
           "minLength": 1,
-          "description": "Name identifying this entry, referenced by dcElectricalLayout.moduleName. Required when the entry is part of a list; optional for a single object."
+          "description": "Name identifying this entry, referenced by dcElectricalLayout.moduleName."
         }
-      }
+      },
+      "required": [
+        "name"
+      ]
     },
     "InverterParams": {
       "oneOf": [
@@ -1623,32 +1603,6 @@
       ],
       "$comment": "Supported by: SOLARGIS_A1, SOLARGIS_A2 only."
     },
-    "NamedModule": {
-      "allOf": [
-        {
-          "$ref": "#/$defs/Module"
-        },
-        {
-          "required": [
-            "name"
-          ]
-        }
-      ],
-      "description": "A Module entry in list form: `name` is required."
-    },
-    "NamedInverter": {
-      "allOf": [
-        {
-          "$ref": "#/$defs/Inverter"
-        },
-        {
-          "required": [
-            "name"
-          ]
-        }
-      ],
-      "description": "An Inverter entry in list form: `name` is required."
-    },
     "NamedTransformer": {
       "allOf": [
         {
@@ -1660,7 +1614,7 @@
           ]
         }
       ],
-      "description": "A Transformer entry in list form: `name` is required."
+      "description": "An inverterTransformers list entry: `name` is required."
     },
     "OrientationConvention": {
       "type": "string",
@@ -1896,10 +1850,6 @@
         "options": {
           "type": "object",
           "properties": {
-            "applyFarHorizonShading": {
-              "type": "boolean",
-              "description": "Include shadows casted by horizon in GTI calculation. Default: true."
-            },
             "applySelfShadingPanels": {
               "type": "boolean",
               "description": "Enables shadows casted by solar panels. Default: true."
@@ -1923,11 +1873,11 @@
           "type": "string",
           "enum": [
             "SOLARGIS_S1",
-            "SOLARGIS_A1",
-            "SOLARGIS_A2"
+            "SOLARGIS_A2",
+            "SOLARGIS_A1"
           ],
           "default": "SOLARGIS_S1",
-          "description": "Simulation engine to use. Default: SOLARGIS_S1. Each engine supports a different subset of mounting types, module types, and features. See $comment fields throughout the schema for details."
+          "description": "Simulation engine to use. Default: SOLARGIS_S1.\n\n- SOLARGIS_S1: state-of-the-art view factor simulator, supporting multi-segment systems, detailed hardware specifications, and the most advanced technology, including bifacial systems. Default for the unified schema.\n- SOLARGIS_A2: fast, machine-learning-based simulator, supporting bifacial systems.\n- SOLARGIS_A1: Solargis' legacy, battle-tested simulation engine.\n\nSee $comment fields throughout the schema for which mounting types, module types, and features each engine supports."
         }
       },
       "required": [

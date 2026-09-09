@@ -20,9 +20,12 @@
     "simulationEngine": "SOLARGIS_S1",
     "system": {
       "components": {
-        "modules": {
-          "type": "MONO_CSI"
-        }
+        "modules": [
+          {
+            "name": "generic",
+            "type": "MONO_CSI"
+          }
+        ]
       },
       "layout": {
         "segments": [
