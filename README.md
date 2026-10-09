@@ -5,7 +5,6 @@ Solargis JSON schemas define JSON instances of:
 **Note**: This repository may contain content that is not reflected in current Solargis products.
 
 ### RELEASE NOTES:
-- **v1.1.9** (Oct 9, 2026): Added 'PT30M' as supported timeStep for TS API public request.
 - **v1.1.8** (Oct 9, 2026): Corrected the utcOffset description: when it is missing, the offset is derived from the site longitude (nearest whole hour), not UTC.
 - **v1.1.7** (Aug 26, 2026): Added the unified pvConfiguration schema supporting more simulation engines; removed pvConfiguration v1, gtiConfiguration v1. Added new properties for dataset (projectCode), column (qualityControl, instrumentCoordinates); License (licenseCode, attribution, citation, dataSharing), Instrument (ventilationHeating, shadingTechnology), Environment (landscapeRepresentativeness, surroundings, photoDocumentation), Report (satelliteRegion, comparisonModelType, reportPublishing, validationSitePublishing). Added categoryScheme into column metadata. Added optional Site properties (nameShort, confidential).
 - **v1.1.6** (Jan 07, 2026): Added 'outputRoundingLevel' as request property.
