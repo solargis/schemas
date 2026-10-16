@@ -511,8 +511,10 @@
           "$ref": "solargis_historical_forecast.schema.json#/$defs/LeadPeriod"
         },
         "forecastModel": {
-          "description": "Forecast model of a per-model forecast column, e.g. IFS for GHI_IFS. Absent on blended forecast columns.",
-          "$ref": "solargis_common_enums.schema.json#/$defs/ForecastModelEnum"
+          "description": "Forecast model of a per-model forecast column, e.g. IFS for GHI_IFS, NOWCAST for the satellite-based nowcast. Absent on blended forecast columns. The set of models evolves with Solargis forecasting and is not fixed by this schema.",
+          "type": "string",
+          "pattern": "^[A-Za-z0-9]+$",
+          "maxLength": 50
         },
         "categoryScheme": {
           "description": "Lookup table interpreting categorical (coded) values occurring in this column, e.g. ranks or classes. Use with the CATEGORY column type. For flag columns use flagScheme instead.",

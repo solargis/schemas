@@ -510,20 +510,6 @@
         "PUBLISH_VALIDATION_ONLY",
         "UNDEFINED"
       ]
-    },
-    "ForecastModelEnum": {
-      "description": "Forecast models whose values can be returned as separate columns next to the blended forecast. NOWCAST is the satellite-based nowcast.",
-      "type": "string",
-      "enum": [
-        "IFS",
-        "IFS_ENS",
-        "GFS",
-        "ICON_EU",
-        "ICON_EU_ENS",
-        "ICON_GLOBAL",
-        "HRRR",
-        "NOWCAST"
-      ]
     }
   }
 }
