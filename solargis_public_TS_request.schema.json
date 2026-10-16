@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.9/solargis_public_TS_request.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.10/solargis_public_TS_request.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
 
   "description": "Schema for Solargis data request - for timeseries datasets.",
@@ -80,6 +80,16 @@
       "description": "Process can return multiple dataset files, one file per one year. Instead of providing single dataset.",
       "type": "boolean",
       "default": false
+    },
+    "forecastBlendingScheme": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/forecastBlendingScheme"
+    },
+    "includeForecastModelColumns": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/includeForecastModelColumns"
+    },
+    "historicalForecast": {
+      "description": "Not accepted in this request. Historical forecast is requested with solargis_public_TS_historical_forecast_request.schema.json.",
+      "not": {}
     }
   },
   "$comment": "The mounting of the PV system is a part of pvConfiguration, so a separate gtiConfiguration would be ambiguous. Same rule as in solargis_data_request.schema.json.",

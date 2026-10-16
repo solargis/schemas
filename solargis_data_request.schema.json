@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.9/solargis_data_request.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.10/solargis_data_request.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
   "description": "Base schema for a Solargis data request - not used directly in public APIs. See special public request types derived from the base.",
   "allOf": [
@@ -156,6 +156,16 @@
             "high_precision"
           ],
           "default": "standard"
+        },
+        "includeForecastModelColumns": {
+          "description": "Next to the blended forecast, return each forecast model's values as separate columns: GHI, DNI, DIF, DHI and GTI with its components (with and without terrain shading), and LEADTIME, for those requested in columns. Named <column>_<model> (historical forecast: <column>_<model>_<leadPeriod>), e.g. GHI_IFS, GHI_ICON_EU_P1D, LEADTIME_NOWCAST_PT1H, with the model in the column metadata (forecastModel). Values are taken before blending, with the same terrain shading as the blended columns. The models are those the forecast blending scheme uses for this site (a regional scheme contributes only the models of the region the site is in); a model column is empty only where that model has no data for the site or time. Columns without forecastModel are the blended forecast; the models it blends are listed in the dataset metadata, processing.modules entry solargis/forecastBlending. Other columns (e.g. KT, PAR, meteo, PV) are not split per model. Applies only to the forecast part of a timeseries.",
+          "type": "boolean",
+          "default": false
+        },
+        "forecastBlendingScheme": {
+          "description": "Name of the forecast blending scheme (NWP models and satellite nowcast) used instead of the default one for the site's region. Applies to the forecast part of a timeseries, live or historical; a date range with no forecast part is unaffected. A scheme none of whose models is available at the site is rejected. Models of the scheme without data for the site or period are left out and the blend uses the remaining ones. The models actually used are listed in the dataset metadata, processing.modules entry solargis/forecastBlending (properties scheme and models).",
+          "type": "string",
+          "minLength": 1
         }
       },
       "if": {

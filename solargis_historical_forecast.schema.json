@@ -1,0 +1,271 @@
+{
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.10/solargis_historical_forecast.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Historical forecast definition: which archived forecast to return instead of history or live forecast. Used by solargis_public_TS_historical_forecast_request.schema.json.",
+  "$defs": {
+    "HistoricalForecast": {
+      "description": "Which historical forecast to return. type CONCATENATED: fixed lead; for every day (P*D) or time step (PT*H) of fromDate..toDate, the forecast that was N days or hours ahead, joined into one series, as an operational delivery would have received it; one series per requested lead period. type SINGLE: fixed issue; one snapshot, the forecast as available at processingDateTime, at most 5 days ahead.",
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "description": "CONCATENATED: one series built from forecasts with the same lead. SINGLE: one forecast as available at one instant.",
+          "type": "string",
+          "enum": [
+            "CONCATENATED",
+            "SINGLE"
+          ]
+        },
+        "leadPeriods": {
+          "description": "CONCATENATED only. Lead periods to return, all P*D or all PT*H. Every requested column that depends on the forecast irradiance (irradiance, its derived and PV columns, LEADTIME) is returned once per lead period, named <column>_<leadPeriod>, e.g. GHI_P1D, PVOUT_PT1H, LEADTIME_P1D, and carries the lead period in its column metadata (leadPeriod). The suffix is added for a single lead period too. Other columns (meteo, ALB, sun position) are the same for every lead period and are returned once, without suffix and without leadPeriod.",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/LeadPeriod"
+          },
+          "anyOf": [
+            {
+              "items": {
+                "enum": [
+                  "P0D",
+                  "P1D",
+                  "P2D",
+                  "P3D",
+                  "P4D"
+                ]
+              }
+            },
+            {
+              "items": {
+                "enum": [
+                  "PT0H",
+                  "PT1H",
+                  "PT2H",
+                  "PT3H",
+                  "PT4H"
+                ]
+              }
+            }
+          ]
+        },
+        "processingTime": {
+          "description": "CONCATENATED with P*D lead periods only. Time of day the forecast is processed, shared by all lead periods, with an explicit offset (HH:MM+hh:mm, HH:MM-hh:mm or HH:MMZ), e.g. 10:30+01:00. Every day of the range gets the forecast as it would have been delivered at that instant: only forecast runs available by then are used (NWP runs a few hours after their issue time, satellite nowcast minutes after its time slot). Fixed offset, no daylight saving time.",
+          "type": "string",
+          "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9](Z|[+\\-](0[0-9]|1[0-4]):(00|30))$"
+        },
+        "processingDateTime": {
+          "description": "SINGLE only. When the forecast is processed, ISO 8601 / RFC 3339 with an explicit offset, e.g. 2026-03-03T10:30:00+01:00. Returns the forecast as it would have been delivered at that instant: only forecast runs available by then are used. fromDate must not be earlier than its date, and toDate at most 4 days after it.",
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}(:\\d{2})?(Z|[+\\-]\\d{2}:\\d{2})$"
+        },
+        "sources": {
+          "description": "Forecast archives to read. NWP_FORECAST: numerical weather prediction models. NOWCAST: satellite-based nowcast. With both, they are blended as in operational forecasting. Defaults: [NWP_FORECAST] for CONCATENATED P*D, [NWP_FORECAST, NOWCAST] for CONCATENATED PT*H and SINGLE. Shared by all lead periods. NOWCAST alone covers only the first hours after the forecast is processed.",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "NWP_FORECAST",
+              "NOWCAST"
+            ]
+          }
+        }
+      },
+      "allOf": [
+        {
+          "$comment": "CONCATENATED: leadPeriods required, processingDateTime forbidden.",
+          "if": {
+            "properties": {
+              "type": {
+                "const": "CONCATENATED"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "leadPeriods"
+            ],
+            "not": {
+              "required": [
+                "processingDateTime"
+              ]
+            }
+          }
+        },
+        {
+          "$comment": "SINGLE: processingDateTime required, leadPeriods and processingTime forbidden.",
+          "if": {
+            "properties": {
+              "type": {
+                "const": "SINGLE"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "processingDateTime"
+            ],
+            "allOf": [
+              {
+                "not": {
+                  "required": [
+                    "leadPeriods"
+                  ]
+                }
+              },
+              {
+                "not": {
+                  "required": [
+                    "processingTime"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "$comment": "P*D: processingTime required.",
+          "if": {
+            "required": [
+              "leadPeriods"
+            ],
+            "properties": {
+              "leadPeriods": {
+                "contains": {
+                  "enum": [
+                    "P0D",
+                    "P1D",
+                    "P2D",
+                    "P3D",
+                    "P4D"
+                  ]
+                }
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "processingTime"
+            ]
+          }
+        },
+        {
+          "$comment": "PT*H: processingTime forbidden, the lead hours alone define the forecast.",
+          "if": {
+            "required": [
+              "leadPeriods"
+            ],
+            "properties": {
+              "leadPeriods": {
+                "contains": {
+                  "enum": [
+                    "PT0H",
+                    "PT1H",
+                    "PT2H",
+                    "PT3H",
+                    "PT4H"
+                  ]
+                }
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "required": [
+                "processingTime"
+              ]
+            }
+          }
+        },
+        {
+          "$comment": "P1D-P4D: no NOWCAST, its horizon of a few hours cannot reach the next day.",
+          "if": {
+            "required": [
+              "leadPeriods"
+            ],
+            "properties": {
+              "leadPeriods": {
+                "contains": {
+                  "enum": [
+                    "P1D",
+                    "P2D",
+                    "P3D",
+                    "P4D"
+                  ]
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "sources": {
+                "items": {
+                  "const": "NWP_FORECAST"
+                }
+              }
+            }
+          }
+        },
+        {
+          "$comment": "P0D and SINGLE: NOWCAST alone is rejected, a whole-day window always exceeds the nowcast horizon. Add NWP_FORECAST.",
+          "if": {
+            "anyOf": [
+              {
+                "properties": {
+                  "type": {
+                    "const": "SINGLE"
+                  }
+                }
+              },
+              {
+                "required": [
+                  "leadPeriods"
+                ],
+                "properties": {
+                  "leadPeriods": {
+                    "contains": {
+                      "enum": [
+                        "P0D"
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "then": {
+            "properties": {
+              "sources": {
+                "contains": {
+                  "const": "NWP_FORECAST"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "LeadPeriod": {
+      "description": "Lead period of a historical forecast, ISO 8601 duration as timeStep. P0D-P4D: the forecast processed N days before each target day, at processingTime. PT0H-PT4H: the forecast issued N hours before each time step; blends satellite nowcast with NWP forecast.",
+      "type": "string",
+      "enum": [
+        "P0D",
+        "P1D",
+        "P2D",
+        "P3D",
+        "P4D",
+        "PT0H",
+        "PT1H",
+        "PT2H",
+        "PT3H",
+        "PT4H"
+      ]
+    }
+  }
+}

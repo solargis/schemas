@@ -1,0 +1,289 @@
+{
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.10/solargis_public_TS_historical_forecast_request.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "description": "Schema for Solargis data request - for historical forecast timeseries datasets. The timeseries request plus a historicalForecast definition; history and live forecast are never mixed in.",
+  "type": "object",
+  "required": [
+    "site",
+    "timeStep",
+    "fromDate",
+    "toDate",
+    "columns",
+    "outputFormat",
+    "historicalForecast"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "$comment": "The mounting of the PV system is a part of pvConfiguration, so a separate gtiConfiguration would be ambiguous. Same rule as in solargis_public_TS_request.schema.json.",
+      "if": {
+        "required": [
+          "pvConfiguration"
+        ]
+      },
+      "then": {
+        "not": {
+          "required": [
+            "gtiConfiguration"
+          ]
+        }
+      }
+    },
+    {
+      "$comment": "WOUT is not supported.",
+      "properties": {
+        "columns": {
+          "not": {
+            "contains": {
+              "const": "WOUT"
+            }
+          }
+        }
+      }
+    },
+    {
+      "$comment": "Probability of exceedance columns (*_UNC_Pxx) are not supported.",
+      "properties": {
+        "columns": {
+          "not": {
+            "contains": {
+              "pattern": "_UNC_P[0-9]+$"
+            }
+          }
+        }
+      }
+    },
+    {
+      "$comment": "Bifacial GTI columns are produced by the PV simulation: pvConfiguration with simulationEngine SOLARGIS_S1 (default) or SOLARGIS_A2.",
+      "if": {
+        "required": [
+          "columns"
+        ],
+        "properties": {
+          "columns": {
+            "contains": {
+              "enum": [
+                "GTI_FRONT_NEAR_SHD",
+                "GTI_REAR_NEAR_SHD",
+                "GTI_FRONT_IAM",
+                "GTI_REAR_IAM"
+              ]
+            }
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "pvConfiguration"
+        ],
+        "properties": {
+          "pvConfiguration": {
+            "properties": {
+              "simulationEngine": {
+                "enum": [
+                  "SOLARGIS_S1",
+                  "SOLARGIS_A2"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "$comment": "Spectral and unshaded front/rear GTI columns: pvConfiguration with simulationEngine SOLARGIS_S1 (default).",
+      "if": {
+        "required": [
+          "columns"
+        ],
+        "properties": {
+          "columns": {
+            "contains": {
+              "enum": [
+                "GTI_FRONT_SPECTRAL",
+                "GTI_REAR_SPECTRAL",
+                "GTI_FRONT_NOSHD",
+                "GTI_REAR_NOSHD"
+              ]
+            }
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "pvConfiguration"
+        ],
+        "properties": {
+          "pvConfiguration": {
+            "properties": {
+              "simulationEngine": {
+                "enum": [
+                  "SOLARGIS_S1"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "$comment": "GTI decomposition and LOSS_SOIL / LOSS_SNOW are not available from SOLARGIS_S1: without pvConfiguration, or with simulationEngine SOLARGIS_A1 or SOLARGIS_A2.",
+      "if": {
+        "required": [
+          "columns"
+        ],
+        "properties": {
+          "columns": {
+            "contains": {
+              "enum": [
+                "GTI_DIR",
+                "GTI_CIRC",
+                "GTI_REFL",
+                "GTI_ISO_HOR",
+                "GTI_DIR_NOSHD",
+                "GTI_CIRC_NOSHD",
+                "GTI_REFL_NOSHD",
+                "GTI_ISO_HOR_NOSHD",
+                "GTI_ISO",
+                "GTI_HOR",
+                "GTI_ISO_SHD",
+                "GTI_ISO_NOSHD",
+                "LOSS_SOIL",
+                "LOSS_SNOW"
+              ]
+            }
+          }
+        }
+      },
+      "then": {
+        "anyOf": [
+          {
+            "not": {
+              "required": [
+                "pvConfiguration"
+              ]
+            }
+          },
+          {
+            "properties": {
+              "pvConfiguration": {
+                "required": [
+                  "simulationEngine"
+                ],
+                "properties": {
+                  "simulationEngine": {
+                    "enum": [
+                      "SOLARGIS_A1",
+                      "SOLARGIS_A2"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "$comment": "GTI_ISO, GTI_HOR, GTI_ISO_SHD and GTI_ISO_NOSHD need terrainShading true.",
+      "if": {
+        "required": [
+          "columns"
+        ],
+        "properties": {
+          "columns": {
+            "contains": {
+              "enum": [
+                "GTI_ISO",
+                "GTI_HOR",
+                "GTI_ISO_SHD",
+                "GTI_ISO_NOSHD"
+              ]
+            }
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "terrainShading"
+        ],
+        "properties": {
+          "terrainShading": {
+            "const": true
+          }
+        }
+      }
+    }
+  ],
+  "properties": {
+    "requestType": {
+      "const": "TIMESERIES"
+    },
+    "site": {
+      "$ref": "solargis_public_TS_request.schema.json#/properties/site"
+    },
+    "timeStep": {
+      "$ref": "solargis_public_TS_request.schema.json#/properties/timeStep"
+    },
+    "fromDate": {
+      "description": "Start date of the requested data. Inclusive. See also the utcOffset. Explicit date only.",
+      "type": "string",
+      "format": "date"
+    },
+    "toDate": {
+      "description": "End date of the requested data. Inclusive. See also the utcOffset. Explicit date only.",
+      "type": "string",
+      "format": "date"
+    },
+    "columns": {
+      "description": "Columns to return, as in the timeseries request. Irradiance and what derives from it come from the forecast archives and are returned per lead period; PV columns (PVOUT, TMOD) are simulated per lead period from that irradiance. Meteo values (e.g. TEMP, WS), ALB and sun position are not lead-specific: one series, returned once without lead period suffix (see historicalForecast leadPeriods). Not accepted: WOUT and *_UNC_Pxx. Some GTI and loss columns depend on pvConfiguration simulationEngine.",
+      "$ref": "solargis_public_TS_request.schema.json#/properties/columns"
+    },
+    "utcOffset": {
+      "$ref": "solargis_public_TS_request.schema.json#/properties/utcOffset"
+    },
+    "timeAlignment": {
+      "$ref": "solargis_public_TS_request.schema.json#/properties/timeAlignment"
+    },
+    "terrainShading": {
+      "$ref": "solargis_public_TS_request.schema.json#/properties/terrainShading"
+    },
+    "environment": {
+      "$ref": "solargis_public_TS_request.schema.json#/properties/environment"
+    },
+    "gtiConfiguration": {
+      "$ref": "solargis_public_TS_request.schema.json#/properties/gtiConfiguration"
+    },
+    "pvConfiguration": {
+      "$ref": "solargis_public_TS_request.schema.json#/properties/pvConfiguration"
+    },
+    "fileLabel": {
+      "$ref": "solargis_public_TS_request.schema.json#/properties/fileLabel"
+    },
+    "outputFormat": {
+      "$ref": "solargis_public_TS_request.schema.json#/properties/outputFormat"
+    },
+    "outputRoundingLevel": {
+      "$ref": "solargis_public_TS_request.schema.json#/properties/outputRoundingLevel"
+    },
+    "compressOutput": {
+      "$ref": "solargis_public_TS_request.schema.json#/properties/compressOutput"
+    },
+    "splitOutputByYears": {
+      "$ref": "solargis_public_TS_request.schema.json#/properties/splitOutputByYears"
+    },
+    "stochasticGenerator": {
+      "description": "Not supported for historical forecast.",
+      "const": false
+    },
+    "forecastBlendingScheme": {
+      "$ref": "solargis_public_TS_request.schema.json#/properties/forecastBlendingScheme"
+    },
+    "includeForecastModelColumns": {
+      "$ref": "solargis_public_TS_request.schema.json#/properties/includeForecastModelColumns"
+    },
+    "historicalForecast": {
+      "$ref": "solargis_historical_forecast.schema.json#/$defs/HistoricalForecast"
+    }
+  }
+}

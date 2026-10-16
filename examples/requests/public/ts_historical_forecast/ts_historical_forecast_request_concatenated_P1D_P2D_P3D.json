@@ -1,0 +1,24 @@
+{
+  "site": {
+    "latitude": 48.15,
+    "longitude": 17.11
+  },
+  "timeStep": "PT15M",
+  "fromDate": "2026-03-01",
+  "toDate": "2026-03-31",
+  "utcOffset": "+01:00",
+  "columns": [
+    "GHI"
+  ],
+  "outputFormat": "SOLARGIS_JSON",
+  "forecastBlendingScheme": "DEFAULT",
+  "historicalForecast": {
+    "type": "CONCATENATED",
+    "leadPeriods": [
+      "P1D",
+      "P2D",
+      "P3D"
+    ],
+    "processingTime": "09:00+01:00"
+  }
+}

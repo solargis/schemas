@@ -1,0 +1,52 @@
+{
+  "site": {
+    "latitude": 43.023903,
+    "longitude": 142.419596,
+    "elevation": 156.9,
+    "name": "Pippu \u6bd4\u5e03\u753a, Kamikawa District"
+  },
+  "timeStep": "PT60M",
+  "fromDate": "2026-03-01",
+  "toDate": "2026-03-31",
+  "utcOffset": "+09:00",
+  "columns": [
+    "GHI",
+    "GTI",
+    "TEMP",
+    "PVOUT"
+  ],
+  "pvConfiguration": {
+    "simulationEngine": "SOLARGIS_S1",
+    "system": {
+      "components": {
+        "modules": [
+          {
+            "name": "generic",
+            "type": "CSI"
+          }
+        ]
+      },
+      "layout": {
+        "segments": [
+          {
+            "installationType": "GROUND_BASED",
+            "installedPowerKWp": 1,
+            "mounting": {
+              "type": "FIXED_ONE_ANGLE",
+              "tilt": 39,
+              "azimuth": 180
+            }
+          }
+        ]
+      }
+    }
+  },
+  "outputFormat": "SOLARGIS_JSON",
+  "historicalForecast": {
+    "type": "CONCATENATED",
+    "leadPeriods": [
+      "P1D"
+    ],
+    "processingTime": "09:00+09:00"
+  }
+}

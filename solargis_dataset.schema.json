@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.9/solargis_dataset.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.10/solargis_dataset.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
 
   "description": "This is the schema for the Solargis dataset - a structure for data and metadata you can exchange with Solargis. You can use this schema for two dimensional tabular data (one column is reserved for datetime strings, others are numeric columns) for a single site location or a single portfolio.",
@@ -505,6 +505,14 @@
         "instrumentCoordinates": {
           "description": "Specific coordinates of instrument",
           "$ref": "solargis_common_types.schema.json#/$defs/InstrumentCoordinates"
+        },
+        "leadPeriod": {
+          "description": "Lead period of a historical forecast column, e.g. P1D for GHI_P1D. Set only on columns of a historical forecast dataset with type CONCATENATED.",
+          "$ref": "solargis_historical_forecast.schema.json#/$defs/LeadPeriod"
+        },
+        "forecastModel": {
+          "description": "Forecast model of a per-model forecast column, e.g. IFS for GHI_IFS. Absent on blended forecast columns.",
+          "$ref": "solargis_common_enums.schema.json#/$defs/ForecastModelEnum"
         },
         "categoryScheme": {
           "description": "Lookup table interpreting categorical (coded) values occurring in this column, e.g. ranks or classes. Use with the CATEGORY column type. For flag columns use flagScheme instead.",

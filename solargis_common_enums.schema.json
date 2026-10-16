@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.9/solargis_common_enums.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.10/solargis_common_enums.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
 
   "description": "Common enums and other schemas used with requests or datasets.",
@@ -509,6 +509,20 @@
         "PUBLISH_QC_AND_VALIDATION",
         "PUBLISH_VALIDATION_ONLY",
         "UNDEFINED"
+      ]
+    },
+    "ForecastModelEnum": {
+      "description": "Forecast models whose values can be returned as separate columns next to the blended forecast. NOWCAST is the satellite-based nowcast.",
+      "type": "string",
+      "enum": [
+        "IFS",
+        "IFS_ENS",
+        "GFS",
+        "ICON_EU",
+        "ICON_EU_ENS",
+        "ICON_GLOBAL",
+        "HRRR",
+        "NOWCAST"
       ]
     }
   }
