@@ -1,8 +1,8 @@
 {
   "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.10/solargis_pv_config_unified.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
-  "version": "0.1.0",
-  "description": "Schema for Solargis PV simulation request. Version: `0.1.0`.",
+  "version": "0.3.0",
+  "description": "Schema for Solargis PV simulation request. Version: `0.3.0`. See the [curated examples gallery](examples-gallery.html) for ready-to-use request bodies, from minimal to advanced.",
   "allOf": [
     {
       "$ref": "#/$defs/PvConfiguration"
@@ -61,8 +61,9 @@
         "unavailability": {
           "$ref": "#/$defs/UnavailabilityLosses"
         },
-        "selfConsumption": {
-          "$ref": "#/$defs/SelfConsumptionLosses"
+        "systemAuxiliaryLosses": {
+          "$ref": "#/$defs/AuxSystemLosses",
+          "description": "System-wide auxiliary consumption, e.g. computers, cameras, meteorological equipment, lighting, etc. Does not include inverter/PCS self-consumption/cooling."
         },
         "degradation": {
           "$ref": "#/$defs/SystemDegradationLosses"
@@ -70,7 +71,8 @@
         "environment": {
           "$ref": "#/$defs/EnvironmentLosses"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "Environment": {
       "type": "object",
@@ -116,13 +118,17 @@
           "minimum": 1,
           "maximum": 3,
           "description": "Number of output AC phases of the inverter. Must be 1 or 3. All inverters must have the same value."
+        },
+        "selfConsumption": {
+          "$ref": "#/$defs/SelfConsumptionComponentLosses",
+          "description": "Inverter losses defined per inverter instance."
         }
       },
+      "additionalProperties": false,
+      "description": "Inverter component. Only name is required; nMppTrackers defaults to 1, Vac/nOutputAcPhases from system defaults. parameters may be omitted only for SOLARGIS_S1, to auto-select an inverter while still specifying selfConsumption directly.",
       "required": [
-        "parameters",
         "name"
-      ],
-      "description": "Inverter component. Only parameters is required; nMppTrackers defaults to 1, other fields use system defaults."
+      ]
     },
     "Transformer": {
       "type": "object",
@@ -180,32 +186,19 @@
         }
       }
     },
-    "SelfConsumptionLosses": {
+    "AuxSystemLosses": {
       "type": "object",
       "properties": {
         "dayConstantLosses": {
           "$ref": "#/$defs/Watt",
-          "description": "[W] Constant losses to apply to inverter power output during the day. Applied only if inverter power output > dayConstantLossesFromInverterPowerThreshold."
-        },
-        "dayConstantLossesFromInverterPowerThreshold": {
-          "$ref": "#/$defs/KiloWatt",
-          "description": "[kW] Threshold for applying dayConstantLosses. Threshold value must be > dayConstantLosses (converted to same unts)."
-        },
-        "dayProportionalLosses": {
-          "$ref": "#/$defs/WattPerKiloWatt",
-          "description": "[W/kW] Proportional losses to apply to inverter power output during the day. Actual loss = inverter power output * this value. Applied only if inverter power output > dayProportionalLossesFromInverterPowerThreshold."
-        },
-        "dayProportionalLossesFromInverterPowerThreshold": {
-          "$ref": "#/$defs/KiloWatt",
-          "description": "[kW] Threshold for applying dayProportionalLosses."
+          "description": "[W] System-wide day constant losses (computers, cameras, meteorological equipment, etc.)"
         },
         "nightConstantLosses": {
           "$ref": "#/$defs/Watt",
-          "description": "[W] Constant losses to apply to inverter power output during the night."
+          "description": "[W] System-wide night constant losses (computers, cameras, meteorological equipment, lighting, etc.)"
         }
       },
-      "additionalProperties": false,
-      "description": "Losses due to power consumption of inverters."
+      "description": "System-wide auxiliary consumption."
     },
     "SystemDegradationLosses": {
       "type": "object",
@@ -317,6 +310,37 @@
     "Volt": {
       "type": "number"
     },
+    "SelfConsumptionComponentLosses": {
+      "type": "object",
+      "properties": {
+        "activeConstantLosses": {
+          "$ref": "#/$defs/Watt",
+          "description": "[W] Component (inverter, PCS) constant self-consumption when active (not standby)."
+        },
+        "activeConstantLossesPowerThreshold": {
+          "$ref": "#/$defs/Watt",
+          "description": "[W] Component power threshold for activeConstantLosses, e.g. ventilation turns on due to higher power."
+        },
+        "activeProportionalLosses": {
+          "$ref": "#/$defs/WattPerWatt",
+          "description": "[W/W] Component (inverter, PCS) self-consumption proportional to power when active (not standby), e.g. ventilation speeds up due to a power increase."
+        },
+        "activeProportionalLossesPowerThreshold": {
+          "$ref": "#/$defs/Watt",
+          "description": "[W] Component power threshold for activeProportionalLosses."
+        },
+        "standbyConsumption": {
+          "$ref": "#/$defs/Watt",
+          "description": "Standby self-consumption, i.e. power consumed while the inverter is not delivering AC power. If input DC power into the inverter < Pso, then the inverter does not operate and its output AC power is negative. This also covers night self-consumption if the inverter/PCS is not disconnected."
+        },
+        "dayStandbyConsumption": {
+          "$ref": "#/$defs/Watt",
+          "description": "If standby consumption differs during the day and night then this optional field overrides standbyConsumption during the day."
+        }
+      },
+      "description": "Per-component self-consumption for inverters and PCSs. Values are defined per component instance. standbyConsumption is required for inverters with explicit Sandia parameters, otherwise it is taken from the selected catalog inverter (SOLARGIS_S1) or defaults to 0.",
+      "additionalProperties": false
+    },
     "Ohm": {
       "type": "number",
       "minimum": 0
@@ -334,11 +358,6 @@
     "KiloWatt": {
       "type": "number",
       "minimum": 0
-    },
-    "Percentage": {
-      "type": "number",
-      "minimum": 0,
-      "maximum": 100
     },
     "ThermalLossesNoctCorrection": {
       "type": "object",
@@ -385,15 +404,15 @@
     "Watt": {
       "type": "number"
     },
-    "WattPerKiloWatt": {
-      "type": "number",
-      "minimum": 0,
-      "maximum": 1000
-    },
     "DateISO8601": {
       "type": "string",
       "format": "date",
       "description": "Date in ISO8601 format: YYYY-MM-DD."
+    },
+    "Percentage": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
     },
     "MonthlyValuesPercentage": {
       "type": "array",
@@ -486,6 +505,23 @@
           "$ref": "#/$defs/WattPeak",
           "description": "[Wp] Nominal peak power of a single module. Optional - when provided, helps determine module specifications."
         },
+        "nameplatePowerTolerance": {
+          "type": "object",
+          "properties": {
+            "low": {
+              "type": "number",
+              "maximum": 0,
+              "description": "[%] Negative tolerance, a value <= 0, e.g. -3 means -3 % of the nameplate power."
+            },
+            "high": {
+              "type": "number",
+              "minimum": 0,
+              "description": "[%] Positive tolerance, a value >= 0, e.g. 3 means +3 % of the nameplate power."
+            }
+          },
+          "additionalProperties": false,
+          "description": "[%] Tolerance of the module nameplate power. Optional, both sides are independent. Affects only the PVOUT_UNC_LOW and PVOUT_UNC_HIGH uncertainty columns."
+        },
         "nominalOperatingCellTemperature": {
           "$ref": "#/$defs/DegreesCelsius",
           "description": "['C] Temperature reached by open circuited cells in a module at certain conditions."
@@ -510,12 +546,22 @@
       "properties": {
         "efficiency": {
           "$ref": "#/$defs/Percentage"
+        },
+        "startPower": {
+          "type": "number",
+          "minimum": 0,
+          "description": "[W] Minimum DC power to start."
         }
       },
       "required": [
         "efficiency"
       ],
       "$comment": "Supported by all simulationEngines."
+    },
+    "WattPerWatt": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
     },
     "TransformerParamsTwoWinding": {
       "type": "object",
@@ -548,6 +594,9 @@
         "losses"
       ],
       "additionalProperties": false
+    },
+    "Ampere": {
+      "type": "number"
     },
     "InternalUnavailabilityLossesYearly": {
       "type": "object",
@@ -701,7 +750,7 @@
         },
         "Pso": {
           "$ref": "#/$defs/Watt",
-          "description": "Minimum input DC power for the inverter to operate. See Pnt."
+          "description": "Minimum input DC power for the inverter to operate. See selfConsumption.standbyConsumption."
         },
         "C0": {
           "type": "number",
@@ -719,10 +768,6 @@
           "$ref": "#/$defs/VoltInverted",
           "description": "[1/V] Empirical coefficient allowing C0 to vary linearly with DC-voltage input."
         },
-        "Pnt": {
-          "$ref": "#/$defs/Watt",
-          "description": "Night tare, i.e. power consumed while inverter is not delivering AC power. If input DC power into the inverter < Pso then the inverter does not operate and its output AC power is negative (-Pnt)."
-        },
         "dcLimitsPerMppt": {
           "$ref": "#/$defs/MpptLimits"
         }
@@ -736,10 +781,15 @@
         "C1",
         "C2",
         "C3",
-        "Pnt",
         "dcLimitsPerMppt"
       ],
+      "additionalProperties": false,
       "$comment": "Supported by: SOLARGIS_S1 only."
+    },
+    "Degrees": {
+      "type": "number",
+      "maximum": 360,
+      "minimum": -360
     },
     "InternalUnavailabilityLossesInterval": {
       "type": "object",
@@ -809,9 +859,6 @@
       "additionalProperties": false
     },
     "AmperePerKelvin": {
-      "type": "number"
-    },
-    "Ampere": {
       "type": "number"
     },
     "VoltInverted": {
@@ -889,7 +936,7 @@
           "$comment": "Multiple segments supported by: SOLARGIS_S1 only. SOLARGIS_A1 and SOLARGIS_A2 support single segment only."
         },
         "dcElectricalLayout": {
-          "$ref": "#/$defs/BasicDcElectricalLayout"
+          "$ref": "#/$defs/SystemBasicDcElectricalLayout"
         },
         "acElectricalLayout": {
           "$ref": "#/$defs/BasicAcElectricalLayout"
@@ -910,28 +957,16 @@
         "segments"
       ]
     },
-    "BasicDcElectricalLayout": {
-      "type": "object",
-      "properties": {
-        "moduleName": {
-          "type": "string",
-          "description": "Type of solar panels used in this segment: the name of an entry in system.components.modules. Required if modules is a list with more than one entry, optional otherwise."
+    "SystemBasicDcElectricalLayout": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/BasicDcElectricalLayout"
         },
-        "inverterName": {
-          "type": "string",
-          "description": "Type of inverters used in this segment: the name of an entry in system.components.inverters. Required if inverters is a list with more than one entry, optional otherwise."
-        },
-        "nInverters": {
-          "type": "integer",
-          "minimum": 1,
-          "description": "Number of inverters in this segment."
-        },
-        "stringSize": {
-          "type": "integer",
-          "minimum": 1,
-          "description": "Number of modules connected in series to form one string. Optional; if omitted it is computed to fit the inverter MPPT voltage window. Modules in a string are always arranged in a single row along the table (no vertical 2-D stringing), as the simulation does not model the localized partial shading where such wiring would matter."
+        {
+          "$ref": "#/$defs/MultiSegmentGroupBasicDcElectricalLayout"
         }
-      }
+      ],
+      "description": "System-level DC electrical layout. Either a single BasicDcElectricalLayout applied to the whole system, or a MultiSegmentGroupBasicDcElectricalLayout assigning inverter fleets to separate groups of segments."
     },
     "BasicAcElectricalLayout": {
       "type": "object",
@@ -966,9 +1001,36 @@
       },
       "description": "Cable losses are not supported if system has combiner boxes."
     },
-    "KiloWattPeak": {
-      "type": "number",
-      "exclusiveMinimum": 0
+    "BasicDcElectricalLayout": {
+      "type": "object",
+      "properties": {
+        "moduleName": {
+          "type": "string",
+          "description": "Type of solar panels used in this segment: the name of an entry in system.components.modules. Required if modules is a list with more than one entry, optional otherwise."
+        },
+        "inverterName": {
+          "type": "string",
+          "description": "Type of inverters used in this segment: the name of an entry in system.components.inverters. Required if inverters is a list with more than one entry, optional otherwise."
+        },
+        "nInverters": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of inverters in this segment."
+        },
+        "stringSize": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of modules connected in series to form one string. Optional; if omitted it is computed to fit the inverter MPPT voltage window. Modules in a string are always arranged in a single row along the table (no vertical 2-D stringing), as the simulation does not model the localized partial shading where such wiring would matter."
+        }
+      }
+    },
+    "MultiSegmentGroupBasicDcElectricalLayout": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SegmentGroupBasicDcElectricalLayout"
+      },
+      "minItems": 1,
+      "description": "DC electrical layout specified separately for two or more groups of segments. Each entry assigns an inverter fleet (and its string sizing) to a group of segments via segmentIndices. Use this form when different segment groups need different inverters; use the single BasicDcElectricalLayout form when one fleet serves the whole system."
     },
     "Mounting": {
       "oneOf": [
@@ -1042,6 +1104,20 @@
           "additionalProperties": false
         }
       }
+    },
+    "KiloWattPeak": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "SegmentGroupBasicDcElectricalLayout": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/BasicDcElectricalLayout"
+        },
+        {
+          "$ref": "#/$defs/SegmentGroup"
+        }
+      ]
     },
     "DegreesOrientationAzimuth": {
       "type": "number",
@@ -1390,6 +1466,24 @@
       ],
       "description": "If LANDSCAPE, modules are placed horizontally (in module definition U is horizontal, V is vertical). If PORTRAIT, modules are rotated 90 degrees (in module definition U is vertical, V is horizontal)."
     },
+    "SegmentGroup": {
+      "type": "object",
+      "properties": {
+        "segmentIndices": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "minItems": 1,
+          "description": "0-based indices into layout.segments identifying the segments that belong to this group. Indices must be unique and, across all groups, must cover every segment exactly once (validated during conversion, not by the schema)."
+        }
+      },
+      "required": [
+        "segmentIndices"
+      ],
+      "description": "Identifies a group of field segments by their 0-based indices into layout.segments."
+    },
     "DegreesMountingTilt": {
       "type": "number",
       "minimum": 0,
@@ -1557,11 +1651,6 @@
         "east",
         "west"
       ]
-    },
-    "Degrees": {
-      "type": "number",
-      "maximum": 360,
-      "minimum": -360
     },
     "WattPeak": {
       "type": "number",

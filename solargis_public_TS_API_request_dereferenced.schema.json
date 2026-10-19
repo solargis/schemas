@@ -876,6 +876,23 @@
                             "type": "number",
                             "exclusiveMinimum": 0
                           },
+                          "nameplatePowerTolerance": {
+                            "type": "object",
+                            "properties": {
+                              "low": {
+                                "type": "number",
+                                "maximum": 0,
+                                "description": "[%] Negative tolerance, a value <= 0, e.g. -3 means -3 % of the nameplate power."
+                              },
+                              "high": {
+                                "type": "number",
+                                "minimum": 0,
+                                "description": "[%] Positive tolerance, a value >= 0, e.g. 3 means +3 % of the nameplate power."
+                              }
+                            },
+                            "additionalProperties": false,
+                            "description": "[%] Tolerance of the module nameplate power. Optional, both sides are independent. Affects only the PVOUT_UNC_LOW and PVOUT_UNC_HIGH uncertainty columns."
+                          },
                           "nominalOperatingCellTemperature": {
                             "type": "number",
                             "minimum": -100
@@ -978,9 +995,6 @@
                               "C3": {
                                 "type": "number"
                               },
-                              "Pnt": {
-                                "type": "number"
-                              },
                               "dcLimitsPerMppt": {
                                 "type": "object",
                                 "properties": {
@@ -1020,9 +1034,9 @@
                               "C1",
                               "C2",
                               "C3",
-                              "Pnt",
                               "dcLimitsPerMppt"
                             ],
+                            "additionalProperties": false,
                             "$comment": "Supported by: SOLARGIS_S1 only."
                           },
                           {
@@ -1032,6 +1046,11 @@
                                 "type": "number",
                                 "minimum": 0,
                                 "maximum": 100
+                              },
+                              "startPower": {
+                                "type": "number",
+                                "minimum": 0,
+                                "description": "[W] Minimum DC power to start."
                               }
                             },
                             "required": [
@@ -1090,13 +1109,40 @@
                         "minimum": 1,
                         "maximum": 3,
                         "description": "Number of output AC phases of the inverter. Must be 1 or 3. All inverters must have the same value."
+                      },
+                      "selfConsumption": {
+                        "type": "object",
+                        "properties": {
+                          "activeConstantLosses": {
+                            "type": "number"
+                          },
+                          "activeConstantLossesPowerThreshold": {
+                            "type": "number"
+                          },
+                          "activeProportionalLosses": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "activeProportionalLossesPowerThreshold": {
+                            "type": "number"
+                          },
+                          "standbyConsumption": {
+                            "type": "number"
+                          },
+                          "dayStandbyConsumption": {
+                            "type": "number"
+                          }
+                        },
+                        "description": "Per-component self-consumption for inverters and PCSs. Values are defined per component instance. standbyConsumption is required for inverters with explicit Sandia parameters, otherwise it is taken from the selected catalog inverter (SOLARGIS_S1) or defaults to 0.",
+                        "additionalProperties": false
                       }
                     },
+                    "additionalProperties": false,
+                    "description": "Inverter component. Only name is required; nMppTrackers defaults to 1, Vac/nOutputAcPhases from system defaults. parameters may be omitted only for SOLARGIS_S1, to auto-select an inverter while still specifying selfConsumption directly.",
                     "required": [
-                      "parameters",
                       "name"
-                    ],
-                    "description": "Inverter component. Only parameters is required; nMppTrackers defaults to 1, other fields use system defaults."
+                    ]
                   },
                   "minItems": 1,
                   "description": "Inverter type(s) used in the power plant: a list of Inverter entries, each with a unique `name`. Segments select a type via dcElectricalLayout.inverterName; with a single inverter the reference is optional."
@@ -2420,27 +2466,82 @@
                   "$comment": "Multiple segments supported by: SOLARGIS_S1 only. SOLARGIS_A1 and SOLARGIS_A2 support single segment only."
                 },
                 "dcElectricalLayout": {
-                  "type": "object",
-                  "properties": {
-                    "moduleName": {
-                      "type": "string",
-                      "description": "Type of solar panels used in this segment: the name of an entry in system.components.modules. Required if modules is a list with more than one entry, optional otherwise."
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "moduleName": {
+                          "type": "string",
+                          "description": "Type of solar panels used in this segment: the name of an entry in system.components.modules. Required if modules is a list with more than one entry, optional otherwise."
+                        },
+                        "inverterName": {
+                          "type": "string",
+                          "description": "Type of inverters used in this segment: the name of an entry in system.components.inverters. Required if inverters is a list with more than one entry, optional otherwise."
+                        },
+                        "nInverters": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "description": "Number of inverters in this segment."
+                        },
+                        "stringSize": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "description": "Number of modules connected in series to form one string. Optional; if omitted it is computed to fit the inverter MPPT voltage window. Modules in a string are always arranged in a single row along the table (no vertical 2-D stringing), as the simulation does not model the localized partial shading where such wiring would matter."
+                        }
+                      }
                     },
-                    "inverterName": {
-                      "type": "string",
-                      "description": "Type of inverters used in this segment: the name of an entry in system.components.inverters. Required if inverters is a list with more than one entry, optional otherwise."
-                    },
-                    "nInverters": {
-                      "type": "integer",
-                      "minimum": 1,
-                      "description": "Number of inverters in this segment."
-                    },
-                    "stringSize": {
-                      "type": "integer",
-                      "minimum": 1,
-                      "description": "Number of modules connected in series to form one string. Optional; if omitted it is computed to fit the inverter MPPT voltage window. Modules in a string are always arranged in a single row along the table (no vertical 2-D stringing), as the simulation does not model the localized partial shading where such wiring would matter."
+                    {
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "moduleName": {
+                                "type": "string",
+                                "description": "Type of solar panels used in this segment: the name of an entry in system.components.modules. Required if modules is a list with more than one entry, optional otherwise."
+                              },
+                              "inverterName": {
+                                "type": "string",
+                                "description": "Type of inverters used in this segment: the name of an entry in system.components.inverters. Required if inverters is a list with more than one entry, optional otherwise."
+                              },
+                              "nInverters": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "description": "Number of inverters in this segment."
+                              },
+                              "stringSize": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "description": "Number of modules connected in series to form one string. Optional; if omitted it is computed to fit the inverter MPPT voltage window. Modules in a string are always arranged in a single row along the table (no vertical 2-D stringing), as the simulation does not model the localized partial shading where such wiring would matter."
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "segmentIndices": {
+                                "type": "array",
+                                "items": {
+                                  "type": "integer",
+                                  "minimum": 0
+                                },
+                                "minItems": 1,
+                                "description": "0-based indices into layout.segments identifying the segments that belong to this group. Indices must be unique and, across all groups, must cover every segment exactly once (validated during conversion, not by the schema)."
+                              }
+                            },
+                            "required": [
+                              "segmentIndices"
+                            ],
+                            "description": "Identifies a group of field segments by their 0-based indices into layout.segments."
+                          }
+                        ]
+                      },
+                      "minItems": 1,
+                      "description": "DC electrical layout specified separately for two or more groups of segments. Each entry assigns an inverter fleet (and its string sizing) to a group of segments via segmentIndices. Use this form when different segment groups need different inverters; use the single BasicDcElectricalLayout form when one fleet serves the whole system."
                     }
-                  }
+                  ],
+                  "description": "System-level DC electrical layout. Either a single BasicDcElectricalLayout applied to the whole system, or a MultiSegmentGroupBasicDcElectricalLayout assigning inverter fleets to separate groups of segments."
                 },
                 "acElectricalLayout": {
                   "type": "object",
@@ -2657,31 +2758,17 @@
                     }
                   }
                 },
-                "selfConsumption": {
+                "systemAuxiliaryLosses": {
                   "type": "object",
                   "properties": {
                     "dayConstantLosses": {
                       "type": "number"
                     },
-                    "dayConstantLossesFromInverterPowerThreshold": {
-                      "type": "number",
-                      "minimum": 0
-                    },
-                    "dayProportionalLosses": {
-                      "type": "number",
-                      "minimum": 0,
-                      "maximum": 1000
-                    },
-                    "dayProportionalLossesFromInverterPowerThreshold": {
-                      "type": "number",
-                      "minimum": 0
-                    },
                     "nightConstantLosses": {
                       "type": "number"
                     }
                   },
-                  "additionalProperties": false,
-                  "description": "Losses due to power consumption of inverters."
+                  "description": "System-wide auxiliary consumption."
                 },
                 "degradation": {
                   "type": "object",
@@ -2733,7 +2820,8 @@
                   ],
                   "description": "Losses due to soiling of solar panels. Given as flat percentage or monthly percentages. Applied during GTI calculation. Overrides input.systemSoilingLosses."
                 }
-              }
+              },
+              "additionalProperties": false
             },
             "environment": {
               "type": "object",
