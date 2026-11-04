@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.10/solargis_public_TS_historical_forecast_request.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.11/solargis_public_TS_historical_forecast_request.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
   "description": "Schema for Solargis data request - for historical forecast timeseries datasets. The timeseries request plus a historicalForecast definition; history and live forecast are never mixed in.",
   "type": "object",
@@ -223,7 +223,19 @@
       "$ref": "solargis_public_TS_request.schema.json#/properties/site"
     },
     "timeStep": {
-      "$ref": "solargis_public_TS_request.schema.json#/properties/timeStep"
+      "description": "Time step of the output. The same values as the legacy historical forecast route. The forecast archives are coarser than PT15M (NWP 30 min, satellite nowcast 5-15 min by region): PT1M, PT5M and PT10M are interpolated from it: they add time resolution, not forecast information.",
+      "type": "string",
+      "enum": [
+        "PT1M",
+        "PT5M",
+        "PT10M",
+        "PT15M",
+        "PT30M",
+        "PT60M",
+        "P1D",
+        "P1M",
+        "P1Y"
+      ]
     },
     "fromDate": {
       "description": "Start date of the requested data. Inclusive. See also the utcOffset. Explicit date only.",

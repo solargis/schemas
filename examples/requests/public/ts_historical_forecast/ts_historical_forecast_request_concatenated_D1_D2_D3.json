@@ -11,15 +11,14 @@
     "GHI"
   ],
   "outputFormat": "SOLARGIS_JSON",
+  "forecastBlendingScheme": "DEFAULT",
   "historicalForecast": {
     "type": "CONCATENATED",
     "leadPeriods": [
-      "P0D"
+      "D1",
+      "D2",
+      "D3"
     ],
-    "processingTime": "08:30+01:00",
-    "sources": [
-      "NWP_FORECAST",
-      "NOWCAST"
-    ]
+    "processingTime": "09:00+01:00"
   }
 }

@@ -14,7 +14,7 @@
   "historicalForecast": {
     "type": "CONCATENATED",
     "leadPeriods": [
-      "PT1H"
+      "H1"
     ]
   }
 }

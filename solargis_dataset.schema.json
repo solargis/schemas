@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.10/solargis_dataset.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.11/solargis_dataset.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
 
   "description": "This is the schema for the Solargis dataset - a structure for data and metadata you can exchange with Solargis. You can use this schema for two dimensional tabular data (one column is reserved for datetime strings, others are numeric columns) for a single site location or a single portfolio.",
@@ -507,7 +507,7 @@
           "$ref": "solargis_common_types.schema.json#/$defs/InstrumentCoordinates"
         },
         "leadPeriod": {
-          "description": "Lead period of a historical forecast column, e.g. P1D for GHI_P1D. Set only on columns of a historical forecast dataset with type CONCATENATED.",
+          "description": "Lead period of a historical forecast column, e.g. D1 for GHI_D1. Set only on columns of a historical forecast dataset with type CONCATENATED.",
           "$ref": "solargis_historical_forecast.schema.json#/$defs/LeadPeriod"
         },
         "forecastModel": {

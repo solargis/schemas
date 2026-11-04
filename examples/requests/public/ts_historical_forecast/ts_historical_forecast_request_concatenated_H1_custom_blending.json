@@ -1,0 +1,46 @@
+{
+  "site": {
+    "latitude": 48.15,
+    "longitude": 17.11
+  },
+  "timeStep": "PT15M",
+  "fromDate": "2026-03-01",
+  "toDate": "2026-03-07",
+  "utcOffset": "+01:00",
+  "columns": [
+    "GHI",
+    "DNI"
+  ],
+  "outputFormat": "SOLARGIS_JSON",
+  "forecastBlendingScheme": {
+    "steps": [
+      {
+        "type": "OVERLAY",
+        "model": "GFS"
+      },
+      {
+        "type": "OVERLAY",
+        "model": "IFS"
+      },
+      {
+        "type": "WEIGHTED_MEAN",
+        "weights": {
+          "IFS": 40,
+          "ICONEU": 60
+        }
+      },
+      {
+        "type": "LEADTIME_TRANSITION",
+        "model": "NOWCAST",
+        "startHours": 2.0,
+        "widthHours": 1.5
+      }
+    ]
+  },
+  "historicalForecast": {
+    "type": "CONCATENATED",
+    "leadPeriods": [
+      "H1"
+    ]
+  }
+}

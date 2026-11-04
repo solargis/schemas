@@ -8,17 +8,16 @@
   "toDate": "2026-03-31",
   "utcOffset": "+01:00",
   "columns": [
-    "GHI"
+    "GHI",
+    "DNI",
+    "LEADTIME"
   ],
   "outputFormat": "SOLARGIS_JSON",
-  "forecastBlendingScheme": "DEFAULT",
+  "includeForecastModelColumns": true,
   "historicalForecast": {
     "type": "CONCATENATED",
     "leadPeriods": [
-      "P1D",
-      "P2D",
-      "P3D"
-    ],
-    "processingTime": "09:00+01:00"
+      "H1"
+    ]
   }
 }

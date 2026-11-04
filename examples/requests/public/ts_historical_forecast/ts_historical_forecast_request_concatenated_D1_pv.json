@@ -45,7 +45,7 @@
   "historicalForecast": {
     "type": "CONCATENATED",
     "leadPeriods": [
-      "P1D"
+      "D1"
     ],
     "processingTime": "09:00+09:00"
   }
