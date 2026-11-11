@@ -83,7 +83,7 @@
           "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(Z|[+\\-]\\d{2}:\\d{2})$"
         },
         "sources": {
-          "description": "Forecast archives to read. NWP_FORECAST: numerical weather prediction models. NOWCAST: satellite-based nowcast. With both, they are blended as in operational forecasting. Default: every source that can contribute, as in the operational delivery - [NWP_FORECAST] when all leadPeriods are D1-D4, otherwise [NWP_FORECAST, NOWCAST]. NOWCAST covers only the first hours after the forecast is processed, so it is used for D0, H* and M* and never reaches D1-D4, also when D0 is requested next to them. NOWCAST alone is accepted for H* and M* only.",
+          "description": "Forecast archives to read. NWP_FORECAST: numerical weather prediction models. NOWCAST: satellite-based nowcast. With both, they are blended as in operational forecasting. Default: every source that can contribute, as in the operational delivery - [NWP_FORECAST] when all leadPeriods are D1-D4, otherwise [NWP_FORECAST, NOWCAST]. NOWCAST covers only the first hours after the forecast is processed, so it is used for D0, H* and M* and never reaches D1-D4. Next to NWP_FORECAST it is accepted with any lead period: the blend at D1-D4 is then the NWP forecast, and the per-model NOWCAST columns (includeForecastModelColumns, forecastModels) are returned for every lead period, empty where the nowcast does not reach, so the set of columns does not depend on the lead. NOWCAST alone is accepted for H* and M* only.",
           "type": "array",
           "minItems": 1,
           "uniqueItems": true,
@@ -221,41 +221,7 @@
           }
         },
         {
-          "$comment": "D1-D4 without D0: no NOWCAST, its horizon of a few hours cannot reach the next day.",
-          "if": {
-            "required": [
-              "leadPeriods"
-            ],
-            "properties": {
-              "leadPeriods": {
-                "contains": {
-                  "enum": [
-                    "D1",
-                    "D2",
-                    "D3",
-                    "D4"
-                  ]
-                },
-                "not": {
-                  "contains": {
-                    "const": "D0"
-                  }
-                }
-              }
-            }
-          },
-          "then": {
-            "properties": {
-              "sources": {
-                "items": {
-                  "const": "NWP_FORECAST"
-                }
-              }
-            }
-          }
-        },
-        {
-          "$comment": "D0 and SINGLE: NOWCAST alone is rejected, a whole-day window always exceeds the nowcast horizon. Add NWP_FORECAST.",
+          "$comment": "D* and SINGLE: NOWCAST alone is rejected, a whole-day window always exceeds the nowcast horizon. Add NWP_FORECAST. Next to NWP_FORECAST, NOWCAST is accepted with every D* lead; where it cannot reach (D1-D4) its columns are empty.",
           "if": {
             "anyOf": [
               {
@@ -273,7 +239,11 @@
                   "leadPeriods": {
                     "contains": {
                       "enum": [
-                        "D0"
+                        "D0",
+                        "D1",
+                        "D2",
+                        "D3",
+                        "D4"
                       ]
                     }
                   }
