@@ -174,8 +174,51 @@
               "$ref": "#/$defs/ForecastBlendingSchemeDefinition"
             }
           ]
+        },
+        "forecastModels": {
+          "description": "Return the forecast models' own values instead of a blended forecast: each requested column that a forecast model provides (GHI, DNI, DIF, DHI and GTI with its components, with and without terrain shading, and LEADTIME) once per model, named <column>_<model> (historical forecast: <column>_<model>_<leadPeriod>), e.g. GHI_IFS, GHI_ICONEU_D1, with the model in the column metadata (forecastModel). No blended column is returned. ALL: every model available at the site for the requested period, in a historical forecast also within its sources, including the satellite nowcast (NOWCAST) where it reaches. A list names the models; a model that is not available is refused. Columns that depend on the forecast but have no per-model values, e.g. PVOUT, are refused; columns that do not depend on it (meteo, sun position) are returned once. The models delivered are listed in the processing module solargis/forecastModels.",
+          "oneOf": [
+            {
+              "description": "Every model available.",
+              "const": "ALL"
+            },
+            {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "$ref": "#/$defs/ForecastModelName"
+              }
+            }
+          ]
         }
       },
+      "allOf": [
+        {
+          "$comment": "forecastModels returns the models' own values, so it excludes a blending scheme and the per-model columns of the blend.",
+          "if": {
+            "required": [
+              "forecastModels"
+            ]
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "forecastBlendingScheme"
+                  ]
+                },
+                {
+                  "required": [
+                    "includeForecastModelColumns"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ],
       "if": {
         "required": [
           "pvConfiguration"

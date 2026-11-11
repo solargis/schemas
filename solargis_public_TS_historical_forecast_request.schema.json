@@ -213,6 +213,30 @@
           }
         }
       }
+    },
+    {
+      "$comment": "forecastModels returns the models' own values, so it excludes a blending scheme and the per-model columns of the blend. Same rule as in solargis_data_request.schema.json.",
+      "if": {
+        "required": [
+          "forecastModels"
+        ]
+      },
+      "then": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "forecastBlendingScheme"
+              ]
+            },
+            {
+              "required": [
+                "includeForecastModelColumns"
+              ]
+            }
+          ]
+        }
+      }
     }
   ],
   "properties": {
@@ -293,6 +317,9 @@
     },
     "includeForecastModelColumns": {
       "$ref": "solargis_public_TS_request.schema.json#/properties/includeForecastModelColumns"
+    },
+    "forecastModels": {
+      "$ref": "solargis_public_TS_request.schema.json#/properties/forecastModels"
     },
     "historicalForecast": {
       "$ref": "solargis_historical_forecast.schema.json#/$defs/HistoricalForecast"

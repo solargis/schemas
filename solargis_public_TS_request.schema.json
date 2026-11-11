@@ -87,11 +87,40 @@
     "includeForecastModelColumns": {
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/includeForecastModelColumns"
     },
+    "forecastModels": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/forecastModels"
+    },
     "historicalForecast": {
       "description": "Not accepted in this request. Historical forecast is requested with solargis_public_TS_historical_forecast_request.schema.json.",
       "not": {}
     }
   },
+  "allOf": [
+    {
+      "$comment": "forecastModels returns the models' own values, so it excludes a blending scheme and the per-model columns of the blend. Same rule as in solargis_data_request.schema.json.",
+      "if": {
+        "required": [
+          "forecastModels"
+        ]
+      },
+      "then": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "forecastBlendingScheme"
+              ]
+            },
+            {
+              "required": [
+                "includeForecastModelColumns"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
   "$comment": "The mounting of the PV system is a part of pvConfiguration, so a separate gtiConfiguration would be ambiguous. Same rule as in solargis_data_request.schema.json.",
   "if": {
     "required": [
