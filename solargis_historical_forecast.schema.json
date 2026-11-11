@@ -4,7 +4,7 @@
   "description": "Historical forecast definition: which archived forecast to return instead of history or live forecast. Used by solargis_public_TS_historical_forecast_request.schema.json.",
   "$defs": {
     "HistoricalForecast": {
-      "description": "Which historical forecast to return. type CONCATENATED: fixed lead; for every day (D*) or time step (H*, M*) of fromDate..toDate, the forecast that was N days, hours or minutes ahead, joined into one series, as an operational delivery would have received it; one series per requested lead period. type SINGLE: fixed issue; one snapshot, the forecast as available at processingDateTime, at most 5 days ahead.",
+      "description": "Which historical forecast to return. type CONCATENATED: fixed lead; for every day (D*) or time step (H*, M*) of fromDate..toDate, the forecast delivered a fixed number of days or delivery intervals before it, joined into one series, as an operational delivery would have received it; one series per requested lead period. type SINGLE: fixed issue; one snapshot, the forecast as available at processingDateTime, at most 5 days ahead.",
       "type": "object",
       "required": [
         "type"
@@ -21,6 +21,7 @@
         },
         "leadPeriods": {
           "description": "CONCATENATED only. Lead periods to return, all D* or all H* / M*. Every requested column that depends on the forecast irradiance (irradiance, its derived and PV columns, LEADTIME) is returned once per lead period, named <column>_<leadPeriod>, e.g. GHI_D1, PVOUT_H1, LEADTIME_D1, and carries the lead period in its column metadata (leadPeriod). The suffix is added for a single lead period too. Other columns (meteo, ALB, sun position) are the same for every lead period and are returned once, without suffix and without leadPeriod.",
+          "$comment": "Pick the family by how often the client receives a forecast (H* hourly, M15_* every 15 minutes, M30_* every 30 minutes) and the number in the name by how many intervals ahead it acts on it, so the series mirrors its real delivery. Same lead time, shorter interval = fresher data: M15_4 is not H1.",
           "type": "array",
           "minItems": 1,
           "uniqueItems": true,
@@ -47,8 +48,24 @@
                   "H2",
                   "H3",
                   "H4",
-                  "M15",
-                  "M30"
+                  "M15_0",
+                  "M15_1",
+                  "M15_2",
+                  "M15_3",
+                  "M15_4",
+                  "M15_5",
+                  "M15_6",
+                  "M15_7",
+                  "M15_8",
+                  "M15_9",
+                  "M15_10",
+                  "M15_11",
+                  "M30_0",
+                  "M30_1",
+                  "M30_2",
+                  "M30_3",
+                  "M30_4",
+                  "M30_5"
                 ]
               }
             }
@@ -172,8 +189,24 @@
                     "H2",
                     "H3",
                     "H4",
-                    "M15",
-                    "M30"
+                    "M15_0",
+                    "M15_1",
+                    "M15_2",
+                    "M15_3",
+                    "M15_4",
+                    "M15_5",
+                    "M15_6",
+                    "M15_7",
+                    "M15_8",
+                    "M15_9",
+                    "M15_10",
+                    "M15_11",
+                    "M30_0",
+                    "M30_1",
+                    "M30_2",
+                    "M30_3",
+                    "M30_4",
+                    "M30_5"
                   ]
                 }
               }
@@ -261,7 +294,7 @@
       ]
     },
     "LeadPeriod": {
-      "description": "Lead period of a historical forecast. D0-D4: the forecast processed N days before each target day (D0: the same day), at processingTime. H0-H4: hourly delivery, each time step from the delivery N hours before it. M15, M30: delivery every 15 minutes, each time step from the delivery 15 or 30 minutes before it. H* and M* blend satellite nowcast with NWP forecast.",
+      "description": "Lead period of a historical forecast. D0-D4: the forecast processed that many days before each target day (D0: the same day), at processingTime. Intraday lead periods name the delivery interval, then the number of intervals: H0-H4 hourly delivery, M15_0-M15_11 delivery every 15 minutes, M30_0-M30_5 delivery every 30 minutes. Each time step comes from the latest delivery made at least that many intervals before it, e.g. H1: 1 hour, M15_2: 30 minutes, M30_1: 30 minutes. With a 30-minute interval one delivery serves two 15-minute time steps, so M30_1 gives the time steps 30 and 45 minutes after its delivery. H* and M* blend satellite nowcast with NWP forecast.",
       "type": "string",
       "enum": [
         "D0",
@@ -274,8 +307,24 @@
         "H2",
         "H3",
         "H4",
-        "M15",
-        "M30"
+        "M15_0",
+        "M15_1",
+        "M15_2",
+        "M15_3",
+        "M15_4",
+        "M15_5",
+        "M15_6",
+        "M15_7",
+        "M15_8",
+        "M15_9",
+        "M15_10",
+        "M15_11",
+        "M30_0",
+        "M30_1",
+        "M30_2",
+        "M30_3",
+        "M30_4",
+        "M30_5"
       ]
     }
   }
