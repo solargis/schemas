@@ -1,0 +1,163 @@
+{
+  "created": "2026-11-11T13:38:44.990341+00:00",
+  "datasetType": "TIMESERIES",
+  "site": {
+    "latitude": 48.61259,
+    "longitude": 20.827079,
+    "elevation": 300.0,
+    "mapUrl": "https://apps.solargis.com/prospect/map?s=48.612590,20.827079&c=48.612590,20.827079,14&m=mapbox-satellite"
+  },
+  "author": {
+    "name": "Solargis s.r.o.",
+    "address": "Bottova 2A, Bratislava, Slovakia",
+    "web": "https://solargis.com",
+    "email": "contact@solargis.com",
+    "phone": "+421 2 4319 1708"
+  },
+  "license": {
+    "copyright": "© 2026 Solargis s.r.o.",
+    "disclaimer": "Considering the nature of climate fluctuations, inter-annual and long-term changes, as well as the uncertainty of measurements and calculations, Solargis s.r.o. cannot take full guarantee of the accuracy of estimates. The maximum possible has been done for the assessment of climate conditions based on the best available data, software and knowledge. Solargis s.r.o. shall not be liable for any direct, incidental, consequential, indirect or punitive damages arising or alleged to have arisen out of use of the provided data. Solargis is a trade mark of Solargis s.r.o."
+  },
+  "metadata": {
+    "columns": {
+      "DATETIME": {
+        "timeFormatPattern": "YYYY-MM-DDThh:mm:ss[.sss]±hh:mm",
+        "timeStep": "PT60M",
+        "timeAlignment": "CENTER",
+        "realTimestamps": true,
+        "firstTimestamp": "2025-06-01T11:30:00+01:00",
+        "lastTimestamp": "2025-06-01T13:30:00+01:00"
+      },
+      "GHI_D1": {
+        "unit": "Wh/m2",
+        "description": "Global horizontal irradiation",
+        "columnType": "GHI",
+        "sources": [
+          {
+            "name": "calculated from GFS forecast model (© 2026 NOAA) ICON and ICONEUENS forecast model (© 2026 DWD) IFS forecast model (© 2026 ECMWF) by Solargis method",
+            "version": "2.2.70"
+          }
+        ],
+        "leadPeriod": "D1"
+      },
+      "GHI_D2": {
+        "unit": "Wh/m2",
+        "description": "Global horizontal irradiation",
+        "columnType": "GHI",
+        "sources": [
+          {
+            "name": "calculated from GFS forecast model (© 2026 NOAA) ICON and ICONEUENS forecast model (© 2026 DWD) IFS forecast model (© 2026 ECMWF) by Solargis method",
+            "version": "2.2.70"
+          }
+        ],
+        "leadPeriod": "D2"
+      },
+      "LEADTIME_D1": {
+        "unit": "hour",
+        "description": "Lead time of forecast",
+        "columnType": "LEADTIME",
+        "leadPeriod": "D1"
+      },
+      "LEADTIME_D2": {
+        "unit": "hour",
+        "description": "Lead time of forecast",
+        "columnType": "LEADTIME",
+        "leadPeriod": "D2"
+      },
+      "TEMP": {
+        "unit": "deg_C",
+        "description": "Air temperature at 2 m",
+        "columnType": "TEMP",
+        "sources": [
+          {
+            "name": "spatially disaggregated from IFS model data (© 2026 ECMWF) by Solargis method",
+            "version": "2.2.70"
+          }
+        ]
+      }
+    },
+    "columnOrder": [
+      "DATETIME",
+      "GHI_D1",
+      "GHI_D2",
+      "LEADTIME_D1",
+      "LEADTIME_D2",
+      "TEMP"
+    ],
+    "createdByApplication": {
+      "name": "solargis/core",
+      "version": "2.2.70"
+    },
+    "processing": {
+      "timePeriod": {
+        "from": "2025-06-01T11:00:00+01:00",
+        "to": "2025-06-01T14:00:00+01:00"
+      },
+      "modules": [
+        {
+          "name": "solargis/core",
+          "version": "2.2.70"
+        },
+        {
+          "name": "solargis/forecastBlending",
+          "details": {
+            "scheme": "DEFAULT",
+            "models": [
+              "GFS",
+              "ICONEU",
+              "ICONEUENS",
+              "IFS",
+              "IFSENS"
+            ]
+          }
+        },
+        {
+          "name": "solargis/historicalForecast",
+          "details": {
+            "type": "CONCATENATED",
+            "leadPeriods": [
+              "D1",
+              "D2"
+            ],
+            "processingTime": "10:30+01:00",
+            "sources": [
+              "NWP_FORECAST"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "data": {
+    "DATETIME": [
+      "2025-06-01T11:30:00+01:00",
+      "2025-06-01T12:30:00+01:00",
+      "2025-06-01T13:30:00+01:00"
+    ],
+    "GHI_D1": [
+      688.0,
+      550.0,
+      462.0
+    ],
+    "GHI_D2": [
+      712.0,
+      674.0,
+      558.0
+    ],
+    "LEADTIME_D1": [
+      34.5,
+      35.5,
+      36.5
+    ],
+    "LEADTIME_D2": [
+      58.5,
+      59.5,
+      60.5
+    ],
+    "TEMP": [
+      23.7,
+      24.3,
+      24.5
+    ]
+  }
+}
