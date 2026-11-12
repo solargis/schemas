@@ -72,7 +72,7 @@
           ]
         },
         "processingTime": {
-          "description": "CONCATENATED with D* lead periods only. Time of day the forecast is processed, shared by all lead periods, with an explicit offset (HH:MM+hh:mm, HH:MM-hh:mm or HH:MMZ), e.g. 10:30+01:00. Every day of the range gets the forecast as it would have been delivered at that instant: only forecast runs available by then are used (NWP runs a few hours after their issue time, satellite nowcast minutes after its time slot). Fixed offset, no daylight saving time.",
+          "description": "CONCATENATED with D* lead periods only. Time of day the forecast is processed, shared by all lead periods, with an explicit offset (HH:MM+hh:mm, HH:MM-hh:mm or HH:MMZ), e.g. 10:30+01:00. Its offset only says how to read the clock time: lead periods count days in the calendar of utcOffset (or its default from the site longitude), so D1 with 23:30Z for a site with utcOffset +09:00 is the forecast processed at 08:30+09:00 on the day before each target day. Every day of the range gets the forecast as it would have been delivered at that instant: only forecast runs available by then are used (NWP runs a few hours after their issue time, satellite nowcast minutes after its time slot). Fixed offset, no daylight saving time.",
           "type": "string",
           "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9](Z|[+\\-](0[0-9]|1[0-4]):(00|30))$"
         },
