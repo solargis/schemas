@@ -163,7 +163,7 @@
           "default": false
         },
         "forecastBlendingScheme": {
-          "description": "Forecast blending scheme (NWP models and satellite nowcast) used instead of the default one for the site's region: either the name of a predefined scheme or an inline definition. Applies to the forecast part of a timeseries, live or historical; a date range with no forecast part is unaffected. A scheme none of whose models is available at the site is rejected. Models of the scheme without data for the site or period are left out and the blend uses the remaining ones. The models actually used are listed in the dataset metadata, processing.modules entry solargis/forecastBlending (properties scheme and models; an inline definition is reported as scheme CUSTOM and echoed as definition).",
+          "description": "Forecast blending scheme (NWP models and satellite nowcast) used instead of the default one for the site's region: either the name of a predefined scheme or an inline definition. The scheme blends irradiance (GHI, DNI); PV columns are simulated from the blended irradiance. Applies to the forecast part of a timeseries, live or historical; a date range with no forecast part is unaffected. A scheme none of whose models is available at the site is rejected. Models of the scheme without data for the site or period are left out and the blend uses the remaining ones. The models actually used are listed in the dataset metadata, processing.modules entry solargis/forecastBlending (properties scheme and models; an inline definition is reported as scheme CUSTOM and echoed as definition).",
           "oneOf": [
             {
               "description": "Name of a predefined forecast blending scheme, e.g. DEFAULT.",
