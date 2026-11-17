@@ -20,59 +20,17 @@
           ]
         },
         "leadPeriods": {
-          "description": "CONCATENATED only. Lead periods to return, all D* or all H* / M*. Every requested column that depends on the forecast irradiance (irradiance, its derived and PV columns, LEADTIME) is returned once per lead period, named <column>_<leadPeriod>, e.g. GHI_D1, PVOUT_H1, LEADTIME_D1, and carries the lead period in its column metadata (leadPeriod). The suffix is added for a single lead period too. Other columns (meteo, ALB, sun position) are the same for every lead period and are returned once, without suffix and without leadPeriod.",
+          "description": "CONCATENATED only. Lead periods to return, D*, H* and M* may be mixed. Every requested column that depends on the forecast irradiance (irradiance, its derived and PV columns, LEADTIME) is returned once per lead period, named <column>_<leadPeriod>, e.g. GHI_D1, PVOUT_H1, LEADTIME_D1, and carries the lead period in its column metadata (leadPeriod). The suffix is added for a single lead period too. Other columns (meteo, ALB, sun position) are the same for every lead period and are returned once, without suffix and without leadPeriod.",
           "$comment": "Pick the family by how often the client receives a forecast (H* hourly, M15_* every 15 minutes, M30_* every 30 minutes) and the number in the name by how many intervals ahead it acts on it, so the series mirrors its real delivery. Same lead time, shorter interval = fresher data: M15_4 is not H1.",
           "type": "array",
           "minItems": 1,
           "uniqueItems": true,
           "items": {
             "$ref": "#/$defs/LeadPeriod"
-          },
-          "anyOf": [
-            {
-              "items": {
-                "enum": [
-                  "D0",
-                  "D1",
-                  "D2",
-                  "D3",
-                  "D4"
-                ]
-              }
-            },
-            {
-              "items": {
-                "enum": [
-                  "H0",
-                  "H1",
-                  "H2",
-                  "H3",
-                  "H4",
-                  "M15_0",
-                  "M15_1",
-                  "M15_2",
-                  "M15_3",
-                  "M15_4",
-                  "M15_5",
-                  "M15_6",
-                  "M15_7",
-                  "M15_8",
-                  "M15_9",
-                  "M15_10",
-                  "M15_11",
-                  "M30_0",
-                  "M30_1",
-                  "M30_2",
-                  "M30_3",
-                  "M30_4",
-                  "M30_5"
-                ]
-              }
-            }
-          ]
+          }
         },
         "processingTime": {
-          "description": "CONCATENATED with D* lead periods only. Time of day the forecast is processed, shared by all lead periods, with an explicit offset (HH:MM+hh:mm, HH:MM-hh:mm or HH:MMZ), e.g. 10:30+01:00. Its offset only says how to read the clock time: lead periods count days in the calendar of utcOffset (or its default from the site longitude), so D1 with 23:30Z for a site with utcOffset +09:00 is the forecast processed at 08:30+09:00 on the day before each target day. Every day of the range gets the forecast as it would have been delivered at that instant: only forecast runs available by then are used (NWP runs a few hours after their issue time, satellite nowcast minutes after its time slot). Fixed offset, no daylight saving time.",
+          "description": "CONCATENATED only, required when leadPeriods contain a D* lead period, forbidden otherwise. Applies to the D* lead periods only: H* and M* lead periods are defined by the lead alone. Time of day the forecast is processed, shared by all D* lead periods, with an explicit offset (HH:MM+hh:mm, HH:MM-hh:mm or HH:MMZ), e.g. 10:30+01:00. Its offset only says how to read the clock time: lead periods count days in the calendar of utcOffset (or its default from the site longitude), so D1 with 23:30Z for a site with utcOffset +09:00 is the forecast processed at 08:30+09:00 on the day before each target day. Every day of the range gets the forecast as it would have been delivered at that instant: only forecast runs available by then are used (NWP runs a few hours after their issue time, satellite nowcast minutes after its time slot). Fixed offset, no daylight saving time.",
           "type": "string",
           "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9](Z|[+\\-](0[0-9]|1[0-4]):(00|30))$"
         },
@@ -83,7 +41,7 @@
           "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(Z|[+\\-]\\d{2}:\\d{2})$"
         },
         "sources": {
-          "description": "Forecast archives to read. NWP_FORECAST: numerical weather prediction models. NOWCAST: satellite-based nowcast. With both, they are blended as in operational forecasting. Default: every source that can contribute, as in the operational delivery - [NWP_FORECAST] when all leadPeriods are D1-D4, otherwise [NWP_FORECAST, NOWCAST]. NOWCAST covers only the first hours after the forecast is processed, so it is used for D0, H* and M* and never reaches D1-D4. Next to NWP_FORECAST it is accepted with any lead period: the blend at D1-D4 is then the NWP forecast, and the per-model NOWCAST columns (includeForecastModelColumns, forecastModels) are returned for every lead period, empty where the nowcast does not reach, so the set of columns does not depend on the lead. NOWCAST alone is accepted for H* and M* only.",
+          "description": "Forecast archives to read. NWP_FORECAST: numerical weather prediction models. NOWCAST: satellite-based nowcast. With both, they are blended as in operational forecasting. Default: every source that can contribute, as in the operational delivery - [NWP_FORECAST] when all leadPeriods are D1-D4, otherwise [NWP_FORECAST, NOWCAST]. NOWCAST covers only the first hours after the forecast is processed, so it is used for D0, H* and M* and never reaches D1-D4. Next to NWP_FORECAST it is accepted with any lead period: the blend at D1-D4 is then the NWP forecast, and the per-model NOWCAST columns (includeForecastModelColumns, forecastModels) are returned for every lead period, empty where the nowcast does not reach, so the set of columns does not depend on the lead. NOWCAST alone is accepted only when every lead period is H* or M*.",
           "type": "array",
           "minItems": 1,
           "uniqueItems": true,
@@ -149,7 +107,7 @@
           }
         },
         {
-          "$comment": "D*: processingTime required.",
+          "$comment": "At least one D* lead period: processingTime required, it applies to the D* lead periods.",
           "if": {
             "required": [
               "leadPeriods"
@@ -175,39 +133,23 @@
           }
         },
         {
-          "$comment": "H* and M*: processingTime forbidden, the lead alone defines the forecast.",
+          "$comment": "No D* lead period (only H* and M*): processingTime forbidden, the lead alone defines the forecast.",
           "if": {
             "required": [
               "leadPeriods"
             ],
             "properties": {
               "leadPeriods": {
-                "contains": {
-                  "enum": [
-                    "H0",
-                    "H1",
-                    "H2",
-                    "H3",
-                    "H4",
-                    "M15_0",
-                    "M15_1",
-                    "M15_2",
-                    "M15_3",
-                    "M15_4",
-                    "M15_5",
-                    "M15_6",
-                    "M15_7",
-                    "M15_8",
-                    "M15_9",
-                    "M15_10",
-                    "M15_11",
-                    "M30_0",
-                    "M30_1",
-                    "M30_2",
-                    "M30_3",
-                    "M30_4",
-                    "M30_5"
-                  ]
+                "not": {
+                  "contains": {
+                    "enum": [
+                      "D0",
+                      "D1",
+                      "D2",
+                      "D3",
+                      "D4"
+                    ]
+                  }
                 }
               }
             }
