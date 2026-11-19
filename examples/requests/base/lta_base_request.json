@@ -10,5 +10,6 @@
     "GHI"
   ],
   "fromDate": "AUTODETECT",
-  "toDate": "LAST_YEAR"
+  "toDate": "LAST_YEAR",
+  "outputFormat": "SOLARGIS_JSON"
 }

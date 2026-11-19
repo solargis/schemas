@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.11/solargis_historical_forecast.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.12/solargis_historical_forecast.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
   "description": "Historical forecast definition: which archived forecast to return instead of history or live forecast. Used by solargis_public_TS_historical_forecast_request.schema.json.",
   "$defs": {

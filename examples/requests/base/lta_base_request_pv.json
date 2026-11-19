@@ -14,6 +14,7 @@
   ],
   "fromDate": "AUTODETECT",
   "toDate": "LAST_YEAR",
+  "outputFormat": "SOLARGIS_JSON",
   "pvConfiguration": {
     "simulationEngine": "SOLARGIS_S1",
     "system": {

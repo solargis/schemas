@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.11/solargis_public_LTA_request.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.12/solargis_public_LTA_request.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
 
   "description": "Schema for Solargis data request - for long-term average (LTA) datasets.",
@@ -49,7 +49,12 @@
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/utcOffset"
     },
     "timeAlignment": {
-      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/timeAlignment"
+      "description": "Long-term average values are labelled with the start of their period (month or year), so START is the only accepted value.",
+      "type": "string",
+      "enum": [
+        "START"
+      ],
+      "default": "START"
     },
     "terrainShading": {
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/terrainShading"
