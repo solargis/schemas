@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.12/solargis_public_TS_historical_forecast_request.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.13/solargis_public_TS_historical_forecast_request.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
   "description": "Schema for Solargis data request - for historical forecast timeseries datasets. The timeseries request plus a historicalForecast definition; history and live forecast are never mixed in.",
   "type": "object",

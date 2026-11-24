@@ -1,5 +1,5 @@
 {
-  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.12/solargis_historical_forecast.schema.json",
+  "$id": "https://raw.githubusercontent.com/solargis/schemas/v1.1.13/solargis_historical_forecast.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema",
   "description": "Historical forecast definition: which archived forecast to return instead of history or live forecast. Used by solargis_public_TS_historical_forecast_request.schema.json.",
   "$defs": {
@@ -163,7 +163,7 @@
           }
         },
         {
-          "$comment": "D* and SINGLE: NOWCAST alone is rejected, a whole-day window always exceeds the nowcast horizon. Add NWP_FORECAST. Next to NWP_FORECAST, NOWCAST is accepted with every D* lead; where it cannot reach (D1-D4) its columns are empty.",
+          "$comment": "D* and SINGLE: NOWCAST alone is rejected, a whole-day window always exceeds the maximum nowcast lead time. Add NWP_FORECAST. Next to NWP_FORECAST, NOWCAST is accepted with every D* lead; where it cannot reach (D1-D4) its columns are empty.",
           "if": {
             "anyOf": [
               {
