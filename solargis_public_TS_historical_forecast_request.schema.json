@@ -237,6 +237,42 @@
           ]
         }
       }
+    },
+    {
+      "$comment": "historicalForecast.leadPeriods with D1-D4: NOWCAST alone is rejected, the nowcast never reaches the next day. Add NWP_FORECAST to forecastSources.",
+      "if": {
+        "required": [
+          "historicalForecast"
+        ],
+        "properties": {
+          "historicalForecast": {
+            "required": [
+              "leadPeriods"
+            ],
+            "properties": {
+              "leadPeriods": {
+                "contains": {
+                  "enum": [
+                    "D1",
+                    "D2",
+                    "D3",
+                    "D4"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "forecastSources": {
+            "contains": {
+              "const": "NWP_FORECAST"
+            }
+          }
+        }
+      }
     }
   ],
   "properties": {
@@ -320,6 +356,9 @@
     },
     "forecastModels": {
       "$ref": "solargis_public_TS_request.schema.json#/properties/forecastModels"
+    },
+    "forecastSources": {
+      "$ref": "solargis_public_TS_request.schema.json#/properties/forecastSources"
     },
     "historicalForecast": {
       "$ref": "solargis_historical_forecast.schema.json#/$defs/HistoricalForecast"

@@ -177,7 +177,7 @@
           ]
         },
         "forecastModels": {
-          "description": "Return the forecast models' own values instead of a blended forecast: each requested column that a forecast model provides (GHI, DNI, DIF, DHI and GTI with its components, with and without terrain shading, and LEADTIME) once per model, named <column>_<model> (historical forecast CONCATENATED: <column>_<model>_<leadPeriod>; SINGLE and the live forecast have no lead period), e.g. GHI_IFS, GHI_ICONEU_D1, with the model in the column metadata (forecastModel). No blended column is returned. ALL: every model available at the site for the requested period, in a historical forecast also within its sources, including the satellite nowcast (NOWCAST) where it reaches. A list names the models; a model that is not available is refused. Columns that depend on the forecast but have no per-model values, e.g. PVOUT, are refused; columns that do not depend on it (meteo, sun position) are returned once. The models delivered are listed in the processing module solargis/forecastModels.",
+          "description": "Return the forecast models' own values instead of a blended forecast: each requested column that a forecast model provides (GHI, DNI, DIF, DHI and GTI with its components, with and without terrain shading, and LEADTIME) once per model, named <column>_<model> (historical forecast CONCATENATED: <column>_<model>_<leadPeriod>; SINGLE and the live forecast have no lead period), e.g. GHI_IFS, GHI_ICONEU_D1, with the model in the column metadata (forecastModel). No blended column is returned. ALL: every model available at the site for the requested period, within forecastSources, including the satellite nowcast (NOWCAST) where it reaches. A list names the models; a model that is not available is refused. Columns that depend on the forecast but have no per-model values, e.g. PVOUT, are refused; columns that do not depend on it (meteo, sun position) are returned once. The models delivered are listed in the processing module solargis/forecastModels.",
           "oneOf": [
             {
               "description": "Every model available.",
@@ -192,6 +192,19 @@
               }
             }
           ]
+        },
+        "forecastSources": {
+          "description": "Forecast sources to read, in the live forecast and in the historical forecast. NWP_FORECAST: numerical weather prediction models. NOWCAST: satellite-based nowcast. With both, they are blended as in operational forecasting. Default: [NWP_FORECAST, NOWCAST]; [NWP_FORECAST] switches the nowcast off, [NOWCAST] the NWP forecast. NOWCAST covers only the first hours after the forecast is processed, and its values are NaN beyond them when it is the only source. In a historical forecast it is used for D0, H*, M* and SINGLE and never reaches D1-D4: next to NWP_FORECAST the blend at D1-D4 is then the NWP forecast, and the per-model NOWCAST columns (includeForecastModelColumns, forecastModels) are returned for every lead period, empty where the nowcast does not reach, so the set of columns does not depend on the lead; NOWCAST alone is rejected when historicalForecast.leadPeriods contain D1-D4. forecastModels ALL takes the models of these sources only, and a listed model of an excluded source is refused. No effect on a date range without a forecast part.",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "NWP_FORECAST",
+              "NOWCAST"
+            ]
+          }
         }
       },
       "allOf": [

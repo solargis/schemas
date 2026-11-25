@@ -90,6 +90,9 @@
     "forecastModels": {
       "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/forecastModels"
     },
+    "forecastSources": {
+      "$ref": "solargis_data_request.schema.json#/$defs/DataRequest/properties/forecastSources"
+    },
     "historicalForecast": {
       "description": "Not accepted in this request. Historical forecast is requested with solargis_public_TS_historical_forecast_request.schema.json.",
       "not": {}

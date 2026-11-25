@@ -120,8 +120,9 @@
               "D2"
             ],
             "processingTime": "10:30+01:00",
-            "sources": [
-              "NWP_FORECAST"
+            "forecastSources": [
+              "NWP_FORECAST",
+              "NOWCAST"
             ]
           }
         }

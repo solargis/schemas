@@ -39,19 +39,6 @@
           "type": "string",
           "format": "date-time",
           "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(Z|[+\\-]\\d{2}:\\d{2})$"
-        },
-        "sources": {
-          "description": "Forecast archives to read. NWP_FORECAST: numerical weather prediction models. NOWCAST: satellite-based nowcast. With both, they are blended as in operational forecasting. Default: [NWP_FORECAST, NOWCAST] for every lead period; [NWP_FORECAST] switches the nowcast off. NOWCAST covers only the first hours after the forecast is processed, so it is used for D0, H* and M* and never reaches D1-D4. Next to NWP_FORECAST it is accepted with any lead period: the blend at D1-D4 is then the NWP forecast, and the per-model NOWCAST columns (includeForecastModelColumns, forecastModels) are returned for every lead period, empty where the nowcast does not reach, so the set of columns does not depend on the lead. NOWCAST alone is accepted unless leadPeriods contain D1-D4; its values are then NaN where the nowcast does not reach (for D0 and SINGLE, outside the first hours after the forecast is processed).",
-          "type": "array",
-          "minItems": 1,
-          "uniqueItems": true,
-          "items": {
-            "type": "string",
-            "enum": [
-              "NWP_FORECAST",
-              "NOWCAST"
-            ]
-          }
         }
       },
       "allOf": [
@@ -159,35 +146,6 @@
               "required": [
                 "processingTime"
               ]
-            }
-          }
-        },
-        {
-          "$comment": "D1-D4: NOWCAST alone is rejected, the nowcast never reaches the next day. Add NWP_FORECAST. Next to NWP_FORECAST, NOWCAST is accepted with every lead period; where it cannot reach (D1-D4) its columns are empty.",
-          "if": {
-            "required": [
-              "leadPeriods"
-            ],
-            "properties": {
-              "leadPeriods": {
-                "contains": {
-                  "enum": [
-                    "D1",
-                    "D2",
-                    "D3",
-                    "D4"
-                  ]
-                }
-              }
-            }
-          },
-          "then": {
-            "properties": {
-              "sources": {
-                "contains": {
-                  "const": "NWP_FORECAST"
-                }
-              }
             }
           }
         }
